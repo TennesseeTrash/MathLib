@@ -192,7 +192,7 @@ namespace cc
     // +=
 
     template <typename T>
-    [[maybe_ubused]] inline constexpr
+    [[maybe_unused]] inline constexpr
     Vector2T<T> operator+= (Vector2T<T>& u, const Vector2T<T>& v) noexcept
     {
         u.x += v.x;
@@ -201,7 +201,7 @@ namespace cc
     }
 
     template <typename T>
-    [[maybe_ubused]] inline constexpr
+    [[maybe_unused]] inline constexpr
     Vector3T<T> operator+= (Vector3T<T>& u, const Vector3T<T>& v) noexcept
     {
         u.x += v.x;
@@ -211,7 +211,7 @@ namespace cc
     }
 
     template <typename T>
-    [[maybe_ubused]] inline constexpr
+    [[maybe_unused]] inline constexpr
     Vector4T<T> operator+= (Vector4T<T>& u, const Vector4T<T>& v) noexcept
     {
         u.x += v.x;
@@ -224,7 +224,7 @@ namespace cc
     // -=
 
     template <typename T>
-    [[maybe_ubused]] inline constexpr
+    [[maybe_unused]] inline constexpr
     Vector2T<T> operator-= (Vector2T<T>& u, const Vector2T<T>& v) noexcept
     {
         u.x -= v.x;
@@ -233,7 +233,7 @@ namespace cc
     }
 
     template <typename T>
-    [[maybe_ubused]] inline constexpr
+    [[maybe_unused]] inline constexpr
     Vector3T<T> operator-= (Vector3T<T>& u, const Vector3T<T>& v) noexcept
     {
         u.x -= v.x;
@@ -243,7 +243,7 @@ namespace cc
     }
 
     template <typename T>
-    [[maybe_ubused]] inline constexpr
+    [[maybe_unused]] inline constexpr
     Vector4T<T> operator-= (Vector4T<T>& u, const Vector4T<T>& v) noexcept
     {
         u.x -= v.x;
@@ -256,7 +256,7 @@ namespace cc
     // *=
 
     template <typename T>
-    [[maybe_ubused]] inline constexpr
+    [[maybe_unused]] inline constexpr
     Vector2T<T> operator*= (Vector2T<T>& u, const Vector2T<T>& v) noexcept
     {
         u.x *= v.x;
@@ -265,7 +265,7 @@ namespace cc
     }
 
     template <typename T>
-    [[maybe_ubused]] inline constexpr
+    [[maybe_unused]] inline constexpr
     Vector3T<T> operator*= (Vector3T<T>& u, const Vector3T<T>& v) noexcept
     {
         u.x *= v.x;
@@ -275,7 +275,7 @@ namespace cc
     }
 
     template <typename T>
-    [[maybe_ubused]] inline constexpr
+    [[maybe_unused]] inline constexpr
     Vector4T<T> operator*= (Vector4T<T>& u, const Vector4T<T>& v) noexcept
     {
         u.x *= v.x;
@@ -288,7 +288,7 @@ namespace cc
     // /=
 
     template <typename T>
-    [[maybe_ubused]] inline constexpr
+    [[maybe_unused]] inline constexpr
     Vector2T<T> operator/= (Vector2T<T>& u, const Vector2T<T>& v) noexcept
     {
         u.x /= v.x;
@@ -297,7 +297,7 @@ namespace cc
     }
 
     template <typename T>
-    [[maybe_ubused]] inline constexpr
+    [[maybe_unused]] inline constexpr
     Vector3T<T> operator/= (Vector3T<T>& u, const Vector3T<T>& v) noexcept
     {
         u.x /= v.x;
@@ -307,7 +307,7 @@ namespace cc
     }
 
     template <typename T>
-    [[maybe_ubused]] inline constexpr
+    [[maybe_unused]] inline constexpr
     Vector4T<T> operator/= (Vector4T<T>& u, const Vector4T<T>& v) noexcept
     {
         u.x /= v.x;
@@ -473,6 +473,134 @@ namespace cc
         return Vector2T(u.x / s, u.y / s, u.z / s, u.w / s);
     }
 
+    // +=
+
+    template <typename T>
+    [[maybe_unused]] inline constexpr
+    Vector2T<T> operator+= (Vector2T<T>& u, T s) noexcept
+    {
+        u.x += s;
+        u.y += s;
+        return u;
+    }
+
+    template <typename T>
+    [[maybe_unused]] inline constexpr
+    Vector3T<T> operator+= (Vector3T<T>& u, T s) noexcept
+    {
+        u.x += s;
+        u.y += s;
+        u.z += s;
+        return u;
+    }
+
+    template <typename T>
+    [[maybe_unused]] inline constexpr
+    Vector4T<T> operator+= (Vector4T<T>& u, T s) noexcept
+    {
+        u.x += s;
+        u.y += s;
+        u.z += s;
+        u.w += s;
+        return u;
+    }
+
+    // -=
+
+    template <typename T>
+    [[maybe_unused]] inline constexpr
+    Vector2T<T> operator-= (Vector2T<T>& u, T s) noexcept
+    {
+        u.x -= s;
+        u.y -= s;
+        return u;
+    }
+
+    template <typename T>
+    [[maybe_unused]] inline constexpr
+    Vector3T<T> operator-= (Vector3T<T>& u, T s) noexcept
+    {
+        u.x -= s;
+        u.y -= s;
+        u.z -= s;
+        return u;
+    }
+
+    template <typename T>
+    [[maybe_unused]] inline constexpr
+    Vector4T<T> operator-= (Vector4T<T>& u, T s) noexcept
+    {
+        u.x -= s;
+        u.y -= s;
+        u.z -= s;
+        u.w -= s;
+        return u;
+    }
+
+    // *=
+
+    template <typename T>
+    [[maybe_unused]] inline constexpr
+    Vector2T<T> operator*= (Vector2T<T>& u, T s) noexcept
+    {
+        u.x *= s;
+        u.y *= s;
+        return u;
+    }
+
+    template <typename T>
+    [[maybe_unused]] inline constexpr
+    Vector3T<T> operator*= (Vector3T<T>& u, T s) noexcept
+    {
+        u.x *= s;
+        u.y *= s;
+        u.z *= s;
+        return u;
+    }
+
+    template <typename T>
+    [[maybe_unused]] inline constexpr
+    Vector4T<T> operator*= (Vector4T<T>& u, T s) noexcept
+    {
+        u.x *= s;
+        u.y *= s;
+        u.z *= s;
+        u.w *= s;
+        return u;
+    }
+
+    // /=
+
+    template <typename T>
+    [[maybe_unused]] inline constexpr
+    Vector2T<T> operator/= (Vector2T<T>& u, T s) noexcept
+    {
+        u.x /= s;
+        u.y /= s;
+        return u;
+    }
+
+    template <typename T>
+    [[maybe_unused]] inline constexpr
+    Vector3T<T> operator/= (Vector3T<T>& u, T s) noexcept
+    {
+        u.x /= s;
+        u.y /= s;
+        u.z /= s;
+        return u;
+    }
+
+    template <typename T>
+    [[maybe_unused]] inline constexpr
+    Vector4T<T> operator/= (Vector4T<T>& u, T s) noexcept
+    {
+        u.x /= s;
+        u.y /= s;
+        u.z /= s;
+        u.w /= s;
+        return u;
+    }
+
     //////////////////////////////////////////////////////////////////////////
     // Utilities
     //////////////////////////////////////////////////////////////////////////
@@ -540,10 +668,10 @@ namespace cc
     Vector3T<T> Cross(const Vector3T<T>& u, const Vector3T<T>& v) noexcept
     {
         Vector3T<T> w;
-		w.x = u.y * v.z - u.z * v.y;
-		w.y = u.z * v.x - u.x * v.z;
-		w.z = u.x * v.y - u.y * v.x;
-		return w;
+        w.x = u.y * v.z - u.z * v.y;
+        w.y = u.z * v.x - u.x * v.z;
+        w.z = u.x * v.y - u.y * v.x;
+        return w;
     }
 }
 

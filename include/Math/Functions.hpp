@@ -11,14 +11,14 @@ namespace cc
     [[nodiscard]] inline constexpr
     T Min(const Pack&... values) noexcept
     {
-        return Min(values);
+        return Min(values...);
     }
 
     template <typename T, typename... Pack>
     [[nodiscard]] inline constexpr
     T Min(const T& a, const Pack&... values) noexcept
     {
-        return Min(a, Min(values));
+        return Min(a, Min(values...));
     }
 
     template <typename T>
@@ -32,14 +32,14 @@ namespace cc
     [[nodiscard]] inline constexpr
     T Max(const Pack&... values) noexcept
     {
-        return Max(values);
+        return Max(values...);
     }
 
     template <typename T, typename... Pack>
     [[nodiscard]] inline constexpr
     T Max(const T& a, const Pack&... values) noexcept
     {
-        return Max(a, Max(values));
+        return Max(a, Max(values...));
     }
 
     template <typename T>

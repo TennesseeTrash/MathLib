@@ -8,37 +8,43 @@ namespace cc
     //////////////////////////////////////////////////////////////////////////
 
     template <typename T, typename... Pack>
-    inline constexpr T Min(const Pack&... values)
+    [[nodiscard]] inline constexpr
+    T Min(const Pack&... values) noexcept
     {
         return Min(values);
     }
 
     template <typename T, typename... Pack>
-    inline constexpr T Min(const T& a, const Pack&... values)
+    [[nodiscard]] inline constexpr
+    T Min(const T& a, const Pack&... values) noexcept
     {
         return Min(a, Min(values));
     }
 
     template <typename T>
-    inline constexpr T Min(const T& a, const T& b)
+    [[nodiscard]] inline constexpr
+    T Min(const T& a, const T& b) noexcept
     {
         return a > b ? b : a;
     }
 
     template <typename T, typename... Pack>
-    inline constexpr T Max(const Pack&... values)
+    [[nodiscard]] inline constexpr
+    T Max(const Pack&... values) noexcept
     {
         return Max(values);
     }
 
     template <typename T, typename... Pack>
-    inline constexpr T Max(const T& a, const Pack&... values)
+    [[nodiscard]] inline constexpr
+    T Max(const T& a, const Pack&... values) noexcept
     {
         return Max(a, Max(values));
     }
 
     template <typename T>
-    inline constexpr T Max(const T& a, const T& b)
+    [[nodiscard]] inline constexpr
+    T Max(const T& a, const T& b) noexcept
     {
         return a > b ? a : b;
     }
@@ -48,13 +54,15 @@ namespace cc
     //////////////////////////////////////////////////////////////////////////
 
     template <typename T>
-    inline constexpr T Clamp(T val, T min = T(0), T max = T(1))
+    [[nodiscard]] inline constexpr
+    T Clamp(T val, T min = T(0), T max = T(1)) noexcept
     {
         return val > max ? max : val < min ? min : val;
     }
 
     template <typename T, typename U>
-    inline constexpr U Lerp(T val, const U& begin, const U& end)
+    [[nodiscard]] inline constexpr
+    U Lerp(T val, const U& begin, const U& end) noexcept
     {
         return ((1 - val) * begin) + (val * end);
     }
@@ -64,13 +72,15 @@ namespace cc
     //////////////////////////////////////////////////////////////////////////
 
     template <typename Int, typename Float>
-    inline constexpr Int Floor(Float val)
+    [[nodiscard]] inline constexpr
+    Int Floor(Float val) noexcept
     {
         return static_cast<Int>(val - (val < static_cast<Int>(val)));
     }
 
     template <typename Int, typename Float>
-    inline constexpr Int Ceil(Float val)
+    [[nodiscard]] inline constexpr
+    Int Ceil(Float val) noexcept
     {
         return static_cast<Int>(val - (val > static_cast<Int>(val)));
     }

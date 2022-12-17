@@ -1,7 +1,10 @@
 #ifndef _CC_MATH_VECTOR_HPP
 #define _CC_MATH_VECTOR_HPP
 
+#include <cstdint>
 #include <cmath>
+
+#include "Functions.hpp"
 
 namespace cc
 {
@@ -24,6 +27,9 @@ namespace cc
 
         constexpr T LenSqr() noexcept { return x * x + y * y; }
         constexpr T Length() noexcept { return std::sqrt(LenSqr()); }
+
+        constexpr T Max() noexcept { return Max(x, y); }
+        constexpr T Min() noexcept { return Min(x, y); }
     };
 
     template <typename T>
@@ -44,6 +50,9 @@ namespace cc
 
         constexpr T LenSqr() const noexcept { return x * x + y * y + z * z; }
         constexpr T Length() const noexcept { return std::sqrt(LenSqr()); }
+
+        constexpr T Max() noexcept { return Max(x, y, z); }
+        constexpr T Min() noexcept { return Min(x, y, z); }
     };
 
     template <typename T>
@@ -67,7 +76,30 @@ namespace cc
 
         constexpr T LenSqr() const noexcept { return x * x + y * y + z * z + w * w; }
         constexpr T Length() const noexcept { return std::sqrt(LenSqr()); }
+
+        constexpr T Max() noexcept { return Max(x, y, z, w); }
+        constexpr T Min() noexcept { return Min(x, y, z, w); }
     };
+
+    //////////////////////////////////////////////////////////////////////////
+    // Useful type aliases
+    //////////////////////////////////////////////////////////////////////////
+
+    using Vector2f = Vector2T<float>;
+    using Vector3f = Vector3T<float>;
+    using Vector4f = Vector4T<float>;
+
+    using Vector2d = Vector2T<double>;
+    using Vector3d = Vector3T<double>;
+    using Vector4d = Vector4T<double>;
+
+    using Vector2i = Vector2T<int32_t>;
+    using Vector3i = Vector3T<int32_t>;
+    using Vector4i = Vector4T<int32_t>;
+
+    using Vector2l = Vector2T<int64_t>;
+    using Vector3l = Vector3T<int64_t>;
+    using Vector4l = Vector4T<int64_t>;
 
     //////////////////////////////////////////////////////////////////////////
     // Operators

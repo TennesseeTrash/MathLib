@@ -1,54 +1,9 @@
 #ifndef _CC_MATH_FUNCTIONS_HPP
 #define _CC_MATH_FUNCTIONS_HPP
 
+
 namespace cc
 {
-    //////////////////////////////////////////////////////////////////////////
-    // Min, Max functions
-    //////////////////////////////////////////////////////////////////////////
-
-    template <typename T, typename... Pack>
-    [[nodiscard]] inline constexpr
-    T Min(const Pack&... values) noexcept
-    {
-        return Min(values...);
-    }
-
-    template <typename T, typename... Pack>
-    [[nodiscard]] inline constexpr
-    T Min(const T& a, const Pack&... values) noexcept
-    {
-        return Min(a, Min(values...));
-    }
-
-    template <typename T>
-    [[nodiscard]] inline constexpr
-    T Min(const T& a, const T& b) noexcept
-    {
-        return a > b ? b : a;
-    }
-
-    template <typename T, typename... Pack>
-    [[nodiscard]] inline constexpr
-    T Max(const Pack&... values) noexcept
-    {
-        return Max(values...);
-    }
-
-    template <typename T, typename... Pack>
-    [[nodiscard]] inline constexpr
-    T Max(const T& a, const Pack&... values) noexcept
-    {
-        return Max(a, Max(values...));
-    }
-
-    template <typename T>
-    [[nodiscard]] inline constexpr
-    T Max(const T& a, const T& b) noexcept
-    {
-        return a > b ? a : b;
-    }
-
     //////////////////////////////////////////////////////////////////////////
     // Clamp, Lerp
     //////////////////////////////////////////////////////////////////////////
@@ -83,6 +38,35 @@ namespace cc
     Int Ceil(Float val) noexcept
     {
         return static_cast<Int>(val - (val > static_cast<Int>(val)));
+    }
+
+    //////////////////////////////////////////////////////////////////////////
+    // Sign, Abs
+    //////////////////////////////////////////////////////////////////////////
+
+    template <typename T>
+    [[nodiscard]] inline constexpr
+    T Sign(T val) noexcept
+    {
+        return (T(0) < val) - (val < T(0));
+    }
+
+    template <typename T>
+    [[nodiscard]] inline constexpr
+    T Abs(T val) noexcept
+    {
+        return val > T(0) ? val : -val;
+    }
+
+    //////////////////////////////////////////////////////////////////////////
+    // Equal function for floating point comparisons
+    //////////////////////////////////////////////////////////////////////////
+
+    template <typename T>
+    [[nodiscard]] inline constexpr
+    bool Equal(T val1, T val2, T epsilon = T(0.000001)) noexcept
+    {
+        return Abs(val1 - val2) < epsilon;
     }
 }
 

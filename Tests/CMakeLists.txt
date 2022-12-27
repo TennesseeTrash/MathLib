@@ -15,7 +15,10 @@ target_link_libraries(Tests PRIVATE
 )
 
 target_sources(Tests PRIVATE
+    "TestFunctions.cpp"
     "TestVectors.cpp"
+    "TestPoints.cpp"
+    "TestMatrices.cpp"
 )
 
 set_property(TARGET Tests PROPERTY CXX_STANDARD 20)

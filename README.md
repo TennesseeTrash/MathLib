@@ -1,4 +1,4 @@
-# ccmath
+# math-cpp
 
 This is an attempt at a small, header-only C++ math library for use in
 Computer Graphics. It aims to provide basic primitives, such as Vectors,
@@ -10,9 +10,9 @@ libraries, such as [GLM](https://github.com/g-truc/glm) or
 [Terathon Math](https://github.com/EricLengyel/Terathon-Math-Library) in your
 projects.
 
-Status:
+## Implementation status:
 - [x] Vector types
-- [ ] Tests for Vector types
+- [x] Tests for Vector types
 - [ ] Point types
 - [ ] Tests for Point types
 - [ ] Matrix types

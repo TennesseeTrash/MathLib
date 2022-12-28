@@ -3,11 +3,19 @@
 
 #include <cstdint>
 #include <cmath>
+#include <limits>
 
 #include "Functions.hpp"
 
 namespace cc
 {
+    //////////////////////////////////////////////////////////////////////////
+    // Assumptions to prevent UB
+    //////////////////////////////////////////////////////////////////////////
+
+    static_assert(std::numeric_limits<float>::is_iec559);
+    static_assert(std::numeric_limits<double>::is_iec559);
+
     //////////////////////////////////////////////////////////////////////////
     // Basic Definitions
     //////////////////////////////////////////////////////////////////////////
@@ -18,12 +26,12 @@ namespace cc
         T x = T(0);
         T y = T(0);
 
-        constexpr explicit Vector2T()           noexcept : x(T(0)), y(T(0)) {}
+        constexpr          Vector2T()           noexcept : x(T(0)), y(T(0)) {}
         constexpr explicit Vector2T(T val)      noexcept : x(val),  y(val)  {}
         constexpr          Vector2T(T xv, T yv) noexcept : x(xv),   y(yv)   {}
 
-        constexpr       T& operator[] (int idx)       { reinterpret_cast<T *>(this)[idx]; }
-        constexpr const T& operator[] (int idx) const { reinterpret_cast<T *>(this)[idx]; }
+        constexpr       T& operator[] (int idx)       noexcept { reinterpret_cast<T *>(this)[idx]; }
+        constexpr const T& operator[] (int idx) const noexcept { reinterpret_cast<T *>(this)[idx]; }
 
         constexpr T LenSqr() const noexcept { return x * x + y * y; }
         constexpr T Length() const noexcept { return std::sqrt(LenSqr()); }
@@ -39,14 +47,14 @@ namespace cc
         T y = T(0);
         T z = T(0);
 
-        constexpr explicit Vector3T()                           noexcept : x(T(0)), y(T(0)), z(T(0)) {}
+        constexpr          Vector3T()                           noexcept : x(T(0)), y(T(0)), z(T(0)) {}
         constexpr explicit Vector3T(T val)                      noexcept : x(val),  y(val),  z(val)  {}
         constexpr          Vector3T(T xv, T yv, T zv)           noexcept : x(xv),   y(yv),   z(zv)   {}
         constexpr explicit Vector3T(const Vector2T<T>& u)       noexcept : x(u.x),  y(u.y),  z(T(0)) {}
         constexpr explicit Vector3T(const Vector2T<T>& u, T zv) noexcept : x(u.x),  y(u.y),  z(zv)   {}
 
-        constexpr       T& operator[] (int idx)       { reinterpret_cast<T *>(this)[idx]; }
-        constexpr const T& operator[] (int idx) const { reinterpret_cast<T *>(this)[idx]; }
+        constexpr       T& operator[] (int idx)       noexcept { reinterpret_cast<T *>(this)[idx]; }
+        constexpr const T& operator[] (int idx) const noexcept { reinterpret_cast<T *>(this)[idx]; }
 
         constexpr T LenSqr() const noexcept { return x * x + y * y + z * z; }
         constexpr T Length() const noexcept { return std::sqrt(LenSqr()); }
@@ -63,7 +71,7 @@ namespace cc
         T z = T(0);
         T w = T(0);
 
-        constexpr explicit Vector4T()                                 noexcept : x(T(0)), y(T(0)), z(T(0)), w(T(0)) {}
+        constexpr          Vector4T()                                 noexcept : x(T(0)), y(T(0)), z(T(0)), w(T(0)) {}
         constexpr explicit Vector4T(T val)                            noexcept : x(val),  y(val),  z(val),  w(val)  {}
         constexpr          Vector4T(T xv, T yv, T zv, T wv)           noexcept : x(xv),   y(yv),   z(zv),   w(wv)   {}
         constexpr explicit Vector4T(const Vector2T<T>& u)             noexcept : x(u.x),  y(u.y),  z(T(0)), w(T(0)) {}
@@ -71,8 +79,8 @@ namespace cc
         constexpr explicit Vector4T(const Vector3T<T>& u)             noexcept : x(u.x),  y(u.y),  z(u.z),  w(T(0)) {}
         constexpr explicit Vector4T(const Vector3T<T>& u, T wv)       noexcept : x(u.x),  y(u.y),  z(u.z),  w(wv)   {}
 
-        constexpr       T& operator[] (int idx)       { reinterpret_cast<T *>(this)[idx]; }
-        constexpr const T& operator[] (int idx) const { reinterpret_cast<T *>(this)[idx]; }
+        constexpr       T& operator[] (int idx)       noexcept { reinterpret_cast<T *>(this)[idx]; }
+        constexpr const T& operator[] (int idx) const noexcept { reinterpret_cast<T *>(this)[idx]; }
 
         constexpr T LenSqr() const noexcept { return x * x + y * y + z * z + w * w; }
         constexpr T Length() const noexcept { return std::sqrt(LenSqr()); }
@@ -354,42 +362,42 @@ namespace cc
 
     template <typename T>
     [[nodiscard]] inline constexpr
-    Vector2T<T> operator+ (const Vector2T<T>& u, T s)
+    Vector2T<T> operator+ (const Vector2T<T>& u, T s) noexcept
     {
         return Vector2T<T>(u.x + s, u.y + s);
     }
 
     template <typename T>
     [[nodiscard]] inline constexpr
-    Vector3T<T> operator+ (const Vector3T<T>& u, T s)
+    Vector3T<T> operator+ (const Vector3T<T>& u, T s) noexcept
     {
         return Vector3T<T>(u.x + s, u.y + s, u.z + s);
     }
 
     template <typename T>
     [[nodiscard]] inline constexpr
-    Vector4T<T> operator+ (const Vector4T<T>& u, T s)
+    Vector4T<T> operator+ (const Vector4T<T>& u, T s) noexcept
     {
         return Vector4T<T>(u.x + s, u.y + s, u.z + s, u.w + s);
     }
 
      template <typename T>
     [[nodiscard]] inline constexpr
-    Vector2T<T> operator+ (T s, const Vector2T<T>& u)
+    Vector2T<T> operator+ (T s, const Vector2T<T>& u) noexcept
     {
         return Vector2T<T>(s + u.x, s + u.y);
     }
 
     template <typename T>
     [[nodiscard]] inline constexpr
-    Vector3T<T> operator+ (T s, const Vector3T<T>& u)
+    Vector3T<T> operator+ (T s, const Vector3T<T>& u) noexcept
     {
         return Vector3T<T>(s + u.x, s + u.y, s + u.z);
     }
 
     template <typename T>
     [[nodiscard]] inline constexpr
-    Vector4T<T> operator+ (T s, const Vector4T<T>& u)
+    Vector4T<T> operator+ (T s, const Vector4T<T>& u) noexcept
     {
         return Vector4T<T>(s + u.x, s + u.y, s + u.z, s + u.w);
     }
@@ -398,21 +406,21 @@ namespace cc
 
     template <typename T>
     [[nodiscard]] inline constexpr
-    Vector2T<T> operator- (const Vector2T<T>& u, T s)
+    Vector2T<T> operator- (const Vector2T<T>& u, T s) noexcept
     {
         return Vector2T<T>(u.x - s, u.y - s);
     }
 
     template <typename T>
     [[nodiscard]] inline constexpr
-    Vector3T<T> operator- (const Vector3T<T>& u, T s)
+    Vector3T<T> operator- (const Vector3T<T>& u, T s) noexcept
     {
         return Vector3T<T>(u.x - s, u.y - s, u.z - s);
     }
 
     template <typename T>
     [[nodiscard]] inline constexpr
-    Vector4T<T> operator- (const Vector4T<T>& u, T s)
+    Vector4T<T> operator- (const Vector4T<T>& u, T s) noexcept
     {
         return Vector4T<T>(u.x - s, u.y - s, u.z - s, u.w - s);
     }
@@ -421,42 +429,42 @@ namespace cc
 
     template <typename T>
     [[nodiscard]] inline constexpr
-    Vector2T<T> operator* (const Vector2T<T>& u, T s)
+    Vector2T<T> operator* (const Vector2T<T>& u, T s) noexcept
     {
         return Vector2T<T>(u.x * s, u.y * s);
     }
 
     template <typename T>
     [[nodiscard]] inline constexpr
-    Vector3T<T> operator* (const Vector3T<T>& u, T s)
+    Vector3T<T> operator* (const Vector3T<T>& u, T s) noexcept
     {
         return Vector3T<T>(u.x * s, u.y * s, u.z * s);
     }
 
     template <typename T>
     [[nodiscard]] inline constexpr
-    Vector4T<T> operator* (const Vector4T<T>& u, T s)
+    Vector4T<T> operator* (const Vector4T<T>& u, T s) noexcept
     {
         return Vector4T<T>(u.x * s, u.y * s, u.z * s, u.w * s);
     }
 
      template <typename T>
     [[nodiscard]] inline constexpr
-    Vector2T<T> operator* (T s, const Vector2T<T>& u)
+    Vector2T<T> operator* (T s, const Vector2T<T>& u) noexcept
     {
         return Vector2T<T>(s * u.x, s * u.y);
     }
 
     template <typename T>
     [[nodiscard]] inline constexpr
-    Vector3T<T> operator* (T s, const Vector3T<T>& u)
+    Vector3T<T> operator* (T s, const Vector3T<T>& u) noexcept
     {
         return Vector3T<T>(s * u.x, s * u.y, s * u.z);
     }
 
     template <typename T>
     [[nodiscard]] inline constexpr
-    Vector4T<T> operator* (T s, const Vector4T<T>& u)
+    Vector4T<T> operator* (T s, const Vector4T<T>& u) noexcept
     {
         return Vector4T<T>(s * u.x, s * u.y, s * u.z, s * u.w);
     }
@@ -465,21 +473,21 @@ namespace cc
 
     template <typename T>
     [[nodiscard]] inline constexpr
-    Vector2T<T> operator/ (const Vector2T<T>& u, T s)
+    Vector2T<T> operator/ (const Vector2T<T>& u, T s) noexcept
     {
         return Vector2T<T>(u.x / s, u.y / s);
     }
 
     template <typename T>
     [[nodiscard]] inline constexpr
-    Vector3T<T> operator/ (const Vector3T<T>& u, T s)
+    Vector3T<T> operator/ (const Vector3T<T>& u, T s) noexcept
     {
         return Vector3T<T>(u.x / s, u.y / s, u.z / s);
     }
 
     template <typename T>
     [[nodiscard]] inline constexpr
-    Vector4T<T> operator/ (const Vector4T<T>& u, T s)
+    Vector4T<T> operator/ (const Vector4T<T>& u, T s) noexcept
     {
         return Vector4T<T>(u.x / s, u.y / s, u.z / s, u.w / s);
     }
@@ -643,7 +651,7 @@ namespace cc
 
     template <typename T>
     [[nodiscard]] inline constexpr
-    bool Equal(const Vector2T<T>& u, const Vector2T<T>& v, T epsilon = T(0.000001))
+    bool Equal(const Vector2T<T>& u, const Vector2T<T>& v, T epsilon = T(0.000001)) noexcept
     {
         return Equal(u.x, v.x, epsilon)
             && Equal(u.y, v.y, epsilon);
@@ -651,7 +659,7 @@ namespace cc
 
     template <typename T>
     [[nodiscard]] inline constexpr
-    bool Equal(const Vector3T<T>& u, const Vector3T<T>& v, T epsilon = T(0.000001))
+    bool Equal(const Vector3T<T>& u, const Vector3T<T>& v, T epsilon = T(0.000001)) noexcept
     {
         return Equal(u.x, v.x, epsilon)
             && Equal(u.y, v.y, epsilon)
@@ -660,7 +668,7 @@ namespace cc
 
     template <typename T>
     [[nodiscard]] inline constexpr
-    bool Equal(const Vector4T<T>& u, const Vector4T<T>& v, T epsilon = T(0.000001))
+    bool Equal(const Vector4T<T>& u, const Vector4T<T>& v, T epsilon = T(0.000001)) noexcept
     {
         return Equal(u.x, v.x, epsilon)
             && Equal(u.y, v.y, epsilon)

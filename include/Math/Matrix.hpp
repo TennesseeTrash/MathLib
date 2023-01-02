@@ -1,5 +1,5 @@
-#ifndef _CC_MATH_MATRIX_HPP
-#define _CC_MATH_MATRIX_HPP
+#ifndef _MATH_MATRIX_HPP
+#define _MATH_MATRIX_HPP
 
 #include "Vector.hpp"
 #include <array>
@@ -610,4 +610,4 @@ namespace cc
     }
 }
 
-#endif //_CC_MATH_MATRIX_HPP
+#endif //_MATH_MATRIX_HPP

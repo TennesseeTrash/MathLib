@@ -1,5 +1,5 @@
-#ifndef _CC_MATH_POINT_HPP
-#define _CC_MATH_POINT_HPP
+#ifndef _MATH_POINT_HPP
+#define _MATH_POINT_HPP
 
 namespace cc
 {
@@ -39,4 +39,4 @@ namespace cc
     
 }
 
-#endif //_CC_MATH_POINT_HPP
+#endif //_MATH_POINT_HPP

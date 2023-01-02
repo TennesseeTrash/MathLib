@@ -1,5 +1,5 @@
-#ifndef _CC_MATH_VECTOR_HPP
-#define _CC_MATH_VECTOR_HPP
+#ifndef _MATH_VECTOR_HPP
+#define _MATH_VECTOR_HPP
 
 #include <cstdint>
 #include <cmath>
@@ -723,4 +723,4 @@ namespace cc
     }
 }
 
-#endif //_CC_MATH_VECTOR_HPP
+#endif //_MATH_VECTOR_HPP

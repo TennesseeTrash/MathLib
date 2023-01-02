@@ -1,5 +1,5 @@
-#ifndef _CC_MATH_FUNCTIONS_HPP
-#define _CC_MATH_FUNCTIONS_HPP
+#ifndef _MATH_FUNCTIONS_HPP
+#define _MATH_FUNCTIONS_HPP
 
 
 namespace cc
@@ -70,4 +70,4 @@ namespace cc
     }
 }
 
-#endif //_CC_MATH_FUNCTIONS_HPP
+#endif //_MATH_FUNCTIONS_HPP

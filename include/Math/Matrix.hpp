@@ -1,9 +1,10 @@
 #ifndef _MATH_MATRIX_HPP
 #define _MATH_MATRIX_HPP
 
-#include "Vector.hpp"
 #include <array>
 #include <limits>
+
+#include "Vector.hpp"
 
 namespace cc
 {

@@ -495,6 +495,61 @@ namespace cc
     // Utilities
     //////////////////////////////////////////////////////////////////////////
 
+    // Equality functions
+
+    template <typename T>
+    [[nodiscard]] inline constexpr
+    bool Equal(const Matrix2T<T>& m, const Matrix2T<T>& n, T epsilon = T(0.000001)) noexcept
+    {
+        return Equal(m[0][0], n[0][0], epsilon)
+            && Equal(m[0][1], n[0][1], epsilon)
+
+            && Equal(m[1][0], n[1][0], epsilon)
+            && Equal(m[1][1], n[1][1], epsilon);
+    }
+
+    template <typename T>
+    [[nodiscard]] inline constexpr
+    bool Equal(const Matrix3T<T>& m, const Matrix3T<T>& n, T epsilon = T(0.000001)) noexcept
+    {
+        return Equal(m[0][0], n[0][0], epsilon)
+            && Equal(m[0][1], n[0][1], epsilon)
+            && Equal(m[0][2], n[0][2], epsilon)
+
+            && Equal(m[1][0], n[1][0], epsilon)
+            && Equal(m[1][1], n[1][1], epsilon)
+            && Equal(m[1][2], n[1][2], epsilon)
+
+            && Equal(m[2][0], n[2][0], epsilon)
+            && Equal(m[2][1], n[2][1], epsilon)
+            && Equal(m[2][2], n[2][2], epsilon);
+    }
+
+    template <typename T>
+    [[nodiscard]] inline constexpr
+    bool Equal(const Matrix4T<T>& m, const Matrix4T<T>& n, T epsilon = T(0.000001)) noexcept
+    {
+        return Equal(m[0][0], n[0][0], epsilon)
+            && Equal(m[0][1], n[0][1], epsilon)
+            && Equal(m[0][2], n[0][2], epsilon)
+            && Equal(m[0][3], n[0][3], epsilon)
+
+            && Equal(m[1][0], n[1][0], epsilon)
+            && Equal(m[1][1], n[1][1], epsilon)
+            && Equal(m[1][2], n[1][2], epsilon)
+            && Equal(m[1][3], n[1][3], epsilon)
+
+            && Equal(m[2][0], n[2][0], epsilon)
+            && Equal(m[2][1], n[2][1], epsilon)
+            && Equal(m[2][2], n[2][2], epsilon)
+            && Equal(m[2][3], n[2][3], epsilon)
+
+            && Equal(m[3][0], n[3][0], epsilon)
+            && Equal(m[3][1], n[3][1], epsilon)
+            && Equal(m[3][2], n[3][2], epsilon)
+            && Equal(m[3][3], n[3][3], epsilon);
+    }
+
     // Transpose
 
     template <typename T>

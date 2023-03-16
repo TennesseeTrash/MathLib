@@ -676,6 +676,29 @@ namespace cc
             && Equal(u.w, v.w, epsilon);
     }
 
+    // NaN checks
+
+    template <typename T>
+    [[nodiscard]] inline constexpr
+    bool HasNaN(const Vector2T<T>& u)
+    {
+        return (u.x != u.x) || (u.y != u.y);
+    }
+
+    template <typename T>
+    [[nodiscard]] inline constexpr
+    bool HasNaN(const Vector3T<T>& u)
+    {
+        return (u.x != u.x) || (u.y != u.y) || (u.z != u.z);
+    }
+
+    template <typename T>
+    [[nodiscard]] inline constexpr
+    bool HasNaN(const Vector4T<T>& u)
+    {
+        return (u.x != u.x) || (u.y != u.y) || (u.z != u.z) || (u.w != u.w);
+    }
+
     // Normalization functions
 
     template <typename T>

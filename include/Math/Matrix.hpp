@@ -551,6 +551,56 @@ namespace cc
             && Equal(m[3][3], n[3][3], epsilon);
     }
 
+    // NaN checks
+
+    template <typename T>
+    [[nodiscard]] inline constexpr
+    bool HasNaN(const Matrix2T<T>& m) noexcept
+    {
+        constexpr size_t dim = 2;
+        bool result;
+        for (size_t i = 0; i < dim; ++i)
+        {
+            for (size_t j = 0; j < dim; ++j)
+            {
+                result = result || (m[i][j] != m[i][j]);
+            }
+        }
+        return result;
+    }
+
+    template <typename T>
+    [[nodiscard]] inline constexpr
+    bool HasNaN(const Matrix3T<T>& m) noexcept
+    {
+        constexpr size_t dim = 3;
+        bool result;
+        for (size_t i = 0; i < dim; ++i)
+        {
+            for (size_t j = 0; j < dim; ++j)
+            {
+                result = result || (m[i][j] != m[i][j]);
+            }
+        }
+        return result;
+    }
+
+    template <typename T>
+    [[nodiscard]] inline constexpr
+    bool HasNaN(const Matrix4T<T>& m) noexcept
+    {
+        constexpr size_t dim = 4;
+        bool result;
+        for (size_t i = 0; i < dim; ++i)
+        {
+            for (size_t j = 0; j < dim; ++j)
+            {
+                result = result || (m[i][j] != m[i][j]);
+            }
+        }
+        return result;
+    }
+
     // Transpose
 
     template <typename T>
@@ -683,7 +733,7 @@ namespace cc
         // this repository: https://github.com/willnode/N-Matrix-Programmer
         // It is licensed by the original author under the MIT license.
         // Copyright (c) 2017 Wildan Mubarok
-        
+
         T A2323 = m[2][2] * m[3][3] - m[2][3] * m[3][2];
         T A1323 = m[2][1] * m[3][3] - m[2][3] * m[3][1];
         T A1223 = m[2][1] * m[3][2] - m[2][2] * m[3][1];

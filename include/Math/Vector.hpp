@@ -30,8 +30,8 @@ namespace cc
         constexpr explicit Vector2T(T val)      noexcept : x(val ), y(val ) {}
         constexpr          Vector2T(T xv, T yv) noexcept : x(xv  ), y(yv  ) {}
 
-        constexpr       T& operator[] (int idx)       noexcept { reinterpret_cast<T *>(this)[idx]; }
-        constexpr const T& operator[] (int idx) const noexcept { reinterpret_cast<T *>(this)[idx]; }
+        constexpr       T& operator[] (size_t idx)       noexcept { return reinterpret_cast<      T *>(this)[idx]; }
+        constexpr const T& operator[] (size_t idx) const noexcept { return reinterpret_cast<const T *>(this)[idx]; }
 
         constexpr T LenSqr() const noexcept { return x * x + y * y; }
         constexpr T Length() const noexcept { return std::sqrt(LenSqr()); }
@@ -53,8 +53,8 @@ namespace cc
         constexpr explicit Vector3T(const Vector2T<T>& u)       noexcept : x(u.x ), y(u.y ), z(T(0)) {}
         constexpr explicit Vector3T(const Vector2T<T>& u, T zv) noexcept : x(u.x ), y(u.y ), z(zv  ) {}
 
-        constexpr       T& operator[] (int idx)       noexcept { reinterpret_cast<T *>(this)[idx]; }
-        constexpr const T& operator[] (int idx) const noexcept { reinterpret_cast<T *>(this)[idx]; }
+        constexpr       T& operator[] (size_t idx)       noexcept { return reinterpret_cast<      T *>(this)[idx]; }
+        constexpr const T& operator[] (size_t idx) const noexcept { return reinterpret_cast<const T *>(this)[idx]; }
 
         constexpr T LenSqr() const noexcept { return x * x + y * y + z * z; }
         constexpr T Length() const noexcept { return std::sqrt(LenSqr()); }
@@ -79,8 +79,8 @@ namespace cc
         constexpr explicit Vector4T(const Vector3T<T>& u)             noexcept : x(u.x ), y(u.y ), z(u.z ), w(T(0)) {}
         constexpr explicit Vector4T(const Vector3T<T>& u, T wv)       noexcept : x(u.x ), y(u.y ), z(u.z ), w(wv  ) {}
 
-        constexpr       T& operator[] (int idx)       noexcept { reinterpret_cast<T *>(this)[idx]; }
-        constexpr const T& operator[] (int idx) const noexcept { reinterpret_cast<T *>(this)[idx]; }
+        constexpr       T& operator[] (size_t idx)       noexcept { return reinterpret_cast<      T *>(this)[idx]; }
+        constexpr const T& operator[] (size_t idx) const noexcept { return reinterpret_cast<const T *>(this)[idx]; }
 
         constexpr T LenSqr() const noexcept { return x * x + y * y + z * z + w * w; }
         constexpr T Length() const noexcept { return std::sqrt(LenSqr()); }

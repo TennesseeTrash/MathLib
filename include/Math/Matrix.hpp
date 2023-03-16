@@ -42,12 +42,12 @@ namespace cc
         constexpr explicit Matrix2T(T m00, T m01,
                                     T m10, T m11)
         noexcept
-            : rows({ {m00, m01},
-                     {m10, m11} })
+            : rows({{ {m00, m01},
+                      {m10, m11} }})
         {}
 
-        constexpr       Vector2T<T>& operator[] (int32_t index)       { return rows[index]; }
-        constexpr const Vector2T<T>& operator[] (int32_t index) const { return rows[index]; }
+        constexpr       Vector2T<T>& operator[] (size_t index)       { return rows[index]; }
+        constexpr const Vector2T<T>& operator[] (size_t index) const { return rows[index]; }
     private:
         std::array<Vector2T<T>, 2> rows;
     };
@@ -79,13 +79,13 @@ namespace cc
                                     T m10, T m11, T m12,
                                     T m20, T m21, T m22)
         noexcept
-            : rows({ {m00, m01, m02},
-                     {m10, m11, m12},
-                     {m20, m21, m22} })
+            : rows({{ {m00, m01, m02},
+                      {m10, m11, m12},
+                      {m20, m21, m22} }})
         {}
 
-        constexpr       Vector3T<T>& operator[] (int32_t index)       { return rows[index]; }
-        constexpr const Vector3T<T>& operator[] (int32_t index) const { return rows[index]; }
+        constexpr       Vector3T<T>& operator[] (size_t index)       { return rows[index]; }
+        constexpr const Vector3T<T>& operator[] (size_t index) const { return rows[index]; }
     private:
         std::array<Vector3T<T>, 3> rows;
     };
@@ -120,14 +120,14 @@ namespace cc
                                     T m20, T m21, T m22, T m23,
                                     T m30, T m31, T m32, T m33)
         noexcept
-            : rows({ {m00, m01, m02, m03},
-                     {m10, m11, m12, m13},
-                     {m20, m21, m22, m23},
-                     {m30, m31, m32, m33} })
+            : rows({{ {m00, m01, m02, m03},
+                      {m10, m11, m12, m13},
+                      {m20, m21, m22, m23},
+                      {m30, m31, m32, m33} }})
         {}
 
-        constexpr       Vector4T<T>& operator[] (int32_t index)       { return rows[index]; }
-        constexpr const Vector4T<T>& operator[] (int32_t index) const { return rows[index]; }
+        constexpr       Vector4T<T>& operator[] (size_t index)       { return rows[index]; }
+        constexpr const Vector4T<T>& operator[] (size_t index) const { return rows[index]; }
     private:
         std::array<Vector4T<T>, 4> rows;
     };
@@ -154,11 +154,11 @@ namespace cc
     [[nodiscard]] inline constexpr
     Matrix2T<T> operator+ (const Matrix2T<T>& a, const Matrix2T<T>& b) noexcept
     {
-        constexpr int32_t dim = 2;
+        constexpr size_t dim = 2;
         Matrix2T<T> c;
-        for (int32_t i = 0; i < dim; ++i)
+        for (size_t i = 0; i < dim; ++i)
         {
-            for (int32_t j = 0; j < dim; ++i)
+            for (size_t j = 0; j < dim; ++j)
             {
                 c[i][j] = a[i][j] + b[i][j];
             }
@@ -170,11 +170,11 @@ namespace cc
     [[nodiscard]] inline constexpr
     Matrix3T<T> operator+ (const Matrix3T<T>& a, const Matrix3T<T>& b) noexcept
     {
-        constexpr int32_t dim = 3;
+        constexpr size_t dim = 3;
         Matrix3T<T> c;
-        for (int32_t i = 0; i < dim; ++i)
+        for (size_t i = 0; i < dim; ++i)
         {
-            for (int32_t j = 0; j < dim; ++i)
+            for (size_t j = 0; j < dim; ++j)
             {
                 c[i][j] = a[i][j] + b[i][j];
             }
@@ -186,11 +186,11 @@ namespace cc
     [[nodiscard]] inline constexpr
     Matrix4T<T> operator+ (const Matrix4T<T>& a, const Matrix4T<T>& b) noexcept
     {
-        constexpr int32_t dim = 4;
+        constexpr size_t dim = 4;
         Matrix4T<T> c;
-        for (int32_t i = 0; i < dim; ++i)
+        for (size_t i = 0; i < dim; ++i)
         {
-            for (int32_t j = 0; j < dim; ++i)
+            for (size_t j = 0; j < dim; ++j)
             {
                 c[i][j] = a[i][j] + b[i][j];
             }
@@ -202,11 +202,11 @@ namespace cc
     [[nodiscard]] inline constexpr
     Matrix2T<T> operator- (const Matrix2T<T>& a, const Matrix2T<T>& b) noexcept
     {
-        constexpr int32_t dim = 2;
+        constexpr size_t dim = 2;
         Matrix2T<T> c;
-        for (int32_t i = 0; i < dim; ++i)
+        for (size_t i = 0; i < dim; ++i)
         {
-            for (int32_t j = 0; j < dim; ++i)
+            for (size_t j = 0; j < dim; ++j)
             {
                 c[i][j] = a[i][j] - b[i][j];
             }
@@ -218,11 +218,11 @@ namespace cc
     [[nodiscard]] inline constexpr
     Matrix3T<T> operator- (const Matrix3T<T>& a, const Matrix3T<T>& b) noexcept
     {
-        constexpr int32_t dim = 3;
+        constexpr size_t dim = 3;
         Matrix3T<T> c;
-        for (int32_t i = 0; i < dim; ++i)
+        for (size_t i = 0; i < dim; ++i)
         {
-            for (int32_t j = 0; j < dim; ++i)
+            for (size_t j = 0; j < dim; ++j)
             {
                 c[i][j] = a[i][j] - b[i][j];
             }
@@ -234,11 +234,11 @@ namespace cc
     [[nodiscard]] inline constexpr
     Matrix4T<T> operator- (const Matrix4T<T>& a, const Matrix4T<T>& b) noexcept
     {
-        constexpr int32_t dim = 4;
+        constexpr size_t dim = 4;
         Matrix4T<T> c;
-        for (int32_t i = 0; i < dim; ++i)
+        for (size_t i = 0; i < dim; ++i)
         {
-            for (int32_t j = 0; j < dim; ++i)
+            for (size_t j = 0; j < dim; ++j)
             {
                 c[i][j] = a[i][j] - b[i][j];
             }
@@ -250,13 +250,13 @@ namespace cc
     [[nodiscard]] inline constexpr
     Matrix2T<T> operator* (const Matrix2T<T>& a, const Matrix2T<T>& b) noexcept
     {
-        constexpr int32_t dim = 2;
+        constexpr size_t dim = 2;
         Matrix2T<T> c;
-        for (int32_t i = 0; i < dim; ++i)
+        for (size_t i = 0; i < dim; ++i)
         {
-            for (int32_t j = 0; j < dim; ++i)
+            for (size_t j = 0; j < dim; ++j)
             {
-                for (int32_t k = 0; k < dim; ++k)
+                for (size_t k = 0; k < dim; ++k)
                 {
                     c[i][j] += a[i][k] * b[k][j];
                 }
@@ -269,13 +269,13 @@ namespace cc
     [[nodiscard]] inline constexpr
     Matrix3T<T> operator* (const Matrix3T<T>& a, const Matrix3T<T>& b) noexcept
     {
-        constexpr int32_t dim = 3;
+        constexpr size_t dim = 3;
         Matrix3T<T> c;
-        for (int32_t i = 0; i < dim; ++i)
+        for (size_t i = 0; i < dim; ++i)
         {
-            for (int32_t j = 0; j < dim; ++i)
+            for (size_t j = 0; j < dim; ++j)
             {
-                for (int32_t k = 0; k < dim; ++k)
+                for (size_t k = 0; k < dim; ++k)
                 {
                     c[i][j] += a[i][k] * b[k][j];
                 }
@@ -288,13 +288,13 @@ namespace cc
     [[nodiscard]] inline constexpr
     Matrix4T<T> operator* (const Matrix4T<T>& a, const Matrix4T<T>& b) noexcept
     {
-        constexpr int32_t dim = 4;
+        constexpr size_t dim = 4;
         Matrix4T<T> c;
-        for (int32_t i = 0; i < dim; ++i)
+        for (size_t i = 0; i < dim; ++i)
         {
-            for (int32_t j = 0; j < dim; ++i)
+            for (size_t j = 0; j < dim; ++j)
             {
-                for (int32_t k = 0; k < dim; ++k)
+                for (size_t k = 0; k < dim; ++k)
                 {
                     c[i][j] += a[i][k] * b[k][j];
                 }
@@ -310,11 +310,11 @@ namespace cc
     [[nodiscard]] inline constexpr
     Matrix2T<T> operator* (const Matrix2T<T>& m, T s) noexcept
     {
-        constexpr int32_t dim = 2;
+        constexpr size_t dim = 2;
         Matrix2T<T> scaled = m;
-        for (int32_t i = 0; i < dim; ++i)
+        for (size_t i = 0; i < dim; ++i)
         {
-            for (int32_t j = 0; j < dim; ++j)
+            for (size_t j = 0; j < dim; ++j)
             {
                 scaled[i][j] *= s;
             }
@@ -326,11 +326,11 @@ namespace cc
     [[nodiscard]] inline constexpr
     Matrix3T<T> operator* (const Matrix3T<T>& m, T s) noexcept
     {
-        constexpr int32_t dim = 3;
+        constexpr size_t dim = 3;
         Matrix3T<T> scaled = m;
-        for (int32_t i = 0; i < dim; ++i)
+        for (size_t i = 0; i < dim; ++i)
         {
-            for (int32_t j = 0; j < dim; ++j)
+            for (size_t j = 0; j < dim; ++j)
             {
                 scaled[i][j] *= s;
             }
@@ -342,11 +342,11 @@ namespace cc
     [[nodiscard]] inline constexpr
     Matrix4T<T> operator* (const Matrix4T<T>& m, T s) noexcept
     {
-        constexpr int32_t dim = 4;
+        constexpr size_t dim = 4;
         Matrix4T<T> scaled = m;
-        for (int32_t i = 0; i < dim; ++i)
+        for (size_t i = 0; i < dim; ++i)
         {
-            for (int32_t j = 0; j < dim; ++j)
+            for (size_t j = 0; j < dim; ++j)
             {
                 scaled[i][j] *= s;
             }
@@ -358,11 +358,11 @@ namespace cc
     [[nodiscard]] inline constexpr
     Matrix2T<T> operator* (T s, const Matrix2T<T>& m) noexcept
     {
-        constexpr int32_t dim = 2;
+        constexpr size_t dim = 2;
         Matrix2T<T> scaled = m;
-        for (int32_t i = 0; i < dim; ++i)
+        for (size_t i = 0; i < dim; ++i)
         {
-            for (int32_t j = 0; j < dim; ++j)
+            for (size_t j = 0; j < dim; ++j)
             {
                 scaled[i][j] *= s;
             }
@@ -374,11 +374,11 @@ namespace cc
     [[nodiscard]] inline constexpr
     Matrix3T<T> operator* (T s, const Matrix3T<T>& m) noexcept
     {
-        constexpr int32_t dim = 3;
+        constexpr size_t dim = 3;
         Matrix3T<T> scaled = m;
-        for (int32_t i = 0; i < dim; ++i)
+        for (size_t i = 0; i < dim; ++i)
         {
-            for (int32_t j = 0; j < dim; ++j)
+            for (size_t j = 0; j < dim; ++j)
             {
                 scaled[i][j] *= s;
             }
@@ -390,11 +390,11 @@ namespace cc
     [[nodiscard]] inline constexpr
     Matrix4T<T> operator* (T s, const Matrix4T<T>& m) noexcept
     {
-        constexpr int32_t dim = 4;
+        constexpr size_t dim = 4;
         Matrix4T<T> scaled = m;
-        for (int32_t i = 0; i < dim; ++i)
+        for (size_t i = 0; i < dim; ++i)
         {
-            for (int32_t j = 0; j < dim; ++j)
+            for (size_t j = 0; j < dim; ++j)
             {
                 scaled[i][j] *= s;
             }
@@ -408,9 +408,9 @@ namespace cc
     [[nodiscard]] inline constexpr
     Vector2T<T> operator* (const Matrix2T<T>& m, Vector2T<T>& u) noexcept
     {
-        constexpr int32_t dim = 2;
+        constexpr size_t dim = 2;
         Vector2T<T> mult;
-        for (int32_t i = 0; i < dim; ++i)
+        for (size_t i = 0; i < dim; ++i)
         {
             mult[i] = Dot(m[i], u);
         }
@@ -421,9 +421,9 @@ namespace cc
     [[nodiscard]] inline constexpr
     Vector3T<T> operator* (const Matrix3T<T>& m, Vector3T<T>& u) noexcept
     {
-        constexpr int32_t dim = 3;
+        constexpr size_t dim = 3;
         Vector3T<T> mult;
-        for (int32_t i = 0; i < dim; ++i)
+        for (size_t i = 0; i < dim; ++i)
         {
             mult[i] = Dot(m[i], u);
         }
@@ -434,9 +434,9 @@ namespace cc
     [[nodiscard]] inline constexpr
     Vector4T<T> operator* (const Matrix4T<T>& m, Vector4T<T>& u) noexcept
     {
-        constexpr int32_t dim = 4;
+        constexpr size_t dim = 4;
         Vector4T<T> mult;
-        for (int32_t i = 0; i < dim; ++i)
+        for (size_t i = 0; i < dim; ++i)
         {
             mult[i] = Dot(m[i], u);
         }
@@ -447,11 +447,11 @@ namespace cc
     [[nodiscard]] inline constexpr
     Vector2T<T> operator* (Vector2T<T>& u, const Matrix2T<T>& m) noexcept
     {
-        constexpr int32_t dim = 2;
+        constexpr size_t dim = 2;
         Vector2T<T> mult;
-        for (int32_t i = 0; i < dim; ++i)
+        for (size_t i = 0; i < dim; ++i)
         {
-            for (int32_t j = 0; j < dim; ++j)
+            for (size_t j = 0; j < dim; ++j)
             {
                 mult[i] += u[j] * m[j][i];
             }
@@ -463,11 +463,11 @@ namespace cc
     [[nodiscard]] inline constexpr
     Vector3T<T> operator* (Vector3T<T>& u, const Matrix3T<T>& m) noexcept
     {
-        constexpr int32_t dim = 3;
+        constexpr size_t dim = 3;
         Vector3T<T> mult;
-        for (int32_t i = 0; i < dim; ++i)
+        for (size_t i = 0; i < dim; ++i)
         {
-            for (int32_t j = 0; j < dim; ++j)
+            for (size_t j = 0; j < dim; ++j)
             {
                 mult[i] += u[j] * m[j][i];
             }
@@ -479,11 +479,11 @@ namespace cc
     [[nodiscard]] inline constexpr
     Vector4T<T> operator* (Vector4T<T>& u, const Matrix4T<T>& m) noexcept
     {
-        constexpr int32_t dim = 4;
+        constexpr size_t dim = 4;
         Vector4T<T> mult;
-        for (int32_t i = 0; i < dim; ++i)
+        for (size_t i = 0; i < dim; ++i)
         {
-            for (int32_t j = 0; j < dim; ++j)
+            for (size_t j = 0; j < dim; ++j)
             {
                 mult[i] += u[j] * m[j][i];
             }

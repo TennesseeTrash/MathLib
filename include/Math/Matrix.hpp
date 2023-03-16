@@ -592,21 +592,86 @@ namespace cc
     [[nodiscard]] inline constexpr
     Matrix2T<T> Invert(const Matrix2T<T>& m) noexcept
     {
-
+        Matrix2T<T> result = m;
+        result[0][0] =  m[1][1];
+        result[0][1] = -m[0][1];
+        result[1][0] = -m[1][0];
+        result[1][1] =  m[0][0];
+        result = result * (T(1) / Determinant(m));
+        return result;
     }
 
     template <typename T>
     [[nodiscard]] inline constexpr
     Matrix3T<T> Invert(const Matrix3T<T>& m) noexcept
     {
-
+        Matrix3T<T> result;
+        result[0][0] = (m[1][1] * m[2][2] - m[2][1] * m[1][2]);
+        result[0][1] = (m[0][2] * m[2][1] - m[0][1] * m[2][2]);
+        result[0][2] = (m[0][1] * m[1][2] - m[0][2] * m[1][1]);
+        result[1][0] = (m[1][2] * m[2][0] - m[1][0] * m[2][2]);
+        result[1][1] = (m[0][0] * m[2][2] - m[0][2] * m[2][0]);
+        result[1][2] = (m[1][0] * m[0][2] - m[0][0] * m[1][2]);
+        result[2][0] = (m[1][0] * m[2][1] - m[2][0] * m[1][1]);
+        result[2][1] = (m[2][0] * m[0][1] - m[0][0] * m[2][1]);
+        result[2][2] = (m[0][0] * m[1][1] - m[1][0] * m[0][1]);
+        result = result * (T(1) / Determinant(m));
+        return result;
     }
 
     template <typename T>
     [[nodiscard]] inline constexpr
     Matrix4T<T> Invert(const Matrix4T<T>& m) noexcept
     {
+        // The content of this function was originally taken from
+        // this repository: https://github.com/willnode/N-Matrix-Programmer
+        // It is licensed by the original author under the MIT license.
+        // Copyright (c) 2017 Wildan Mubarok
+        
+        T A2323 = m[2][2] * m[3][3] - m[2][3] * m[3][2];
+        T A1323 = m[2][1] * m[3][3] - m[2][3] * m[3][1];
+        T A1223 = m[2][1] * m[3][2] - m[2][2] * m[3][1];
+        T A0323 = m[2][0] * m[3][3] - m[2][3] * m[3][0];
+        T A0223 = m[2][0] * m[3][2] - m[2][2] * m[3][0];
+        T A0123 = m[2][0] * m[3][1] - m[2][1] * m[3][0];
+        T A2313 = m[1][2] * m[3][3] - m[1][3] * m[3][2];
+        T A1313 = m[1][1] * m[3][3] - m[1][3] * m[3][1];
+        T A1213 = m[1][1] * m[3][2] - m[1][2] * m[3][1];
+        T A2312 = m[1][2] * m[2][3] - m[1][3] * m[2][2];
+        T A1312 = m[1][1] * m[2][3] - m[1][3] * m[2][1];
+        T A1212 = m[1][1] * m[2][2] - m[1][2] * m[2][1];
+        T A0313 = m[1][0] * m[3][3] - m[1][3] * m[3][0];
+        T A0213 = m[1][0] * m[3][2] - m[1][2] * m[3][0];
+        T A0312 = m[1][0] * m[2][3] - m[1][3] * m[2][0];
+        T A0212 = m[1][0] * m[2][2] - m[1][2] * m[2][0];
+        T A0113 = m[1][0] * m[3][1] - m[1][1] * m[3][0];
+        T A0112 = m[1][0] * m[2][1] - m[1][1] * m[2][0];
 
+        T det = m[0][0] * (m[1][1] * A2323 - m[1][2] * A1323 + m[1][3] * A1223)
+	          - m[0][1] * (m[1][0] * A2323 - m[1][2] * A0323 + m[1][3] * A0223)
+	          + m[0][2] * (m[1][0] * A1323 - m[1][1] * A0323 + m[1][3] * A0123)
+	          - m[0][3] * (m[1][0] * A1223 - m[1][1] * A0223 + m[1][2] * A0123);
+
+        Matrix4T<T> result;
+        result[0][0] =  (m[1][1] * A2323 - m[1][2] * A1323 + m[1][3] * A1223);
+        result[0][1] = -(m[0][1] * A2323 - m[0][2] * A1323 + m[0][3] * A1223);
+        result[0][2] =  (m[0][1] * A2313 - m[0][2] * A1313 + m[0][3] * A1213);
+        result[0][3] = -(m[0][1] * A2312 - m[0][2] * A1312 + m[0][3] * A1212);
+        result[1][0] = -(m[1][0] * A2323 - m[1][2] * A0323 + m[1][3] * A0223);
+        result[1][1] =  (m[0][0] * A2323 - m[0][2] * A0323 + m[0][3] * A0223);
+        result[1][2] = -(m[0][0] * A2313 - m[0][2] * A0313 + m[0][3] * A0213);
+        result[1][3] =  (m[0][0] * A2312 - m[0][2] * A0312 + m[0][3] * A0212);
+        result[2][0] =  (m[1][0] * A1323 - m[1][1] * A0323 + m[1][3] * A0123);
+        result[2][1] = -(m[0][0] * A1323 - m[0][1] * A0323 + m[0][3] * A0123);
+        result[2][2] =  (m[0][0] * A1313 - m[0][1] * A0313 + m[0][3] * A0113);
+        result[2][3] = -(m[0][0] * A1312 - m[0][1] * A0312 + m[0][3] * A0112);
+        result[3][0] = -(m[1][0] * A1223 - m[1][1] * A0223 + m[1][2] * A0123);
+        result[3][1] =  (m[0][0] * A1223 - m[0][1] * A0223 + m[0][2] * A0123);
+        result[3][2] = -(m[0][0] * A1213 - m[0][1] * A0213 + m[0][2] * A0113);
+        result[3][3] =  (m[0][0] * A1212 - m[0][1] * A0212 + m[0][2] * A0112);
+
+        result = result * (T(1) / det);
+        return result;
     }
 }
 

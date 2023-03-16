@@ -501,34 +501,34 @@ namespace cc
     [[nodiscard]] inline constexpr
     Matrix2T<T> Transpose(const Matrix2T<T>& m) noexcept
     {
-        Matrix2T<T> tpose = m;
-        std::swap(tpose[1][0], tpose[0][1]);
-        return tpose;
+        Matrix2T<T> result = m;
+        std::swap(result[1][0], result[0][1]);
+        return result;
     }
 
     template <typename T>
     [[nodiscard]] inline constexpr
     Matrix3T<T> Transpose(const Matrix3T<T>& m) noexcept
     {
-        Matrix3T<T> tpose = m;
-        std::swap(tpose[1][0], tpose[0][1]);
-		std::swap(tpose[2][0], tpose[0][2]);
-		std::swap(tpose[2][1], tpose[1][2]);
-		return tpose;
+        Matrix3T<T> result = m;
+        std::swap(result[1][0], result[0][1]);
+		std::swap(result[2][0], result[0][2]);
+		std::swap(result[2][1], result[1][2]);
+		return result;
     }
 
     template <typename T>
     [[nodiscard]] inline constexpr
     Matrix4T<T> Transpose(const Matrix4T<T>& m) noexcept
     {
-        Matrix4T<T> tpose = m;
-        std::swap(tpose[1][0], tpose[0][1]);
-		std::swap(tpose[2][0], tpose[0][2]);
-		std::swap(tpose[2][1], tpose[1][2]);
-		std::swap(tpose[3][0], tpose[0][3]);
-		std::swap(tpose[3][1], tpose[1][3]);
-		std::swap(tpose[3][2], tpose[2][3]);
-        return tpose;
+        Matrix4T<T> result = m;
+        std::swap(result[1][0], result[0][1]);
+		std::swap(result[2][0], result[0][2]);
+		std::swap(result[2][1], result[1][2]);
+		std::swap(result[3][0], result[0][3]);
+		std::swap(result[3][1], result[1][3]);
+		std::swap(result[3][2], result[2][3]);
+        return result;
     }
 
     // Determinants

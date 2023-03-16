@@ -27,8 +27,8 @@ namespace cc
         T y = T(0);
 
         constexpr          Vector2T()           noexcept : x(T(0)), y(T(0)) {}
-        constexpr explicit Vector2T(T val)      noexcept : x(val),  y(val)  {}
-        constexpr          Vector2T(T xv, T yv) noexcept : x(xv),   y(yv)   {}
+        constexpr explicit Vector2T(T val)      noexcept : x(val ), y(val ) {}
+        constexpr          Vector2T(T xv, T yv) noexcept : x(xv  ), y(yv  ) {}
 
         constexpr       T& operator[] (int idx)       noexcept { reinterpret_cast<T *>(this)[idx]; }
         constexpr const T& operator[] (int idx) const noexcept { reinterpret_cast<T *>(this)[idx]; }
@@ -48,10 +48,10 @@ namespace cc
         T z = T(0);
 
         constexpr          Vector3T()                           noexcept : x(T(0)), y(T(0)), z(T(0)) {}
-        constexpr explicit Vector3T(T val)                      noexcept : x(val),  y(val),  z(val)  {}
-        constexpr          Vector3T(T xv, T yv, T zv)           noexcept : x(xv),   y(yv),   z(zv)   {}
-        constexpr explicit Vector3T(const Vector2T<T>& u)       noexcept : x(u.x),  y(u.y),  z(T(0)) {}
-        constexpr explicit Vector3T(const Vector2T<T>& u, T zv) noexcept : x(u.x),  y(u.y),  z(zv)   {}
+        constexpr explicit Vector3T(T val)                      noexcept : x(val ), y(val ), z(val ) {}
+        constexpr          Vector3T(T xv, T yv, T zv)           noexcept : x(xv  ), y(yv  ), z(zv  ) {}
+        constexpr explicit Vector3T(const Vector2T<T>& u)       noexcept : x(u.x ), y(u.y ), z(T(0)) {}
+        constexpr explicit Vector3T(const Vector2T<T>& u, T zv) noexcept : x(u.x ), y(u.y ), z(zv  ) {}
 
         constexpr       T& operator[] (int idx)       noexcept { reinterpret_cast<T *>(this)[idx]; }
         constexpr const T& operator[] (int idx) const noexcept { reinterpret_cast<T *>(this)[idx]; }
@@ -72,12 +72,12 @@ namespace cc
         T w = T(0);
 
         constexpr          Vector4T()                                 noexcept : x(T(0)), y(T(0)), z(T(0)), w(T(0)) {}
-        constexpr explicit Vector4T(T val)                            noexcept : x(val),  y(val),  z(val),  w(val)  {}
-        constexpr          Vector4T(T xv, T yv, T zv, T wv)           noexcept : x(xv),   y(yv),   z(zv),   w(wv)   {}
-        constexpr explicit Vector4T(const Vector2T<T>& u)             noexcept : x(u.x),  y(u.y),  z(T(0)), w(T(0)) {}
-        constexpr explicit Vector4T(const Vector2T<T>& u, T zv, T wv) noexcept : x(u.x),  y(u.y),  z(zv),   w(wv)   {}
-        constexpr explicit Vector4T(const Vector3T<T>& u)             noexcept : x(u.x),  y(u.y),  z(u.z),  w(T(0)) {}
-        constexpr explicit Vector4T(const Vector3T<T>& u, T wv)       noexcept : x(u.x),  y(u.y),  z(u.z),  w(wv)   {}
+        constexpr explicit Vector4T(T val)                            noexcept : x(val ), y(val ), z(val ), w(val ) {}
+        constexpr          Vector4T(T xv, T yv, T zv, T wv)           noexcept : x(xv  ), y(yv  ), z(zv  ), w(wv  ) {}
+        constexpr explicit Vector4T(const Vector2T<T>& u)             noexcept : x(u.x ), y(u.y ), z(T(0)), w(T(0)) {}
+        constexpr explicit Vector4T(const Vector2T<T>& u, T zv, T wv) noexcept : x(u.x ), y(u.y ), z(zv  ), w(wv  ) {}
+        constexpr explicit Vector4T(const Vector3T<T>& u)             noexcept : x(u.x ), y(u.y ), z(u.z ), w(T(0)) {}
+        constexpr explicit Vector4T(const Vector3T<T>& u, T wv)       noexcept : x(u.x ), y(u.y ), z(u.z ), w(wv  ) {}
 
         constexpr       T& operator[] (int idx)       noexcept { reinterpret_cast<T *>(this)[idx]; }
         constexpr const T& operator[] (int idx) const noexcept { reinterpret_cast<T *>(this)[idx]; }

@@ -407,7 +407,7 @@ namespace cc
 
     template <typename T>
     [[nodiscard]] inline constexpr
-    Vector2T<T> operator* (const Matrix2T<T>& m, Vector2T<T>& u) noexcept
+    Vector2T<T> operator* (const Matrix2T<T>& m, const Vector2T<T>& u) noexcept
     {
         constexpr size_t dim = 2;
         Vector2T<T> mult;
@@ -420,7 +420,7 @@ namespace cc
 
     template <typename T>
     [[nodiscard]] inline constexpr
-    Vector3T<T> operator* (const Matrix3T<T>& m, Vector3T<T>& u) noexcept
+    Vector3T<T> operator* (const Matrix3T<T>& m, const Vector3T<T>& u) noexcept
     {
         constexpr size_t dim = 3;
         Vector3T<T> mult;
@@ -433,7 +433,7 @@ namespace cc
 
     template <typename T>
     [[nodiscard]] inline constexpr
-    Vector4T<T> operator* (const Matrix4T<T>& m, Vector4T<T>& u) noexcept
+    Vector4T<T> operator* (const Matrix4T<T>& m, const Vector4T<T>& u) noexcept
     {
         constexpr size_t dim = 4;
         Vector4T<T> mult;

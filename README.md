@@ -25,6 +25,7 @@ features on this list are important for this library to be of proper use.
 - [ ] Tests (basic interface tests, fuzz tests)
 - [ ] Basic transforms (Rotate, Translate, Scale)
 - [ ] Camera transforms (Perspective, Orthographic projection)
+- [x] Coordinate frames
 - [x] Vector types
 - [x] Matrix types
 - [x] Useful constants

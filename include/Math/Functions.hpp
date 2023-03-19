@@ -83,7 +83,7 @@ namespace cc
 
     template <typename T>
     [[nodiscard]] inline constexpr
-    bool Equal(T val1, T val2, T epsilon = T(0.000001)) noexcept
+    bool Equal(T val1, T val2, T epsilon = Constants::FloatEps<T>) noexcept
     {
         return Abs(val1 - val2) < epsilon;
     }

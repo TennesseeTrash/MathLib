@@ -651,7 +651,7 @@ namespace cc
 
     template <typename T>
     [[nodiscard]] inline constexpr
-    bool Equal(const Vector2T<T>& u, const Vector2T<T>& v, T epsilon = T(0.000001)) noexcept
+    bool Equal(const Vector2T<T>& u, const Vector2T<T>& v, T epsilon = Constants::FloatEps<T>) noexcept
     {
         return Equal(u.x, v.x, epsilon)
             && Equal(u.y, v.y, epsilon);
@@ -659,7 +659,7 @@ namespace cc
 
     template <typename T>
     [[nodiscard]] inline constexpr
-    bool Equal(const Vector3T<T>& u, const Vector3T<T>& v, T epsilon = T(0.000001)) noexcept
+    bool Equal(const Vector3T<T>& u, const Vector3T<T>& v, T epsilon = Constants::FloatEps<T>) noexcept
     {
         return Equal(u.x, v.x, epsilon)
             && Equal(u.y, v.y, epsilon)
@@ -668,7 +668,7 @@ namespace cc
 
     template <typename T>
     [[nodiscard]] inline constexpr
-    bool Equal(const Vector4T<T>& u, const Vector4T<T>& v, T epsilon = T(0.000001)) noexcept
+    bool Equal(const Vector4T<T>& u, const Vector4T<T>& v, T epsilon = Constants::FloatEps<T>) noexcept
     {
         return Equal(u.x, v.x, epsilon)
             && Equal(u.y, v.y, epsilon)
@@ -680,21 +680,21 @@ namespace cc
 
     template <typename T>
     [[nodiscard]] inline constexpr
-    bool HasNaN(const Vector2T<T>& u)
+    bool HasNaN(const Vector2T<T>& u) noexcept
     {
         return (u.x != u.x) || (u.y != u.y);
     }
 
     template <typename T>
     [[nodiscard]] inline constexpr
-    bool HasNaN(const Vector3T<T>& u)
+    bool HasNaN(const Vector3T<T>& u) noexcept
     {
         return (u.x != u.x) || (u.y != u.y) || (u.z != u.z);
     }
 
     template <typename T>
     [[nodiscard]] inline constexpr
-    bool HasNaN(const Vector4T<T>& u)
+    bool HasNaN(const Vector4T<T>& u) noexcept
     {
         return (u.x != u.x) || (u.y != u.y) || (u.z != u.z) || (u.w != u.w);
     }
@@ -703,7 +703,7 @@ namespace cc
 
     template <typename T>
     [[nodiscard]] inline constexpr
-    Vector2T<T> Normalize(const Vector2T<T>& u)
+    Vector2T<T> Normalize(const Vector2T<T>& u) noexcept
     {
         T len = u.Length();
         return u / len;
@@ -711,7 +711,7 @@ namespace cc
 
     template <typename T>
     [[nodiscard]] inline constexpr
-    Vector3T<T> Normalize(const Vector3T<T>& u)
+    Vector3T<T> Normalize(const Vector3T<T>& u) noexcept
     {
         T len = u.Length();
         return u / len;
@@ -719,7 +719,7 @@ namespace cc
 
     template <typename T>
     [[nodiscard]] inline constexpr
-    Vector4T<T> Normalize(const Vector4T<T>& u)
+    Vector4T<T> Normalize(const Vector4T<T>& u) noexcept
     {
         T len = u.Length();
         return u / len;

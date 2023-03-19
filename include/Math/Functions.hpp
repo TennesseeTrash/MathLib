@@ -1,6 +1,8 @@
 #ifndef _MATH_FUNCTIONS_HPP
 #define _MATH_FUNCTIONS_HPP
 
+#include "Constants.hpp"
+
 namespace cc
 {
     //////////////////////////////////////////////////////////////////////////
@@ -55,6 +57,24 @@ namespace cc
     T Abs(T val) noexcept
     {
         return val > T(0) ? val : -val;
+    }
+
+    //////////////////////////////////////////////////////////////////////////
+    // Angle unit conversion functions
+    //////////////////////////////////////////////////////////////////////////
+
+    template <typename T>
+    [[nodiscard]] inline constexpr
+    T ToRadians(T val) noexcept
+    {
+        return (Constants::Pi<T> * val) / T(180);
+    }
+
+    template <typename T>
+    [[nodiscard]] inline constexpr
+    T ToDegrees(T val) noexcept
+    {
+        return (180 * val) / Constants::Pi<T>;
     }
 
     //////////////////////////////////////////////////////////////////////////

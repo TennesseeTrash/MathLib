@@ -72,7 +72,7 @@ namespace cc::Transform
 
     template <typename T>
     [[nodiscard]] inline constexpr
-    Matrix4T<T> LookAt(const Vector3T<T>& position, const Vector3T<T>& direction, const Vector3T<T>& up)
+    Matrix4T<T> LookAt(const Vector3T<T>& position, const Vector3T<T>& direction, const Vector3T<T>& up) noexcept
     {
         Vector4T<T> w = Vector4T<T>(-Normalize(direction));
         Vector4T<T> u = Vector4T<T>(Normalize(Cross(up, w)));
@@ -83,14 +83,28 @@ namespace cc::Transform
 
     template <typename T>
     [[nodiscard]] inline constexpr
-    Matrix4T<T> PerspectiveProjection(T fov, T aspectRatio, T near, T far)
+    Matrix4T<T> PerspectiveProjection(T fov, T aspectRatio, T near, T far) noexcept
     {
         // TODO
     }
 
     template <typename T>
     [[nodiscard]] inline constexpr
-    Matrix4T<T> OrthographicProjection()
+    Matrix4T<T> OrthographicProjection(T left, T right, T bottom, T top, T near, T far) noexcept
+    {
+        // TODO
+    }
+
+    template <typename T>
+    [[nodiscard]] inline constexpr
+    Matrix4T<T> InifnitePerspectiveProjection(T fov, T aspectRatio, T near)
+    {
+        // TODO
+    }
+
+    template <typename T>
+    [[nodiscard]] inline constexpr
+    Matrix4T<T> InifniteOrthographicProjection(T left, T right, T bottom, T top)
     {
         // TODO
     }

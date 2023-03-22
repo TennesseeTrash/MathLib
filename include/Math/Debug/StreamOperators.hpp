@@ -62,7 +62,7 @@ template <typename T>
 inline
 std::ostream& operator<<(std::ostream& os, const cc::Matrix3T<T>& mat)
 {
-    os << "Matrix2T(\n";
+    os << "Matrix3T(\n";
     for (size_t i = 0; i < 3; ++i)
     {
         os << "    ";
@@ -80,7 +80,7 @@ template <typename T>
 inline
 std::ostream& operator<<(std::ostream& os, const cc::Matrix4T<T>& mat)
 {
-    os << "Matrix2T(\n";
+    os << "Matrix4T(\n";
     for (size_t i = 0; i < 4; ++i)
     {
         os << "    ";

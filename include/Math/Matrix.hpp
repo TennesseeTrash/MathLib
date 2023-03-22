@@ -20,7 +20,7 @@ namespace cc
     //////////////////////////////////////////////////////////////////////////
 
     template <typename T>
-    class Matrix2T
+    class Matrix2T final
     {
     public:
         constexpr explicit Matrix2T() noexcept
@@ -54,7 +54,7 @@ namespace cc
     };
 
     template <typename T>
-    class Matrix3T
+    class Matrix3T final
     {
     public:
         constexpr explicit Matrix3T() noexcept
@@ -92,7 +92,7 @@ namespace cc
     };
 
     template <typename T>
-    class Matrix4T
+    class Matrix4T final
     {
     public:
         constexpr explicit Matrix4T() noexcept

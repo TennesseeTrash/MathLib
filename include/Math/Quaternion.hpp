@@ -1,9 +1,9 @@
-#ifndef _MATH_QUATERNION_HPP
-#define _MATH_QUATERNION_HPP
+#ifndef MATHLIB_QUATERNION_HPP
+#define MATHLIB_QUATERNION_HPP
 
 #include "Matrix.hpp"
 
-namespace cc
+namespace Math
 {
     //////////////////////////////////////////////////////////////////////////
     // Assumptions for correct behavior
@@ -291,4 +291,4 @@ namespace cc
     }
 }
 
-#endif //_MATH_QUATERNION_HPP
+#endif //MATHLIB_QUATERNION_HPP

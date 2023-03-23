@@ -1,9 +1,9 @@
-#ifndef _MATH_FUNCTIONS_HPP
-#define _MATH_FUNCTIONS_HPP
+#ifndef MATHLIB_FUNCTIONS_HPP
+#define MATHLIB_FUNCTIONS_HPP
 
 #include "Constants.hpp"
 
-namespace cc
+namespace Math
 {
     //////////////////////////////////////////////////////////////////////////
     // Square function
@@ -14,6 +14,13 @@ namespace cc
     T Sq(T val) noexcept
     {
         return val * val;
+    }
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    T Cube(T val) noexcept
+    {
+        return val * val * val;
     }
 
     //////////////////////////////////////////////////////////////////////////
@@ -100,4 +107,4 @@ namespace cc
     }
 }
 
-#endif //_MATH_FUNCTIONS_HPP
+#endif //MATHLIB_FUNCTIONS_HPP

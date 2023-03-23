@@ -1,9 +1,9 @@
-#ifndef _MATH_UTILS_COORDINATE_FRAME_HPP
-#define _MATH_UTILS_COORDINATE_FRAME_HPP
+#ifndef MATHLIB_UTILS_COORDINATE_FRAME_HPP
+#define MATHLIB_UTILS_COORDINATE_FRAME_HPP
 
 #include "../Matrix.hpp"
 
-namespace cc
+namespace Math
 {
     class CoordinateFrame
     {
@@ -47,4 +47,4 @@ namespace cc
     };
 }
 
-#endif // _MATH_UTILS_COORDINATE_FRAME_HPP
+#endif // MATHLIB_UTILS_COORDINATE_FRAME_HPP

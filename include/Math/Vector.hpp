@@ -1,5 +1,5 @@
-#ifndef _MATH_VECTOR_HPP
-#define _MATH_VECTOR_HPP
+#ifndef MATHLIB_VECTOR_HPP
+#define MATHLIB_VECTOR_HPP
 
 #include <cstdint>
 #include <cmath>
@@ -7,7 +7,7 @@
 
 #include "Functions.hpp"
 
-namespace cc
+namespace Math
 {
     //////////////////////////////////////////////////////////////////////////
     // Assumptions for correct behavior
@@ -746,4 +746,4 @@ namespace cc
     }
 }
 
-#endif //_MATH_VECTOR_HPP
+#endif //MATHLIB_VECTOR_HPP

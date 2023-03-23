@@ -10,7 +10,7 @@ FetchContent_MakeAvailable(Catch2)
 add_executable(Tests)
 
 target_link_libraries(Tests PRIVATE
-    "math-cpp"
+    MathLib
     Catch2::Catch2WithMain
 )
 

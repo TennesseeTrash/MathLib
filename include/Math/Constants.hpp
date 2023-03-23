@@ -1,7 +1,7 @@
-#ifndef _MATH_CONSTANTS_HPP
-#define _MATH_CONSTANTS_HPP
+#ifndef MATHLIB_CONSTANTS_HPP
+#define MATHLIB_CONSTANTS_HPP
 
-namespace cc
+namespace Math
 {
     namespace Constants
     {
@@ -36,4 +36,4 @@ namespace cc
     }
 }
 
-#endif //_MATH_CONSTANTS_HPP
+#endif //MATHLIB_CONSTANTS_HPP

@@ -1,9 +1,9 @@
-#ifndef _MATH_POINT_HPP
-#define _MATH_POINT_HPP
+#ifndef MATHLIB_POINT_HPP
+#define MATHLIB_POINT_HPP
 
 #include "Vector.hpp"
 
-namespace cc
+namespace Math
 {
     //////////////////////////////////////////////////////////////////////////
     // Basic Definitions
@@ -286,4 +286,4 @@ namespace cc
     }
 }
 
-#endif //_MATH_POINT_HPP
+#endif //MATHLIB_POINT_HPP

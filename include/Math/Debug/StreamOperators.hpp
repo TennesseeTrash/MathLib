@@ -1,16 +1,17 @@
-#ifndef _MATH_DEBUG_PRINT_HPP
-#define _MATH_DEBUG_PRINT_HPP
+#ifndef MATHLIB_DEBUG_PRINT_HPP
+#define MATHLIB_DEBUG_PRINT_HPP
 
 #include <iostream>
 #include <iomanip>
 
 #include "../Vector.hpp"
+#include "../Point.hpp"
 #include "../Matrix.hpp"
 #include "../Quaternion.hpp"
 
 template <typename T>
 inline
-std::ostream& operator<<(std::ostream& os, const cc::Vector2T<T>& vec)
+std::ostream& operator<<(std::ostream& os, const Math::Vector2T<T>& vec)
 {
     os  << "Vector2T("
         << std::setprecision(4) << vec.x << ", "
@@ -20,7 +21,7 @@ std::ostream& operator<<(std::ostream& os, const cc::Vector2T<T>& vec)
 
 template <typename T>
 inline
-std::ostream& operator<<(std::ostream& os, const cc::Vector3T<T>& vec)
+std::ostream& operator<<(std::ostream& os, const Math::Vector3T<T>& vec)
 {
     os  << "Vector3T("
         << std::setprecision(4) << vec.x << ", "
@@ -31,7 +32,7 @@ std::ostream& operator<<(std::ostream& os, const cc::Vector3T<T>& vec)
 
 template <typename T>
 inline
-std::ostream& operator<<(std::ostream& os, const cc::Vector4T<T>& vec)
+std::ostream& operator<<(std::ostream& os, const Math::Vector4T<T>& vec)
 {
     os  << "Vector4T("
         << std::setprecision(4) << vec.x << ", "
@@ -43,7 +44,28 @@ std::ostream& operator<<(std::ostream& os, const cc::Vector4T<T>& vec)
 
 template <typename T>
 inline
-std::ostream& operator<<(std::ostream& os, const cc::Matrix2T<T>& mat)
+std::ostream& operator<<(std::ostream& os, const Math::Point2T<T>& vec)
+{
+    os  << "Point2T("
+        << std::setprecision(4) << vec.x << ", "
+        << std::setprecision(4) << vec.y << ")";
+    return os;
+}
+
+template <typename T>
+inline
+std::ostream& operator<<(std::ostream& os, const Math::Point3T<T>& vec)
+{
+    os  << "Point3T("
+        << std::setprecision(4) << vec.x << ", "
+        << std::setprecision(4) << vec.y << ", "
+        << std::setprecision(4) << vec.z << ")";
+    return os;
+}
+
+template <typename T>
+inline
+std::ostream& operator<<(std::ostream& os, const Math::Matrix2T<T>& mat)
 {
     os << "Matrix2T(\n";
     for (size_t i = 0; i < 2; ++i)
@@ -61,7 +83,7 @@ std::ostream& operator<<(std::ostream& os, const cc::Matrix2T<T>& mat)
 
 template <typename T>
 inline
-std::ostream& operator<<(std::ostream& os, const cc::Matrix3T<T>& mat)
+std::ostream& operator<<(std::ostream& os, const Math::Matrix3T<T>& mat)
 {
     os << "Matrix3T(\n";
     for (size_t i = 0; i < 3; ++i)
@@ -79,7 +101,7 @@ std::ostream& operator<<(std::ostream& os, const cc::Matrix3T<T>& mat)
 
 template <typename T>
 inline
-std::ostream& operator<<(std::ostream& os, const cc::Matrix4T<T>& mat)
+std::ostream& operator<<(std::ostream& os, const Math::Matrix4T<T>& mat)
 {
     os << "Matrix4T(\n";
     for (size_t i = 0; i < 4; ++i)
@@ -97,7 +119,7 @@ std::ostream& operator<<(std::ostream& os, const cc::Matrix4T<T>& mat)
 
 template <typename T>
 inline
-std::ostream& operator<<(std::ostream& os, const cc::QuaternionT<T>& quat)
+std::ostream& operator<<(std::ostream& os, const Math::QuaternionT<T>& quat)
 {
     os  << "QuaternionT("
         << std::setprecision(4) << quat.mV.x << ", "
@@ -107,4 +129,4 @@ std::ostream& operator<<(std::ostream& os, const cc::QuaternionT<T>& quat)
     return os;
 }
 
-#endif // _MATH_DEBUG_PRINT_HPP
+#endif // MATHLIB_DEBUG_PRINT_HPP

@@ -1,5 +1,5 @@
-#ifndef _MATH_MATRIX_HPP
-#define _MATH_MATRIX_HPP
+#ifndef MATHLIB_MATRIX_HPP
+#define MATHLIB_MATRIX_HPP
 
 #include <array>
 #include <limits>
@@ -7,7 +7,7 @@
 #include "Vector.hpp"
 #include "Point.hpp"
 
-namespace cc
+namespace Math
 {
     //////////////////////////////////////////////////////////////////////////
     // Assumptions for correct behavior
@@ -863,4 +863,4 @@ namespace cc
     }
 }
 
-#endif //_MATH_MATRIX_HPP
+#endif //MATHLIB_MATRIX_HPP

@@ -1,9 +1,9 @@
-#ifndef _MATH_UTILS_TRANSFORM_HPP
-#define _MATH_UTILS_TRANSFORM_HPP
+#ifndef MATHLIB_UTILS_TRANSFORM_HPP
+#define MATHLIB_UTILS_TRANSFORM_HPP
 
 #include "../Matrix.hpp"
 
-namespace cc::Transform
+namespace Math::Transform
 {
     template <typename T>
     [[nodiscard]] constexpr
@@ -132,4 +132,4 @@ namespace cc::Transform
     }
 }
 
-#endif //_MATH_UTILS_TRANSFORM_HPP
+#endif //MATHLIB_UTILS_TRANSFORM_HPP

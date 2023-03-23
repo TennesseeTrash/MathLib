@@ -5,6 +5,7 @@
 #include <limits>
 
 #include "Vector.hpp"
+#include "Point.hpp"
 
 namespace cc
 {
@@ -305,7 +306,7 @@ namespace cc
     }
 
 
-    // Matrix-scalar multiplication
+    // Matrix-Scalar multiplication
 
     template <typename T>
     [[nodiscard]] constexpr
@@ -403,19 +404,19 @@ namespace cc
         return scaled;
     }
 
-    // Matrix-vector multiplication
+    // Matrix-Vector multiplication
 
     template <typename T>
     [[nodiscard]] constexpr
     Vector2T<T> operator* (const Matrix2T<T>& m, const Vector2T<T>& u) noexcept
     {
         constexpr size_t dim = 2;
-        Vector2T<T> mult;
+        Vector2T<T> result;
         for (size_t i = 0; i < dim; ++i)
         {
-            mult[i] = Dot(m[i], u);
+            result[i] = Dot(m[i], u);
         }
-        return mult;
+        return result;
     }
 
     template <typename T>
@@ -423,12 +424,12 @@ namespace cc
     Vector3T<T> operator* (const Matrix3T<T>& m, const Vector3T<T>& u) noexcept
     {
         constexpr size_t dim = 3;
-        Vector3T<T> mult;
+        Vector3T<T> result;
         for (size_t i = 0; i < dim; ++i)
         {
-            mult[i] = Dot(m[i], u);
+            result[i] = Dot(m[i], u);
         }
-        return mult;
+        return result;
     }
 
     template <typename T>
@@ -436,12 +437,12 @@ namespace cc
     Vector4T<T> operator* (const Matrix4T<T>& m, const Vector4T<T>& u) noexcept
     {
         constexpr size_t dim = 4;
-        Vector4T<T> mult;
+        Vector4T<T> result;
         for (size_t i = 0; i < dim; ++i)
         {
-            mult[i] = Dot(m[i], u);
+            result[i] = Dot(m[i], u);
         }
-        return mult;
+        return result;
     }
 
     template <typename T>
@@ -449,15 +450,15 @@ namespace cc
     Vector2T<T> operator* (Vector2T<T>& u, const Matrix2T<T>& m) noexcept
     {
         constexpr size_t dim = 2;
-        Vector2T<T> mult;
+        Vector2T<T> result;
         for (size_t i = 0; i < dim; ++i)
         {
             for (size_t j = 0; j < dim; ++j)
             {
-                mult[i] += u[j] * m[j][i];
+                result[i] += u[j] * m[j][i];
             }
         }
-        return mult;
+        return result;
     }
 
     template <typename T>
@@ -465,15 +466,15 @@ namespace cc
     Vector3T<T> operator* (Vector3T<T>& u, const Matrix3T<T>& m) noexcept
     {
         constexpr size_t dim = 3;
-        Vector3T<T> mult;
+        Vector3T<T> result;
         for (size_t i = 0; i < dim; ++i)
         {
             for (size_t j = 0; j < dim; ++j)
             {
-                mult[i] += u[j] * m[j][i];
+                result[i] += u[j] * m[j][i];
             }
         }
-        return mult;
+        return result;
     }
 
     template <typename T>
@@ -481,15 +482,149 @@ namespace cc
     Vector4T<T> operator* (Vector4T<T>& u, const Matrix4T<T>& m) noexcept
     {
         constexpr size_t dim = 4;
-        Vector4T<T> mult;
+        Vector4T<T> result;
         for (size_t i = 0; i < dim; ++i)
         {
             for (size_t j = 0; j < dim; ++j)
             {
-                mult[i] += u[j] * m[j][i];
+                result[i] += u[j] * m[j][i];
             }
         }
-        return mult;
+        return result;
+    }
+
+    // Matrix-Point multiplication
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    Point2T<T> operator* (const Matrix2T<T>& m, const Point2T<T>& p) noexcept
+    {
+        constexpr size_t dim = 2;
+        Point2T<T> result;
+        for (size_t i = 0; i < dim; ++i)
+        {
+            for (size_t j = 0; j < dim; ++j)
+            {
+                result[i] += m[i][j] * p[j];
+            }
+        }
+        return result;
+    }
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    Point2T<T> operator* (const Matrix3T<T>& m, const Point2T<T>& p) noexcept
+    {
+        constexpr size_t dim = 2;
+        Point2T<T> result;
+        for (size_t i = 0; i < dim; ++i)
+        {
+            for (size_t j = 0; j < dim; ++j)
+            {
+                result[i] += m[i][j] * p[j];
+            }
+            result[i] += m[i][dim];
+        }
+        return result;
+    }
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    Point3T<T> operator* (const Matrix3T<T>& m, const Point3T<T>& p) noexcept
+    {
+        constexpr size_t dim = 3;
+        Point2T<T> result;
+        for (size_t i = 0; i < dim; ++i)
+        {
+            for (size_t j = 0; j < dim; ++j)
+            {
+                result[i] += m[i][j] * p[j];
+            }
+        }
+        return result;
+    }
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    Point3T<T> operator* (const Matrix4T<T>& m, const Point3T<T>& p) noexcept
+    {
+        constexpr size_t dim = 3;
+        Point2T<T> result;
+        for (size_t i = 0; i < dim; ++i)
+        {
+            for (size_t j = 0; j < dim; ++j)
+            {
+                result[i] += m[i][j] * p[j];
+            }
+            result[i] += m[i][dim];
+        }
+        return result;
+    }
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    Point2T<T> operator* (const Point2T<T>& p, const Matrix2T<T>& m) noexcept
+    {
+        constexpr size_t dim = 2;
+        Point2T<T> result;
+        for (size_t i = 0; i < dim; ++i)
+        {
+            for (size_t j = 0; j < dim; ++j)
+            {
+                result[i] += p[j] * m[j][i];
+            }
+        }
+        return result;
+    }
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    Point2T<T> operator* (const Point2T<T>& p, const Matrix3T<T>& m) noexcept
+    {
+        constexpr size_t dim = 2;
+        Point2T<T> result;
+        for (size_t i = 0; i < dim; ++i)
+        {
+            for (size_t j = 0; j < dim; ++j)
+            {
+                result[i] += p[j] * m[j][i];
+            }
+            result[i] += m[dim][i];
+        }
+        return result;
+    }
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    Point3T<T> operator* (const Point3T<T>& p, const Matrix3T<T>& m) noexcept
+    {
+        constexpr size_t dim = 3;
+        Point2T<T> result;
+        for (size_t i = 0; i < dim; ++i)
+        {
+            for (size_t j = 0; j < dim; ++j)
+            {
+                result[i] += p[j] * m[j][i];
+            }
+        }
+        return result;
+    }
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    Point3T<T> operator* (const Point3T<T>& p, const Matrix4T<T>& m) noexcept
+    {
+        constexpr size_t dim = 3;
+        Point2T<T> result;
+        for (size_t i = 0; i < dim; ++i)
+        {
+            for (size_t j = 0; j < dim; ++j)
+            {
+                result[i] += p[j] * m[j][i];
+            }
+            result[i] += m[dim][i];
+        }
+        return result;
     }
 
     //////////////////////////////////////////////////////////////////////////

@@ -168,6 +168,84 @@ namespace cc
         return Point3T<T>(p.x / v.x, p.y / v.y, p.z / v.z);
     }
 
+    // Modifying operators
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    Point2T<T>& operator+= (Point2T<T>& p, const Vector2T<T>& v) noexcept
+    {
+        p.x += v.x;
+        p.y += v.y;
+        return p;
+    }
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    Point3T<T>& operator+= (Point3T<T>& p, const Vector3T<T>& v) noexcept
+    {
+        p.x += v.x;
+        p.y += v.y;
+        p.z += v.z;
+        return p;
+    }
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    Point2T<T>& operator-= (Point2T<T>& p, const Vector2T<T>& v) noexcept
+    {
+        p.x -= v.x;
+        p.y -= v.y;
+        return p;
+    }
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    Point3T<T>& operator-= (Point3T<T>& p, const Vector3T<T>& v) noexcept
+    {
+        p.x -= v.x;
+        p.y -= v.y;
+        p.z -= v.z;
+        return p;
+    }
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    Point2T<T>& operator*= (Point2T<T>& p, const Vector2T<T>& v) noexcept
+    {
+        p.x *= v.x;
+        p.y *= v.y;
+        return p;
+    }
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    Point3T<T>& operator*= (Point3T<T>& p, const Vector3T<T>& v) noexcept
+    {
+        p.x *= v.x;
+        p.y *= v.y;
+        p.z *= v.z;
+        return p;
+    }
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    Point2T<T>& operator/= (Point2T<T>& p, const Vector2T<T>& v) noexcept
+    {
+        p.x /= v.x;
+        p.y /= v.y;
+        return p;
+    }
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    Point3T<T>& operator/= (Point3T<T>& p, const Vector3T<T>& v) noexcept
+    {
+        p.x /= v.x;
+        p.y /= v.y;
+        p.z /= v.z;
+        return p;
+    }
+
     //////////////////////////////////////////////////////////////////////////
     // Utilities
     //////////////////////////////////////////////////////////////////////////

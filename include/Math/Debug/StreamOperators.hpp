@@ -6,6 +6,7 @@
 
 #include "../Vector.hpp"
 #include "../Matrix.hpp"
+#include "../Quaternion.hpp"
 
 template <typename T>
 inline
@@ -91,6 +92,18 @@ std::ostream& operator<<(std::ostream& os, const cc::Matrix4T<T>& mat)
         os << "\n";
     }
     os << ")";
+    return os;
+}
+
+template <typename T>
+inline
+std::ostream& operator<<(std::ostream& os, const cc::QuaternionT<T>& quat)
+{
+    os  << "QuaternionT("
+        << std::setprecision(4) << quat.mV.x << ", "
+        << std::setprecision(4) << quat.mV.y << ", "
+        << std::setprecision(4) << quat.mV.z << ", "
+        << std::setprecision(4) << quat.mS   << ")";
     return os;
 }
 

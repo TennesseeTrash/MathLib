@@ -23,3 +23,40 @@ TEST_CASE("Quaternion and Transform similarity", "[Math][Quaternion]")
         REQUIRE(cc::Equal(m1, m2));
     }
 }
+
+TEST_CASE("Check MakeFromYawPitchRoll static member function", "[Math][Quaternion]")
+{
+    SECTION("Trivial parameters")
+    {
+        cc::Quaternionf q1 = cc::Quaternionf::MakeFromYawPitchRoll(0.0f, 0.0f, 0.0f);
+        cc::Quaternionf q2 = cc::Quaternionf({0.0f, 0.0f, 0.0f}, 1.0f);
+
+        REQUIRE(cc::Equal(q1, q2));
+    }
+
+    SECTION("Yaw check")
+    {
+        cc::Quaternionf q1 = cc::Quaternionf::MakeFromYawPitchRoll(cc::ToRadians(30.0f), 0.0f, 0.0f);
+        cc::Quaternionf q2 = cc::Quaternionf::MakeRotation(cc::ToRadians(30.0f), {0.0f, 1.0f, 0.0f});
+
+        REQUIRE(cc::Equal(q1, q2));
+    }
+
+    SECTION("Pitch check")
+    {
+        cc::Quaternionf q1 = cc::Quaternionf::MakeFromYawPitchRoll(0.0f, cc::ToRadians(45.0f), 0.0f);
+        cc::Quaternionf q2 = cc::Quaternionf::MakeRotation(cc::ToRadians(45.0f), {1.0f, 0.0f, 0.0f});
+
+        REQUIRE(cc::Equal(q1, q2));
+    }
+
+    SECTION("Roll check")
+    {
+        cc::Quaternionf q1 = cc::Quaternionf::MakeFromYawPitchRoll(0.0f, 0.0f, cc::ToRadians(56.0f));
+        cc::Quaternionf q2 = cc::Quaternionf::MakeRotation(cc::ToRadians(56.0f), {0.0f, 0.0f, 1.0f});
+
+        std::cout << q1 << "\n" << q2 << "\n";
+
+        REQUIRE(cc::Equal(q1, q2));
+    }
+}

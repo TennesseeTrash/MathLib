@@ -77,6 +77,22 @@ namespace cc
         {
             return QuaternionT(std::sin(angle / 2) * axis, std::cos(angle / 2));
         }
+
+        static QuaternionT<T> MakeFromYawPitchRoll(T yaw, T pitch, T roll) noexcept
+        {
+            T cosRoll  = std::cos(roll  / T(2));
+            T sinRoll  = std::sin(roll  / T(2));
+            T cosPitch = std::cos(pitch / T(2));
+            T sinPitch = std::sin(pitch / T(2));
+            T cosYaw   = std::cos(yaw   / T(2));
+            T sinYaw   = std::sin(yaw   / T(2));
+            return QuaternionT<T>({
+                cosRoll * sinPitch * cosYaw + sinRoll * cosPitch * sinYaw,
+                cosRoll * cosPitch * sinYaw - sinRoll * sinPitch * cosYaw,
+                sinRoll * cosPitch * cosYaw - cosRoll * sinPitch * sinYaw},
+                cosRoll * cosPitch * cosYaw + sinRoll * sinPitch * sinYaw
+            );
+        }
     };
 
     //////////////////////////////////////////////////////////////////////////

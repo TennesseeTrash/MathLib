@@ -1,6 +1,8 @@
 #ifndef _MATH_POINT_HPP
 #define _MATH_POINT_HPP
 
+#include "Vector.hpp"
+
 namespace cc
 {
     //////////////////////////////////////////////////////////////////////////
@@ -12,6 +14,16 @@ namespace cc
     {
         T x = T(0);
         T y = T(0);
+
+        constexpr          Point2T()           noexcept : x(T(0)), y(T(0)) {}
+        constexpr explicit Point2T(T val)      noexcept : x(val ), y(val ) {}
+        constexpr          Point2T(T xv, T yv) noexcept : x(xv  ), y(yv  ) {}
+
+        constexpr       T& operator[] (size_t idx)       noexcept { return reinterpret_cast<      T *>(this)[idx]; }
+        constexpr const T& operator[] (size_t idx) const noexcept { return reinterpret_cast<const T *>(this)[idx]; }
+
+        constexpr T Max() noexcept { return std::max(x, y); }
+        constexpr T Min() noexcept { return std::min(x, y); }
     };
 
     template <typename T>
@@ -20,6 +32,18 @@ namespace cc
         T x = T(0);
         T y = T(0);
         T z = T(0);
+
+        constexpr          Point3T()                          noexcept : x(T(0)), y(T(0)), z(T(0)) {}
+        constexpr explicit Point3T(T val)                     noexcept : x(val ), y(val ), z(val ) {}
+        constexpr          Point3T(T xv, T yv, T zv)          noexcept : x(xv  ), y(yv  ), z(zv  ) {}
+        constexpr explicit Point3T(const Point2T<T>& p)       noexcept : x(p.x ), y(p.y ), z(T(0)) {}
+        constexpr explicit Point3T(const Point2T<T>& p, T zv) noexcept : x(p.x ), y(p.y ), z(zv  ) {}
+
+        constexpr       T& operator[] (size_t idx)       noexcept { return reinterpret_cast<      T *>(this)[idx]; }
+        constexpr const T& operator[] (size_t idx) const noexcept { return reinterpret_cast<const T *>(this)[idx]; }
+
+        constexpr T Max() noexcept { return std::max({x, y, z}); }
+        constexpr T Min() noexcept { return std::min({x, y, z}); }
     };
 
     //////////////////////////////////////////////////////////////////////////
@@ -36,7 +60,152 @@ namespace cc
     // Operators
     //////////////////////////////////////////////////////////////////////////
 
-    
+    // Subtracting two points
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    Vector2T<T> operator- (const Point2T<T>& p1, const Point2T<T>& p2) noexcept
+    {
+        return Point2T<T>(p1.x - p2.x, p1.y - p2.y);
+    }
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    Vector3T<T> operator- (const Point3T<T>& p1, const Point3T<T>& p2) noexcept
+    {
+        return Point3T<T>(p1.x - p2.x, p1.y - p2.y, p1.z - p2.z);
+    }
+
+    // Adding a Vector to a Point
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    Point2T<T> operator+ (const Point2T<T>& p, const Vector2T<T>& v) noexcept
+    {
+        return Point2T<T>(p.x + v.x, p.y + v.y);
+    }
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    Point3T<T> operator+ (const Point3T<T>& p, const Vector3T<T>& v) noexcept
+    {
+        return Point3T<T>(p.x + v.x, p.y + v.y, p.z + v.z);
+    }
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    Point2T<T> operator+ (const Vector2T<T>& v, const Point2T<T>& p) noexcept
+    {
+        return Point2T<T>(p.x + v.x, p.y + v.y);
+    }
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    Point3T<T> operator+ (const Vector3T<T>& v, const Point3T<T>& p) noexcept
+    {
+        return Point3T<T>(p.x + v.x, p.y + v.y, p.z + v.z);
+    }
+
+    // Subtracting a Vector from a Point
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    Point2T<T> operator- (const Point2T<T>& p, const Vector2T<T>& v) noexcept
+    {
+        return Point2T<T>(p.x - v.x, p.y - v.y);
+    }
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    Point3T<T> operator- (const Point3T<T>& p, const Vector3T<T>& v) noexcept
+    {
+        return Point3T<T>(p.x - v.x, p.y - v.y, p.z - v.z);
+    }
+
+    // (Component-wise) multiply a Point by a Vector
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    Point2T<T> operator* (const Point2T<T>& p, const Vector2T<T>& v) noexcept
+    {
+        return Point2T<T>(p.x * v.x, p.y * v.y);
+    }
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    Point3T<T> operator* (const Point3T<T>& p, const Vector3T<T>& v) noexcept
+    {
+        return Point3T<T>(p.x * v.x, p.y * v.y, p.z * v.z);
+    }
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    Point2T<T> operator* (const Vector2T<T>& v, const Point2T<T>& p) noexcept
+    {
+        return Point2T<T>(p.x * v.x, p.y * v.y);
+    }
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    Point3T<T> operator* (const Vector3T<T>& v, const Point3T<T>& p) noexcept
+    {
+        return Point3T<T>(p.x * v.x, p.y * v.y, p.z * v.z);
+    }
+
+    // (Component-wise) divide a Point by a Vector
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    Point2T<T> operator/ (const Point2T<T>& p, const Vector2T<T>& v) noexcept
+    {
+        return Point2T<T>(p.x / v.x, p.y / v.y);
+    }
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    Point3T<T> operator/ (const Point3T<T>& p, const Vector3T<T>& v) noexcept
+    {
+        return Point3T<T>(p.x / v.x, p.y / v.y, p.z / v.z);
+    }
+
+    //////////////////////////////////////////////////////////////////////////
+    // Utilities
+    //////////////////////////////////////////////////////////////////////////
+
+    // Equality checks
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    bool Equal(const Point2T<T>& p1, const Point2T<T>& p2, T epsilon = Constants::FloatEps<T>) noexcept
+    {
+        return Equal(p1.x, p2.x, epsilon)
+            && Equal(p1.y, p2.y, epsilon);
+    }
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    bool Equal(const Point3T<T>& p1, const Point3T<T>& p2, T epsilon = Constants::FloatEps<T>) noexcept
+    {
+        return Equal(p1.x, p2.x, epsilon)
+            && Equal(p1.y, p2.y, epsilon)
+            && Equal(p1.z, p2.z, epsilon);
+    }
+
+    // NaN checks
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    bool HasNaN(const Point2T<T>& p) noexcept
+    {
+        return (p.x != p.x) || (p.y != p.y);
+    }
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    bool HasNaN(const Point3T<T>& p) noexcept
+    {
+        return (p.x != p.x) || (p.y != p.y) || (p.z != p.z);
+    }
 }
 
 #endif //_MATH_POINT_HPP

@@ -117,21 +117,21 @@ namespace cc
     // +
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Vector2T<T> operator+ (const Vector2T<T>& u, const Vector2T<T>& v) noexcept
     {
         return Vector2T<T>(u.x + v.x, u.y + v.y);
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Vector3T<T> operator+ (const Vector3T<T>& u, const Vector3T<T>& v) noexcept
     {
         return Vector3T<T>(u.x + v.x, u.y + v.y, u.z + v.z);
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Vector4T<T> operator+ (const Vector4T<T>& u, const Vector4T<T>& v) noexcept
     {
         return Vector4T<T>(u.x + v.x, u.y + v.y, u.z + v.z, u.w + v.w);
@@ -140,21 +140,21 @@ namespace cc
     // - (binary)
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Vector2T<T> operator- (const Vector2T<T>& u, const Vector2T<T>& v) noexcept
     {
         return Vector2T<T>(u.x - v.x, u.y - v.y);
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Vector3T<T> operator- (const Vector3T<T>& u, const Vector3T<T>& v) noexcept
     {
         return Vector3T<T>(u.x - v.x, u.y - v.y, u.z - v.z);
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Vector4T<T> operator- (const Vector4T<T>& u, const Vector4T<T>& v) noexcept
     {
         return Vector4T<T>(u.x - v.x, u.y - v.y, u.z - v.z, u.w - v.w);
@@ -163,21 +163,21 @@ namespace cc
     // *
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Vector2T<T> operator* (const Vector2T<T>& u, const Vector2T<T>& v) noexcept
     {
         return Vector2T<T>(u.x * v.x, u.y * v.y);
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Vector3T<T> operator* (const Vector3T<T>& u, const Vector3T<T>& v) noexcept
     {
         return Vector3T<T>(u.x * v.x, u.y * v.y, u.z * v.z);
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Vector4T<T> operator* (const Vector4T<T>& u, const Vector4T<T>& v) noexcept
     {
         return Vector4T<T>(u.x * v.x, u.y * v.y, u.z * v.z, u.w * v.w);
@@ -186,21 +186,21 @@ namespace cc
     // /
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Vector2T<T> operator/ (const Vector2T<T>& u, const Vector2T<T>& v) noexcept
     {
         return Vector2T<T>(u.x / v.x, u.y / v.y);
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Vector3T<T> operator/ (const Vector3T<T>& u, const Vector3T<T>& v) noexcept
     {
         return Vector3T<T>(u.x / v.x, u.y / v.y, u.z / v.z);
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Vector4T<T> operator/ (const Vector4T<T>& u, const Vector4T<T>& v) noexcept
     {
         return Vector4T<T>(u.x / v.x, u.y / v.y, u.z / v.z, u.w / v.w);
@@ -209,21 +209,21 @@ namespace cc
     // - (unary)
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Vector2T<T> operator- (const Vector2T<T>& u) noexcept
     {
         return Vector2T<T>(-u.x, -u.y);
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Vector3T<T> operator- (const Vector3T<T>& u) noexcept
     {
         return Vector3T<T>(-u.x, -u.y, -u.z);
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Vector4T<T> operator- (const Vector4T<T>& u) noexcept
     {
         return Vector4T<T>(-u.x, -u.y, -u.z, -u.w);
@@ -232,7 +232,7 @@ namespace cc
     // +=
 
     template <typename T>
-    [[maybe_unused]] inline constexpr
+    [[maybe_unused]] constexpr
     Vector2T<T> operator+= (Vector2T<T>& u, const Vector2T<T>& v) noexcept
     {
         u.x += v.x;
@@ -241,7 +241,7 @@ namespace cc
     }
 
     template <typename T>
-    [[maybe_unused]] inline constexpr
+    [[maybe_unused]] constexpr
     Vector3T<T> operator+= (Vector3T<T>& u, const Vector3T<T>& v) noexcept
     {
         u.x += v.x;
@@ -251,7 +251,7 @@ namespace cc
     }
 
     template <typename T>
-    [[maybe_unused]] inline constexpr
+    [[maybe_unused]] constexpr
     Vector4T<T> operator+= (Vector4T<T>& u, const Vector4T<T>& v) noexcept
     {
         u.x += v.x;
@@ -264,7 +264,7 @@ namespace cc
     // -=
 
     template <typename T>
-    [[maybe_unused]] inline constexpr
+    [[maybe_unused]] constexpr
     Vector2T<T> operator-= (Vector2T<T>& u, const Vector2T<T>& v) noexcept
     {
         u.x -= v.x;
@@ -273,7 +273,7 @@ namespace cc
     }
 
     template <typename T>
-    [[maybe_unused]] inline constexpr
+    [[maybe_unused]] constexpr
     Vector3T<T> operator-= (Vector3T<T>& u, const Vector3T<T>& v) noexcept
     {
         u.x -= v.x;
@@ -283,7 +283,7 @@ namespace cc
     }
 
     template <typename T>
-    [[maybe_unused]] inline constexpr
+    [[maybe_unused]] constexpr
     Vector4T<T> operator-= (Vector4T<T>& u, const Vector4T<T>& v) noexcept
     {
         u.x -= v.x;
@@ -296,7 +296,7 @@ namespace cc
     // *=
 
     template <typename T>
-    [[maybe_unused]] inline constexpr
+    [[maybe_unused]] constexpr
     Vector2T<T> operator*= (Vector2T<T>& u, const Vector2T<T>& v) noexcept
     {
         u.x *= v.x;
@@ -305,7 +305,7 @@ namespace cc
     }
 
     template <typename T>
-    [[maybe_unused]] inline constexpr
+    [[maybe_unused]] constexpr
     Vector3T<T> operator*= (Vector3T<T>& u, const Vector3T<T>& v) noexcept
     {
         u.x *= v.x;
@@ -315,7 +315,7 @@ namespace cc
     }
 
     template <typename T>
-    [[maybe_unused]] inline constexpr
+    [[maybe_unused]] constexpr
     Vector4T<T> operator*= (Vector4T<T>& u, const Vector4T<T>& v) noexcept
     {
         u.x *= v.x;
@@ -328,7 +328,7 @@ namespace cc
     // /=
 
     template <typename T>
-    [[maybe_unused]] inline constexpr
+    [[maybe_unused]] constexpr
     Vector2T<T> operator/= (Vector2T<T>& u, const Vector2T<T>& v) noexcept
     {
         u.x /= v.x;
@@ -337,7 +337,7 @@ namespace cc
     }
 
     template <typename T>
-    [[maybe_unused]] inline constexpr
+    [[maybe_unused]] constexpr
     Vector3T<T> operator/= (Vector3T<T>& u, const Vector3T<T>& v) noexcept
     {
         u.x /= v.x;
@@ -347,7 +347,7 @@ namespace cc
     }
 
     template <typename T>
-    [[maybe_unused]] inline constexpr
+    [[maybe_unused]] constexpr
     Vector4T<T> operator/= (Vector4T<T>& u, const Vector4T<T>& v) noexcept
     {
         u.x /= v.x;
@@ -361,42 +361,42 @@ namespace cc
     // + (add scalar to each vector component)
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Vector2T<T> operator+ (const Vector2T<T>& u, T s) noexcept
     {
         return Vector2T<T>(u.x + s, u.y + s);
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Vector3T<T> operator+ (const Vector3T<T>& u, T s) noexcept
     {
         return Vector3T<T>(u.x + s, u.y + s, u.z + s);
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Vector4T<T> operator+ (const Vector4T<T>& u, T s) noexcept
     {
         return Vector4T<T>(u.x + s, u.y + s, u.z + s, u.w + s);
     }
 
      template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Vector2T<T> operator+ (T s, const Vector2T<T>& u) noexcept
     {
         return Vector2T<T>(s + u.x, s + u.y);
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Vector3T<T> operator+ (T s, const Vector3T<T>& u) noexcept
     {
         return Vector3T<T>(s + u.x, s + u.y, s + u.z);
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Vector4T<T> operator+ (T s, const Vector4T<T>& u) noexcept
     {
         return Vector4T<T>(s + u.x, s + u.y, s + u.z, s + u.w);
@@ -405,21 +405,21 @@ namespace cc
     // - (sub scalar from each vector component)
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Vector2T<T> operator- (const Vector2T<T>& u, T s) noexcept
     {
         return Vector2T<T>(u.x - s, u.y - s);
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Vector3T<T> operator- (const Vector3T<T>& u, T s) noexcept
     {
         return Vector3T<T>(u.x - s, u.y - s, u.z - s);
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Vector4T<T> operator- (const Vector4T<T>& u, T s) noexcept
     {
         return Vector4T<T>(u.x - s, u.y - s, u.z - s, u.w - s);
@@ -428,42 +428,42 @@ namespace cc
     // * (mult each component with scalar)
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Vector2T<T> operator* (const Vector2T<T>& u, T s) noexcept
     {
         return Vector2T<T>(u.x * s, u.y * s);
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Vector3T<T> operator* (const Vector3T<T>& u, T s) noexcept
     {
         return Vector3T<T>(u.x * s, u.y * s, u.z * s);
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Vector4T<T> operator* (const Vector4T<T>& u, T s) noexcept
     {
         return Vector4T<T>(u.x * s, u.y * s, u.z * s, u.w * s);
     }
 
      template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Vector2T<T> operator* (T s, const Vector2T<T>& u) noexcept
     {
         return Vector2T<T>(s * u.x, s * u.y);
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Vector3T<T> operator* (T s, const Vector3T<T>& u) noexcept
     {
         return Vector3T<T>(s * u.x, s * u.y, s * u.z);
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Vector4T<T> operator* (T s, const Vector4T<T>& u) noexcept
     {
         return Vector4T<T>(s * u.x, s * u.y, s * u.z, s * u.w);
@@ -472,21 +472,21 @@ namespace cc
     // / (scalar is divisor)
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Vector2T<T> operator/ (const Vector2T<T>& u, T s) noexcept
     {
         return Vector2T<T>(u.x / s, u.y / s);
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Vector3T<T> operator/ (const Vector3T<T>& u, T s) noexcept
     {
         return Vector3T<T>(u.x / s, u.y / s, u.z / s);
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Vector4T<T> operator/ (const Vector4T<T>& u, T s) noexcept
     {
         return Vector4T<T>(u.x / s, u.y / s, u.z / s, u.w / s);
@@ -495,7 +495,7 @@ namespace cc
     // +=
 
     template <typename T>
-    [[maybe_unused]] inline constexpr
+    [[maybe_unused]] constexpr
     Vector2T<T> operator+= (Vector2T<T>& u, T s) noexcept
     {
         u.x += s;
@@ -504,7 +504,7 @@ namespace cc
     }
 
     template <typename T>
-    [[maybe_unused]] inline constexpr
+    [[maybe_unused]] constexpr
     Vector3T<T> operator+= (Vector3T<T>& u, T s) noexcept
     {
         u.x += s;
@@ -514,7 +514,7 @@ namespace cc
     }
 
     template <typename T>
-    [[maybe_unused]] inline constexpr
+    [[maybe_unused]] constexpr
     Vector4T<T> operator+= (Vector4T<T>& u, T s) noexcept
     {
         u.x += s;
@@ -527,7 +527,7 @@ namespace cc
     // -=
 
     template <typename T>
-    [[maybe_unused]] inline constexpr
+    [[maybe_unused]] constexpr
     Vector2T<T> operator-= (Vector2T<T>& u, T s) noexcept
     {
         u.x -= s;
@@ -536,7 +536,7 @@ namespace cc
     }
 
     template <typename T>
-    [[maybe_unused]] inline constexpr
+    [[maybe_unused]] constexpr
     Vector3T<T> operator-= (Vector3T<T>& u, T s) noexcept
     {
         u.x -= s;
@@ -546,7 +546,7 @@ namespace cc
     }
 
     template <typename T>
-    [[maybe_unused]] inline constexpr
+    [[maybe_unused]] constexpr
     Vector4T<T> operator-= (Vector4T<T>& u, T s) noexcept
     {
         u.x -= s;
@@ -559,7 +559,7 @@ namespace cc
     // *=
 
     template <typename T>
-    [[maybe_unused]] inline constexpr
+    [[maybe_unused]] constexpr
     Vector2T<T> operator*= (Vector2T<T>& u, T s) noexcept
     {
         u.x *= s;
@@ -568,7 +568,7 @@ namespace cc
     }
 
     template <typename T>
-    [[maybe_unused]] inline constexpr
+    [[maybe_unused]] constexpr
     Vector3T<T> operator*= (Vector3T<T>& u, T s) noexcept
     {
         u.x *= s;
@@ -578,7 +578,7 @@ namespace cc
     }
 
     template <typename T>
-    [[maybe_unused]] inline constexpr
+    [[maybe_unused]] constexpr
     Vector4T<T> operator*= (Vector4T<T>& u, T s) noexcept
     {
         u.x *= s;
@@ -591,7 +591,7 @@ namespace cc
     // /=
 
     template <typename T>
-    [[maybe_unused]] inline constexpr
+    [[maybe_unused]] constexpr
     Vector2T<T> operator/= (Vector2T<T>& u, T s) noexcept
     {
         u.x /= s;
@@ -600,7 +600,7 @@ namespace cc
     }
 
     template <typename T>
-    [[maybe_unused]] inline constexpr
+    [[maybe_unused]] constexpr
     Vector3T<T> operator/= (Vector3T<T>& u, T s) noexcept
     {
         u.x /= s;
@@ -610,7 +610,7 @@ namespace cc
     }
 
     template <typename T>
-    [[maybe_unused]] inline constexpr
+    [[maybe_unused]] constexpr
     Vector4T<T> operator/= (Vector4T<T>& u, T s) noexcept
     {
         u.x /= s;
@@ -627,21 +627,21 @@ namespace cc
     // Dot product
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     T Dot(const Vector2T<T>& u, const Vector2T<T>& v) noexcept
     {
         return (u.x * v.x) + (u.y * v.y);
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     T Dot(const Vector3T<T>& u, const Vector3T<T>& v) noexcept
     {
         return (u.x * v.x) + (u.y * v.y) + (u.z * v.z);
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     T Dot(const Vector4T<T>& u, const Vector4T<T>& v) noexcept
     {
         return (u.x * v.x) + (u.y * v.y) + (u.z * v.z) + (u.w * v.w);
@@ -650,7 +650,7 @@ namespace cc
     // Equality functions
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     bool Equal(const Vector2T<T>& u, const Vector2T<T>& v, T epsilon = Constants::FloatEps<T>) noexcept
     {
         return Equal(u.x, v.x, epsilon)
@@ -658,7 +658,7 @@ namespace cc
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     bool Equal(const Vector3T<T>& u, const Vector3T<T>& v, T epsilon = Constants::FloatEps<T>) noexcept
     {
         return Equal(u.x, v.x, epsilon)
@@ -667,7 +667,7 @@ namespace cc
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     bool Equal(const Vector4T<T>& u, const Vector4T<T>& v, T epsilon = Constants::FloatEps<T>) noexcept
     {
         return Equal(u.x, v.x, epsilon)
@@ -679,21 +679,21 @@ namespace cc
     // NaN checks
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     bool HasNaN(const Vector2T<T>& u) noexcept
     {
         return (u.x != u.x) || (u.y != u.y);
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     bool HasNaN(const Vector3T<T>& u) noexcept
     {
         return (u.x != u.x) || (u.y != u.y) || (u.z != u.z);
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     bool HasNaN(const Vector4T<T>& u) noexcept
     {
         return (u.x != u.x) || (u.y != u.y) || (u.z != u.z) || (u.w != u.w);
@@ -702,7 +702,7 @@ namespace cc
     // Normalization functions
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Vector2T<T> Normalize(const Vector2T<T>& u) noexcept
     {
         T len = u.Length();
@@ -710,7 +710,7 @@ namespace cc
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Vector3T<T> Normalize(const Vector3T<T>& u) noexcept
     {
         T len = u.Length();
@@ -718,7 +718,7 @@ namespace cc
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Vector4T<T> Normalize(const Vector4T<T>& u) noexcept
     {
         T len = u.Length();
@@ -728,14 +728,14 @@ namespace cc
     // Perpendicular operations
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Vector2T<T> Perp(const Vector2T<T>& u) noexcept
     {
         return Vector2T<T>(u.y, -u.x);
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Vector3T<T> Cross(const Vector3T<T>& u, const Vector3T<T>& v) noexcept
     {
         Vector3T<T> w;

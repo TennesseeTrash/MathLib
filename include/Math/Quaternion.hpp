@@ -93,14 +93,14 @@ namespace cc
     // Basic arithmetic operators
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     QuaternionT<T> operator+ (const QuaternionT<T>& q1, const QuaternionT<T>& q2) noexcept
     {
         return QuaternionT<T>(q1.mV + q2.mV, q1.mS + q2.mS);
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     QuaternionT<T> operator- (const QuaternionT<T>& q1, const QuaternionT<T>& q2) noexcept
     {
         return QuaternionT<T>(q1.mV - q2.mV, q1.mS - q2.mS);
@@ -109,7 +109,7 @@ namespace cc
     // Hamilton product
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     QuaternionT<T> operator* (const QuaternionT<T>& q1, const QuaternionT<T>& q2) noexcept
     {
         QuaternionT<T> result;
@@ -121,7 +121,7 @@ namespace cc
     /* Alternative implementation taken from
      * Foundations of Game Engine Development, Volume 1 Mathematics by E. Lengyel
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     QuaternionT<T> operator* (const QuaternionT<T>& q1, const QuaternionT<T>& q2) noexcept
     {
         return QuaternionT(
@@ -136,21 +136,21 @@ namespace cc
     // Scalar multiplication, division by scalar
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     QuaternionT<T> operator* (const QuaternionT<T>& q, T s) noexcept
     {
         return QuaternionT<T>(q.mV * s, q.mS * s);
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     QuaternionT<T> operator* (T s, const QuaternionT<T>& q) noexcept
     {
         return QuaternionT<T>(s * q.mV, s * q.mS);
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     QuaternionT<T> operator/ (const QuaternionT<T>& q, T s) noexcept
     {
         return QuaternionT<T>(q.mV / s, q.mS / s);
@@ -161,7 +161,7 @@ namespace cc
     //////////////////////////////////////////////////////////////////////////
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     bool Equal(const QuaternionT<T>& q1, const QuaternionT<T>& q2, T epsilon = Constants::FloatEps<T>) noexcept
     {
         return Equal(q1.mV, q2.mV, epsilon)
@@ -169,49 +169,49 @@ namespace cc
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     T NormSqr(const QuaternionT<T>& q) noexcept
     {
         return q.mV.LenSqr() + Sq(q.mS);
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     T Norm(const QuaternionT<T>& q) noexcept
     {
         return std::sqrt(NormSqr(q));
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     QuaternionT<T> Normalize(const QuaternionT<T>& q) noexcept
     {
         return q / Norm(q);
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     QuaternionT<T> Conjugate(const QuaternionT<T>& q) noexcept
     {
         return QuaternionT(-q.mV, q.mS);
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     QuaternionT<T> Inverse(const QuaternionT<T>& q) noexcept
     {
         return  Conjugate(q) / NormSqr(q);
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     T Dot(const QuaternionT<T>& q1, const QuaternionT<T>& q2) noexcept
     {
         return (q1.mS * q2.mS) + Dot(q1.mV, q2.mV);
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     QuaternionT<T> Lerp(T value, const QuaternionT<T>& begin, const QuaternionT<T>& end) noexcept
     {
         value = Clamp(value);
@@ -226,7 +226,7 @@ namespace cc
     }
 
     template <bool Long = false, typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     QuaternionT<T> Slerp(T value, const QuaternionT<T>& begin, const QuaternionT<T>& end) noexcept
     {
         value = Clamp(value);
@@ -247,7 +247,7 @@ namespace cc
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     QuaternionT<T> LongSlerp(T value, const QuaternionT<T>& begin, const QuaternionT<T>& end) noexcept
     {
         value = Clamp(value);
@@ -268,7 +268,7 @@ namespace cc
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Vector3T<T> Transform(const Vector3T<T>& v, const QuaternionT<T>& q) noexcept
     {
         return (v * (Sq(q.mS) - Dot(q.mV, q.mV))) + (q.mV * (T(2) * Dot(v, q.mV))) + (Cross(q.mV, v) * q.mS * T(2));

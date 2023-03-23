@@ -10,7 +10,7 @@ namespace cc
     //////////////////////////////////////////////////////////////////////////
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     T Sq(T val) noexcept
     {
         return val * val;
@@ -21,14 +21,14 @@ namespace cc
     //////////////////////////////////////////////////////////////////////////
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     T Clamp(T val, T min = T(0), T max = T(1)) noexcept
     {
         return val > max ? max : val < min ? min : val;
     }
 
     template <typename T, typename U>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     U Lerp(T val, const U& begin, const U& end) noexcept
     {
         return ((1 - val) * begin) + (val * end);
@@ -39,14 +39,14 @@ namespace cc
     //////////////////////////////////////////////////////////////////////////
 
     template <typename Int, typename Float>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Int Floor(Float val) noexcept
     {
         return static_cast<Int>(val - (val < static_cast<Int>(val)));
     }
 
     template <typename Int, typename Float>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Int Ceil(Float val) noexcept
     {
         return static_cast<Int>(val - (val > static_cast<Int>(val)));
@@ -57,14 +57,14 @@ namespace cc
     //////////////////////////////////////////////////////////////////////////
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     T Sign(T val) noexcept
     {
         return (T(0) < val) - (val < T(0));
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     T Abs(T val) noexcept
     {
         return val > T(0) ? val : -val;
@@ -75,14 +75,14 @@ namespace cc
     //////////////////////////////////////////////////////////////////////////
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     T ToRadians(T val) noexcept
     {
         return (Constants::Pi<T> * val) / T(180);
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     T ToDegrees(T val) noexcept
     {
         return (180 * val) / Constants::Pi<T>;
@@ -93,7 +93,7 @@ namespace cc
     //////////////////////////////////////////////////////////////////////////
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     bool Equal(T val1, T val2, T epsilon = Constants::FloatEps<T>) noexcept
     {
         return Abs(val1 - val2) < epsilon;

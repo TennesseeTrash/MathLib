@@ -152,7 +152,7 @@ namespace cc
     // Basic matrix arithmetic
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Matrix2T<T> operator+ (const Matrix2T<T>& a, const Matrix2T<T>& b) noexcept
     {
         constexpr size_t dim = 2;
@@ -168,7 +168,7 @@ namespace cc
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Matrix3T<T> operator+ (const Matrix3T<T>& a, const Matrix3T<T>& b) noexcept
     {
         constexpr size_t dim = 3;
@@ -184,7 +184,7 @@ namespace cc
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Matrix4T<T> operator+ (const Matrix4T<T>& a, const Matrix4T<T>& b) noexcept
     {
         constexpr size_t dim = 4;
@@ -200,7 +200,7 @@ namespace cc
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Matrix2T<T> operator- (const Matrix2T<T>& a, const Matrix2T<T>& b) noexcept
     {
         constexpr size_t dim = 2;
@@ -216,7 +216,7 @@ namespace cc
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Matrix3T<T> operator- (const Matrix3T<T>& a, const Matrix3T<T>& b) noexcept
     {
         constexpr size_t dim = 3;
@@ -232,7 +232,7 @@ namespace cc
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Matrix4T<T> operator- (const Matrix4T<T>& a, const Matrix4T<T>& b) noexcept
     {
         constexpr size_t dim = 4;
@@ -248,7 +248,7 @@ namespace cc
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Matrix2T<T> operator* (const Matrix2T<T>& a, const Matrix2T<T>& b) noexcept
     {
         constexpr size_t dim = 2;
@@ -267,7 +267,7 @@ namespace cc
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Matrix3T<T> operator* (const Matrix3T<T>& a, const Matrix3T<T>& b) noexcept
     {
         constexpr size_t dim = 3;
@@ -286,7 +286,7 @@ namespace cc
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Matrix4T<T> operator* (const Matrix4T<T>& a, const Matrix4T<T>& b) noexcept
     {
         constexpr size_t dim = 4;
@@ -308,7 +308,7 @@ namespace cc
     // Matrix-scalar multiplication
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Matrix2T<T> operator* (const Matrix2T<T>& m, T s) noexcept
     {
         constexpr size_t dim = 2;
@@ -324,7 +324,7 @@ namespace cc
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Matrix3T<T> operator* (const Matrix3T<T>& m, T s) noexcept
     {
         constexpr size_t dim = 3;
@@ -340,7 +340,7 @@ namespace cc
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Matrix4T<T> operator* (const Matrix4T<T>& m, T s) noexcept
     {
         constexpr size_t dim = 4;
@@ -356,7 +356,7 @@ namespace cc
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Matrix2T<T> operator* (T s, const Matrix2T<T>& m) noexcept
     {
         constexpr size_t dim = 2;
@@ -372,7 +372,7 @@ namespace cc
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Matrix3T<T> operator* (T s, const Matrix3T<T>& m) noexcept
     {
         constexpr size_t dim = 3;
@@ -388,7 +388,7 @@ namespace cc
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Matrix4T<T> operator* (T s, const Matrix4T<T>& m) noexcept
     {
         constexpr size_t dim = 4;
@@ -406,7 +406,7 @@ namespace cc
     // Matrix-vector multiplication
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Vector2T<T> operator* (const Matrix2T<T>& m, const Vector2T<T>& u) noexcept
     {
         constexpr size_t dim = 2;
@@ -419,7 +419,7 @@ namespace cc
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Vector3T<T> operator* (const Matrix3T<T>& m, const Vector3T<T>& u) noexcept
     {
         constexpr size_t dim = 3;
@@ -432,7 +432,7 @@ namespace cc
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Vector4T<T> operator* (const Matrix4T<T>& m, const Vector4T<T>& u) noexcept
     {
         constexpr size_t dim = 4;
@@ -445,7 +445,7 @@ namespace cc
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Vector2T<T> operator* (Vector2T<T>& u, const Matrix2T<T>& m) noexcept
     {
         constexpr size_t dim = 2;
@@ -461,7 +461,7 @@ namespace cc
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Vector3T<T> operator* (Vector3T<T>& u, const Matrix3T<T>& m) noexcept
     {
         constexpr size_t dim = 3;
@@ -477,7 +477,7 @@ namespace cc
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Vector4T<T> operator* (Vector4T<T>& u, const Matrix4T<T>& m) noexcept
     {
         constexpr size_t dim = 4;
@@ -499,7 +499,7 @@ namespace cc
     // Equality functions
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     bool Equal(const Matrix2T<T>& m, const Matrix2T<T>& n, T epsilon = Constants::FloatEps<T>) noexcept
     {
         return Equal(m[0], n[0], epsilon)
@@ -507,7 +507,7 @@ namespace cc
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     bool Equal(const Matrix3T<T>& m, const Matrix3T<T>& n, T epsilon = Constants::FloatEps<T>) noexcept
     {
         return Equal(m[0], n[0], epsilon)
@@ -516,7 +516,7 @@ namespace cc
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     bool Equal(const Matrix4T<T>& m, const Matrix4T<T>& n, T epsilon = Constants::FloatEps<T>) noexcept
     {
         return Equal(m[0], n[0], epsilon)
@@ -528,21 +528,21 @@ namespace cc
     // NaN checks
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     bool HasNaN(const Matrix2T<T>& m) noexcept
     {
         return HasNaN(m[0]) || HasNaN(m[1]);
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     bool HasNaN(const Matrix3T<T>& m) noexcept
     {
         return HasNaN(m[0]) || HasNaN(m[1]) || HasNaN(m[2]);
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     bool HasNaN(const Matrix4T<T>& m) noexcept
     {
         return HasNaN(m[0]) || HasNaN(m[1]) || HasNaN(m[2]) || HasNaN(m[3]);
@@ -551,7 +551,7 @@ namespace cc
     // Transpose
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Matrix2T<T> Transpose(const Matrix2T<T>& m) noexcept
     {
         Matrix2T<T> result = m;
@@ -560,7 +560,7 @@ namespace cc
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Matrix3T<T> Transpose(const Matrix3T<T>& m) noexcept
     {
         Matrix3T<T> result = m;
@@ -571,7 +571,7 @@ namespace cc
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Matrix4T<T> Transpose(const Matrix4T<T>& m) noexcept
     {
         Matrix4T<T> result = m;
@@ -587,7 +587,7 @@ namespace cc
     // Determinants
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     T Determinant(const Matrix2T<T>& m) noexcept
     {
         return (m[0][0] * m[1][1])
@@ -595,7 +595,7 @@ namespace cc
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     T Determinant(const Matrix3T<T>& m) noexcept
     {
         return (m[0][0] * m[1][1] * m[2][2])
@@ -607,7 +607,7 @@ namespace cc
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     T Determinant(const Matrix4T<T>& m) noexcept
     {
         return (m[0][0] * m[1][1] * m[2][2] * m[3][3])
@@ -642,7 +642,7 @@ namespace cc
     // Matrix inverse
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Matrix2T<T> Invert(const Matrix2T<T>& m) noexcept
     {
         Matrix2T<T> result = m;
@@ -655,7 +655,7 @@ namespace cc
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Matrix3T<T> Invert(const Matrix3T<T>& m) noexcept
     {
         Matrix3T<T> result;
@@ -673,7 +673,7 @@ namespace cc
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Matrix4T<T> Invert(const Matrix4T<T>& m) noexcept
     {
         // The content of this function was originally taken from

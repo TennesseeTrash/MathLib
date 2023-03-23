@@ -6,14 +6,14 @@
 namespace cc::Transform
 {
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Matrix4T<T> Identity() noexcept
     {
         return Matrix4T<T>(1.0f);
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Matrix4T<T> RotateByX(T angle) noexcept
     {
         return Matrix4T<T>(
@@ -25,7 +25,7 @@ namespace cc::Transform
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Matrix4T<T> RotateByY(T angle) noexcept
     {
         return Matrix4T<T>(
@@ -37,7 +37,7 @@ namespace cc::Transform
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Matrix4T<T> RotateByZ(T angle) noexcept
     {
         return Matrix4T<T>(
@@ -49,7 +49,7 @@ namespace cc::Transform
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Matrix4T<T> Translate(const Vector3T<T>& direction) noexcept
     {
         Matrix4T<T> result;
@@ -60,7 +60,7 @@ namespace cc::Transform
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Matrix4T<T> Scale(const Vector3T<T>& scales) noexcept
     {
         Matrix4T<T> result;
@@ -71,7 +71,7 @@ namespace cc::Transform
     }
 
     template <typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Matrix4T<T> LookAt(const Vector3T<T>& position, const Vector3T<T>& direction, const Vector3T<T>& up) noexcept
     {
         Vector4T<T> w = Vector4T<T>(-Normalize(direction));
@@ -88,7 +88,7 @@ namespace cc::Transform
     };
 
     template <Handedness handedness = Handedness::LeftHanded, typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Matrix4T<T> PerspectiveProjection(T fov, T aspectRatio, T near, T far) noexcept
     {
 		T tanFovOver2 = std::tan(fov / T(2));
@@ -112,7 +112,7 @@ namespace cc::Transform
     }
 
     template <Handedness handedness = Handedness::LeftHanded, typename T>
-    [[nodiscard]] inline constexpr
+    [[nodiscard]] constexpr
     Matrix4T<T> OrthographicProjection(T left, T right, T bottom, T top, T near, T far) noexcept
     {
         Matrix4T<T> result(T(1));

@@ -81,32 +81,54 @@ namespace cc::Transform
         return Matrix4T<T>(u, v, w, o) * Translate(-position);
     }
 
-    template <typename T>
+    enum class Handedness
+    {
+        LeftHanded,
+        RightHanded,
+    };
+
+    template <Handedness handedness = Handedness::LeftHanded, typename T>
     [[nodiscard]] inline constexpr
     Matrix4T<T> PerspectiveProjection(T fov, T aspectRatio, T near, T far) noexcept
     {
-        // TODO
+		T tanFovOver2 = std::tan(fov / T(2));
+
+		Matrix4T<T> result(T(0));
+		result[0][0] = T(1) / (aspectRatio * tanFovOver2);
+		result[1][1] = T(1) / tanFovOver2;
+		result[2][2] = far / (far - near);
+		result[3][2] = -(far * near) / (far - near);
+
+        if constexpr (handedness == Handedness::LeftHanded)
+        {
+            result[2][3] = T(1);
+        }
+        if constexpr (handedness == Handedness::RightHanded)
+        {
+            result[2][3] = T(-1);
+        }
+
+		return result;
     }
 
-    template <typename T>
+    template <Handedness handedness = Handedness::LeftHanded, typename T>
     [[nodiscard]] inline constexpr
     Matrix4T<T> OrthographicProjection(T left, T right, T bottom, T top, T near, T far) noexcept
     {
-        // TODO
-    }
+        Matrix4T<T> result(T(1));
+		result[0][0] = T(2) / (right - left);
+		result[1][1] = T(2) / (top - bottom);
+		result[2][2] = T(1) / (far - near);
+		result[3][0] = -(right + left) / (right - left);
+		result[3][1] = -(top + bottom) / (top - bottom);
+		result[3][2] = -near / (far - near);
 
-    template <typename T>
-    [[nodiscard]] inline constexpr
-    Matrix4T<T> InifnitePerspectiveProjection(T fov, T aspectRatio, T near)
-    {
-        // TODO
-    }
+        if constexpr (handedness == Handedness::RightHanded)
+        {
+            result[2][2] = -result[2][2];
+        }
 
-    template <typename T>
-    [[nodiscard]] inline constexpr
-    Matrix4T<T> InifniteOrthographicProjection(T left, T right, T bottom, T top)
-    {
-        // TODO
+		return result;
     }
 }
 

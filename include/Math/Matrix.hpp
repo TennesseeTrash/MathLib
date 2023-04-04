@@ -447,7 +447,7 @@ namespace Math
 
     template <typename T>
     [[nodiscard]] constexpr
-    Vector2T<T> operator* (Vector2T<T>& u, const Matrix2T<T>& m) noexcept
+    Vector2T<T> operator* (const Vector2T<T>& u, const Matrix2T<T>& m) noexcept
     {
         constexpr size_t dim = 2;
         Vector2T<T> result;
@@ -463,7 +463,7 @@ namespace Math
 
     template <typename T>
     [[nodiscard]] constexpr
-    Vector3T<T> operator* (Vector3T<T>& u, const Matrix3T<T>& m) noexcept
+    Vector3T<T> operator* (const Vector3T<T>& u, const Matrix3T<T>& m) noexcept
     {
         constexpr size_t dim = 3;
         Vector3T<T> result;
@@ -479,7 +479,7 @@ namespace Math
 
     template <typename T>
     [[nodiscard]] constexpr
-    Vector4T<T> operator* (Vector4T<T>& u, const Matrix4T<T>& m) noexcept
+    Vector4T<T> operator* (const Vector4T<T>& u, const Matrix4T<T>& m) noexcept
     {
         constexpr size_t dim = 4;
         Vector4T<T> result;

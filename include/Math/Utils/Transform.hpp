@@ -52,7 +52,7 @@ namespace Math::Transform
     [[nodiscard]] constexpr
     Matrix4T<T> Translate(const Vector3T<T>& direction) noexcept
     {
-        Matrix4T<T> result;
+        Matrix4T<T> result(T(1));
         result[0][3] = direction[0];
         result[1][3] = direction[1];
         result[2][3] = direction[2];
@@ -74,11 +74,16 @@ namespace Math::Transform
     [[nodiscard]] constexpr
     Matrix4T<T> LookAt(const Vector3T<T>& position, const Vector3T<T>& direction, const Vector3T<T>& up) noexcept
     {
-        Vector4T<T> w = Vector4T<T>(-Normalize(direction));
-        Vector4T<T> u = Vector4T<T>(Normalize(Cross(up, w)));
-        Vector4T<T> v = Vector4T<T>(Cross(w, u));
+        Vector3T<T> w = Vector3T<T>(-Normalize(direction));
+        Vector3T<T> u = Vector3T<T>(Normalize(Cross(up, w)));
+        Vector3T<T> v = Vector3T<T>(Cross(w, u));
         Vector4T<T> o = Vector4T<T>(T(0), T(0), T(0), T(1));
-        return Matrix4T<T>(u, v, w, o) * Translate(-position);
+        return Matrix4T<T>(
+            Vector4T<T>(u, -position.x),
+            Vector4T<T>(v, -position.y),
+            Vector4T<T>(w, -position.z),
+            o
+        );
     }
 
     enum class Handedness
@@ -97,15 +102,15 @@ namespace Math::Transform
 		result[0][0] = T(1) / (aspectRatio * tanFovOver2);
 		result[1][1] = T(1) / tanFovOver2;
 		result[2][2] = far / (far - near);
-		result[3][2] = -(far * near) / (far - near);
+		result[2][3] = -(far * near) / (far - near);
 
         if constexpr (handedness == Handedness::LeftHanded)
         {
-            result[2][3] = T(1);
+            result[3][2] = T(1);
         }
         if constexpr (handedness == Handedness::RightHanded)
         {
-            result[2][3] = T(-1);
+            result[3][2] = T(-1);
         }
 
 		return result;
@@ -119,9 +124,9 @@ namespace Math::Transform
 		result[0][0] = T(2) / (right - left);
 		result[1][1] = T(2) / (top - bottom);
 		result[2][2] = T(1) / (far - near);
-		result[3][0] = -(right + left) / (right - left);
-		result[3][1] = -(top + bottom) / (top - bottom);
-		result[3][2] = -near / (far - near);
+		result[0][3] = -(right + left) / (right - left);
+		result[1][3] = -(top + bottom) / (top - bottom);
+		result[2][3] = -near / (far - near);
 
         if constexpr (handedness == Handedness::RightHanded)
         {

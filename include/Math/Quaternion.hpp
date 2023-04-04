@@ -285,7 +285,7 @@ namespace Math
 
     template <typename T>
     [[nodiscard]] constexpr
-    Vector3T<T> Transform(const Vector3T<T>& v, const QuaternionT<T>& q) noexcept
+    Vector3T<T> TransformVector(const Vector3T<T>& v, const QuaternionT<T>& q) noexcept
     {
         return (v * (Sq(q.mS) - Dot(q.mV, q.mV))) + (q.mV * (T(2) * Dot(v, q.mV))) + (Cross(q.mV, v) * q.mS * T(2));
     }

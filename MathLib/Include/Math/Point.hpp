@@ -66,14 +66,14 @@ namespace Math
     [[nodiscard]] constexpr
     Vector2T<T> operator- (const Point2T<T>& p1, const Point2T<T>& p2) noexcept
     {
-        return Point2T<T>(p1.x - p2.x, p1.y - p2.y);
+        return Vector2T<T>(p1.x - p2.x, p1.y - p2.y);
     }
 
     template <typename T>
     [[nodiscard]] constexpr
     Vector3T<T> operator- (const Point3T<T>& p1, const Point3T<T>& p2) noexcept
     {
-        return Point3T<T>(p1.x - p2.x, p1.y - p2.y, p1.z - p2.z);
+        return Vector3T<T>(p1.x - p2.x, p1.y - p2.y, p1.z - p2.z);
     }
 
     // Adding a Vector to a Point

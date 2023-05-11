@@ -15,9 +15,10 @@ namespace Math
         T x = T(0);
         T y = T(0);
 
-        constexpr          Point2T()           noexcept : x(T(0)), y(T(0)) {}
-        constexpr explicit Point2T(T val)      noexcept : x(val ), y(val ) {}
-        constexpr          Point2T(T xv, T yv) noexcept : x(xv  ), y(yv  ) {}
+        constexpr          Point2T()                     noexcept : x(T(0)), y(T(0)) {}
+        constexpr explicit Point2T(T val)                noexcept : x(val ), y(val ) {}
+        constexpr          Point2T(T xv, T yv)           noexcept : x(xv  ), y(yv  ) {}
+        constexpr explicit Point2T(const Vector2T<T>& v) noexcept : x(v.x ), y(v.y ) {}
 
         constexpr       T& operator[] (size_t idx)       noexcept { return reinterpret_cast<      T *>(this)[idx]; }
         constexpr const T& operator[] (size_t idx) const noexcept { return reinterpret_cast<const T *>(this)[idx]; }
@@ -38,6 +39,8 @@ namespace Math
         constexpr          Point3T(T xv, T yv, T zv)          noexcept : x(xv  ), y(yv  ), z(zv  ) {}
         constexpr explicit Point3T(const Point2T<T>& p)       noexcept : x(p.x ), y(p.y ), z(T(0)) {}
         constexpr explicit Point3T(const Point2T<T>& p, T zv) noexcept : x(p.x ), y(p.y ), z(zv  ) {}
+        constexpr explicit Point3T(const Vector2T<T>& v)      noexcept : x(v.x ), y(v.y ), z(T(0)) {}
+        constexpr explicit Point3T(const Vector3T<T>& v)      noexcept : x(v.x ), y(v.y ), z(v.z ) {}
 
         constexpr       T& operator[] (size_t idx)       noexcept { return reinterpret_cast<      T *>(this)[idx]; }
         constexpr const T& operator[] (size_t idx) const noexcept { return reinterpret_cast<const T *>(this)[idx]; }

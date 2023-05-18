@@ -1,5 +1,5 @@
 #include <catch2/catch_test_macros.hpp>
-#include <Math/Vector.hpp>
+#include <MathLib/Vector.hpp>
 
 TEST_CASE("Check Vector2f constructors", "[Math][Vector]")
 {

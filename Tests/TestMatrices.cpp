@@ -1,6 +1,6 @@
 #include <catch2/catch_test_macros.hpp>
-#include <Math/Matrix.hpp>
-#include <Math/Debug/StreamOperators.hpp>
+#include <MathLib/Matrix.hpp>
+#include <MathLib/Debug/StreamOperators.hpp>
 
 TEST_CASE("Check inverse calculations", "[Math][Matrix]")
 {

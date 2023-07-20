@@ -36,8 +36,8 @@ namespace Math
         constexpr T LenSqr() const noexcept { return x * x + y * y; }
         constexpr T Length() const noexcept { return std::sqrt(LenSqr()); }
 
-        constexpr T Max() noexcept { return std::max(x, y); }
-        constexpr T Min() noexcept { return std::min(x, y); }
+        constexpr T Max() noexcept { return ::Math::Max(x, y); }
+        constexpr T Min() noexcept { return ::Math::Min(x, y); }
     };
 
     template <typename T>
@@ -59,8 +59,8 @@ namespace Math
         constexpr T LenSqr() const noexcept { return x * x + y * y + z * z; }
         constexpr T Length() const noexcept { return std::sqrt(LenSqr()); }
 
-        constexpr T Max() noexcept { return std::max({x, y, z}); }
-        constexpr T Min() noexcept { return std::min({x, y, z}); }
+        constexpr T Max() noexcept { return ::Math::Max({x, y, z}); }
+        constexpr T Min() noexcept { return ::Math::Min({x, y, z}); }
     };
 
     template <typename T>
@@ -85,8 +85,8 @@ namespace Math
         constexpr T LenSqr() const noexcept { return x * x + y * y + z * z + w * w; }
         constexpr T Length() const noexcept { return std::sqrt(LenSqr()); }
 
-        constexpr T Max() noexcept { return std::max({x, y, z, w}); }
-        constexpr T Min() noexcept { return std::min({x, y, z, w}); }
+        constexpr T Max() noexcept { return ::Math::Max({x, y, z, w}); }
+        constexpr T Min() noexcept { return ::Math::Min({x, y, z, w}); }
     };
 
     //////////////////////////////////////////////////////////////////////////

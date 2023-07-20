@@ -3,6 +3,8 @@
 
 #include "Constants.hpp"
 
+#include <initializer_list>
+
 namespace Math
 {
     //////////////////////////////////////////////////////////////////////////
@@ -104,6 +106,54 @@ namespace Math
     bool Equal(T val1, T val2, T epsilon = Constants::FloatEps<T>) noexcept
     {
         return Abs(val1 - val2) < epsilon;
+    }
+
+    //////////////////////////////////////////////////////////////////////////
+    // Min/Max
+    //////////////////////////////////////////////////////////////////////////
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    T Min(T val1, T val2) noexcept
+    {
+        return val1 < val2 ? val1 : val2;
+    }
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    T Min(std::initializer_list<T> values)
+    {
+        T min = *values.begin();
+        for (auto val : values)
+        {
+            if (val < min)
+            {
+                min = val;
+            }
+        }
+        return min;
+    }
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    T Max(T val1, T val2) noexcept
+    {
+        return val1 > val2 ? val1 : val2;
+    }
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    T Max(std::initializer_list<T> values)
+    {
+        T max = *values.begin();
+        for (auto val : values)
+        {
+            if (val > max)
+            {
+                max = val;
+            }
+        }
+        return max;
     }
 }
 

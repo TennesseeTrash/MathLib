@@ -5,7 +5,7 @@
 
 namespace Math
 {
-    namespace detail
+    namespace Detail
     {
         auto prvalue(auto&& arg)
         {
@@ -37,6 +37,7 @@ namespace Math
         typename T::ScalarType;
         { T::Dimension } -> std::same_as<size_t>;
 
+        ArithmeticType<typename T::ScalarType>;
         ArithmeticType<T>;
 
         requires requires (size_t i)
@@ -70,37 +71,117 @@ namespace Math
     concept ConceptVector2 = requires (T u)
     {
         ConceptVectorN<T>;
-        { detail::prvalue(u.x) } -> std::same_as<typename T::ScalarType>;
-        { detail::prvalue(u.x) } -> std::same_as<typename T::ScalarType>;
-        T::Dimension == 2;
+        { Detail::prvalue(u.x) } -> std::same_as<typename T::ScalarType>;
+        { Detail::prvalue(u.x) } -> std::same_as<typename T::ScalarType>;
+        requires T::Dimension == 2;
     };
 
     template <typename T>
     concept ConceptVector3 = requires (T u)
     {
         ConceptVectorN<T>;
-        { detail::prvalue(u.x) } -> std::same_as<typename T::ScalarType>;
-        { detail::prvalue(u.y) } -> std::same_as<typename T::ScalarType>;
-        { detail::prvalue(u.z) } -> std::same_as<typename T::ScalarType>;
-        T::Dimension == 3;
+        { Detail::prvalue(u.x) } -> std::same_as<typename T::ScalarType>;
+        { Detail::prvalue(u.y) } -> std::same_as<typename T::ScalarType>;
+        { Detail::prvalue(u.z) } -> std::same_as<typename T::ScalarType>;
+        requires T::Dimension == 3;
     };
 
     template <typename T>
     concept ConceptVector4 = requires (T u)
     {
         ConceptVectorN<T>;
-        { detail::prvalue(u.x) } -> std::same_as<typename T::ScalarType>;
-        { detail::prvalue(u.y) } -> std::same_as<typename T::ScalarType>;
-        { detail::prvalue(u.z) } -> std::same_as<typename T::ScalarType>;
-        { detail::prvalue(u.w) } -> std::same_as<typename T::ScalarType>;
-        T::Dimension == 4;
+        { Detail::prvalue(u.x) } -> std::same_as<typename T::ScalarType>;
+        { Detail::prvalue(u.y) } -> std::same_as<typename T::ScalarType>;
+        { Detail::prvalue(u.z) } -> std::same_as<typename T::ScalarType>;
+        { Detail::prvalue(u.w) } -> std::same_as<typename T::ScalarType>;
+        requires T::Dimension == 4;
     };
 
     template <typename T>
-    concept ConceptVector = requires {
+    concept ConceptVector = requires
+    {
         requires ConceptVector2<T>
               || ConceptVector3<T>
               || ConceptVector4<T>;
+    };
+
+    template <typename T>
+    concept ConceptMatrixN = requires (T m)
+    {
+        typename T::ScalarType;
+        typename T::VectorType;
+        { T::Dimension } -> std::same_as<size_t>;
+
+        T::VectorType::Dimension == T::Dimension;
+
+        ArithmeticType<typename T::ScalarType>;
+        ArithmeticType<typename T::VectorType>;
+
+        requires requires (size_t i)
+        {
+            { m[i]    } -> std::same_as<typename T::VectorType>;
+            { m[i][i] } -> std::same_as<typename T::ScalarType>;
+        };
+
+        requires requires (T n)
+        {
+            { m + n } -> std::same_as<T>;
+            { m - n } -> std::same_as<T>;
+            { m * n } -> std::same_as<T>;
+        };
+
+        requires requires (typename T::ScalarType s)
+        {
+            { m + s } -> std::same_as<T>;
+            { s + m } -> std::same_as<T>;
+            { m - s } -> std::same_as<T>;
+            { s - m } -> std::same_as<T>;
+            { m * s } -> std::same_as<T>;
+            { s * m } -> std::same_as<T>;
+            { m / s } -> std::same_as<T>;
+        };
+
+        requires requires (typename T::VectorType u)
+        {
+            { m * u } -> std::same_as<typename T::VectorType>;
+            { u * m } -> std::same_as<typename T::VectorType>;
+        };
+    };
+
+    template <typename T>
+    concept ConceptMatrix2 = requires (T m)
+    {
+        ConceptMatrixN<T>;
+        requires T::Dimension == 2;
+    };
+
+    template <typename T>
+    concept ConceptMatrix3 = requires (T m)
+    {
+        ConceptMatrixN<T>;
+        requires T::Dimension == 3;
+    };
+
+    template <typename T>
+    concept ConceptMatrix4 = requires (T m)
+    {
+        ConceptMatrixN<T>;
+        requires T::Dimension == 4;
+    };
+
+    template <typename T>
+    concept ConceptMatrix = requires
+    {
+        requires ConceptMatrix2<T>
+              || ConceptMatrix3<T>
+              || ConceptMatrix4<T>;
+    };
+
+    template <typename T>
+    concept ConceptLibType = requires
+    {
+        requires ConceptVector<T>
+              || ConceptMatrix<T>;
     };
 }
 

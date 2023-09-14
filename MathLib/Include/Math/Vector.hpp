@@ -31,6 +31,26 @@ namespace Math
     using Vector2l = Vector2T<i64>;
     using Vector3l = Vector3T<i64>;
     using Vector4l = Vector4T<i64>;
+
+    //////////////////////////////////////////////////////////////////////////
+    // Enforce concepts on provided types
+    //////////////////////////////////////////////////////////////////////////
+
+    static_assert(ConceptVector2<Vector2f>);
+    static_assert(ConceptVector3<Vector3f>);
+    static_assert(ConceptVector4<Vector4f>);
+
+    static_assert(ConceptVector2<Vector2d>);
+    static_assert(ConceptVector3<Vector3d>);
+    static_assert(ConceptVector4<Vector4d>);
+
+    static_assert(ConceptVector2<Vector2i>);
+    static_assert(ConceptVector3<Vector3i>);
+    static_assert(ConceptVector4<Vector4i>);
+
+    static_assert(ConceptVector2<Vector2l>);
+    static_assert(ConceptVector3<Vector3l>);
+    static_assert(ConceptVector4<Vector4l>);
 }
 
 #endif //MATHLIB_VECTOR_HPP

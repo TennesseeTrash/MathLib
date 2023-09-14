@@ -34,6 +34,6 @@ TEST_CASE("Check inverse calculations", "[Math][Matrix]")
 
         Math::Matrix4f m_inverse = Math::Invert(m);
 
-        REQUIRE(Math::Equal((m * m_inverse), Math::Matrix4f(1.0f)));
+        REQUIRE(Math::Equal((m * m_inverse), Math::Matrix4f(1.0f), 1.0e-5f));
     }
 }

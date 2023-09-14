@@ -33,17 +33,6 @@ namespace Math
         constexpr T Min() noexcept { return ::Math::Min({x, y, z}); }
     };
 
-    template <typename T>
-    [[nodiscard]] constexpr
-    Vector3T<T> Cross(const Vector3T<T>& u, const Vector3T<T>& v) noexcept
-    {
-        Vector3T<T> w;
-        w.x = u.y * v.z - u.z * v.y;
-        w.y = u.z * v.x - u.x * v.z;
-        w.z = u.x * v.y - u.y * v.x;
-        return w;
-    }
-
     //////////////////////////////////////////////////////////////////////////
     // Basic arithmetic
     //////////////////////////////////////////////////////////////////////////

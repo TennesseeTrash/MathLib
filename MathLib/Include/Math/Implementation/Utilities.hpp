@@ -29,6 +29,24 @@ namespace Math
         return u / len;
     }
 
+    template <ConceptVector2 Vec>
+    [[nodiscard]] constexpr
+    Vec Perp(const Vec& u) noexcept
+    {
+        return Vector2T<T>(u.y, -u.x);
+    }
+
+    template <ConceptVector3 Vec>
+    [[nodiscard]] constexpr
+    Vec Cross(const Vec& u, const Vec& v) noexcept
+    {
+        Vector3T<T> w;
+        w.x = u.y * v.z - u.z * v.y;
+        w.y = u.z * v.x - u.x * v.z;
+        w.z = u.x * v.y - u.y * v.x;
+        return w;
+    }
+
     template <ConceptVector Vec>
     [[nodiscard]] constexpr
     bool Equal(const Vec& u, const Vec& v, typename Vec::ScalarType epsilon = Constants::Epsilon<typename Vec::ScalarType>::Value) noexcept

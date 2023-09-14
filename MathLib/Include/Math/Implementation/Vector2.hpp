@@ -30,13 +30,6 @@ namespace Math
         constexpr T Min() noexcept { return ::Math::Min(x, y); }
     };
 
-    template <typename T>
-    [[nodiscard]] constexpr
-    Vector2T<T> Perp(const Vector2T<T>& u) noexcept
-    {
-        return Vector2T<T>(u.y, -u.x);
-    }
-
     //////////////////////////////////////////////////////////////////////////
     // Basic arithmetic
     //////////////////////////////////////////////////////////////////////////

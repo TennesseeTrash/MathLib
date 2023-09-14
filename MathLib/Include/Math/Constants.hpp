@@ -1,6 +1,9 @@
 #ifndef MATHLIB_CONSTANTS_HPP
 #define MATHLIB_CONSTANTS_HPP
 
+#include "Common/Types.hpp"
+#include "Common/Concepts.hpp"
+
 namespace Math
 {
     namespace Constants
@@ -20,19 +23,41 @@ namespace Math
         template <typename T>
         static constexpr T Sqrt5    = T(2.2360679774997896964091736687312762354406183596115257242708972454);
 
-        static constexpr float Pi_f    = Pi   <float>;
-        static constexpr float E_f     = E    <float>;
-        static constexpr float Phi_f   = Phi  <float>;
-        static constexpr float Sqrt2_f = Sqrt2<float>;
-        static constexpr float Sqrt3_f = Sqrt3<float>;
-        static constexpr float Sqrt5_f = Sqrt5<float>;
+        static constexpr f32 Pi_f    = Pi   <f32>;
+        static constexpr f32 E_f     = E    <f32>;
+        static constexpr f32 Phi_f   = Phi  <f32>;
+        static constexpr f32 Sqrt2_f = Sqrt2<f32>;
+        static constexpr f32 Sqrt3_f = Sqrt3<f32>;
+        static constexpr f32 Sqrt5_f = Sqrt5<f32>;
 
-        static constexpr double Pi_d    = Pi   <double>;
-        static constexpr double E_d     = E    <double>;
-        static constexpr double Phi_d   = Phi  <double>;
-        static constexpr double Sqrt2_d = Sqrt2<double>;
-        static constexpr double Sqrt3_d = Sqrt3<double>;
-        static constexpr double Sqrt5_d = Sqrt5<double>;
+        static constexpr f64 Pi_d    = Pi   <f64>;
+        static constexpr f64 E_d     = E    <f64>;
+        static constexpr f64 Phi_d   = Phi  <f64>;
+        static constexpr f64 Sqrt2_d = Sqrt2<f64>;
+        static constexpr f64 Sqrt3_d = Sqrt3<f64>;
+        static constexpr f64 Sqrt5_d = Sqrt5<f64>;
+
+        template <typename T>
+        struct Epsilon final
+        {};
+
+        template <IntegralType T>
+        struct Epsilon<T> final
+        {
+            static constexpr T Value = 0;
+        };
+
+        template <>
+        struct Epsilon<f32> final
+        {
+            static constexpr f32 Value = 1.0e-6f;
+        };
+
+        template <>
+        struct Epsilon<f64> final
+        {
+            static constexpr f64 Value = 1.0e-10;
+        };
     }
 }
 

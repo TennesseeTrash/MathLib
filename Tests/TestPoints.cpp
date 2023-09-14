@@ -1,2 +1,2 @@
 #include <catch2/catch_test_macros.hpp>
-#include <MathLib/Point.hpp>
+#include <Math/Point.hpp>

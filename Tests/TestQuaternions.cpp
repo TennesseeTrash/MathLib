@@ -1,7 +1,7 @@
 #include <catch2/catch_test_macros.hpp>
-#include <MathLib/Quaternion.hpp>
-#include <MathLib/Utils/Transform.hpp>
-#include <MathLib/Debug/StreamOperators.hpp>
+#include <Math/Quaternion.hpp>
+#include <Math/Utils/Transform.hpp>
+#include <Math/Debug/StreamOperators.hpp>
 
 TEST_CASE("Quaternion and Transform similarity", "[Math][Quaternion]")
 {

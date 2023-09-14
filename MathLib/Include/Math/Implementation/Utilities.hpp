@@ -1,5 +1,5 @@
-#ifndef MATHLIB_IMPL_EQUALITIES_HPP
-#define MATHLIB_IMPL_EQUALITIES_HPP
+#ifndef MATHLIB_IMPL_UTILITIES_HPP
+#define MATHLIB_IMPL_UTILITIES_HPP
 
 #include "../Common/Concepts.hpp"
 
@@ -22,7 +22,8 @@ namespace Math
     }
 
     template <ConceptVector Vec>
-    Vec Normalize(const Vec& u)
+    [[nodiscard]] constexpr
+    Vec Normalize(const Vec& u) noexcept
     {
         auto len = u.Length();
         return u / len;
@@ -59,4 +60,4 @@ namespace Math
     }
 }
 
-#endif //MATHLIB_IMPL_EQUALITIES_HPP
+#endif //MATHLIB_IMPL_UTILITIES_HPP

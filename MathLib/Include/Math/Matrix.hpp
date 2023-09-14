@@ -1,21 +1,16 @@
 #ifndef MATHLIB_MATRIX_HPP
 #define MATHLIB_MATRIX_HPP
 
-#include <array>
-#include <limits>
+#include "Common/Types.hpp"
+#include "Common/Concepts.hpp"
 
 #include "Vector.hpp"
 #include "Point.hpp"
 
+#include <array>
+
 namespace Math
 {
-    //////////////////////////////////////////////////////////////////////////
-    // Assumptions for correct behavior
-    //////////////////////////////////////////////////////////////////////////
-
-    static_assert(std::numeric_limits<float>::is_iec559);
-    static_assert(std::numeric_limits<double>::is_iec559);
-
     //////////////////////////////////////////////////////////////////////////
     // Basic Definitions
     //////////////////////////////////////////////////////////////////////////

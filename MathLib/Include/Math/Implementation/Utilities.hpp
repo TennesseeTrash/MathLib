@@ -33,14 +33,14 @@ namespace Math
     [[nodiscard]] constexpr
     Vec Perp(const Vec& u) noexcept
     {
-        return Vector2T<T>(u.y, -u.x);
+        return Vec(u.y, -u.x);
     }
 
     template <ConceptVector3 Vec>
     [[nodiscard]] constexpr
     Vec Cross(const Vec& u, const Vec& v) noexcept
     {
-        Vector3T<T> w;
+        Vec w;
         w.x = u.y * v.z - u.z * v.y;
         w.y = u.z * v.x - u.x * v.z;
         w.z = u.x * v.y - u.y * v.x;

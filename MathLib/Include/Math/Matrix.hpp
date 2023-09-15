@@ -134,7 +134,7 @@ namespace Math
         {
             for (size_t j = 0; j < Mat::Dimension; ++j)
             {
-                scaled[i][j] -= s;
+                scaled[i][j] = s - m[i][j];
             }
         }
         return scaled;

@@ -141,6 +141,13 @@ namespace Math
 
     template <typename T>
     [[nodiscard]] constexpr
+    Vector3T<T> operator- (T s, const Vector3T<T>& u) noexcept
+    {
+        return Vector3T<T>(s - u.x, s - u.y, s - u.z);
+    }
+
+    template <typename T>
+    [[nodiscard]] constexpr
     Vector3T<T> operator* (const Vector3T<T>& u, T s) noexcept
     {
         return Vector3T<T>(u.x * s, u.y * s, u.z * s);

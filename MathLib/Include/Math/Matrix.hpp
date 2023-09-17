@@ -2,18 +2,12 @@
 #define MATHLIB_MATRIX_HPP
 
 #include "Common/Types.hpp"
-#include "Common/Concepts.hpp"
-#include "Functions.hpp"
-
-#include "Vector.hpp"
-#include "Point.hpp"
-
 #include "Implementation/Matrix2.hpp"
 #include "Implementation/Matrix3.hpp"
 #include "Implementation/Matrix4.hpp"
 #include "Implementation/MatrixOperators.hpp"
 
-#include <array>
+#include "Point.hpp"
 
 namespace Math
 {

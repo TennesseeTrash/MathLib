@@ -2,8 +2,6 @@
 #define MATHLIB_VECTOR_HPP
 
 #include "Common/Types.hpp"
-#include "Common/Concepts.hpp"
-#include "Functions.hpp"
 
 #include "Implementation/Vector2.hpp"
 #include "Implementation/Vector3.hpp"

@@ -1,6 +1,10 @@
 #ifndef MATHLIB_IMPL_MATRIX2_HPP
 #define MATHLIB_IMPL_MATRIX2_HPP
 
+#include "Vector2.hpp"
+
+#include <array>
+
 namespace Math
 {
     template <typename T>

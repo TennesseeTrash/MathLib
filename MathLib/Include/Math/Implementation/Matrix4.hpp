@@ -1,6 +1,10 @@
 #ifndef MATHLIB_IMPL_MATRIX4_HPP
 #define MATHLIB_IMPL_MATRIX4_HPP
 
+#include "Vector4.hpp"
+
+#include <array>
+
 namespace Math
 {
     template <typename T>

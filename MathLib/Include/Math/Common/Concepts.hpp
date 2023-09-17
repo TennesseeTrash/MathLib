@@ -5,6 +5,10 @@
 
 namespace Math
 {
+    //////////////////////////////////////////////////////////////////////////
+    // General concepts
+    //////////////////////////////////////////////////////////////////////////
+
     namespace Detail
     {
         auto Prvalue(auto&& arg)
@@ -39,6 +43,10 @@ namespace Math
         { a *= b } -> SameBaseType<T>;
         { a /= b } -> SameBaseType<T>;
     };
+
+    //////////////////////////////////////////////////////////////////////////
+    // Vector concepts
+    //////////////////////////////////////////////////////////////////////////
 
     template <typename T>
     concept ConceptBasicVector = requires (T u)
@@ -122,54 +130,9 @@ namespace Math
               || ConceptVector4<T>;
     };
 
-    template <typename T>
-    concept ConceptBasicPoint = requires (T p)
-    {
-        typename T::ScalarType;
-        { T::Dimension } -> SameBaseType<size_t>;
-
-        requires ArithmeticType<typename T::ScalarType>;
-
-        requires requires (size_t i)
-        {
-            { p[i] } -> SameBaseType<typename T::ScalarType>;
-        };
-
-        { p.Max() } -> SameBaseType<typename T::ScalarType>;
-        { p.Min() } -> SameBaseType<typename T::ScalarType>;
-    };
-
-    template <typename T, typename Vec>
-    concept ConceptPointN = requires (T p)
-    {
-        requires ConceptBasicPoint<T>;
-
-        requires requires (T q)
-        {
-            { p - q } -> std::convertible_to<Vec>;
-        };
-    };
-
-    template <typename T, typename Vec>
-    concept ConceptPoint2 = requires (T p)
-    {
-        requires ConceptPointN<T, Vec>;
-        requires T::Dimension == 2;
-    };
-
-    template <typename T, typename Vec>
-    concept ConceptPoint3 = requires (T p)
-    {
-        requires ConceptPointN<T, Vec>;
-        requires T::Dimension == 3;
-    };
-
-    template <typename T, typename Vec>
-    concept ConceptPoint = requires
-    {
-        requires ConceptPoint2<T, Vec>
-              || ConceptPoint3<T, Vec>;
-    };
+    //////////////////////////////////////////////////////////////////////////
+    // Matrix concepts
+    //////////////////////////////////////////////////////////////////////////
 
     template <typename T>
     concept ConceptBasicMatrix = requires (T m)
@@ -178,10 +141,10 @@ namespace Math
         typename T::VectorType;
         { T::Dimension } -> SameBaseType<size_t>;
 
+        requires ConceptBasicVector<typename T::VectorType>;
         requires T::VectorType::Dimension == T::Dimension;
 
         requires ArithmeticType<typename T::ScalarType>;
-        requires ArithmeticType<typename T::VectorType>;
 
         requires requires (size_t i)
         {
@@ -249,12 +212,115 @@ namespace Math
               || ConceptMatrix4<T>;
     };
 
+    //////////////////////////////////////////////////////////////////////////
+    // Point concepts
+    //////////////////////////////////////////////////////////////////////////
+
+    template <typename T>
+    concept ConceptBasicPoint = requires (T p)
+    {
+        typename T::ScalarType;
+        typename T::VectorType;
+        typename T::MatrixType;
+        typename T::ProjectiveMatrixType;
+        { T::Dimension } -> SameBaseType<size_t>;
+
+        requires ConceptBasicVector<typename T::VectorType>;
+        requires T::VectorType::Dimension == T::Dimension;
+        requires ConceptBasicMatrix<typename T::MatrixType>;
+        requires T::MatrixType::Dimension == T::Dimension;
+        requires ConceptBasicMatrix<typename T::ProjectiveMatrixType>;
+        requires T::ProjectiveMatrixType::Dimension == T::Dimension + 1;
+
+        requires ArithmeticType<typename T::ScalarType>;
+
+        { typename T::VectorType(p) } -> std::same_as<typename T::VectorType>;
+
+        requires requires (size_t i)
+        {
+            { p[i] } -> SameBaseType<typename T::ScalarType>;
+        };
+
+        { p.Max() } -> SameBaseType<typename T::ScalarType>;
+        { p.Min() } -> SameBaseType<typename T::ScalarType>;
+    };
+
+    template <typename T>
+    concept ConceptPointN = requires (T p)
+    {
+        requires ConceptBasicPoint<T>;
+
+        requires requires (T q)
+        {
+            { p - q } -> std::convertible_to<typename T::VectorType>;
+        };
+
+        requires requires (typename T::VectorType v)
+        {
+            { p + v } -> std::same_as<T>;
+            { v + p } -> std::same_as<T>;
+            { p - v } -> std::same_as<T>;
+            { v - p } -> std::same_as<T>;
+            { p * v } -> std::same_as<T>;
+            { v * p } -> std::same_as<T>;
+            { p / v } -> std::same_as<T>;
+
+            { p += v } -> SameBaseType<T>;
+            { p -= v } -> SameBaseType<T>;
+            { p *= v } -> SameBaseType<T>;
+            { p /= v } -> SameBaseType<T>;
+        };
+
+        requires requires (typename T::MatrixType m)
+        {
+            { p * m } -> std::same_as<T>;
+            { m * p } -> std::same_as<T>;
+
+        };
+
+        requires requires (typename T::ProjectiveMatrixType m)
+        {
+            { p * m } -> std::same_as<T>;
+            { m * p } -> std::same_as<T>;
+        };
+    };
+
+    template <typename T>
+    concept ConceptPoint2 = requires (T p)
+    {
+        requires ConceptPointN<T>;
+        { Detail::Prvalue(p.x) } -> SameBaseType<typename T::ScalarType>;
+        { Detail::Prvalue(p.x) } -> SameBaseType<typename T::ScalarType>;
+        requires T::Dimension == 2;
+    };
+
+    template <typename T>
+    concept ConceptPoint3 = requires (T p)
+    {
+        requires ConceptPointN<T>;
+        { Detail::Prvalue(p.x) } -> SameBaseType<typename T::ScalarType>;
+        { Detail::Prvalue(p.y) } -> SameBaseType<typename T::ScalarType>;
+        { Detail::Prvalue(p.z) } -> SameBaseType<typename T::ScalarType>;
+        requires T::Dimension == 3;
+    };
+
+    template <typename T>
+    concept ConceptPoint = requires
+    {
+        requires ConceptPoint2<T>
+              || ConceptPoint3<T>;
+    };
+
+    //////////////////////////////////////////////////////////////////////////
+    // Utility concepts
+    //////////////////////////////////////////////////////////////////////////
+
     template <typename T>
     concept ConceptUtilType = requires
     {
         requires ConceptBasicVector<T>
-              || ConceptBasicPoint<T>
-              || ConceptBasicMatrix<T>;
+              || ConceptBasicMatrix<T>
+              || ConceptBasicPoint<T>;
     };
 }
 

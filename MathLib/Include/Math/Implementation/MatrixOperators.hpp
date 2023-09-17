@@ -2,6 +2,8 @@
 #define MATHLIB_IMPL_MATRIX_OPERATORS_HPP
 
 #include "../Common/Concepts.hpp"
+#include "VectorOperators.hpp"
+#include "Utilities.hpp"
 
 namespace Math
 {

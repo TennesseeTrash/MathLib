@@ -14,7 +14,13 @@ namespace Math
     }
 
     template <typename T>
+    concept FundamentalType = std::is_fundamental_v<T>;
+
+    template <typename T>
     concept IntegralType = std::is_integral_v<T>;
+
+    template <typename T>
+    concept FloatingPointType = std::is_floating_point_v<T>;
 
     template <typename T>
     concept ArithmeticType = requires (T a, T b)
@@ -37,8 +43,8 @@ namespace Math
         typename T::ScalarType;
         { T::Dimension } -> std::same_as<size_t>;
 
-        ArithmeticType<typename T::ScalarType>;
-        ArithmeticType<T>;
+        requires ArithmeticType<typename T::ScalarType>;
+        requires ArithmeticType<T>;
 
         requires requires (size_t i)
         {
@@ -113,10 +119,10 @@ namespace Math
         typename T::VectorType;
         { T::Dimension } -> std::same_as<size_t>;
 
-        T::VectorType::Dimension == T::Dimension;
+        requires T::VectorType::Dimension == T::Dimension;
 
-        ArithmeticType<typename T::ScalarType>;
-        ArithmeticType<typename T::VectorType>;
+        requires ArithmeticType<typename T::ScalarType>;
+        requires ArithmeticType<typename T::VectorType>;
 
         requires requires (size_t i)
         {

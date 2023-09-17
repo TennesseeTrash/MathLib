@@ -178,7 +178,7 @@ namespace Math
 
     template <typename T>
     [[nodiscard]] constexpr
-    bool Equal(const QuaternionT<T>& q1, const QuaternionT<T>& q2, T epsilon = Constants::FloatEps<T>) noexcept
+    bool Equal(const QuaternionT<T>& q1, const QuaternionT<T>& q2, T epsilon = Constants::Epsilon<T>::Value) noexcept
     {
         return Equal(q1.mV, q2.mV, epsilon)
             && Equal(q1.mS, q2.mS, epsilon);

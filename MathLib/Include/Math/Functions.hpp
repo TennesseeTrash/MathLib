@@ -1,6 +1,7 @@
 #ifndef MATHLIB_FUNCTIONS_HPP
 #define MATHLIB_FUNCTIONS_HPP
 
+#include "Common/Concepts.hpp"
 #include "Constants.hpp"
 
 #include <initializer_list>
@@ -98,14 +99,21 @@ namespace Math
     }
 
     //////////////////////////////////////////////////////////////////////////
-    // Equal function for floating point comparisons
+    // Equal function for fundamental types
     //////////////////////////////////////////////////////////////////////////
 
-    template <typename T>
+    template <FundamentalType T>
     [[nodiscard]] constexpr
-    bool Equal(T val1, T val2, T epsilon = Constants::FloatEps<T>) noexcept
+    bool Equal(T val1, T val2, T epsilon = Constants::Epsilon<T>::Value) noexcept
     {
-        return Abs(val1 - val2) < epsilon;
+        if constexpr (FloatingPointType<T>)
+        {
+            return Abs(val1 - val2) < epsilon;
+        }
+        else
+        {
+            return val1 == val2;
+        }
     }
 
     //////////////////////////////////////////////////////////////////////////

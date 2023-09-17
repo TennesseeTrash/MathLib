@@ -1,6 +1,8 @@
 #ifndef MATHLIB_IMPL_VECTOR4_HPP
 #define MATHLIB_IMPL_VECTOR4_HPP
 
+#include "Vector3.hpp"
+
 namespace Math
 {
     template <typename T>

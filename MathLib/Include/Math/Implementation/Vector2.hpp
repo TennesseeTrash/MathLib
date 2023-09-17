@@ -1,6 +1,8 @@
 #ifndef MATHLIB_IMPL_VECTOR2_HPP
 #define MATHLIB_IMPL_VECTOR2_HPP
 
+#include "../Functions.hpp"
+
 namespace Math
 {
     template <typename T>

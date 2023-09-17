@@ -12,6 +12,9 @@ namespace Math
     template <typename T>
     struct Point2T
     {
+        using ScalarType = T;
+        static constexpr size_t Dimension = 2;
+
         T x = T(0);
         T y = T(0);
 
@@ -30,6 +33,9 @@ namespace Math
     template <typename T>
     struct Point3T
     {
+        using ScalarType = T;
+        static constexpr size_t Dimension = 3;
+
         T x = T(0);
         T y = T(0);
         T z = T(0);
@@ -252,41 +258,6 @@ namespace Math
     //////////////////////////////////////////////////////////////////////////
     // Utilities
     //////////////////////////////////////////////////////////////////////////
-
-    // Equality checks
-
-    template <typename T>
-    [[nodiscard]] constexpr
-    bool Equal(const Point2T<T>& p1, const Point2T<T>& p2, T epsilon = Constants::FloatEps<T>) noexcept
-    {
-        return Equal(p1.x, p2.x, epsilon)
-            && Equal(p1.y, p2.y, epsilon);
-    }
-
-    template <typename T>
-    [[nodiscard]] constexpr
-    bool Equal(const Point3T<T>& p1, const Point3T<T>& p2, T epsilon = Constants::FloatEps<T>) noexcept
-    {
-        return Equal(p1.x, p2.x, epsilon)
-            && Equal(p1.y, p2.y, epsilon)
-            && Equal(p1.z, p2.z, epsilon);
-    }
-
-    // NaN checks
-
-    template <typename T>
-    [[nodiscard]] constexpr
-    bool HasNaN(const Point2T<T>& p) noexcept
-    {
-        return (p.x != p.x) || (p.y != p.y);
-    }
-
-    template <typename T>
-    [[nodiscard]] constexpr
-    bool HasNaN(const Point3T<T>& p) noexcept
-    {
-        return (p.x != p.x) || (p.y != p.y) || (p.z != p.z);
-    }
 }
 
 #endif //MATHLIB_POINT_HPP

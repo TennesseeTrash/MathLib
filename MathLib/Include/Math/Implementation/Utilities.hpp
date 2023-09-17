@@ -5,7 +5,7 @@
 
 namespace Math
 {
-    template <ConceptVector Vec>
+    template <ConceptVectorN Vec>
     [[nodiscard]] constexpr
     typename Vec::ScalarType Dot(const Vec& u, const Vec& v) noexcept
     {
@@ -17,7 +17,7 @@ namespace Math
         return dot;
     }
 
-    template <ConceptVector Vec>
+    template <ConceptVectorN Vec>
     [[nodiscard]] constexpr
     Vec Normalize(const Vec& u) noexcept
     {
@@ -43,37 +43,18 @@ namespace Math
         return w;
     }
 
-    template <ConceptMatrix2 Mat>
+    template <ConceptMatrixN Mat>
     [[nodiscard]] constexpr
     Mat Transpose(const Mat& m) noexcept
     {
         Mat result = m;
-        std::swap(result[1][0], result[0][1]);
-        return result;
-    }
-
-    template <ConceptMatrix3 Mat>
-    [[nodiscard]] constexpr
-    Mat Transpose(const Mat& m) noexcept
-    {
-        Mat result = m;
-        std::swap(result[1][0], result[0][1]);
-        std::swap(result[2][0], result[0][2]);
-        std::swap(result[2][1], result[1][2]);
-        return result;
-    }
-
-    template <ConceptMatrix4 Mat>
-    [[nodiscard]] constexpr
-    Mat Transpose(const Mat& m) noexcept
-    {
-        Mat result = m;
-        std::swap(result[1][0], result[0][1]);
-        std::swap(result[2][0], result[0][2]);
-        std::swap(result[2][1], result[1][2]);
-        std::swap(result[3][0], result[0][3]);
-        std::swap(result[3][1], result[1][3]);
-        std::swap(result[3][2], result[2][3]);
+        for (size_t i = 0; i < Mat::Dimension; ++i)
+        {
+            for (size_t j = i + 1; j < Mat::Dimension; ++j)
+            {
+                std::swap(result[i][j], result[j][i]);
+            }
+        }
         return result;
     }
 
@@ -213,7 +194,7 @@ namespace Math
         return result;
     }
 
-    template <ConceptLibType T>
+    template <ConceptUtilType T>
     [[nodiscard]] constexpr
     bool Equal(const T& u, const T& v, typename T::ScalarType epsilon = Constants::Epsilon<typename T::ScalarType>::Value) noexcept
     {
@@ -228,7 +209,7 @@ namespace Math
         return true;
     }
 
-    template <ConceptVector Vec>
+    template <ConceptVectorN Vec>
     [[nodiscard]] constexpr
     bool HasNaN(const Vec& u) noexcept
     {
@@ -243,7 +224,22 @@ namespace Math
         return false;
     }
 
-    template <ConceptMatrix Mat>
+    template <ConceptBasicPoint Pnt>
+    [[nodiscard]] constexpr
+    bool HasNaN(const Pnt& p) noexcept
+    {
+        for (size_t i = 0; i < Pnt::Dimension; ++i)
+        {
+            if (p[i] != p[i])
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    template <ConceptMatrixN Mat>
     [[nodiscard]] constexpr
     bool HasNaN(const Mat& m)
     {

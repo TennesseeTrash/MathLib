@@ -33,6 +33,250 @@ namespace Math
     using Vector4l = Vector4T<i64>;
 
     //////////////////////////////////////////////////////////////////////////
+    // Operators
+    //////////////////////////////////////////////////////////////////////////
+
+    template <ConceptBasicVector Vec>
+    [[nodiscard]] constexpr
+    Vec operator+ (const Vec& u, const Vec& v) noexcept
+    {
+        Vec result;
+        for (size_t i = 0; i < Vec::Dimension; ++i)
+        {
+            result[i] = u[i] + v[i];
+        }
+        return result;
+    }
+
+    template <ConceptBasicVector Vec>
+    [[nodiscard]] constexpr
+    Vec operator- (const Vec& u, const Vec& v) noexcept
+    {
+        Vec result;
+        for (size_t i = 0; i < Vec::Dimension; ++i)
+        {
+            result[i] = u[i] - v[i];
+        }
+        return result;
+    }
+
+    template <ConceptBasicVector Vec>
+    [[nodiscard]] constexpr
+    Vec operator* (const Vec& u, const Vec& v) noexcept
+    {
+        Vec result;
+        for (size_t i = 0; i < Vec::Dimension; ++i)
+        {
+            result[i] = u[i] * v[i];
+        }
+        return result;
+    }
+
+    template <ConceptBasicVector Vec>
+    [[nodiscard]] constexpr
+    Vec operator/ (const Vec& u, const Vec& v) noexcept
+    {
+        Vec result;
+        for (size_t i = 0; i < Vec::Dimension; ++i)
+        {
+            result[i] = u[i] / v[i];
+        }
+        return result;
+    }
+
+    template <ConceptBasicVector Vec>
+    [[nodiscard]] constexpr
+    Vec operator- (const Vec& u) noexcept
+    {
+        Vec result;
+        for (size_t i = 0; i < Vec::Dimension; ++i)
+        {
+            result[i] = - u[i];
+        }
+        return result;
+    }
+
+
+
+    template <ConceptBasicVector Vec>
+    [[maybe_unused]] constexpr
+    Vec& operator+= (Vec& u, const Vec& v) noexcept
+    {
+        for (size_t i = 0; i < Vec::Dimension; ++i)
+        {
+            u[i] += v[i];
+        }
+        return u;
+    }
+
+    template <ConceptBasicVector Vec>
+    [[maybe_unused]] constexpr
+    Vec& operator-= (Vec& u, const Vec& v) noexcept
+    {
+        for (size_t i = 0; i < Vec::Dimension; ++i)
+        {
+            u[i] -= v[i];
+        }
+        return u;
+    }
+
+    template <ConceptBasicVector Vec>
+    [[maybe_unused]] constexpr
+    Vec& operator*= (Vec& u, const Vec& v) noexcept
+    {
+        for (size_t i = 0; i < Vec::Dimension; ++i)
+        {
+            u[i] *= v[i];
+        }
+        return u;
+    }
+
+    template <ConceptBasicVector Vec>
+    [[maybe_unused]] constexpr
+    Vec& operator/= (Vec& u, const Vec& v) noexcept
+    {
+        for (size_t i = 0; i < Vec::Dimension; ++i)
+        {
+            u[i] /= v[i];
+        }
+        return u;
+    }
+
+    //////////////////////////////////////////////////////////////////////////
+    // Scalar arithmetic
+    //////////////////////////////////////////////////////////////////////////
+
+    template <ConceptBasicVector Vec>
+    [[nodiscard]] constexpr
+    Vec operator+ (const Vec& u, typename Vec::ScalarType s) noexcept
+    {
+        Vec result;
+        for (size_t i = 0; i < Vec::Dimension; ++i)
+        {
+            result[i] = u[i] + s;
+        }
+        return result;
+    }
+
+    template <ConceptBasicVector Vec>
+    [[nodiscard]] constexpr
+    Vec operator+ (typename Vec::ScalarType s, const Vec& u) noexcept
+    {
+        Vec result;
+        for (size_t i = 0; i < Vec::Dimension; ++i)
+        {
+            result[i] = s + u[i];
+        }
+        return result;
+    }
+
+    template <ConceptBasicVector Vec>
+    [[nodiscard]] constexpr
+    Vec operator- (const Vec& u, typename Vec::ScalarType s) noexcept
+    {
+        Vec result;
+        for (size_t i = 0; i < Vec::Dimension; ++i)
+        {
+            result[i] = u[i] - s;
+        }
+        return result;
+    }
+
+    template <ConceptBasicVector Vec>
+    [[nodiscard]] constexpr
+    Vec operator- (typename Vec::ScalarType s, const Vec& u) noexcept
+    {
+        Vec result;
+        for (size_t i = 0; i < Vec::Dimension; ++i)
+        {
+            result[i] = s - u[i];
+        }
+        return result;
+    }
+
+    template <ConceptBasicVector Vec>
+    [[nodiscard]] constexpr
+    Vec operator* (const Vec& u, typename Vec::ScalarType s) noexcept
+    {
+        Vec result;
+        for (size_t i = 0; i < Vec::Dimension; ++i)
+        {
+            result[i] = u[i] * s;
+        }
+        return result;
+    }
+
+    template <ConceptBasicVector Vec>
+    [[nodiscard]] constexpr
+    Vec operator* (typename Vec::ScalarType s, const Vec& u) noexcept
+    {
+        Vec result;
+        for (size_t i = 0; i < Vec::Dimension; ++i)
+        {
+            result[i] = s * u[i];
+        }
+        return result;
+    }
+
+    template <ConceptBasicVector Vec>
+    [[nodiscard]] constexpr
+    Vec operator/ (const Vec& u, typename Vec::ScalarType s) noexcept
+    {
+        Vec result;
+        for (size_t i = 0; i < Vec::Dimension; ++i)
+        {
+            result[i] = u[i] / s;
+        }
+        return result;
+    }
+
+
+
+    template <ConceptBasicVector Vec>
+    [[maybe_unused]] constexpr
+    Vec& operator+= (Vec& u, typename Vec::ScalarType s) noexcept
+    {
+        for (size_t i = 0; i < Vec::Dimension; ++i)
+        {
+            u[i] += s;
+        }
+        return u;
+    }
+
+    template <ConceptBasicVector Vec>
+    [[maybe_unused]] constexpr
+    Vec& operator-= (Vec& u, typename Vec::ScalarType s) noexcept
+    {
+        for (size_t i = 0; i < Vec::Dimension; ++i)
+        {
+            u[i] -= s;
+        }
+        return u;
+    }
+
+    template <ConceptBasicVector Vec>
+    [[maybe_unused]] constexpr
+    Vec& operator*= (Vec& u, typename Vec::ScalarType s) noexcept
+    {
+        for (size_t i = 0; i < Vec::Dimension; ++i)
+        {
+            u[i] *= s;
+        }
+        return u;
+    }
+
+    template <ConceptBasicVector Vec>
+    [[maybe_unused]] constexpr
+    Vec& operator/= (Vec& u, typename Vec::ScalarType s) noexcept
+    {
+        for (size_t i = 0; i < Vec::Dimension; ++i)
+        {
+            u[i] /= s;
+        }
+        return u;
+    }
+
+    //////////////////////////////////////////////////////////////////////////
     // Enforce concepts on provided types
     //////////////////////////////////////////////////////////////////////////
 

@@ -98,7 +98,7 @@ namespace Math
         u.w -= v.w;
         return u;
     }
-    
+
     template <typename T>
     [[maybe_unused]] constexpr
     Vector4T<T> operator*= (Vector4T<T>& u, const Vector4T<T>& v) noexcept
@@ -197,7 +197,7 @@ namespace Math
         u.z -= s;
         u.w -= s;
         return u;
-    } 
+    }
 
     template <typename T>
     [[maybe_unused]] constexpr

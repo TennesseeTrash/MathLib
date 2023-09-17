@@ -19,13 +19,14 @@ namespace Math
         T y = T(0);
         T z = T(0);
 
-        constexpr          Point3T()                          noexcept : x(T(0)), y(T(0)), z(T(0)) {}
-        constexpr explicit Point3T(T val)                     noexcept : x(val ), y(val ), z(val ) {}
-        constexpr          Point3T(T xv, T yv, T zv)          noexcept : x(xv  ), y(yv  ), z(zv  ) {}
-        constexpr explicit Point3T(const Point2T<T>& p)       noexcept : x(p.x ), y(p.y ), z(T(0)) {}
-        constexpr explicit Point3T(const Point2T<T>& p, T zv) noexcept : x(p.x ), y(p.y ), z(zv  ) {}
-        constexpr explicit Point3T(const Vector2T<T>& v)      noexcept : x(v.x ), y(v.y ), z(T(0)) {}
-        constexpr explicit Point3T(const Vector3T<T>& v)      noexcept : x(v.x ), y(v.y ), z(v.z ) {}
+        constexpr          Point3T()                           noexcept : x(T(0)), y(T(0)), z(T(0)) {}
+        constexpr explicit Point3T(T val)                      noexcept : x(val ), y(val ), z(val ) {}
+        constexpr          Point3T(T xv, T yv, T zv)           noexcept : x(xv  ), y(yv  ), z(zv  ) {}
+        constexpr explicit Point3T(const Point2T<T>& p)        noexcept : x(p.x ), y(p.y ), z(T(0)) {}
+        constexpr explicit Point3T(const Point2T<T>& p, T zv)  noexcept : x(p.x ), y(p.y ), z(zv  ) {}
+        constexpr explicit Point3T(const Vector2T<T>& v)       noexcept : x(v.x ), y(v.y ), z(T(0)) {}
+        constexpr explicit Point3T(const Vector2T<T>& v, T zv) noexcept : x(v.x ), y(v.y ), z(zv  ) {}
+        constexpr explicit Point3T(const Vector3T<T>& v)       noexcept : x(v.x ), y(v.y ), z(v.z ) {}
 
         constexpr explicit operator Vector3T<T>()  const noexcept { return Vector3T<T>(x, y, z); }
 

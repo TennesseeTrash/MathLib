@@ -20,6 +20,7 @@ target_sources(Tests PRIVATE
     "TestPoints.cpp"
     "TestMatrices.cpp"
     "TestQuaternions.cpp"
+    "TestUtilsContainerTools.cpp"
 )
 
 set_property(TARGET Tests PROPERTY CXX_STANDARD 20)

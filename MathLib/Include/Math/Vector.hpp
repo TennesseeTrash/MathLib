@@ -23,6 +23,14 @@ namespace Math
     using Vector3d = Vector3T<f64>;
     using Vector4d = Vector4T<f64>;
 
+    using Vector2c = Vector2T< i8>;
+    using Vector3c = Vector3T< i8>;
+    using Vector4c = Vector4T< i8>;
+
+    using Vector2s = Vector2T<i16>;
+    using Vector3s = Vector3T<i16>;
+    using Vector4s = Vector4T<i16>;
+
     using Vector2i = Vector2T<i32>;
     using Vector3i = Vector3T<i32>;
     using Vector4i = Vector4T<i32>;

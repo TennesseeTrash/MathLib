@@ -112,7 +112,7 @@ namespace Math
 
 
     template <ConceptBasicPoint Pnt>
-    [[nodiscard]] constexpr
+    [[maybe_unused]] constexpr
     Pnt& operator+= (Pnt& p, const typename Pnt::VectorType& v) noexcept
     {
         for (size_t i = 0; i < Pnt::Dimension; ++i)
@@ -123,7 +123,7 @@ namespace Math
     }
 
     template <ConceptBasicPoint Pnt>
-    [[nodiscard]] constexpr
+    [[maybe_unused]] constexpr
     Pnt& operator-= (Pnt& p, const typename Pnt::VectorType& v) noexcept
     {
         for (size_t i = 0; i < Pnt::Dimension; ++i)
@@ -134,7 +134,7 @@ namespace Math
     }
 
     template <ConceptBasicPoint Pnt>
-    [[nodiscard]] constexpr
+    [[maybe_unused]] constexpr
     Pnt& operator*= (Pnt& p, const typename Pnt::VectorType& v) noexcept
     {
         for (size_t i = 0; i < Pnt::Dimension; ++i)
@@ -145,7 +145,7 @@ namespace Math
     }
 
     template <ConceptBasicPoint Pnt>
-    [[nodiscard]] constexpr
+    [[maybe_unused]] constexpr
     Pnt& operator/= (Pnt& p, const typename Pnt::VectorType& v) noexcept
     {
         for (size_t i = 0; i < Pnt::Dimension; ++i)

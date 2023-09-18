@@ -7,8 +7,6 @@
 #include "Implementation/Matrix4.hpp"
 #include "Implementation/MatrixOperators.hpp"
 
-#include "Point.hpp"
-
 namespace Math
 {
     //////////////////////////////////////////////////////////////////////////

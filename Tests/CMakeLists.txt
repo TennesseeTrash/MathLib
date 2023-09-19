@@ -23,8 +23,6 @@ target_sources(Tests PRIVATE
     "TestUtilsContainerTools.cpp"
 )
 
-set_property(TARGET Tests PROPERTY CXX_STANDARD 20)
-
 if(MSVC)
     target_compile_options(Tests PRIVATE /W4)
 else()

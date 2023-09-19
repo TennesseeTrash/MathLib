@@ -478,6 +478,27 @@ TEST_CASE("Vector operator/", "[Math][Vector]")
         Math::Vector4f expect(1.0f / 3.0f, 2.0f / 3.0f, 1.0f, 4.0f / 3.0f);
         REQUIRE(Math::Equal(vec / 3.0f, expect));
     }
+
+    SECTION("Scalar / Vector2")
+    {
+        Math::Vector2f vec(1.0f, 2.0f);
+        Math::Vector2f expect(3.0f, 1.5f);
+        REQUIRE(Math::Equal(3.0f / vec, expect));
+    }
+
+    SECTION("Scalar / Vector3")
+    {
+        Math::Vector3f vec(1.0f, 2.0f, 3.0f);
+        Math::Vector3f expect(3.0f, 1.5f, 1.0f);
+        REQUIRE(Math::Equal(3.0f / vec, expect));
+    }
+
+    SECTION("Scalar / Vector4")
+    {
+        Math::Vector4f vec(1.0f, 2.0f, 3.0f, 4.0f);
+        Math::Vector4f expect(3.0f, 1.5f, 1.0f, 0.75f);
+        REQUIRE(Math::Equal(3.0f / vec, expect));
+    }
 }
 
 TEST_CASE("Vector operator+=", "[Math][Vector]")

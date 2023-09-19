@@ -84,6 +84,7 @@ namespace Math
             { u * s } -> std::same_as<T>;
             { s * u } -> std::same_as<T>;
             { u / s } -> std::same_as<T>;
+            { s / u } -> std::same_as<T>;
 
             { u += s } -> SameBaseType<T>;
             { u -= s } -> SameBaseType<T>;

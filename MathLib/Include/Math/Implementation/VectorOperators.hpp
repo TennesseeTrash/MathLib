@@ -203,6 +203,18 @@ namespace Math
         return result;
     }
 
+    template <ConceptBasicVector Vec>
+    [[nodiscard]] constexpr
+    Vec operator/ (typename Vec::ScalarType s, const Vec& u) noexcept
+    {
+        Vec result;
+        for (size_t i = 0; i < Vec::Dimension; ++i)
+        {
+            result[i] = s / u[i];
+        }
+        return result;
+    }
+
 
 
     template <ConceptBasicVector Vec>

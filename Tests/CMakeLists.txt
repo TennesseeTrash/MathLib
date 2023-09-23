@@ -23,8 +23,12 @@ target_sources(Tests PRIVATE
     "TestUtilsContainerTools.cpp"
 )
 
-if(MSVC)
+if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     target_compile_options(Tests PRIVATE /W4)
-else()
+elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    target_compile_options(Tests PRIVATE -Wall -Wextra -Wpedantic)
+elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     target_compile_options(Tests PRIVATE -Weverything -Wpedantic -Wno-c++98-compat -Wno-c++98-compat-pedantic)
+else()
+    message(WARNING "Unknown compiler, no compiler warnings set for Tests target!")
 endif()

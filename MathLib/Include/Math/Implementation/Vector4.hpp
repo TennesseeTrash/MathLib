@@ -30,8 +30,8 @@ namespace Math
         constexpr T LenSqr() const noexcept { return x * x + y * y + z * z + w * w; }
         constexpr T Length() const noexcept { return std::sqrt(LenSqr()); }
 
-        constexpr T Max() noexcept { return ::Math::Max({x, y, z, w}); }
-        constexpr T Min() noexcept { return ::Math::Min({x, y, z, w}); }
+        constexpr T Max() noexcept { return ::Math::Max(x, y, z, w); }
+        constexpr T Min() noexcept { return ::Math::Min(x, y, z, w); }
     };
 }
 

@@ -4,7 +4,7 @@
 #include "Common/Concepts.hpp"
 #include "Constants.hpp"
 
-#include <initializer_list>
+#include "Implementation/Functions.hpp"
 
 namespace Math
 {
@@ -14,17 +14,19 @@ namespace Math
 
     template <typename T>
     [[nodiscard]] constexpr
-    T Sq(T val) noexcept
+    T Squared(T val) noexcept
     {
         return val * val;
     }
 
     template <typename T>
     [[nodiscard]] constexpr
-    T Cube(T val) noexcept
+    T Cubed(T val) noexcept
     {
         return val * val * val;
     }
+
+    // TODO(3011): Add Pow function
 
     //////////////////////////////////////////////////////////////////////////
     // Clamp, Lerp
@@ -127,19 +129,12 @@ namespace Math
         return val1 < val2 ? val1 : val2;
     }
 
-    template <typename T>
+    template <typename T, typename... Ts>
     [[nodiscard]] constexpr
-    T Min(std::initializer_list<T> values)
+    T Min(T v1, Ts... values) noexcept
     {
-        T min = *values.begin();
-        for (auto val : values)
-        {
-            if (val < min)
-            {
-                min = val;
-            }
-        }
-        return min;
+        static_assert(sizeof...(Ts) == 0 || (std::is_same_v<T, Ts> || ...));
+        return Implementation::Min({v1, values...});
     }
 
     template <typename T>
@@ -149,19 +144,12 @@ namespace Math
         return val1 > val2 ? val1 : val2;
     }
 
-    template <typename T>
+    template <typename T, typename... Ts>
     [[nodiscard]] constexpr
-    T Max(std::initializer_list<T> values)
+    T Max(T v1, Ts... values) noexcept
     {
-        T max = *values.begin();
-        for (auto val : values)
-        {
-            if (val > max)
-            {
-                max = val;
-            }
-        }
-        return max;
+        static_assert(sizeof...(Ts) == 0 || (std::is_same_v<T, Ts> || ...));
+        return Implementation::Max({v1, values...});
     }
 }
 

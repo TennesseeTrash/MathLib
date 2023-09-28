@@ -36,15 +36,15 @@ namespace Math
         {
             Matrix3T<T> result;
 
-            result[0][0] = Sq(mS) + Sq(mV.x) - Sq(mV.y) - Sq(mV.z);
+            result[0][0] = Squared(mS) + Squared(mV.x) - Squared(mV.y) - Squared(mV.z);
             result[0][1] = 2 * (mV.x * mV.y - mS * mV.z);
             result[0][2] = 2 * (mV.x * mV.z + mS * mV.y);
             result[1][0] = 2 * (mV.x * mV.y + mS * mV.z);
-            result[1][1] = Sq(mS) - Sq(mV.x) + Sq(mV.y) - Sq(mV.z);
+            result[1][1] = Squared(mS) - Squared(mV.x) + Squared(mV.y) - Squared(mV.z);
             result[1][2] = 2 * (mV.y * mV.z - mS * mV.x);
             result[2][0] = 2 * (mV.x * mV.z - mS * mV.y);
             result[2][1] = 2 * (mV.y * mV.z + mS * mV.x);
-            result[2][2] = Sq(mS) - Sq(mV.x) - Sq(mV.y) + Sq(mV.z);
+            result[2][2] = Squared(mS) - Squared(mV.x) - Squared(mV.y) + Squared(mV.z);
 
             return result;
         }
@@ -53,15 +53,15 @@ namespace Math
         {
             Matrix4T<T> result(T(1));
 
-            result[0][0] = Sq(mS) + Sq(mV.x) - Sq(mV.y) - Sq(mV.z);
+            result[0][0] = Squared(mS) + Squared(mV.x) - Squared(mV.y) - Squared(mV.z);
             result[0][1] = 2 * (mV.x * mV.y - mS * mV.z);
             result[0][2] = 2 * (mV.x * mV.z + mS * mV.y);
             result[1][0] = 2 * (mV.x * mV.y + mS * mV.z);
-            result[1][1] = Sq(mS) - Sq(mV.x) + Sq(mV.y) - Sq(mV.z);
+            result[1][1] = Squared(mS) - Squared(mV.x) + Squared(mV.y) - Squared(mV.z);
             result[1][2] = 2 * (mV.y * mV.z - mS * mV.x);
             result[2][0] = 2 * (mV.x * mV.z - mS * mV.y);
             result[2][1] = 2 * (mV.y * mV.z + mS * mV.x);
-            result[2][2] = Sq(mS) - Sq(mV.x) - Sq(mV.y) + Sq(mV.z);
+            result[2][2] = Squared(mS) - Squared(mV.x) - Squared(mV.y) + Squared(mV.z);
 
             return result;
         }
@@ -181,7 +181,7 @@ namespace Math
     [[nodiscard]] constexpr
     T NormSqr(const QuaternionT<T>& q) noexcept
     {
-        return q.mV.LenSqr() + Sq(q.mS);
+        return q.mV.LenSqr() + Squared(q.mS);
     }
 
     template <typename T>
@@ -280,7 +280,7 @@ namespace Math
     [[nodiscard]] constexpr
     Vector3T<T> TransformVector(const Vector3T<T>& v, const QuaternionT<T>& q) noexcept
     {
-        return (v * (Sq(q.mS) - Dot(q.mV, q.mV))) + (q.mV * (T(2) * Dot(v, q.mV))) + (Cross(q.mV, v) * q.mS * T(2));
+        return (v * (Squared(q.mS) - Dot(q.mV, q.mV))) + (q.mV * (T(2) * Dot(v, q.mV))) + (Cross(q.mV, v) * q.mS * T(2));
     }
 }
 

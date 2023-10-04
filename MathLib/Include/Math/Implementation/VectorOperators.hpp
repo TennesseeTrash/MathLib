@@ -14,7 +14,7 @@ namespace Math
     Vec operator+ (const Vec& u, const Vec& v) noexcept
     {
         Vec result;
-        for (size_t i = 0; i < Vec::Dimension; ++i)
+        for (SizeType i = 0; i < Vec::Dimension; ++i)
         {
             result[i] = u[i] + v[i];
         }
@@ -26,7 +26,7 @@ namespace Math
     Vec operator- (const Vec& u, const Vec& v) noexcept
     {
         Vec result;
-        for (size_t i = 0; i < Vec::Dimension; ++i)
+        for (SizeType i = 0; i < Vec::Dimension; ++i)
         {
             result[i] = u[i] - v[i];
         }
@@ -38,7 +38,7 @@ namespace Math
     Vec operator* (const Vec& u, const Vec& v) noexcept
     {
         Vec result;
-        for (size_t i = 0; i < Vec::Dimension; ++i)
+        for (SizeType i = 0; i < Vec::Dimension; ++i)
         {
             result[i] = u[i] * v[i];
         }
@@ -50,7 +50,7 @@ namespace Math
     Vec operator/ (const Vec& u, const Vec& v) noexcept
     {
         Vec result;
-        for (size_t i = 0; i < Vec::Dimension; ++i)
+        for (SizeType i = 0; i < Vec::Dimension; ++i)
         {
             result[i] = u[i] / v[i];
         }
@@ -62,7 +62,7 @@ namespace Math
     Vec operator- (const Vec& u) noexcept
     {
         Vec result;
-        for (size_t i = 0; i < Vec::Dimension; ++i)
+        for (SizeType i = 0; i < Vec::Dimension; ++i)
         {
             result[i] = - u[i];
         }
@@ -75,7 +75,7 @@ namespace Math
     [[maybe_unused]] constexpr
     Vec& operator+= (Vec& u, const Vec& v) noexcept
     {
-        for (size_t i = 0; i < Vec::Dimension; ++i)
+        for (SizeType i = 0; i < Vec::Dimension; ++i)
         {
             u[i] += v[i];
         }
@@ -86,7 +86,7 @@ namespace Math
     [[maybe_unused]] constexpr
     Vec& operator-= (Vec& u, const Vec& v) noexcept
     {
-        for (size_t i = 0; i < Vec::Dimension; ++i)
+        for (SizeType i = 0; i < Vec::Dimension; ++i)
         {
             u[i] -= v[i];
         }
@@ -97,7 +97,7 @@ namespace Math
     [[maybe_unused]] constexpr
     Vec& operator*= (Vec& u, const Vec& v) noexcept
     {
-        for (size_t i = 0; i < Vec::Dimension; ++i)
+        for (SizeType i = 0; i < Vec::Dimension; ++i)
         {
             u[i] *= v[i];
         }
@@ -108,7 +108,7 @@ namespace Math
     [[maybe_unused]] constexpr
     Vec& operator/= (Vec& u, const Vec& v) noexcept
     {
-        for (size_t i = 0; i < Vec::Dimension; ++i)
+        for (SizeType i = 0; i < Vec::Dimension; ++i)
         {
             u[i] /= v[i];
         }
@@ -124,7 +124,7 @@ namespace Math
     Vec operator+ (const Vec& u, typename Vec::ScalarType s) noexcept
     {
         Vec result;
-        for (size_t i = 0; i < Vec::Dimension; ++i)
+        for (SizeType i = 0; i < Vec::Dimension; ++i)
         {
             result[i] = u[i] + s;
         }
@@ -136,7 +136,7 @@ namespace Math
     Vec operator+ (typename Vec::ScalarType s, const Vec& u) noexcept
     {
         Vec result;
-        for (size_t i = 0; i < Vec::Dimension; ++i)
+        for (SizeType i = 0; i < Vec::Dimension; ++i)
         {
             result[i] = s + u[i];
         }
@@ -148,7 +148,7 @@ namespace Math
     Vec operator- (const Vec& u, typename Vec::ScalarType s) noexcept
     {
         Vec result;
-        for (size_t i = 0; i < Vec::Dimension; ++i)
+        for (SizeType i = 0; i < Vec::Dimension; ++i)
         {
             result[i] = u[i] - s;
         }
@@ -160,7 +160,7 @@ namespace Math
     Vec operator- (typename Vec::ScalarType s, const Vec& u) noexcept
     {
         Vec result;
-        for (size_t i = 0; i < Vec::Dimension; ++i)
+        for (SizeType i = 0; i < Vec::Dimension; ++i)
         {
             result[i] = s - u[i];
         }
@@ -172,7 +172,7 @@ namespace Math
     Vec operator* (const Vec& u, typename Vec::ScalarType s) noexcept
     {
         Vec result;
-        for (size_t i = 0; i < Vec::Dimension; ++i)
+        for (SizeType i = 0; i < Vec::Dimension; ++i)
         {
             result[i] = u[i] * s;
         }
@@ -184,7 +184,7 @@ namespace Math
     Vec operator* (typename Vec::ScalarType s, const Vec& u) noexcept
     {
         Vec result;
-        for (size_t i = 0; i < Vec::Dimension; ++i)
+        for (SizeType i = 0; i < Vec::Dimension; ++i)
         {
             result[i] = s * u[i];
         }
@@ -196,7 +196,7 @@ namespace Math
     Vec operator/ (const Vec& u, typename Vec::ScalarType s) noexcept
     {
         Vec result;
-        for (size_t i = 0; i < Vec::Dimension; ++i)
+        for (SizeType i = 0; i < Vec::Dimension; ++i)
         {
             result[i] = u[i] / s;
         }
@@ -208,7 +208,7 @@ namespace Math
     Vec operator/ (typename Vec::ScalarType s, const Vec& u) noexcept
     {
         Vec result;
-        for (size_t i = 0; i < Vec::Dimension; ++i)
+        for (SizeType i = 0; i < Vec::Dimension; ++i)
         {
             result[i] = s / u[i];
         }
@@ -221,7 +221,7 @@ namespace Math
     [[maybe_unused]] constexpr
     Vec& operator+= (Vec& u, typename Vec::ScalarType s) noexcept
     {
-        for (size_t i = 0; i < Vec::Dimension; ++i)
+        for (SizeType i = 0; i < Vec::Dimension; ++i)
         {
             u[i] += s;
         }
@@ -232,7 +232,7 @@ namespace Math
     [[maybe_unused]] constexpr
     Vec& operator-= (Vec& u, typename Vec::ScalarType s) noexcept
     {
-        for (size_t i = 0; i < Vec::Dimension; ++i)
+        for (SizeType i = 0; i < Vec::Dimension; ++i)
         {
             u[i] -= s;
         }
@@ -243,7 +243,7 @@ namespace Math
     [[maybe_unused]] constexpr
     Vec& operator*= (Vec& u, typename Vec::ScalarType s) noexcept
     {
-        for (size_t i = 0; i < Vec::Dimension; ++i)
+        for (SizeType i = 0; i < Vec::Dimension; ++i)
         {
             u[i] *= s;
         }
@@ -254,7 +254,7 @@ namespace Math
     [[maybe_unused]] constexpr
     Vec& operator/= (Vec& u, typename Vec::ScalarType s) noexcept
     {
-        for (size_t i = 0; i < Vec::Dimension; ++i)
+        for (SizeType i = 0; i < Vec::Dimension; ++i)
         {
             u[i] /= s;
         }

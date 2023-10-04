@@ -9,7 +9,7 @@ namespace Math
     struct Vector3T final
     {
         using ScalarType = T;
-        static constexpr size_t Dimension = 3;
+        static constexpr SizeType Dimension = 3;
 
         T x = T(0);
         T y = T(0);
@@ -21,8 +21,8 @@ namespace Math
         constexpr explicit Vector3T(const Vector2T<T>& u)       noexcept : x(u.x ), y(u.y ), z(T(0)) {}
         constexpr explicit Vector3T(const Vector2T<T>& u, T zv) noexcept : x(u.x ), y(u.y ), z(zv  ) {}
 
-        constexpr       T& operator[] (size_t idx)       noexcept { return reinterpret_cast<      T *>(this)[idx]; }
-        constexpr const T& operator[] (size_t idx) const noexcept { return reinterpret_cast<const T *>(this)[idx]; }
+        constexpr       T& operator[] (SizeType idx)       noexcept { return reinterpret_cast<      T *>(this)[idx]; }
+        constexpr const T& operator[] (SizeType idx) const noexcept { return reinterpret_cast<const T *>(this)[idx]; }
 
         constexpr T LenSqr() const noexcept { return x * x + y * y + z * z; }
         constexpr T Length() const noexcept { return std::sqrt(LenSqr()); }

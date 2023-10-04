@@ -14,7 +14,7 @@ namespace Math
     typename Pnt::VectorType operator- (const Pnt& p1, const Pnt& p2) noexcept
     {
         typename Pnt::VectorType u;
-        for (size_t i = 0; i < Pnt::Dimension; ++i)
+        for (SizeType i = 0; i < Pnt::Dimension; ++i)
         {
             u[i] = p1[i] - p2[i];
         }
@@ -30,7 +30,7 @@ namespace Math
     Pnt operator+ (const Pnt& p, const typename Pnt::VectorType& v) noexcept
     {
         Pnt result;
-        for (size_t i = 0; i < Pnt::Dimension; ++i)
+        for (SizeType i = 0; i < Pnt::Dimension; ++i)
         {
             result[i] = p[i] + v[i];
         }
@@ -42,7 +42,7 @@ namespace Math
     Pnt operator+ (const typename Pnt::VectorType& v, const Pnt& p) noexcept
     {
         Pnt result;
-        for (size_t i = 0; i < Pnt::Dimension; ++i)
+        for (SizeType i = 0; i < Pnt::Dimension; ++i)
         {
             result[i] = v[i] + p[i];
         }
@@ -54,7 +54,7 @@ namespace Math
     Pnt operator- (const Pnt& p, const typename Pnt::VectorType& v) noexcept
     {
         Pnt result;
-        for (size_t i = 0; i < Pnt::Dimension; ++i)
+        for (SizeType i = 0; i < Pnt::Dimension; ++i)
         {
             result[i] = p[i] - v[i];
         }
@@ -66,7 +66,7 @@ namespace Math
     Pnt operator- (const typename Pnt::VectorType& v, const Pnt& p) noexcept
     {
         Pnt result;
-        for (size_t i = 0; i < Pnt::Dimension; ++i)
+        for (SizeType i = 0; i < Pnt::Dimension; ++i)
         {
             result[i] = v[i] - p[i];
         }
@@ -78,7 +78,7 @@ namespace Math
     Pnt operator* (const Pnt& p, const typename Pnt::VectorType& v) noexcept
     {
         Pnt result;
-        for (size_t i = 0; i < Pnt::Dimension; ++i)
+        for (SizeType i = 0; i < Pnt::Dimension; ++i)
         {
             result[i] = p[i] * v[i];
         }
@@ -90,7 +90,7 @@ namespace Math
     Pnt operator* (const typename Pnt::VectorType& v, const Pnt& p) noexcept
     {
         Pnt result;
-        for (size_t i = 0; i < Pnt::Dimension; ++i)
+        for (SizeType i = 0; i < Pnt::Dimension; ++i)
         {
             result[i] = v[i] * p[i];
         }
@@ -102,7 +102,7 @@ namespace Math
     Pnt operator/ (const Pnt& p, const typename Pnt::VectorType& v) noexcept
     {
         Pnt result;
-        for (size_t i = 0; i < Pnt::Dimension; ++i)
+        for (SizeType i = 0; i < Pnt::Dimension; ++i)
         {
             result[i] = p[i] / v[i];
         }
@@ -115,7 +115,7 @@ namespace Math
     [[maybe_unused]] constexpr
     Pnt& operator+= (Pnt& p, const typename Pnt::VectorType& v) noexcept
     {
-        for (size_t i = 0; i < Pnt::Dimension; ++i)
+        for (SizeType i = 0; i < Pnt::Dimension; ++i)
         {
             p[i] += v[i];
         }
@@ -126,7 +126,7 @@ namespace Math
     [[maybe_unused]] constexpr
     Pnt& operator-= (Pnt& p, const typename Pnt::VectorType& v) noexcept
     {
-        for (size_t i = 0; i < Pnt::Dimension; ++i)
+        for (SizeType i = 0; i < Pnt::Dimension; ++i)
         {
             p[i] -= v[i];
         }
@@ -137,7 +137,7 @@ namespace Math
     [[maybe_unused]] constexpr
     Pnt& operator*= (Pnt& p, const typename Pnt::VectorType& v) noexcept
     {
-        for (size_t i = 0; i < Pnt::Dimension; ++i)
+        for (SizeType i = 0; i < Pnt::Dimension; ++i)
         {
             p[i] *= v[i];
         }
@@ -148,7 +148,7 @@ namespace Math
     [[maybe_unused]] constexpr
     Pnt& operator/= (Pnt& p, const typename Pnt::VectorType& v) noexcept
     {
-        for (size_t i = 0; i < Pnt::Dimension; ++i)
+        for (SizeType i = 0; i < Pnt::Dimension; ++i)
         {
             p[i] /= v[i];
         }
@@ -164,9 +164,9 @@ namespace Math
     Pnt operator* (const Pnt& p, const typename Pnt::MatrixType& m) noexcept
     {
         Pnt result;
-        for (size_t i = 0; i < Pnt::Dimension; ++i)
+        for (SizeType i = 0; i < Pnt::Dimension; ++i)
         {
-            for (size_t j = 0; j < Pnt::Dimension; ++j)
+            for (SizeType j = 0; j < Pnt::Dimension; ++j)
             {
                 result[i] += p[j] * m[j][i];
             }
@@ -179,9 +179,9 @@ namespace Math
     Pnt operator* (const typename Pnt::MatrixType& m, const Pnt& p) noexcept
     {
         Pnt result;
-        for (size_t i = 0; i < Pnt::Dimension; ++i)
+        for (SizeType i = 0; i < Pnt::Dimension; ++i)
         {
-            for (size_t j = 0; j < Pnt::Dimension; ++j)
+            for (SizeType j = 0; j < Pnt::Dimension; ++j)
             {
                 result[i] += m[i][j] * p[j];
             }
@@ -194,9 +194,9 @@ namespace Math
     Pnt operator* (const Pnt& p, const typename Pnt::ProjectiveMatrixType& m) noexcept
     {
         Pnt result;
-        for (size_t i = 0; i < Pnt::Dimension; ++i)
+        for (SizeType i = 0; i < Pnt::Dimension; ++i)
         {
-            for (size_t j = 0; j < Pnt::Dimension; ++j)
+            for (SizeType j = 0; j < Pnt::Dimension; ++j)
             {
                 result[i] += p[j] * m[j][i];
             }
@@ -210,9 +210,9 @@ namespace Math
     Pnt operator* (const typename Pnt::ProjectiveMatrixType& m, const Pnt& p) noexcept
     {
         Pnt result;
-        for (size_t i = 0; i < Pnt::Dimension; ++i)
+        for (SizeType i = 0; i < Pnt::Dimension; ++i)
         {
-            for (size_t j = 0; j < Pnt::Dimension; ++j)
+            for (SizeType j = 0; j < Pnt::Dimension; ++j)
             {
                 result[i] += m[i][j] * p[j];
             }

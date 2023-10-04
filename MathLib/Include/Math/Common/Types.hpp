@@ -7,6 +7,8 @@
 
 namespace Math
 {
+    using SizeType = std::size_t;
+
     static_assert(std::numeric_limits<float>::is_iec559);
     static_assert(std::numeric_limits<double>::is_iec559);
 

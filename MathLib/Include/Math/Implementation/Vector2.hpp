@@ -11,7 +11,7 @@ namespace Math
     struct Vector2T final
     {
         using ScalarType = T;
-        static constexpr size_t Dimension = 2;
+        static constexpr SizeType Dimension = 2;
 
         T x = T(0);
         T y = T(0);
@@ -20,8 +20,8 @@ namespace Math
         constexpr explicit Vector2T(T val)      noexcept : x(val ), y(val ) {}
         constexpr          Vector2T(T xv, T yv) noexcept : x(xv  ), y(yv  ) {}
 
-        constexpr       T& operator[] (size_t idx)       noexcept { return reinterpret_cast<      T *>(this)[idx]; }
-        constexpr const T& operator[] (size_t idx) const noexcept { return reinterpret_cast<const T *>(this)[idx]; }
+        constexpr       T& operator[] (SizeType idx)       noexcept { return reinterpret_cast<      T *>(this)[idx]; }
+        constexpr const T& operator[] (SizeType idx) const noexcept { return reinterpret_cast<const T *>(this)[idx]; }
 
         constexpr T LenSqr() const noexcept { return x * x + y * y; }
         constexpr T Length() const noexcept { return std::sqrt(LenSqr()); }

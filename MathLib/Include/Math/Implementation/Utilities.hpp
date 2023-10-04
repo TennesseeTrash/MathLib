@@ -10,7 +10,7 @@ namespace Math
     typename Vec::ScalarType Dot(const Vec& u, const Vec& v) noexcept
     {
         typename Vec::ScalarType dot{};
-        for (size_t i = 0; i < Vec::Dimension; ++i)
+        for (SizeType i = 0; i < Vec::Dimension; ++i)
         {
             dot += (u[i] * v[i]);
         }
@@ -48,9 +48,9 @@ namespace Math
     Mat Transpose(const Mat& m) noexcept
     {
         Mat result = m;
-        for (size_t i = 0; i < Mat::Dimension; ++i)
+        for (SizeType i = 0; i < Mat::Dimension; ++i)
         {
-            for (size_t j = i + 1; j < Mat::Dimension; ++j)
+            for (SizeType j = i + 1; j < Mat::Dimension; ++j)
             {
                 std::swap(result[i][j], result[j][i]);
             }
@@ -212,7 +212,7 @@ namespace Math
     [[nodiscard]] constexpr
     bool Equal(const T& u, const T& v, typename T::ScalarType epsilon = Constants::Epsilon<typename T::ScalarType>::Value) noexcept
     {
-        for (size_t i = 0; i < T::Dimension; ++i)
+        for (SizeType i = 0; i < T::Dimension; ++i)
         {
             if (!Equal(u[i], v[i], epsilon))
             {
@@ -227,7 +227,7 @@ namespace Math
     [[nodiscard]] constexpr
     bool HasNaN(const Vec& u) noexcept
     {
-        for (size_t i = 0; i < Vec::Dimension; ++i)
+        for (SizeType i = 0; i < Vec::Dimension; ++i)
         {
             if (u[i] != u[i])
             {
@@ -242,7 +242,7 @@ namespace Math
     [[nodiscard]] constexpr
     bool HasNaN(const Pnt& p) noexcept
     {
-        for (size_t i = 0; i < Pnt::Dimension; ++i)
+        for (SizeType i = 0; i < Pnt::Dimension; ++i)
         {
             if (p[i] != p[i])
             {
@@ -257,7 +257,7 @@ namespace Math
     [[nodiscard]] constexpr
     bool HasNaN(const Mat& m)
     {
-        for (size_t i = 0; i < Mat::Dimension; ++i)
+        for (SizeType i = 0; i < Mat::Dimension; ++i)
         {
             if (HasNaN(m[i]))
             {

@@ -13,7 +13,7 @@ namespace Math
     public:
         using ScalarType = T;
         using VectorType = Vector3T<T>;
-        static constexpr size_t Dimension = 3;
+        static constexpr SizeType Dimension = 3;
 
         constexpr explicit Matrix3T() noexcept
             : rows({})
@@ -22,7 +22,7 @@ namespace Math
         constexpr explicit Matrix3T(T diag) noexcept
             : rows({})
         {
-            for (size_t i = 0; i < 3; ++i) { rows[i][i] = diag; }
+            for (SizeType i = 0; i < 3; ++i) { rows[i][i] = diag; }
         }
 
         constexpr explicit Matrix3T(const Vector3T<T>& row0,
@@ -43,8 +43,8 @@ namespace Math
                       {m20, m21, m22} }})
         {}
 
-        constexpr       Vector3T<T>& operator[] (size_t index)       { return rows[index]; }
-        constexpr const Vector3T<T>& operator[] (size_t index) const { return rows[index]; }
+        constexpr       Vector3T<T>& operator[] (SizeType index)       { return rows[index]; }
+        constexpr const Vector3T<T>& operator[] (SizeType index) const { return rows[index]; }
 
         constexpr T Min() const { return ::Math::Min(rows[0].Min(), rows[1].Min(), rows[2].Min()); }
         constexpr T Max() const { return ::Math::Max(rows[0].Max(), rows[1].Max(), rows[2].Max()); }

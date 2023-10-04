@@ -52,11 +52,11 @@ namespace Math
     concept ConceptBasicVector = requires (T u)
     {
         typename T::ScalarType;
-        { T::Dimension } -> SameBaseType<size_t>;
+        { T::Dimension } -> SameBaseType<SizeType>;
 
         requires ArithmeticType<typename T::ScalarType>;
 
-        requires requires (size_t i)
+        requires requires (SizeType i)
         {
             { u[i] } -> SameBaseType<typename T::ScalarType>;
         };
@@ -140,14 +140,14 @@ namespace Math
     {
         typename T::ScalarType;
         typename T::VectorType;
-        { T::Dimension } -> SameBaseType<size_t>;
+        { T::Dimension } -> SameBaseType<SizeType>;
 
         requires ConceptBasicVector<typename T::VectorType>;
         requires T::VectorType::Dimension == T::Dimension;
 
         requires ArithmeticType<typename T::ScalarType>;
 
-        requires requires (size_t i)
+        requires requires (SizeType i)
         {
             { m[i]    } -> SameBaseType<typename T::VectorType>;
             { m[i][i] } -> SameBaseType<typename T::ScalarType>;
@@ -227,7 +227,7 @@ namespace Math
         typename T::VectorType;
         typename T::MatrixType;
         typename T::ProjectiveMatrixType;
-        { T::Dimension } -> SameBaseType<size_t>;
+        { T::Dimension } -> SameBaseType<SizeType>;
 
         requires ConceptBasicVector<typename T::VectorType>;
         requires T::VectorType::Dimension == T::Dimension;
@@ -240,7 +240,7 @@ namespace Math
 
         { typename T::VectorType(p) } -> std::same_as<typename T::VectorType>;
 
-        requires requires (size_t i)
+        requires requires (SizeType i)
         {
             { p[i] } -> SameBaseType<typename T::ScalarType>;
         };

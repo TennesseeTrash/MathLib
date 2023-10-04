@@ -68,10 +68,10 @@ inline
 std::ostream& operator<<(std::ostream& os, const Math::Matrix2T<T>& mat)
 {
     os << "Matrix2T(\n";
-    for (size_t i = 0; i < 2; ++i)
+    for (Math::SizeType i = 0; i < 2; ++i)
     {
         os << "    ";
-        for (size_t j = 0; j < 2; ++j)
+        for (Math::SizeType j = 0; j < 2; ++j)
         {
             os << std::setprecision(4) << mat[i][j] << ", ";
         }
@@ -86,10 +86,10 @@ inline
 std::ostream& operator<<(std::ostream& os, const Math::Matrix3T<T>& mat)
 {
     os << "Matrix3T(\n";
-    for (size_t i = 0; i < 3; ++i)
+    for (Math::SizeType i = 0; i < 3; ++i)
     {
         os << "    ";
-        for (size_t j = 0; j < 3; ++j)
+        for (Math::SizeType j = 0; j < 3; ++j)
         {
             os << std::setprecision(4) << mat[i][j] << ", ";
         }
@@ -104,10 +104,10 @@ inline
 std::ostream& operator<<(std::ostream& os, const Math::Matrix4T<T>& mat)
 {
     os << "Matrix4T(\n";
-    for (size_t i = 0; i < 4; ++i)
+    for (Math::SizeType i = 0; i < 4; ++i)
     {
         os << "    ";
-        for (size_t j = 0; j < 4; ++j)
+        for (Math::SizeType j = 0; j < 4; ++j)
         {
             os << std::setprecision(4) << mat[i][j] << ", ";
         }

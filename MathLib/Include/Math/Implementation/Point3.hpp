@@ -13,7 +13,7 @@ namespace Math
         using VectorType = Vector3T<T>;
         using MatrixType = Matrix3T<T>;
         using ProjectiveMatrixType = Matrix4T<T>;
-        static constexpr size_t Dimension = 3;
+        static constexpr SizeType Dimension = 3;
 
         T x = T(0);
         T y = T(0);
@@ -30,8 +30,8 @@ namespace Math
 
         constexpr explicit operator Vector3T<T>()  const noexcept { return Vector3T<T>(x, y, z); }
 
-        constexpr       T& operator[] (size_t idx)       noexcept { return reinterpret_cast<      T *>(this)[idx]; }
-        constexpr const T& operator[] (size_t idx) const noexcept { return reinterpret_cast<const T *>(this)[idx]; }
+        constexpr       T& operator[] (SizeType idx)       noexcept { return reinterpret_cast<      T *>(this)[idx]; }
+        constexpr const T& operator[] (SizeType idx) const noexcept { return reinterpret_cast<const T *>(this)[idx]; }
 
         constexpr T Max() noexcept { return ::Math::Max({x, y, z}); }
         constexpr T Min() noexcept { return ::Math::Max({x, y, z}); }

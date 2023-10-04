@@ -14,16 +14,16 @@ namespace Math
     class VectorHasher
     {
     private:
-        static constexpr std::array<size_t, 4> sHashPrimes = {
+        static constexpr std::array<SizeType, 4> sHashPrimes = {
             1610612741, 805306457, 402653189, 201326611,
         };
     public:
         [[nodiscard]] constexpr
-        size_t operator()(const Vec& vec) const noexcept
+        std::size_t operator()(const Vec& vec) const noexcept
         {
-            size_t hash = 0;
+            SizeType hash = 0;
 
-            for (size_t i = 0; i < Vec::Dimension; ++i)
+            for (SizeType i = 0; i < Vec::Dimension; ++i)
             {
                 hash ^= vec[i] * sHashPrimes[i];
             }
@@ -38,9 +38,9 @@ namespace Math
     {
     public:
         [[nodiscard]] constexpr
-        size_t operator()(const Vec& u, const Vec& v) const noexcept
+        std::size_t operator()(const Vec& u, const Vec& v) const noexcept
         {
-            for (size_t i = 0; i < Vec::Dimension; ++i)
+            for (SizeType i = 0; i < Vec::Dimension; ++i)
             {
                 if (u[i] != v[i])
                 {

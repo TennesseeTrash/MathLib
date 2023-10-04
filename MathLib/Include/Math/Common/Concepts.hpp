@@ -152,6 +152,9 @@ namespace Math
             { m[i]    } -> SameBaseType<typename T::VectorType>;
             { m[i][i] } -> SameBaseType<typename T::ScalarType>;
         };
+
+        { m.Max() } -> SameBaseType<typename T::ScalarType>;
+        { m.Min() } -> SameBaseType<typename T::ScalarType>;
     };
 
     template <typename T>

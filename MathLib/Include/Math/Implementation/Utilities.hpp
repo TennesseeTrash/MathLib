@@ -196,6 +196,20 @@ namespace Math
 
     template <ConceptUtilType T>
     [[nodiscard]] constexpr
+    typename T::ScalarType Min(const T& u) noexcept
+    {
+        return u.Min();
+    }
+
+    template <ConceptUtilType T>
+    [[nodiscard]] constexpr
+    typename T::ScalarType Max(const T& u) noexcept
+    {
+        return u.Max();
+    }
+
+    template <ConceptUtilType T>
+    [[nodiscard]] constexpr
     bool Equal(const T& u, const T& v, typename T::ScalarType epsilon = Constants::Epsilon<typename T::ScalarType>::Value) noexcept
     {
         for (size_t i = 0; i < T::Dimension; ++i)

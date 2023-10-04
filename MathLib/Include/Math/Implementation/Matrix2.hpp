@@ -41,6 +41,9 @@ namespace Math
 
         constexpr       Vector2T<T>& operator[] (size_t index)       { return rows[index]; }
         constexpr const Vector2T<T>& operator[] (size_t index) const { return rows[index]; }
+
+        constexpr T Min() const { return ::Math::Min(rows[0].Min(), rows[1].Min()); }
+        constexpr T Max() const { return ::Math::Max(rows[0].Max(), rows[1].Max()); }
     private:
         std::array<Vector2T<T>, 2> rows;
     };

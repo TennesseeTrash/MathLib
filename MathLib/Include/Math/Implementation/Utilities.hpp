@@ -29,7 +29,7 @@ namespace Math
     [[nodiscard]] constexpr
     Vec Perp(const Vec& u) noexcept
     {
-        return Vec(u.y, -u.x);
+        return Vec(-u.y, u.x);
     }
 
     template <ConceptVector3 Vec>

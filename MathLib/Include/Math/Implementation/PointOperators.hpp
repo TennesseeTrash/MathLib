@@ -25,9 +25,10 @@ namespace Math
     // Point-Vector operators
     //////////////////////////////////////////////////////////////////////////
 
-    template <ConceptBasicPoint Pnt>
+    template <ConceptBasicPoint Pnt, ConceptBasicVector Vec>
+        requires (Pnt::Dimension == Vec::Dimension)
     [[nodiscard]] constexpr
-    Pnt operator+ (const Pnt& p, const typename Pnt::VectorType& v) noexcept
+    Pnt operator+ (const Pnt& p, const Vec& v) noexcept
     {
         Pnt result;
         for (SizeType i = 0; i < Pnt::Dimension; ++i)
@@ -37,9 +38,10 @@ namespace Math
         return result;
     }
 
-    template <ConceptBasicPoint Pnt>
+    template <ConceptBasicPoint Pnt, ConceptBasicVector Vec>
+        requires (Pnt::Dimension == Vec::Dimension)
     [[nodiscard]] constexpr
-    Pnt operator+ (const typename Pnt::VectorType& v, const Pnt& p) noexcept
+    Pnt operator+ (const Vec& v, const Pnt& p) noexcept
     {
         Pnt result;
         for (SizeType i = 0; i < Pnt::Dimension; ++i)
@@ -49,9 +51,10 @@ namespace Math
         return result;
     }
 
-    template <ConceptBasicPoint Pnt>
+    template <ConceptBasicPoint Pnt, ConceptBasicVector Vec>
+        requires (Pnt::Dimension == Vec::Dimension)
     [[nodiscard]] constexpr
-    Pnt operator- (const Pnt& p, const typename Pnt::VectorType& v) noexcept
+    Pnt operator- (const Pnt& p, const Vec& v) noexcept
     {
         Pnt result;
         for (SizeType i = 0; i < Pnt::Dimension; ++i)
@@ -61,9 +64,10 @@ namespace Math
         return result;
     }
 
-    template <ConceptBasicPoint Pnt>
+    template <ConceptBasicPoint Pnt, ConceptBasicVector Vec>
+        requires (Pnt::Dimension == Vec::Dimension)
     [[nodiscard]] constexpr
-    Pnt operator- (const typename Pnt::VectorType& v, const Pnt& p) noexcept
+    Pnt operator- (const Vec& v, const Pnt& p) noexcept
     {
         Pnt result;
         for (SizeType i = 0; i < Pnt::Dimension; ++i)
@@ -73,47 +77,12 @@ namespace Math
         return result;
     }
 
-    template <ConceptBasicPoint Pnt>
-    [[nodiscard]] constexpr
-    Pnt operator* (const Pnt& p, const typename Pnt::VectorType& v) noexcept
-    {
-        Pnt result;
-        for (SizeType i = 0; i < Pnt::Dimension; ++i)
-        {
-            result[i] = p[i] * v[i];
-        }
-        return result;
-    }
-
-    template <ConceptBasicPoint Pnt>
-    [[nodiscard]] constexpr
-    Pnt operator* (const typename Pnt::VectorType& v, const Pnt& p) noexcept
-    {
-        Pnt result;
-        for (SizeType i = 0; i < Pnt::Dimension; ++i)
-        {
-            result[i] = v[i] * p[i];
-        }
-        return result;
-    }
-
-    template <ConceptBasicPoint Pnt>
-    [[nodiscard]] constexpr
-    Pnt operator/ (const Pnt& p, const typename Pnt::VectorType& v) noexcept
-    {
-        Pnt result;
-        for (SizeType i = 0; i < Pnt::Dimension; ++i)
-        {
-            result[i] = p[i] / v[i];
-        }
-        return result;
-    }
 
 
-
-    template <ConceptBasicPoint Pnt>
+    template <ConceptBasicPoint Pnt, ConceptBasicVector Vec>
+        requires (Pnt::Dimension == Vec::Dimension)
     [[maybe_unused]] constexpr
-    Pnt& operator+= (Pnt& p, const typename Pnt::VectorType& v) noexcept
+    Pnt& operator+= (Pnt& p, const Vec& v) noexcept
     {
         for (SizeType i = 0; i < Pnt::Dimension; ++i)
         {
@@ -122,103 +91,16 @@ namespace Math
         return p;
     }
 
-    template <ConceptBasicPoint Pnt>
+    template <ConceptBasicPoint Pnt, ConceptBasicVector Vec>
+        requires (Pnt::Dimension == Vec::Dimension)
     [[maybe_unused]] constexpr
-    Pnt& operator-= (Pnt& p, const typename Pnt::VectorType& v) noexcept
+    Pnt& operator-= (Pnt& p, const Vec& v) noexcept
     {
         for (SizeType i = 0; i < Pnt::Dimension; ++i)
         {
             p[i] -= v[i];
         }
         return p;
-    }
-
-    template <ConceptBasicPoint Pnt>
-    [[maybe_unused]] constexpr
-    Pnt& operator*= (Pnt& p, const typename Pnt::VectorType& v) noexcept
-    {
-        for (SizeType i = 0; i < Pnt::Dimension; ++i)
-        {
-            p[i] *= v[i];
-        }
-        return p;
-    }
-
-    template <ConceptBasicPoint Pnt>
-    [[maybe_unused]] constexpr
-    Pnt& operator/= (Pnt& p, const typename Pnt::VectorType& v) noexcept
-    {
-        for (SizeType i = 0; i < Pnt::Dimension; ++i)
-        {
-            p[i] /= v[i];
-        }
-        return p;
-    }
-
-    //////////////////////////////////////////////////////////////////////////
-    // Point-Matrix operators
-    //////////////////////////////////////////////////////////////////////////
-
-    template <ConceptBasicPoint Pnt>
-    [[nodiscard]] constexpr
-    Pnt operator* (const Pnt& p, const typename Pnt::MatrixType& m) noexcept
-    {
-        Pnt result;
-        for (SizeType i = 0; i < Pnt::Dimension; ++i)
-        {
-            for (SizeType j = 0; j < Pnt::Dimension; ++j)
-            {
-                result[i] += p[j] * m[j][i];
-            }
-        }
-        return result;
-    }
-
-    template <ConceptBasicPoint Pnt>
-    [[nodiscard]] constexpr
-    Pnt operator* (const typename Pnt::MatrixType& m, const Pnt& p) noexcept
-    {
-        Pnt result;
-        for (SizeType i = 0; i < Pnt::Dimension; ++i)
-        {
-            for (SizeType j = 0; j < Pnt::Dimension; ++j)
-            {
-                result[i] += m[i][j] * p[j];
-            }
-        }
-        return result;
-    }
-
-    template <ConceptBasicPoint Pnt>
-    [[nodiscard]] constexpr
-    Pnt operator* (const Pnt& p, const typename Pnt::ProjectiveMatrixType& m) noexcept
-    {
-        Pnt result;
-        for (SizeType i = 0; i < Pnt::Dimension; ++i)
-        {
-            for (SizeType j = 0; j < Pnt::Dimension; ++j)
-            {
-                result[i] += p[j] * m[j][i];
-            }
-            result[i] += m[Pnt::Dimension][i];
-        }
-        return result;
-    }
-
-    template <ConceptBasicPoint Pnt>
-    [[nodiscard]] constexpr
-    Pnt operator* (const typename Pnt::ProjectiveMatrixType& m, const Pnt& p) noexcept
-    {
-        Pnt result;
-        for (SizeType i = 0; i < Pnt::Dimension; ++i)
-        {
-            for (SizeType j = 0; j < Pnt::Dimension; ++j)
-            {
-                result[i] += m[i][j] * p[j];
-            }
-            result[i] += m[i][Pnt::Dimension];
-        }
-        return result;
     }
 }
 

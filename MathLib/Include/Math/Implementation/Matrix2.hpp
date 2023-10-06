@@ -12,7 +12,6 @@ namespace Math
     {
     public:
         using ScalarType = T;
-        using VectorType = Vector2T<T>;
         static constexpr SizeType Dimension = 2;
 
         constexpr explicit Matrix2T() noexcept

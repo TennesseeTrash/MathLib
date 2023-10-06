@@ -12,7 +12,6 @@ namespace Math
     {
     public:
         using ScalarType = T;
-        using VectorType = Vector3T<T>;
         static constexpr SizeType Dimension = 3;
 
         constexpr explicit Matrix3T() noexcept

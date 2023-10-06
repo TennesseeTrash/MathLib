@@ -1,9 +1,6 @@
 #ifndef MATHLIB_IMPL_POINT2_HPP
 #define MATHLIB_IMPL_POINT2_HPP
 
-#include "Matrix2.hpp"
-#include "Matrix3.hpp"
-
 namespace Math
 {
     template <typename T>
@@ -11,8 +8,6 @@ namespace Math
     {
         using ScalarType = T;
         using VectorType = Vector2T<T>;
-        using MatrixType = Matrix2T<T>;
-        using ProjectiveMatrixType = Matrix3T<T>;
         static constexpr SizeType Dimension = 2;
 
         T x = T(0);

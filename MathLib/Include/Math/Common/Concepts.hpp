@@ -1,5 +1,7 @@
-#ifndef MATHLIB_COMMON_CONCEPTS_HPP
-#define MATHLIB_COMMON_CONCEPTS_HPP
+#ifndef MATHLIB_COMMON_TYPE_CONCEPTS_HPP
+#define MATHLIB_COMMON_TYPE_CONCEPTS_HPP
+
+#include "Types.hpp"
 
 #include <concepts>
 
@@ -20,6 +22,9 @@ namespace Math
     template <typename T, typename U>
     concept SameBaseType = std::is_same_v<std::remove_cvref_t<U>, std::remove_cvref_t<T>>;
 
+    template <typename T, typename U>
+    concept SameTypeRef = std::is_same_v<U&, T>;
+
     template <typename T>
     concept FundamentalType = std::is_fundamental_v<T>;
 
@@ -38,10 +43,55 @@ namespace Math
         { a / b } -> std::same_as<T>;
         { -a    } -> std::same_as<T>;
 
-        { a += b } -> SameBaseType<T>;
-        { a -= b } -> SameBaseType<T>;
-        { a *= b } -> SameBaseType<T>;
-        { a /= b } -> SameBaseType<T>;
+        { a += b } -> SameTypeRef<T>;
+        { a -= b } -> SameTypeRef<T>;
+        { a *= b } -> SameTypeRef<T>;
+        { a /= b } -> SameTypeRef<T>;
+    };
+
+    template <typename Ta, typename Tb>
+    concept Addition = requires (Ta a, Tb b)
+    {
+        { a + b } -> std::same_as<Ta>;
+        { b + a } -> std::same_as<Ta>;
+
+        { a += b } -> SameTypeRef<Ta>;
+    };
+
+    template <typename Ta, typename Tb>
+    concept Subtraction = requires (Ta a, Tb b)
+    {
+        { a - b } -> std::same_as<Ta>;
+        { b - a } -> std::same_as<Ta>;
+
+        { a -= b } -> SameTypeRef<Ta>;
+    };
+
+    template <typename Ta, typename Tb>
+    concept Multiplication = requires (Ta a, Tb b)
+    {
+        { a * b } -> std::same_as<Ta>;
+        { b * a } -> std::same_as<Ta>;
+
+        { a *= b } -> SameTypeRef<Ta>;
+    };
+
+    template <typename Ta, typename Tb>
+    concept Division = requires (Ta a, Tb b)
+    {
+        { a / b } -> std::same_as<Ta>;
+        { b / a } -> std::same_as<Ta>;
+
+        { a /= b } -> SameTypeRef<Ta>;
+    };
+
+    template <typename Ta, typename Tb>
+    concept BinaryArithmetic = requires (Ta a, Tb b)
+    {
+        requires Addition<Ta, Tb>;
+        requires Subtraction<Ta, Tb>;
+        requires Multiplication<Ta, Tb>;
+        requires Division<Ta, Tb>;
     };
 
     //////////////////////////////////////////////////////////////////////////
@@ -72,25 +122,8 @@ namespace Math
     concept ConceptVectorN = requires (T u, T v)
     {
         requires ConceptBasicVector<T>;
-
         requires ArithmeticType<T>;
-
-        requires requires (typename T::ScalarType s)
-        {
-            { u + s } -> std::same_as<T>;
-            { s + u } -> std::same_as<T>;
-            { u - s } -> std::same_as<T>;
-            { s - u } -> std::same_as<T>;
-            { u * s } -> std::same_as<T>;
-            { s * u } -> std::same_as<T>;
-            { u / s } -> std::same_as<T>;
-            { s / u } -> std::same_as<T>;
-
-            { u += s } -> SameBaseType<T>;
-            { u -= s } -> SameBaseType<T>;
-            { u *= s } -> SameBaseType<T>;
-            { u /= s } -> SameBaseType<T>;
-        };
+        requires BinaryArithmetic<T, typename T::ScalarType>;
     };
 
     template <typename T>
@@ -128,92 +161,8 @@ namespace Math
     {
         requires ConceptVector2<T>
               || ConceptVector3<T>
-              || ConceptVector4<T>;
-    };
-
-    //////////////////////////////////////////////////////////////////////////
-    // Matrix concepts
-    //////////////////////////////////////////////////////////////////////////
-
-    template <typename T>
-    concept ConceptBasicMatrix = requires (T m)
-    {
-        typename T::ScalarType;
-        typename T::VectorType;
-        { T::Dimension } -> SameBaseType<SizeType>;
-
-        requires ConceptBasicVector<typename T::VectorType>;
-        requires T::VectorType::Dimension == T::Dimension;
-
-        requires ArithmeticType<typename T::ScalarType>;
-
-        requires requires (SizeType i)
-        {
-            { m[i]    } -> SameBaseType<typename T::VectorType>;
-            { m[i][i] } -> SameBaseType<typename T::ScalarType>;
-        };
-
-        { m.Max() } -> SameBaseType<typename T::ScalarType>;
-        { m.Min() } -> SameBaseType<typename T::ScalarType>;
-    };
-
-    template <typename T>
-    concept ConceptMatrixN = requires (T m)
-    {
-        requires ConceptBasicMatrix<T>;
-
-        requires requires (T n)
-        {
-            { m + n } -> SameBaseType<T>;
-            { m - n } -> SameBaseType<T>;
-            { m * n } -> SameBaseType<T>;
-        };
-
-        requires requires (typename T::ScalarType s)
-        {
-            { m + s } -> SameBaseType<T>;
-            { s + m } -> SameBaseType<T>;
-            { m - s } -> SameBaseType<T>;
-            { s - m } -> SameBaseType<T>;
-            { m * s } -> SameBaseType<T>;
-            { s * m } -> SameBaseType<T>;
-            { m / s } -> SameBaseType<T>;
-        };
-
-        requires requires (typename T::VectorType u)
-        {
-            { m * u } -> SameBaseType<typename T::VectorType>;
-            { u * m } -> SameBaseType<typename T::VectorType>;
-        };
-    };
-
-    template <typename T>
-    concept ConceptMatrix2 = requires (T m)
-    {
-        requires ConceptMatrixN<T>;
-        requires T::Dimension == 2;
-    };
-
-    template <typename T>
-    concept ConceptMatrix3 = requires (T m)
-    {
-        requires ConceptMatrixN<T>;
-        requires T::Dimension == 3;
-    };
-
-    template <typename T>
-    concept ConceptMatrix4 = requires (T m)
-    {
-        requires ConceptMatrixN<T>;
-        requires T::Dimension == 4;
-    };
-
-    template <typename T>
-    concept ConceptMatrix = requires
-    {
-        requires ConceptMatrix2<T>
-              || ConceptMatrix3<T>
-              || ConceptMatrix4<T>;
+              || ConceptVector4<T>
+              || (ConceptVectorN<T> && T::Dimension > 4);
     };
 
     //////////////////////////////////////////////////////////////////////////
@@ -225,20 +174,12 @@ namespace Math
     {
         typename T::ScalarType;
         typename T::VectorType;
-        typename T::MatrixType;
-        typename T::ProjectiveMatrixType;
         { T::Dimension } -> SameBaseType<SizeType>;
-
-        requires ConceptBasicVector<typename T::VectorType>;
-        requires T::VectorType::Dimension == T::Dimension;
-        requires ConceptBasicMatrix<typename T::MatrixType>;
-        requires T::MatrixType::Dimension == T::Dimension;
-        requires ConceptBasicMatrix<typename T::ProjectiveMatrixType>;
-        requires T::ProjectiveMatrixType::Dimension == T::Dimension + 1;
 
         requires ArithmeticType<typename T::ScalarType>;
 
-        { typename T::VectorType(p) } -> std::same_as<typename T::VectorType>;
+        requires ConceptBasicVector<typename T::VectorType>;
+        requires T::Dimension == T::VectorType::Dimension;
 
         requires requires (SizeType i)
         {
@@ -256,37 +197,11 @@ namespace Math
 
         requires requires (T q)
         {
-            { p - q } -> std::convertible_to<typename T::VectorType>;
+            { p - q } -> SameBaseType<typename T::VectorType>;
         };
 
-        requires requires (typename T::VectorType v)
-        {
-            { p + v } -> std::same_as<T>;
-            { v + p } -> std::same_as<T>;
-            { p - v } -> std::same_as<T>;
-            { v - p } -> std::same_as<T>;
-            { p * v } -> std::same_as<T>;
-            { v * p } -> std::same_as<T>;
-            { p / v } -> std::same_as<T>;
-
-            { p += v } -> SameBaseType<T>;
-            { p -= v } -> SameBaseType<T>;
-            { p *= v } -> SameBaseType<T>;
-            { p /= v } -> SameBaseType<T>;
-        };
-
-        requires requires (typename T::MatrixType m)
-        {
-            { p * m } -> std::same_as<T>;
-            { m * p } -> std::same_as<T>;
-
-        };
-
-        requires requires (typename T::ProjectiveMatrixType m)
-        {
-            { p * m } -> std::same_as<T>;
-            { m * p } -> std::same_as<T>;
-        };
+        requires Addition<T, typename T::VectorType>;
+        requires Subtraction<T, typename T::VectorType>;
     };
 
     template <typename T>
@@ -316,11 +231,123 @@ namespace Math
     };
 
     //////////////////////////////////////////////////////////////////////////
+    // Matrix concepts
+    //////////////////////////////////////////////////////////////////////////
+
+    template <typename T>
+    concept ConceptBasicMatrix = requires (T m)
+    {
+        typename T::ScalarType;
+        { T::Dimension } -> SameBaseType<SizeType>;
+
+        requires ArithmeticType<typename T::ScalarType>;
+
+        requires requires (SizeType i)
+        {
+            { m[i][i] } -> SameBaseType<typename T::ScalarType>;
+        };
+
+        { m.Max() } -> SameBaseType<typename T::ScalarType>;
+        { m.Min() } -> SameBaseType<typename T::ScalarType>;
+    };
+
+    template <typename T>
+    concept ConceptMatrixN = requires (T m)
+    {
+        requires ConceptBasicMatrix<T>;
+        requires BinaryArithmetic<T, typename T::ScalarType>;
+        requires Addition<T, T>;
+        requires Subtraction<T, T>;
+        requires Multiplication<T, T>;
+    };
+
+    template <typename T>
+    concept ConceptMatrix2 = requires (T m)
+    {
+        requires ConceptMatrixN<T>;
+        requires T::Dimension == 2;
+    };
+
+    template <typename T>
+    concept ConceptMatrix3 = requires (T m)
+    {
+        requires ConceptMatrixN<T>;
+        requires T::Dimension == 3;
+    };
+
+    template <typename T>
+    concept ConceptMatrix4 = requires (T m)
+    {
+        requires ConceptMatrixN<T>;
+        requires T::Dimension == 4;
+    };
+
+    template <typename T>
+    concept ConceptMatrix = requires
+    {
+        requires ConceptMatrix2<T>
+              || ConceptMatrix3<T>
+              || ConceptMatrix4<T>
+              || (ConceptMatrixN<T> && T::Dimension > 4);
+    };
+
+    //////////////////////////////////////////////////////////////////////////
+    // Transform concepts
+    //////////////////////////////////////////////////////////////////////////
+
+    template <typename T>
+    concept ConceptBasicTransform = requires (T t)
+    {
+        typename T::ScalarType;
+        typename T::MatrixType;
+        { T::Dimension } -> SameBaseType<SizeType>;
+
+        requires ArithmeticType<typename T::ScalarType>;
+        requires ConceptBasicMatrix<typename T::MatrixType>;
+        requires T::Dimension + 1 == T::MatrixType::Dimension;
+
+        requires requires (SizeType i)
+        {
+            { t[i][i] } -> SameBaseType<typename T::ScalarType>;
+        };
+
+        { t.ToMatrix() } -> SameBaseType<typename T::MatrixType>;
+    };
+
+    template <typename T>
+    concept ConceptTransformN = requires (T t)
+    {
+        requires ConceptBasicTransform<T>;
+        requires Multiplication<T, T>;
+    };
+
+    template <typename T>
+    concept ConceptTransform2 = requires (T t)
+    {
+        requires ConceptTransformN<T>;
+        requires T::Dimension == 2;
+    };
+
+    template <typename T>
+    concept ConceptTransform3 = requires (T t)
+    {
+        requires ConceptTransformN<T>;
+        requires T::Dimension == 3;
+    };
+
+    template <typename T>
+    concept ConceptTransform = requires
+    {
+        requires ConceptTransform2<T>
+              || ConceptTransform3<T>;
+    };
+
+    //////////////////////////////////////////////////////////////////////////
     // Utility concepts
     //////////////////////////////////////////////////////////////////////////
 
     template <typename T>
-    concept ConceptUtilType = requires
+    concept ConceptMathTypeUtil = requires
     {
         requires ConceptBasicVector<T>
               || ConceptBasicMatrix<T>
@@ -328,4 +355,4 @@ namespace Math
     };
 }
 
-#endif //MATHLIB_COMMON_CONCEPTS_HPP
+#endif //MATHLIB_COMMON_TYPE_CONCEPTS_HPP

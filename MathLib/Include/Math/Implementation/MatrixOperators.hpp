@@ -59,6 +59,44 @@ namespace Math
         return c;
     }
 
+
+
+    template <ConceptBasicMatrix Mat>
+    [[maybe_unused]] constexpr
+    Mat& operator+= (Mat& a, const Mat& b) noexcept
+    {
+        for (SizeType i = 0; i < Mat::Dimension; ++i)
+        {
+            for (SizeType j = 0; j < Mat::Dimension; ++j)
+            {
+                a[i][j] += b[i][j];
+            }
+        }
+        return a;
+    }
+
+    template <ConceptBasicMatrix Mat>
+    [[maybe_unused]] constexpr
+    Mat& operator-= (Mat& a, const Mat& b) noexcept
+    {
+        for (SizeType i = 0; i < Mat::Dimension; ++i)
+        {
+            for (SizeType j = 0; j < Mat::Dimension; ++j)
+            {
+                a[i][j] -= b[i][j];
+            }
+        }
+        return a;
+    }
+
+    template <ConceptBasicMatrix Mat>
+    [[maybe_unused]] constexpr
+    Mat& operator*= (Mat& a, const Mat& b) noexcept
+    {
+        a = a * b;
+        return a;
+    }
+
     //////////////////////////////////////////////////////////////////////////
     // Matrix-Scalar operators
     //////////////////////////////////////////////////////////////////////////
@@ -168,15 +206,89 @@ namespace Math
         return scaled;
     }
 
+    template <ConceptBasicMatrix Mat>
+    [[nodiscard]] constexpr
+    Mat operator/ (typename Mat::ScalarType s, const Mat& m) noexcept
+    {
+        Mat scaled = m;
+        for (SizeType i = 0; i < Mat::Dimension; ++i)
+        {
+            for (SizeType j = 0; j < Mat::Dimension; ++j)
+            {
+                scaled[i][j] = s / m[i][j];
+            }
+        }
+        return scaled;
+    }
+
+
+
+    template <ConceptBasicMatrix Mat>
+    [[maybe_unused]] constexpr
+    Mat& operator+= (Mat& m, typename Mat::ScalarType s) noexcept
+    {
+        for (SizeType i = 0; i < Mat::Dimension; i++)
+        {
+            for (SizeType j = 0; j < Mat::Dimension; j++)
+            {
+                m[i][j] += s;
+            }
+        }
+        return m;
+    }
+
+    template <ConceptBasicMatrix Mat>
+    [[maybe_unused]] constexpr
+    Mat& operator-= (Mat& m, typename Mat::ScalarType s) noexcept
+    {
+        for (SizeType i = 0; i < Mat::Dimension; i++)
+        {
+            for (SizeType j = 0; j < Mat::Dimension; j++)
+            {
+                m[i][j] -= s;
+            }
+        }
+        return m;
+    }
+
+    template <ConceptBasicMatrix Mat>
+    [[maybe_unused]] constexpr
+    Mat& operator*= (Mat& m, typename Mat::ScalarType s) noexcept
+    {
+        for (SizeType i = 0; i < Mat::Dimension; i++)
+        {
+            for (SizeType j = 0; j < Mat::Dimension; j++)
+            {
+                m[i][j] *= s;
+            }
+        }
+        return m;
+    }
+
+    template <ConceptBasicMatrix Mat>
+    [[maybe_unused]] constexpr
+    Mat& operator/= (Mat& m, typename Mat::ScalarType s) noexcept
+    {
+        for (SizeType i = 0; i < Mat::Dimension; i++)
+        {
+            for (SizeType j = 0; j < Mat::Dimension; j++)
+            {
+                m[i][j] /= s;
+            }
+        }
+        return m;
+    }
+
     //////////////////////////////////////////////////////////////////////////
     // Matrix-Vector operators
     //////////////////////////////////////////////////////////////////////////
 
-    template <ConceptBasicMatrix Mat>
+    template <ConceptBasicMatrix Mat, ConceptBasicVector Vec>
+        requires (Mat::Dimension == Vec::Dimension)
     [[nodiscard]] constexpr
-    typename Mat::VectorType operator* (const Mat& m, const typename Mat::VectorType& u) noexcept
+    Vec operator* (const Mat& m, const Vec& u) noexcept
     {
-        typename Mat::VectorType result;
+        Vec result;
         for (SizeType i = 0; i < Mat::Dimension; ++i)
         {
             result[i] = Dot(m[i], u);
@@ -184,17 +296,88 @@ namespace Math
         return result;
     }
 
-    template <ConceptBasicMatrix Mat>
+    template <ConceptBasicMatrix Mat, ConceptBasicVector Vec>
+        requires (Mat::Dimension == Vec::Dimension)
     [[nodiscard]] constexpr
-    typename Mat::VectorType operator* (const typename Mat::VectorType& u, const Mat& m) noexcept
+    Vec operator* (const Vec& u, const Mat& m) noexcept
     {
-        typename Mat::VectorType result;
+        Vec result;
         for (SizeType i = 0; i < Mat::Dimension; ++i)
         {
             for (SizeType j = 0; j < Mat::Dimension; ++j)
             {
                 result[i] += u[j] * m[j][i];
             }
+        }
+        return result;
+    }
+
+    //////////////////////////////////////////////////////////////////////////
+    // Matrix-Point operators
+    //////////////////////////////////////////////////////////////////////////
+
+    template <ConceptBasicMatrix Mat, ConceptBasicPoint Pnt>
+        requires (Mat::Dimension == Pnt::Dimension)
+    [[nodiscard]] constexpr
+    Pnt operator* (const Pnt& p, const Mat& m) noexcept
+    {
+        Pnt result;
+        for (SizeType i = 0; i < Mat::Dimension; ++i)
+        {
+            for (SizeType j = 0; j < Mat::Dimension; ++j)
+            {
+                result[i] += p[j] * m[j][i];
+            }
+        }
+        return result;
+    }
+
+    template <ConceptBasicMatrix Mat, ConceptBasicPoint Pnt>
+        requires (Mat::Dimension == Pnt::Dimension)
+    [[nodiscard]] constexpr
+    Pnt operator* (const Mat& m, const Pnt& p) noexcept
+    {
+        Pnt result;
+        for (SizeType i = 0; i < Mat::Dimension; ++i)
+        {
+            for (SizeType j = 0; j < Mat::Dimension; ++j)
+            {
+                result[i] += m[i][j] * p[j];
+            }
+        }
+        return result;
+    }
+
+    template <ConceptBasicMatrix Mat, ConceptBasicPoint Pnt>
+        requires (Mat::Dimension == Pnt::Dimension + 1)
+    [[nodiscard]] constexpr
+    Pnt operator* (const Pnt& p, const Mat& m) noexcept
+    {
+        Pnt result;
+        for (SizeType i = 0; i < Pnt::Dimension; ++i)
+        {
+            for (SizeType j = 0; j < Pnt::Dimension; ++j)
+            {
+                result[i] += p[j] * m[j][i];
+            }
+            result[i] += m[Pnt::Dimension][i];
+        }
+        return result;
+    }
+
+    template <ConceptBasicMatrix Mat, ConceptBasicPoint Pnt>
+        requires (Mat::Dimension == Pnt::Dimension + 1)
+    [[nodiscard]] constexpr
+    Pnt operator* (const Mat& m, const Pnt& p) noexcept
+    {
+        Pnt result;
+        for (SizeType i = 0; i < Pnt::Dimension; ++i)
+        {
+            for (SizeType j = 0; j < Pnt::Dimension; ++j)
+            {
+                result[i] += m[i][j] * p[j];
+            }
+            result[i] += m[i][Pnt::Dimension];
         }
         return result;
     }

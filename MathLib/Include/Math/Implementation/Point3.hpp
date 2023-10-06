@@ -2,7 +2,6 @@
 #define MATHLIB_IMPL_POINT3_HPP
 
 #include "Point2.hpp"
-#include "Matrix4.hpp"
 
 namespace Math
 {
@@ -11,8 +10,6 @@ namespace Math
     {
         using ScalarType = T;
         using VectorType = Vector3T<T>;
-        using MatrixType = Matrix3T<T>;
-        using ProjectiveMatrixType = Matrix4T<T>;
         static constexpr SizeType Dimension = 3;
 
         T x = T(0);

@@ -5,7 +5,7 @@
 
 namespace Math
 {
-    template <ConceptVectorN Vec>
+    template <ConceptVector Vec>
     [[nodiscard]] constexpr
     typename Vec::ScalarType Dot(const Vec& u, const Vec& v) noexcept
     {
@@ -17,7 +17,7 @@ namespace Math
         return dot;
     }
 
-    template <ConceptVectorN Vec>
+    template <ConceptVector Vec>
     [[nodiscard]] constexpr
     Vec Normalize(const Vec& u) noexcept
     {
@@ -43,7 +43,7 @@ namespace Math
         return w;
     }
 
-    template <ConceptMatrixN Mat>
+    template <ConceptMatrix Mat>
     [[nodiscard]] constexpr
     Mat Transpose(const Mat& m) noexcept
     {
@@ -139,6 +139,8 @@ namespace Math
         return result;
     }
 
+    // TODO(3011): Investigate better calculations with better precision.
+    // (Possibly at the cost of some performance.)
     template <ConceptMatrix4 Mat>
     [[nodiscard]] constexpr
     Mat Invert(const Mat& m) noexcept
@@ -194,21 +196,21 @@ namespace Math
         return result;
     }
 
-    template <ConceptUtilType T>
+    template <ConceptMathTypeUtil T>
     [[nodiscard]] constexpr
     typename T::ScalarType Min(const T& u) noexcept
     {
         return u.Min();
     }
 
-    template <ConceptUtilType T>
+    template <ConceptMathTypeUtil T>
     [[nodiscard]] constexpr
     typename T::ScalarType Max(const T& u) noexcept
     {
         return u.Max();
     }
 
-    template <ConceptUtilType T>
+    template <ConceptMathTypeUtil T>
     [[nodiscard]] constexpr
     bool Equal(const T& u, const T& v, typename T::ScalarType epsilon = Constants::Epsilon<typename T::ScalarType>::Value) noexcept
     {
@@ -223,7 +225,7 @@ namespace Math
         return true;
     }
 
-    template <ConceptVectorN Vec>
+    template <ConceptBasicVector Vec>
     [[nodiscard]] constexpr
     bool HasNaN(const Vec& u) noexcept
     {
@@ -253,7 +255,7 @@ namespace Math
         return false;
     }
 
-    template <ConceptMatrixN Mat>
+    template <ConceptBasicMatrix Mat>
     [[nodiscard]] constexpr
     bool HasNaN(const Mat& m)
     {

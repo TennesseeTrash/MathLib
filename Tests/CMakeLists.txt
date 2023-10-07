@@ -20,6 +20,7 @@ target_sources(Tests PRIVATE
     "TestVectors.cpp"
     "TestPoints.cpp"
     "TestMatrices.cpp"
+    "TestTransforms.cpp"
     "TestQuaternions.cpp"
     "TestUtilsContainerTools.cpp"
 )

@@ -269,6 +269,21 @@ namespace Math
 
         return false;
     }
+
+    template <ConceptBasicTransform Transform>
+    [[nodiscard]] constexpr
+    bool HasNaN(const Transform& t)
+    {
+        for (SizeType i = 0; i < Transform::Dimension; ++i)
+        {
+            if (HasNaN(t[i]))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
 
 #endif //MATHLIB_IMPL_UTILITIES_HPP

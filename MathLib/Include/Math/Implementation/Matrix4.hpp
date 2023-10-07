@@ -12,7 +12,6 @@ namespace Math
     {
     public:
         using ScalarType = T;
-        using VectorType = Vector4T<T>;
         static constexpr SizeType Dimension = 4;
 
         constexpr explicit Matrix4T() noexcept

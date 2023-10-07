@@ -350,8 +350,9 @@ namespace Math
     concept ConceptMathTypeUtil = requires
     {
         requires ConceptBasicVector<T>
+              || ConceptBasicPoint<T>
               || ConceptBasicMatrix<T>
-              || ConceptBasicPoint<T>;
+              || ConceptBasicTransform<T>;
     };
 }
 

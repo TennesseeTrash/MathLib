@@ -1,21 +1,25 @@
 #ifndef MATHLIB_UTILS_COORDINATE_FRAME_HPP
 #define MATHLIB_UTILS_COORDINATE_FRAME_HPP
 
+#include "../Vector.hpp"
 #include "../Matrix.hpp"
 
 namespace Math
 {
-    class CoordinateFrame
+    class CoordinateFrame final
     {
     public:
+        [[nodiscard]] constexpr
         CoordinateFrame() noexcept
             : mFrame(1.0f)
         {}
 
+        [[nodiscard]] constexpr
         CoordinateFrame(const Vector3f& x, const Vector3f& y, const Vector3f& z) noexcept
             : mFrame(x, y, z)
         {}
 
+        [[nodiscard]] constexpr
         static CoordinateFrame MakeFromNormal(const Vector3f& normal) noexcept
         {
             CoordinateFrame result;
@@ -29,19 +33,21 @@ namespace Math
             return result;
         }
 
+        [[nodiscard]] constexpr
         Vector3f ToWorld(const Vector3f& vec) const noexcept
         {
             return vec.x * mFrame[0] + vec.y * mFrame[1] + vec.z * mFrame[2];
         }
 
+        [[nodiscard]] constexpr
         Vector3f ToLocal(const Vector3f& vec) const noexcept
         {
             return mFrame * vec;
         }
 
-        const Vector3f& Binormal() const { return mFrame[0]; }
-        const Vector3f& Tangent () const { return mFrame[1]; }
-        const Vector3f& Normal  () const { return mFrame[2]; }
+        [[nodiscard]] constexpr const Vector3f& Binormal() const { return mFrame[0]; }
+        [[nodiscard]] constexpr const Vector3f& Tangent () const { return mFrame[1]; }
+        [[nodiscard]] constexpr const Vector3f& Normal  () const { return mFrame[2]; }
     private:
         Matrix3f mFrame;
     };

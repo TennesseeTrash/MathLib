@@ -6,8 +6,48 @@
 
 #include "Implementation/Functions.hpp"
 
+// TODO(3011): Add Pow function
+// TODO(3011): Add Sqrt function
+// TODO(3011): Add Trigonometric functions (sin, cos, tan etc.)
+
 namespace Math
 {
+    //////////////////////////////////////////////////////////////////////////
+    // Sign, Abs
+    //////////////////////////////////////////////////////////////////////////
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    T Sign(T val) noexcept
+    {
+        return (static_cast<T>(0) < val) - (val < static_cast<T>(0));
+    }
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    T Abs(T val) noexcept
+    {
+        return val > static_cast<T>(0) ? val : -val;
+    }
+
+    //////////////////////////////////////////////////////////////////////////
+    // Equal function for fundamental types
+    //////////////////////////////////////////////////////////////////////////
+
+    template <FundamentalType T>
+    [[nodiscard]] constexpr
+    bool Equal(T val1, T val2, T epsilon = Constants::Epsilon<T>) noexcept
+    {
+        if constexpr (FloatingPointType<T>)
+        {
+            return Abs(val1 - val2) < epsilon;
+        }
+        else
+        {
+            return val1 == val2;
+        }
+    }
+
     //////////////////////////////////////////////////////////////////////////
     // Square function
     //////////////////////////////////////////////////////////////////////////
@@ -26,38 +66,43 @@ namespace Math
         return val * val * val;
     }
 
-    // TODO(3011): Add Pow function
-
     //////////////////////////////////////////////////////////////////////////
     // Clamp, Lerp
     //////////////////////////////////////////////////////////////////////////
 
     template <typename T>
     [[nodiscard]] constexpr
-    T Clamp(T val, T min = T(0), T max = T(1)) noexcept
+    T Clamp(T val, T min = static_cast<T>(0), T max = static_cast<T>(1)) noexcept
     {
-        return val > max ? max : val < min ? min : val;
+        return (val > max) ? max : ((val < min) ? min : val);
     }
 
-    template <typename T, typename U>
+    template <typename T>
     [[nodiscard]] constexpr
-    U Lerp(T val, const U& begin, const U& end) noexcept
+    T Lerp(T val, T begin, T end) noexcept
     {
         return ((1 - val) * begin) + (val * end);
+    }
+
+    template <FloatingPointType T>
+    [[nodiscard]] constexpr
+    T InvLerp(T val, T begin, T end) noexcept
+    {
+        return (val - begin) / (end - begin);
     }
 
     //////////////////////////////////////////////////////////////////////////
     // Floor, Ceil
     //////////////////////////////////////////////////////////////////////////
 
-    template <typename Int, typename Float>
+    template <IntegralType Int, FloatingPointType Float>
     [[nodiscard]] constexpr
     Int Floor(Float val) noexcept
     {
         return static_cast<Int>(val - (val < static_cast<Int>(val)));
     }
 
-    template <typename Int, typename Float>
+    template <IntegralType Int, FloatingPointType Float>
     [[nodiscard]] constexpr
     Int Ceil(Float val) noexcept
     {
@@ -65,57 +110,57 @@ namespace Math
     }
 
     //////////////////////////////////////////////////////////////////////////
-    // Sign, Abs
+    // Smoothstep, Smootherstep
     //////////////////////////////////////////////////////////////////////////
 
-    template <typename T>
+    template <FloatingPointType T>
     [[nodiscard]] constexpr
-    T Sign(T val) noexcept
+    T Smoothstep(T val, T begin, T end) noexcept
     {
-        return (T(0) < val) - (val < T(0));
+        val = Clamp(InvLerp(val, begin, end));
+        return (static_cast<T>(3) - static_cast<T>(2) * val) * Squared(val);
     }
 
-    template <typename T>
+    template <FloatingPointType T>
     [[nodiscard]] constexpr
-    T Abs(T val) noexcept
+    T SmoothstepDerivative(T val, T begin, T end) noexcept
     {
-        return val > T(0) ? val : -val;
+        val = Clamp(InvLerp(val, begin, end));
+        return static_cast<T>(6) * val * (static_cast<T>(1) - val);
+    }
+
+    template <FloatingPointType T>
+    [[nodiscard]] constexpr
+    T Smootherstep(T val, T begin, T end) noexcept
+    {
+        val = Clamp(InvLerp(val, begin, end));
+        return ((static_cast<T>(6) * val - static_cast<T>(15)) * val + static_cast<T>(10)) * Cubed(val);
+    }
+
+    template <FloatingPointType T>
+    [[nodiscard]] constexpr
+    T SmootherstepDerivative(T val, T begin, T end) noexcept
+    {
+        val = Clamp(InvLerp(val, begin, end));
+        return static_cast<T>(30) * (Squared(val) - static_cast<T>(2) * val + static_cast<T>(1)) * Squared(val);
     }
 
     //////////////////////////////////////////////////////////////////////////
     // Angle unit conversion functions
     //////////////////////////////////////////////////////////////////////////
 
-    template <typename T>
+    template <FloatingPointType T>
     [[nodiscard]] constexpr
-    T ToRadians(T val) noexcept
+    T ToRadians(T degrees) noexcept
     {
-        return (Constants::Pi<T> * val) / T(180);
+        return (Constants::Pi<T> * degrees) / static_cast<T>(180);
     }
 
-    template <typename T>
+    template <FloatingPointType T>
     [[nodiscard]] constexpr
-    T ToDegrees(T val) noexcept
+    T ToDegrees(T radians) noexcept
     {
-        return (180 * val) / Constants::Pi<T>;
-    }
-
-    //////////////////////////////////////////////////////////////////////////
-    // Equal function for fundamental types
-    //////////////////////////////////////////////////////////////////////////
-
-    template <FundamentalType T>
-    [[nodiscard]] constexpr
-    bool Equal(T val1, T val2, T epsilon = Constants::Epsilon<T>::Value) noexcept
-    {
-        if constexpr (FloatingPointType<T>)
-        {
-            return Abs(val1 - val2) < epsilon;
-        }
-        else
-        {
-            return val1 == val2;
-        }
+        return (180 * radians) / Constants::Pi<T>;
     }
 
     //////////////////////////////////////////////////////////////////////////

@@ -212,7 +212,7 @@ namespace Math
 
     template <ConceptMathTypeUtil T>
     [[nodiscard]] constexpr
-    bool Equal(const T& u, const T& v, typename T::ScalarType epsilon = Constants::Epsilon<typename T::ScalarType>::Value) noexcept
+    bool Equal(const T& u, const T& v, typename T::ScalarType epsilon = Constants::Epsilon<typename T::ScalarType>) noexcept
     {
         for (SizeType i = 0; i < T::Dimension; ++i)
         {

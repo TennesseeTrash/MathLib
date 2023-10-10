@@ -32,22 +32,13 @@ namespace Math
     concept IntegralType = std::is_integral_v<T>;
 
     template <typename T>
-    concept FloatingPointType = std::is_floating_point_v<T>;
+    concept SignedIntegralType = std::is_signed_v<T>;
 
     template <typename T>
-    concept ArithmeticType = requires (T a, T b)
-    {
-        { a + b } -> std::same_as<T>;
-        { a - b } -> std::same_as<T>;
-        { a * b } -> std::same_as<T>;
-        { a / b } -> std::same_as<T>;
-        { -a    } -> std::same_as<T>;
+    concept UnsignedIntegralType = std::is_unsigned_v<T>;
 
-        { a += b } -> SameTypeRef<T>;
-        { a -= b } -> SameTypeRef<T>;
-        { a *= b } -> SameTypeRef<T>;
-        { a /= b } -> SameTypeRef<T>;
-    };
+    template <typename T>
+    concept FloatingPointType = std::is_floating_point_v<T>;
 
     template <typename Ta, typename Tb>
     concept Addition = requires (Ta a, Tb b)
@@ -92,6 +83,12 @@ namespace Math
         requires Subtraction<Ta, Tb>;
         requires Multiplication<Ta, Tb>;
         requires Division<Ta, Tb>;
+    };
+
+    template <typename T>
+    concept ArithmeticType = requires
+    {
+        requires BinaryArithmetic<T, T>;
     };
 
     //////////////////////////////////////////////////////////////////////////

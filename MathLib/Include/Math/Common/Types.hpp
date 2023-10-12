@@ -12,10 +12,9 @@ namespace Math
     template <typename T>
     class StrongType final
     {
-    private:
+    public:
         static_assert(!IsSpecialization<T, StrongType>, "StrongType may not be nested");
-
-        T mValue;
+        using ValueType = T;
     public:
         [[nodiscard]] constexpr
         StrongType(T value = T{}) noexcept
@@ -64,9 +63,45 @@ namespace Math
         friend constexpr
         To Convert(StrongType<T> value) noexcept
         {
-            return To(static_cast<decltype(ToUnderlying(To()))>(value.mValue));
+            return To(static_cast<typename To::ValueType>(value.mValue));
         }
+    private:
+        T mValue;
     };
+
+    namespace Implementation
+    {
+        template <typename T>
+        struct UnderlyingType
+        {
+            using Type = T;
+        };
+
+        template <typename T>
+        struct UnderlyingType<StrongType<T>>
+        {
+            using Type = T;
+        };
+    }
+
+    template <typename T>
+    using UnderlyingType = typename Implementation::UnderlyingType<T>::Type;
+
+    template <typename T>
+        requires (!IsSpecialization<T, StrongType>)
+    [[nodiscard]] constexpr
+    T ToUnderlying(T value) noexcept
+    {
+        return value;
+    }
+
+    template <typename To, typename From>
+        requires (!IsSpecialization<From, StrongType>)
+    [[nodiscard]] constexpr
+    To Convert(From value) noexcept
+    {
+        return static_cast<UnderlyingType<To>>(value);
+    }
 
     using SizeType = StrongType<std::size_t>;
     using SignedSizeType = StrongType<std::int64_t>;
@@ -89,6 +124,49 @@ namespace Math
 
     using f32 = StrongType<float>;
     using f64 = StrongType<double>;
+
+    namespace Implementation
+    {
+        template <std::size_t>
+        struct SignedIntegerSelector
+        {
+            using Type = void;
+        };
+
+        template <> struct SignedIntegerSelector<1> { using Type = i8;  };
+        template <> struct SignedIntegerSelector<2> { using Type = i16; };
+        template <> struct SignedIntegerSelector<4> { using Type = i32; };
+        template <> struct SignedIntegerSelector<8> { using Type = i64; };
+
+        template <std::size_t>
+        struct UnsignedIntegerSelector
+        {
+            using Type = void;
+        };
+
+        template <> struct UnsignedIntegerSelector<1> { using Type = u8;  };
+        template <> struct UnsignedIntegerSelector<2> { using Type = u16; };
+        template <> struct UnsignedIntegerSelector<4> { using Type = u32; };
+        template <> struct UnsignedIntegerSelector<8> { using Type = u64; };
+
+        template <std::size_t>
+        struct FloatingPointSelector
+        {
+            using Type = void;
+        };
+
+        template <> struct FloatingPointSelector<4> { using Type = f32; };
+        template <> struct FloatingPointSelector<8> { using Type = f64; };
+    }
+
+    template <std::size_t Size>
+    using SignedIntegerSelector = typename Implementation::SignedIntegerSelector<Size>::Type;
+
+    template <std::size_t Size>
+    using UnsignedIntegerSelector = typename Implementation::UnsignedIntegerSelector<Size>::Type;
+
+    template <std::size_t Size>
+    using FloatingPointSelector = typename Implementation::FloatingPointSelector<Size>::Type;
 }
 
 #endif //MATHLIB_COMMON_TYPES_HPP

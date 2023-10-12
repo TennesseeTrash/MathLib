@@ -98,7 +98,7 @@ namespace Math
         return (val > max) ? max : ((val < min) ? min : val);
     }
 
-    template <typename T>
+    template <FloatingPointType T>
     [[nodiscard]] constexpr
     T Lerp(T val, T begin, T end) noexcept
     {
@@ -116,18 +116,36 @@ namespace Math
     // Floor, Ceil
     //////////////////////////////////////////////////////////////////////////
 
-    template <IntegralType Int, FloatingPointType Float>
+    template <SignedIntegralType Int, FloatingPointType Float>
+        requires (sizeof(Int) >= sizeof(Float))
     [[nodiscard]] constexpr
     Int Floor(Float val) noexcept
     {
-        return static_cast<Int>(val - (val < static_cast<Int>(val)));
+        return Convert<Int>(val - (val < Convert<Float>(ToUnderlying(Convert<Int>(val)))));
     }
 
-    template <IntegralType Int, FloatingPointType Float>
+    template <FloatingPointType Float>
+    [[nodiscard]] constexpr
+    Float Floor(Float val) noexcept
+    {
+        using Int = SignedIntegerSelector<sizeof(UnderlyingType<Float>)>;
+        return Convert<Float>(ToUnderlying(Floor<Int, Float>(val)));
+    }
+
+    template <SignedIntegralType Int, FloatingPointType Float>
+        requires (sizeof(Int) >= sizeof(Float))
     [[nodiscard]] constexpr
     Int Ceil(Float val) noexcept
     {
-        return static_cast<Int>(val - (val > static_cast<Int>(val)));
+        return Convert<Int>(val + (val > Convert<Float>(ToUnderlying(Convert<Int>(val)))));
+    }
+
+    template <FloatingPointType Float>
+    [[nodiscard]] constexpr
+    Float Ceil(Float val) noexcept
+    {
+        using Int = SignedIntegerSelector<sizeof(UnderlyingType<Float>)>;
+        return Convert<Float>(ToUnderlying(Ceil<Int, Float>(val)));
     }
 
     //////////////////////////////////////////////////////////////////////////
@@ -174,26 +192,19 @@ namespace Math
     [[nodiscard]] constexpr
     T ToRadians(T degrees) noexcept
     {
-        return (Constants::Pi<T> * degrees) / static_cast<T>(180);
+        return Constants::Pi<T> * (degrees / static_cast<T>(180));
     }
 
     template <FloatingPointType T>
     [[nodiscard]] constexpr
     T ToDegrees(T radians) noexcept
     {
-        return (180 * radians) / Constants::Pi<T>;
+        return 180 * (radians / Constants::Pi<T>);
     }
 
     //////////////////////////////////////////////////////////////////////////
     // Min/Max
     //////////////////////////////////////////////////////////////////////////
-
-    //template <typename T>
-    //[[nodiscard]] constexpr
-    //T Min(T val1, T val2) noexcept
-    //{
-    //    return val1 < val2 ? val1 : val2;
-    //}
 
     template <typename T, typename... Ts>
     [[nodiscard]] constexpr
@@ -202,13 +213,6 @@ namespace Math
         static_assert(sizeof...(Ts) == 0 || (std::is_same_v<T, Ts> || ...));
         return Implementation::Min({v1, values...});
     }
-
-    //template <typename T>
-    //[[nodiscard]] constexpr
-    //T Max(T val1, T val2) noexcept
-    //{
-    //    return val1 > val2 ? val1 : val2;
-    //}
 
     template <typename T, typename... Ts>
     [[nodiscard]] constexpr

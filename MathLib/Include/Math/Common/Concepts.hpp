@@ -29,16 +29,20 @@ namespace Math
     concept FundamentalType = std::is_fundamental_v<T>;
 
     template <typename T>
-    concept IntegralType = std::is_integral_v<T>;
+    concept IntegralType = std::is_integral_v<T>
+                        || std::is_integral_v<typename T::ValueType>;
 
     template <typename T>
-    concept SignedIntegralType = std::is_signed_v<T>;
+    concept SignedIntegralType = std::is_signed_v<T>
+                              || std::is_signed_v<typename T::ValueType>;
 
     template <typename T>
-    concept UnsignedIntegralType = std::is_unsigned_v<T>;
+    concept UnsignedIntegralType = std::is_unsigned_v<T>
+                                || std::is_unsigned_v<typename T::ValueType>;
 
     template <typename T>
-    concept FloatingPointType = std::is_floating_point_v<T>;
+    concept FloatingPointType = std::is_floating_point_v<T>
+                             || std::is_floating_point_v<typename T::ValueType>;
 
     template <typename Ta, typename Tb>
     concept Addition = requires (Ta a, Tb b)

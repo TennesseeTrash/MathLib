@@ -21,11 +21,11 @@ namespace Math
         constexpr explicit Vector3T(const Vector2T<T>& u)       noexcept : x(u.x ), y(u.y ), z(T(0)) {}
         constexpr explicit Vector3T(const Vector2T<T>& u, T zv) noexcept : x(u.x ), y(u.y ), z(zv  ) {}
 
-        constexpr       T& operator[] (SizeType idx)       noexcept { return reinterpret_cast<      T *>(this)[idx]; }
-        constexpr const T& operator[] (SizeType idx) const noexcept { return reinterpret_cast<const T *>(this)[idx]; }
+        constexpr       T& operator[] (SizeType idx)       noexcept { return reinterpret_cast<      T *>(this)[ToUnderlying(idx)]; }
+        constexpr const T& operator[] (SizeType idx) const noexcept { return reinterpret_cast<const T *>(this)[ToUnderlying(idx)]; }
 
         constexpr T LenSqr() const noexcept { return x * x + y * y + z * z; }
-        constexpr T Length() const noexcept { return std::sqrt(LenSqr()); }
+        constexpr T Length() const noexcept { return std::sqrt(ToUnderlying(LenSqr())); }
 
         constexpr T Max() noexcept { return ::Math::Max(x, y, z); }
         constexpr T Min() noexcept { return ::Math::Min(x, y, z); }

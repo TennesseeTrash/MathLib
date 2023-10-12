@@ -68,17 +68,17 @@ namespace Math
 
         static QuaternionT<T> MakeRotation(T angle, const Vector3T<T>& axis) noexcept
         {
-            return QuaternionT(std::sin(angle / 2) * axis, std::cos(angle / 2));
+            return QuaternionT(std::sin(ToUnderlying(angle / 2)) * axis, std::cos(ToUnderlying(angle / 2)));
         }
 
         static QuaternionT<T> MakeFromYawPitchRoll(T yaw, T pitch, T roll) noexcept
         {
-            T cosRoll  = std::cos(roll  / T(2));
-            T sinRoll  = std::sin(roll  / T(2));
-            T cosPitch = std::cos(pitch / T(2));
-            T sinPitch = std::sin(pitch / T(2));
-            T cosYaw   = std::cos(yaw   / T(2));
-            T sinYaw   = std::sin(yaw   / T(2));
+            T cosRoll  = std::cos(ToUnderlying(roll  / T(2)));
+            T sinRoll  = std::sin(ToUnderlying(roll  / T(2)));
+            T cosPitch = std::cos(ToUnderlying(pitch / T(2)));
+            T sinPitch = std::sin(ToUnderlying(pitch / T(2)));
+            T cosYaw   = std::cos(ToUnderlying(yaw   / T(2)));
+            T sinYaw   = std::sin(ToUnderlying(yaw   / T(2)));
             return QuaternionT<T>({
                 cosRoll * sinPitch * cosYaw + sinRoll * cosPitch * sinYaw,
                 cosRoll * cosPitch * sinYaw - sinRoll * sinPitch * cosYaw,
@@ -92,8 +92,8 @@ namespace Math
     // Useful type aliases
     //////////////////////////////////////////////////////////////////////////
 
-    using Quaternionf = QuaternionT<float>;
-    using Quaterniond = QuaternionT<double>;
+    using Quaternionf = QuaternionT<f32>;
+    using Quaterniond = QuaternionT<f64>;
 
     //////////////////////////////////////////////////////////////////////////
     // Operators
@@ -188,7 +188,7 @@ namespace Math
     [[nodiscard]] constexpr
     T Norm(const QuaternionT<T>& q) noexcept
     {
-        return std::sqrt(NormSqr(q));
+        return std::sqrt(ToUnderlying(NormSqr(q)));
     }
 
     template <typename T>
@@ -250,9 +250,9 @@ namespace Math
             cosAngle = -cosAngle;
             mult = T(-1);
         }
-        T angle = std::acos(cosAngle);
-        T sinAngle = std::sin(angle);
-        return ((begin * std::sin((T(1) - value) * angle) + end * std::sin(value * angle) * mult)) / sinAngle;
+        T angle = std::acos(ToUnderlying(cosAngle));
+        T sinAngle = std::sin(ToUnderlying(angle));
+        return ((begin * T(std::sin(ToUnderlying((T(1) - value) * angle))) + end * T(std::sin(ToUnderlying(value * angle))) * mult)) / sinAngle;
     }
 
     template <typename T>

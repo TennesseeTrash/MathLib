@@ -18,7 +18,7 @@ TEST_CASE("Quaternion and Transform similarity", "[Math][Quaternion]")
         Math::Matrix4f m1 = Math::Transform::RotateByY(Math::ToRadians(15.f));
         Math::Quaternionf q1 = Math::Quaternionf::MakeRotation(Math::ToRadians(0.f), {0.0f, 1.0f, 0.0f});
         Math::Quaternionf q2 = Math::Quaternionf::MakeRotation(Math::ToRadians(60.f), {0.0f, 1.0f, 0.0f});
-        Math::Matrix4f m2 = Math::Slerp(0.25f, q1, q2).ToMatrix4();
+        Math::Matrix4f m2 = Math::Slerp(Math::f32(0.25f), q1, q2).ToMatrix4();
 
         REQUIRE(Math::Equal(m1, m2));
     }

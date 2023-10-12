@@ -20,8 +20,8 @@ namespace Math
 
         constexpr explicit operator Vector2T<T>()  const noexcept { return Vector2T<T>(x, y); }
 
-        constexpr       T& operator[] (SizeType idx)       noexcept { return reinterpret_cast<      T *>(this)[idx]; }
-        constexpr const T& operator[] (SizeType idx) const noexcept { return reinterpret_cast<const T *>(this)[idx]; }
+        constexpr       T& operator[] (SizeType idx)       noexcept { return reinterpret_cast<      T *>(this)[ToUnderlying(idx)]; }
+        constexpr const T& operator[] (SizeType idx) const noexcept { return reinterpret_cast<const T *>(this)[ToUnderlying(idx)]; }
 
         constexpr T Max() noexcept { return ::Math::Max(x, y); }
         constexpr T Min() noexcept { return ::Math::Max(x, y); }

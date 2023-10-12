@@ -10,7 +10,7 @@
 namespace Math
 {
     template <ConceptBasicVector Vec>
-        requires IntegralType<typename Vec::ScalarType>
+    //    requires IntegralType<typename Vec::ScalarType>
     class VectorHasher
     {
     private:
@@ -25,15 +25,15 @@ namespace Math
 
             for (SizeType i = 0; i < Vec::Dimension; ++i)
             {
-                hash ^= vec[i] * sHashPrimes[i];
+                hash ^= Convert<SizeType>(vec[i]) * sHashPrimes[ToUnderlying(i)];
             }
 
-            return hash;
+            return ToUnderlying(hash);
         }
     };
 
     template <ConceptBasicVector Vec>
-        requires IntegralType<typename Vec::ScalarType>
+    //    requires IntegralType<typename Vec::ScalarType>
     class VectorEqual
     {
     public:

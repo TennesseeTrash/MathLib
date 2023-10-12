@@ -48,6 +48,27 @@ namespace Math
         }
     }
 
+    template <FundamentalType T>
+    [[nodiscard]] constexpr
+    bool Equal(StrongType<T> val1, StrongType<T> val2, StrongType<T> epsilon = Constants::Epsilon<StrongType<T>>) noexcept
+    {
+        return Equal(ToUnderlying(val1), ToUnderlying(val2), ToUnderlying(epsilon));
+    }
+
+    template <FundamentalType T>
+    [[nodiscard]] constexpr
+    bool Equal(StrongType<T> val1, T val2, StrongType<T> epsilon = Constants::Epsilon<StrongType<T>>) noexcept
+    {
+        return Equal(ToUnderlying(val1), val2, ToUnderlying(epsilon));
+    }
+
+    template <FundamentalType T>
+    [[nodiscard]] constexpr
+    bool Equal(T val1, StrongType<T> val2, StrongType<T> epsilon = Constants::Epsilon<StrongType<T>>) noexcept
+    {
+        return Equal(val1, ToUnderlying(val2), ToUnderlying(epsilon));
+    }
+
     //////////////////////////////////////////////////////////////////////////
     // Square function
     //////////////////////////////////////////////////////////////////////////
@@ -167,12 +188,12 @@ namespace Math
     // Min/Max
     //////////////////////////////////////////////////////////////////////////
 
-    template <typename T>
-    [[nodiscard]] constexpr
-    T Min(T val1, T val2) noexcept
-    {
-        return val1 < val2 ? val1 : val2;
-    }
+    //template <typename T>
+    //[[nodiscard]] constexpr
+    //T Min(T val1, T val2) noexcept
+    //{
+    //    return val1 < val2 ? val1 : val2;
+    //}
 
     template <typename T, typename... Ts>
     [[nodiscard]] constexpr
@@ -182,12 +203,12 @@ namespace Math
         return Implementation::Min({v1, values...});
     }
 
-    template <typename T>
-    [[nodiscard]] constexpr
-    T Max(T val1, T val2) noexcept
-    {
-        return val1 > val2 ? val1 : val2;
-    }
+    //template <typename T>
+    //[[nodiscard]] constexpr
+    //T Max(T val1, T val2) noexcept
+    //{
+    //    return val1 > val2 ? val1 : val2;
+    //}
 
     template <typename T, typename... Ts>
     [[nodiscard]] constexpr

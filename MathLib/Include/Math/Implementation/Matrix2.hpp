@@ -21,7 +21,7 @@ namespace Math
         constexpr explicit Matrix2T(T diag) noexcept
             : rows({})
         {
-            for (SizeType i = 0; i < 2; ++i) { rows[i][i] = diag; }
+            for (SizeType i = 0; i < 2; ++i) { rows[ToUnderlying(i)][ToUnderlying(i)] = diag; }
         }
 
         constexpr explicit Matrix2T(const Vector2T<T>& row0,
@@ -38,8 +38,8 @@ namespace Math
                       {m10, m11} }})
         {}
 
-        constexpr       Vector2T<T>& operator[] (SizeType index)       { return rows[index]; }
-        constexpr const Vector2T<T>& operator[] (SizeType index) const { return rows[index]; }
+        constexpr       Vector2T<T>& operator[] (SizeType index)       { return rows[ToUnderlying(index)]; }
+        constexpr const Vector2T<T>& operator[] (SizeType index) const { return rows[ToUnderlying(index)]; }
 
         constexpr T Min() const { return ::Math::Min(rows[0].Min(), rows[1].Min()); }
         constexpr T Max() const { return ::Math::Max(rows[0].Max(), rows[1].Max()); }

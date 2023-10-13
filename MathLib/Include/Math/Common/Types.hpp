@@ -125,6 +125,23 @@ namespace Math
     using f32 = StrongType<float>;
     using f64 = StrongType<double>;
 
+    class StaticSizeType
+    {
+    public:
+        std::size_t Value;
+
+        [[nodiscard]] constexpr
+        StaticSizeType(std::size_t value) noexcept
+            : Value(value)
+        {}
+
+        [[nodiscard]] constexpr
+        operator SizeType() const noexcept
+        {
+            return SizeType(Value);
+        }
+    };
+
     namespace Implementation
     {
         template <std::size_t>

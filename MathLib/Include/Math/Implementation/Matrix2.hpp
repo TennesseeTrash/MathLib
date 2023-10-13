@@ -3,7 +3,7 @@
 
 #include "Vector2.hpp"
 
-#include <array>
+#include "../Common/Array.hpp"
 
 namespace Math
 {
@@ -34,8 +34,8 @@ namespace Math
         constexpr explicit Matrix2T(T m00, T m01,
                                     T m10, T m11)
         noexcept
-            : rows({{ {m00, m01},
-                      {m10, m11} }})
+            : rows(Vector2T<T>(m00, m01),
+                   Vector2T<T>(m10, m11))
         {}
 
         constexpr       Vector2T<T>& operator[] (SizeType index)       { return rows[ToUnderlying(index)]; }
@@ -44,7 +44,7 @@ namespace Math
         constexpr T Min() const { return ::Math::Min(rows[0].Min(), rows[1].Min()); }
         constexpr T Max() const { return ::Math::Max(rows[0].Max(), rows[1].Max()); }
     private:
-        std::array<Vector2T<T>, 2> rows;
+        Array<Vector2T<T>, 2> rows;
     };
 }
 

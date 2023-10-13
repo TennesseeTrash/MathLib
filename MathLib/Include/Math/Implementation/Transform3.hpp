@@ -3,8 +3,6 @@
 
 #include "Matrix4.hpp"
 
-#include <array>
-
 namespace Math
 {
     template <typename T>
@@ -61,7 +59,7 @@ namespace Math
         }
     private:
         // Fourth row is implicit { 0, 0, 0, 1 }
-        std::array<Vector4T<T>, 3> rows;
+        Array<Vector4T<T>, 3> rows;
     };
 }
 

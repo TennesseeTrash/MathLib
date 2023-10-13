@@ -3,8 +3,6 @@
 
 #include "Matrix3.hpp"
 
-#include <array>
-
 namespace Math
 {
     template <typename T>
@@ -55,7 +53,7 @@ namespace Math
         }
     private:
         // Third row is implicit { 0, 0, 1 }
-        std::array<Vector3T<T>, 2> rows;
+        Array<Vector3T<T>, 2> rows;
     };
 }
 

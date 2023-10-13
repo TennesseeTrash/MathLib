@@ -3,10 +3,12 @@
 
 #include "Vector3.hpp"
 
-#include <array>
+#include "../Common/Array.hpp"
 
 namespace Math
 {
+    static_assert(ConceptArray<Array<i32, 4>>);
+
     template <typename T>
     class Matrix3T final
     {
@@ -37,9 +39,9 @@ namespace Math
                                     T m10, T m11, T m12,
                                     T m20, T m21, T m22)
         noexcept
-            : rows({{ {m00, m01, m02},
-                      {m10, m11, m12},
-                      {m20, m21, m22} }})
+            : rows(Vector3T<T>(m00, m01, m02),
+                   Vector3T<T>(m10, m11, m12),
+                   Vector3T<T>(m20, m21, m22))
         {}
 
         constexpr       Vector3T<T>& operator[] (SizeType index)       { return rows[ToUnderlying(index)]; }
@@ -48,7 +50,7 @@ namespace Math
         constexpr T Min() const { return ::Math::Min(rows[0].Min(), rows[1].Min(), rows[2].Min()); }
         constexpr T Max() const { return ::Math::Max(rows[0].Max(), rows[1].Max(), rows[2].Max()); }
     private:
-        std::array<Vector3T<T>, 3> rows;
+        Array<Vector3T<T>, 3> rows;
     };
 }
 

@@ -53,18 +53,11 @@ namespace Math
 
         // Note(3011): The warning that appears here is bogus.
         // Relevant issue - https://github.com/llvm/llvm-project/issues/43670
-        [[nodiscard]] friend constexpr auto operator<=>(StrongType<T> a, StrongType<T> b) = default;
+        [[nodiscard]] friend constexpr
+        auto operator<=>(StrongType<T> a, StrongType<T> b) = default;
 
-        friend constexpr
+        [[nodiscard]] friend constexpr
         T ToUnderlying(StrongType<T> value) noexcept { return value.mValue; }
-
-        template <typename To>
-            requires IsSpecialization<To, StrongType>
-        friend constexpr
-        To Convert(StrongType<T> value) noexcept
-        {
-            return To(static_cast<typename To::ValueType>(value.mValue));
-        }
     private:
         T mValue;
     };
@@ -96,11 +89,10 @@ namespace Math
     }
 
     template <typename To, typename From>
-        requires (!IsSpecialization<From, StrongType>)
     [[nodiscard]] constexpr
     To Convert(From value) noexcept
     {
-        return static_cast<UnderlyingType<To>>(value);
+        return static_cast<UnderlyingType<To>>(ToUnderlying(value));
     }
 
     using SizeType = StrongType<std::size_t>;

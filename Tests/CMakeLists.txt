@@ -15,6 +15,7 @@ target_link_libraries(Tests PRIVATE
 )
 
 target_sources(Tests PRIVATE
+    "TestTypes.cpp"
     "TestConcepts.cpp"
     "TestFunctions.cpp"
     "TestVectors.cpp"

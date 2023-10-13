@@ -3,19 +3,19 @@
 
 #include "../Common/Types.hpp"
 #include "../Common/Concepts.hpp"
+#include "../Common/Array.hpp"
 
-#include <array>
 #include <unordered_map>
 
 namespace Math
 {
     template <ConceptBasicVector Vec>
-    //    requires IntegralType<typename Vec::ScalarType>
+        requires IntegralType<typename Vec::ScalarType>
     class VectorHasher
     {
     private:
-        static constexpr std::array<SizeType, 4> sHashPrimes = {
-            1610612741, 805306457, 402653189, 201326611,
+        static constexpr Array<SizeType, 4> sHashPrimes = {
+            SizeType(1610612741), SizeType(805306457), SizeType(402653189), SizeType(201326611),
         };
     public:
         [[nodiscard]] constexpr
@@ -25,7 +25,7 @@ namespace Math
 
             for (SizeType i = 0; i < Vec::Dimension; ++i)
             {
-                hash ^= Convert<SizeType>(vec[i]) * sHashPrimes[ToUnderlying(i)];
+                hash ^= Convert<SizeType>(vec[i]) * sHashPrimes[i];
             }
 
             return ToUnderlying(hash);
@@ -33,7 +33,7 @@ namespace Math
     };
 
     template <ConceptBasicVector Vec>
-    //    requires IntegralType<typename Vec::ScalarType>
+        requires IntegralType<typename Vec::ScalarType>
     class VectorEqual
     {
     public:

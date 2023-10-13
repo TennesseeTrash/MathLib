@@ -7,8 +7,6 @@
 
 namespace Math
 {
-    static_assert(ConceptArray<Array<i32, 4>>);
-
     template <typename T>
     class Matrix3T final
     {

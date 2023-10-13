@@ -2,9 +2,9 @@
 #define MATHLIB_FUNCTIONS_HPP
 
 #include "Common/Concepts.hpp"
+#include "Common/Array.hpp"
 #include "Constants.hpp"
-
-#include "Implementation/Functions.hpp"
+#include "Implementation/Algorithms.hpp"
 
 // TODO(3011): Add Pow function
 // TODO(3011): Add Sqrt function
@@ -211,7 +211,7 @@ namespace Math
     T Min(T v1, Ts... values) noexcept
     {
         static_assert(sizeof...(Ts) == 0 || (std::is_same_v<T, Ts> || ...));
-        return Implementation::Min({v1, values...});
+        return Min(Array<T, sizeof...(Ts) + 1>(v1, values...));
     }
 
     template <typename T, typename... Ts>
@@ -219,7 +219,7 @@ namespace Math
     T Max(T v1, Ts... values) noexcept
     {
         static_assert(sizeof...(Ts) == 0 || (std::is_same_v<T, Ts> || ...));
-        return Implementation::Max({v1, values...});
+        return Max(Array<T, sizeof...(Ts) + 1>(v1, values...));
     }
 }
 

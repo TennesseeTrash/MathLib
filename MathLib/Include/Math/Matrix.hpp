@@ -2,9 +2,7 @@
 #define MATHLIB_MATRIX_HPP
 
 #include "Common/Types.hpp"
-#include "Implementation/Matrix2.hpp"
-#include "Implementation/Matrix3.hpp"
-#include "Implementation/Matrix4.hpp"
+#include "Implementation/Matrix.hpp"
 #include "Implementation/MatrixOperators.hpp"
 #include "Implementation/MatrixUtilities.hpp"
 #include "Implementation/Utilities.hpp"

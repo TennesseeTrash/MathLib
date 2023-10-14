@@ -1,8 +1,7 @@
 #ifndef MATHLIB_TRANSFORM_HPP
 #define MATHLIB_TRANSFORM_HPP
 
-#include "Implementation/Transform2.hpp"
-#include "Implementation/Transform3.hpp"
+#include "Implementation/Transform.hpp"
 #include "Implementation/TransformOperators.hpp"
 #include "Implementation/Utilities.hpp"
 

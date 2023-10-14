@@ -291,7 +291,7 @@ namespace Math
         {
             for (SizeType j = 0; j < Mat::Dimension; ++j)
             {
-                result[i] = m[i][j] * u[j];
+                result[i] += m[i][j] * u[j];
             }
         }
         return result;

@@ -728,5 +728,8 @@ TEST_CASE("Perp and Cross helper functions", "[Math][Vector]")
         Math::Vector3f vec2(4.0f, 5.0f, 6.0f);
         REQUIRE(Math::Equal(0.0f, Math::Dot(vec1, Math::Cross(vec1, vec2))));
         REQUIRE(Math::Equal(0.0f, Math::Dot(vec2, Math::Cross(vec2, vec1))));
+
+        REQUIRE(Math::Equal(Math::Cross(vec1, vec2), Math::Cross<Math::Handedness::Left>(vec2, vec1)));
+        REQUIRE(Math::Equal(Math::Cross(vec1, vec2), -Math::Cross<Math::Handedness::Left>(vec1, vec2)));
     }
 }

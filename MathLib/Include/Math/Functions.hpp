@@ -6,11 +6,9 @@
 #include "Constants.hpp"
 #include "Implementation/Algorithms.hpp"
 
+// Note(3011): Currently used for std::pow and trig functions.
+// TODO(3011): Add custom implementation and remove this include later.
 #include <cmath>
-
-// TODO(3011): Add Pow function
-// TODO(3011): Add Sqrt function
-// TODO(3011): Add Trigonometric functions (sin, cos, tan etc.)
 
 namespace Math
 {
@@ -22,14 +20,14 @@ namespace Math
     [[nodiscard]] constexpr
     T Sign(T val) noexcept
     {
-        return (static_cast<T>(0) < val) - (val < static_cast<T>(0));
+        return (Convert<T>(0) < val) - (val < Convert<T>(0));
     }
 
     template <typename T>
     [[nodiscard]] constexpr
     T Abs(T val) noexcept
     {
-        return val > static_cast<T>(0) ? val : -val;
+        return val > Convert<T>(0) ? val : -val;
     }
 
     //////////////////////////////////////////////////////////////////////////
@@ -72,7 +70,7 @@ namespace Math
     }
 
     //////////////////////////////////////////////////////////////////////////
-    // Square function
+    // Power functions
     //////////////////////////////////////////////////////////////////////////
 
     template <typename T>
@@ -87,6 +85,69 @@ namespace Math
     T Cubed(T val) noexcept
     {
         return val * val * val;
+    }
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    T Pow(T val, T exponent) noexcept
+    {
+        return std::pow(ToUnderlying(val), ToUnderlying(exponent));
+    }
+
+    //////////////////////////////////////////////////////////////////////////
+    // Trig functions
+    //////////////////////////////////////////////////////////////////////////
+
+    // TODO(3011): Add tests, for use later when the custom implementation is
+    // going to need testing.
+
+    template <FloatingPointType T>
+    [[nodiscard]] constexpr
+    T Sin(T val) noexcept
+    {
+        return std::sin(ToUnderlying(val));
+    }
+
+    template <FloatingPointType T>
+    [[nodiscard]] constexpr
+    T Cos(T val) noexcept
+    {
+        return std::cos(ToUnderlying(val));
+    }
+
+    template <FloatingPointType T>
+    [[nodiscard]] constexpr
+    T Tan(T val) noexcept
+    {
+        return std::tan(ToUnderlying(val));
+    }
+
+    template <FloatingPointType T>
+    [[nodiscard]] constexpr
+    T Asin(T val) noexcept
+    {
+        return std::asin(ToUnderlying(val));
+    }
+
+    template <FloatingPointType T>
+    [[nodiscard]] constexpr
+    T Acos(T val) noexcept
+    {
+        return std::acos(ToUnderlying(val));
+    }
+
+    template <FloatingPointType T>
+    [[nodiscard]] constexpr
+    T Atan(T val) noexcept
+    {
+        return std::atan(ToUnderlying(val));
+    }
+
+    template <FloatingPointType T>
+    [[nodiscard]] constexpr
+    T Atan2(T y, T x) noexcept
+    {
+        return std::atan2(ToUnderlying(y), ToUnderlying(x));
     }
 
     //////////////////////////////////////////////////////////////////////////
@@ -115,15 +176,31 @@ namespace Math
     }
 
     //////////////////////////////////////////////////////////////////////////
-    // Floor, Ceil
+    // Trunc, Floor, Ceil
     //////////////////////////////////////////////////////////////////////////
+
+    template <SignedIntegralType Int, FloatingPointType Float>
+        requires (sizeof(Int) >= sizeof(Float))
+    [[nodiscard]] constexpr
+    Int Trunc(Float val) noexcept
+    {
+        return Convert<Int>(val);
+    }
+
+    template <FloatingPointType Float>
+    [[nodiscard]] constexpr
+    Float Trunc(Float val) noexcept
+    {
+        using Int = SignedIntegerSelector<sizeof(UnderlyingType<Float>)>;
+        return Convert<Float>(Trunc<Int, Float>(val));
+    }
 
     template <SignedIntegralType Int, FloatingPointType Float>
         requires (sizeof(Int) >= sizeof(Float))
     [[nodiscard]] constexpr
     Int Floor(Float val) noexcept
     {
-        return Convert<Int>(val - (val < Convert<Float>(ToUnderlying(Convert<Int>(val)))));
+        return Convert<Int>(val - (val < Trunc<Float>(val)));
     }
 
     template <FloatingPointType Float>
@@ -131,7 +208,7 @@ namespace Math
     Float Floor(Float val) noexcept
     {
         using Int = SignedIntegerSelector<sizeof(UnderlyingType<Float>)>;
-        return Convert<Float>(ToUnderlying(Floor<Int, Float>(val)));
+        return Convert<Float>(Floor<Int, Float>(val));
     }
 
     template <SignedIntegralType Int, FloatingPointType Float>
@@ -139,7 +216,7 @@ namespace Math
     [[nodiscard]] constexpr
     Int Ceil(Float val) noexcept
     {
-        return Convert<Int>(val + (val > Convert<Float>(ToUnderlying(Convert<Int>(val)))));
+        return Convert<Int>(val + (val > Trunc<Float>(val)));
     }
 
     template <FloatingPointType Float>
@@ -147,7 +224,7 @@ namespace Math
     Float Ceil(Float val) noexcept
     {
         using Int = SignedIntegerSelector<sizeof(UnderlyingType<Float>)>;
-        return Convert<Float>(ToUnderlying(Ceil<Int, Float>(val)));
+        return Convert<Float>(Ceil<Int, Float>(val));
     }
 
     //////////////////////////////////////////////////////////////////////////

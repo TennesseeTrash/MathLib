@@ -9,6 +9,12 @@
 
 namespace Math
 {
+    enum class Handedness
+    {
+        Left,
+        Right
+    };
+
     template <typename T>
     class StrongType final
     {

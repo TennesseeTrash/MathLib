@@ -33,12 +33,14 @@ namespace Math
                         || std::is_integral_v<typename T::ValueType>;
 
     template <typename T>
-    concept SignedIntegralType = std::is_signed_v<T>
-                              || std::is_signed_v<typename T::ValueType>;
+    concept SignedIntegralType = IntegralType<T>
+                              &&(std::is_signed_v<T>
+                              || std::is_signed_v<typename T::ValueType>);
 
     template <typename T>
-    concept UnsignedIntegralType = std::is_unsigned_v<T>
-                                || std::is_unsigned_v<typename T::ValueType>;
+    concept UnsignedIntegralType = IntegralType<T>
+                                &&(std::is_unsigned_v<T>
+                                || std::is_unsigned_v<typename T::ValueType>);
 
     template <typename T>
     concept FloatingPointType = std::is_floating_point_v<T>

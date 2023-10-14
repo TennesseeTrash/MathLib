@@ -3,6 +3,9 @@
 
 #include "Matrix.hpp"
 
+// TODO(3011): Reimplement this class to follow the same conventions
+// as other classes in MathLib.
+
 namespace Math
 {
     //////////////////////////////////////////////////////////////////////////

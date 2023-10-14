@@ -3,8 +3,6 @@
 
 #include "../Functions.hpp"
 
-#include <cmath>
-
 namespace Math
 {
     template <typename T>

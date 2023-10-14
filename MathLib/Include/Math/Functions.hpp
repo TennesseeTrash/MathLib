@@ -6,6 +6,8 @@
 #include "Constants.hpp"
 #include "Implementation/Algorithms.hpp"
 
+#include <cmath>
+
 // TODO(3011): Add Pow function
 // TODO(3011): Add Sqrt function
 // TODO(3011): Add Trigonometric functions (sin, cos, tan etc.)

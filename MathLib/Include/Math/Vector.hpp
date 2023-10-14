@@ -7,6 +7,7 @@
 #include "Implementation/Vector3.hpp"
 #include "Implementation/Vector4.hpp"
 #include "Implementation/VectorOperators.hpp"
+#include "Implementation/VectorUtilities.hpp"
 #include "Implementation/Utilities.hpp"
 
 namespace Math

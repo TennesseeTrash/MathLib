@@ -4,6 +4,7 @@
 #include "Implementation/Point2.hpp"
 #include "Implementation/Point3.hpp"
 #include "Implementation/PointOperators.hpp"
+#include "Implementation/PointUtilities.hpp"
 #include "Implementation/Utilities.hpp"
 
 namespace Math

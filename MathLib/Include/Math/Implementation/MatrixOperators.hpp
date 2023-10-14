@@ -2,8 +2,6 @@
 #define MATHLIB_IMPL_MATRIX_OPERATORS_HPP
 
 #include "../Common/Concepts.hpp"
-#include "VectorOperators.hpp"
-#include "Utilities.hpp"
 
 namespace Math
 {
@@ -291,7 +289,10 @@ namespace Math
         Vec result;
         for (SizeType i = 0; i < Mat::Dimension; ++i)
         {
-            result[i] = Dot(m[i], u);
+            for (SizeType j = 0; j < Mat::Dimension; ++j)
+            {
+                result[i] = m[i][j] * u[j];
+            }
         }
         return result;
     }

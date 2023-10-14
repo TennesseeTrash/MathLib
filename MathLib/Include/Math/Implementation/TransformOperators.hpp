@@ -1,6 +1,8 @@
 #ifndef MATHLIB_IMPL_TRANSFORM_OPERATORS_HPP
 #define MATHLIB_IMPL_TRANSFORM_OPERATORS_HPP
 
+#include "../Common/Concepts.hpp"
+
 namespace Math
 {
     //////////////////////////////////////////////////////////////////////////

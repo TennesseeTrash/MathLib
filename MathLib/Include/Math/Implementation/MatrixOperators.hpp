@@ -320,22 +320,6 @@ namespace Math
     template <ConceptBasicMatrix Mat, ConceptBasicPoint Pnt>
         requires (Mat::Dimension == Pnt::Dimension)
     [[nodiscard]] constexpr
-    Pnt operator* (const Pnt& p, const Mat& m) noexcept
-    {
-        Pnt result;
-        for (SizeType i = 0; i < Mat::Dimension; ++i)
-        {
-            for (SizeType j = 0; j < Mat::Dimension; ++j)
-            {
-                result[i] += p[j] * m[j][i];
-            }
-        }
-        return result;
-    }
-
-    template <ConceptBasicMatrix Mat, ConceptBasicPoint Pnt>
-        requires (Mat::Dimension == Pnt::Dimension)
-    [[nodiscard]] constexpr
     Pnt operator* (const Mat& m, const Pnt& p) noexcept
     {
         Pnt result;
@@ -350,18 +334,17 @@ namespace Math
     }
 
     template <ConceptBasicMatrix Mat, ConceptBasicPoint Pnt>
-        requires (Mat::Dimension == Pnt::Dimension + 1)
+        requires (Mat::Dimension == Pnt::Dimension)
     [[nodiscard]] constexpr
     Pnt operator* (const Pnt& p, const Mat& m) noexcept
     {
         Pnt result;
-        for (SizeType i = 0; i < Pnt::Dimension; ++i)
+        for (SizeType i = 0; i < Mat::Dimension; ++i)
         {
-            for (SizeType j = 0; j < Pnt::Dimension; ++j)
+            for (SizeType j = 0; j < Mat::Dimension; ++j)
             {
                 result[i] += p[j] * m[j][i];
             }
-            result[i] += m[Pnt::Dimension][i];
         }
         return result;
     }
@@ -380,6 +363,47 @@ namespace Math
             }
             result[i] += m[i][Pnt::Dimension];
         }
+
+        typename Pnt::ScalarType w = 0;
+        for (SizeType j = 0; j < Pnt::Dimension; ++j)
+        {
+            w += p[j] * m[Pnt::Dimension][j];
+        }
+        w += m[Pnt::Dimension][Pnt::Dimension];
+        for (SizeType i = 0; i < Pnt::Dimension; ++i)
+        {
+            result[i] /= w;
+        }
+
+        return result;
+    }
+
+    template <ConceptBasicMatrix Mat, ConceptBasicPoint Pnt>
+        requires (Mat::Dimension == Pnt::Dimension + 1)
+    [[nodiscard]] constexpr
+    Pnt operator* (const Pnt& p, const Mat& m) noexcept
+    {
+        Pnt result;
+        for (SizeType i = 0; i < Pnt::Dimension; ++i)
+        {
+            for (SizeType j = 0; j < Pnt::Dimension; ++j)
+            {
+                result[i] += p[j] * m[j][i];
+            }
+            result[i] += m[Pnt::Dimension][i];
+        }
+
+        typename Pnt::ScalarType w = 0;
+        for (SizeType j = 0; j < Pnt::Dimension; ++j)
+        {
+            w += p[j] * m[j][Pnt::Dimension];
+        }
+        w += m[Pnt::Dimension][Pnt::Dimension];
+        for (SizeType i = 0; i < Pnt::Dimension; ++i)
+        {
+            result[i] /= w;
+        }
+
         return result;
     }
 }

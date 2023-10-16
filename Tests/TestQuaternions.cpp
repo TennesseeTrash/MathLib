@@ -1,13 +1,13 @@
 #include <catch2/catch_test_macros.hpp>
 #include <Math/Quaternion.hpp>
-#include <Math/Utils/Transform.hpp>
+#include <Math/Transform.hpp>
 #include <Math/Debug/StreamOperators.hpp>
 
 TEST_CASE("Quaternion and Transform similarity", "[Math][Quaternion]")
 {
     SECTION("Check a basic case")
     {
-        Math::Matrix4f m1 = Math::Transform::RotateByX(Math::ToRadians(12.f));
+        Math::Matrix4f m1 = Math::RotateX(Math::ToRadians(Math::f32(12.f))).ToMatrix();
         Math::Matrix4f m2 = Math::Quaternionf::MakeRotation(Math::ToRadians(12.f), {1.0f, 0.0f, 0.0f}).ToMatrix4();
 
         REQUIRE(Math::Equal(m1, m2));
@@ -15,7 +15,7 @@ TEST_CASE("Quaternion and Transform similarity", "[Math][Quaternion]")
 
     SECTION("Trivial Slerp check")
     {
-        Math::Matrix4f m1 = Math::Transform::RotateByY(Math::ToRadians(15.f));
+        Math::Matrix4f m1 = Math::RotateY(Math::ToRadians(Math::f32(15.f))).ToMatrix();
         Math::Quaternionf q1 = Math::Quaternionf::MakeRotation(Math::ToRadians(0.f), {0.0f, 1.0f, 0.0f});
         Math::Quaternionf q2 = Math::Quaternionf::MakeRotation(Math::ToRadians(60.f), {0.0f, 1.0f, 0.0f});
         Math::Matrix4f m2 = Math::Slerp(Math::f32(0.25f), q1, q2).ToMatrix4();

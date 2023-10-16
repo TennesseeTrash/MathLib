@@ -23,7 +23,7 @@ namespace Math
                     result[i][j] += t1[i][k] * t2[k][j];
                 }
 
-                if constexpr (j == Transform::Dimension)
+                if (j == Transform::Dimension)
                 {
                     result[i][j] += t1[i][j];
                 }
@@ -33,7 +33,7 @@ namespace Math
     }
 
     template <ConceptBasicTransform Transform>
-    [[nodiscard]] constexpr
+    [[maybe_unused]] constexpr
     Transform& operator*= (Transform& t1, const Transform& t2) noexcept
     {
         t1 = t1 * t2;
@@ -57,6 +57,23 @@ namespace Math
                 result[i] += t[i][j] * v[j];
             }
         }
+        return result;
+    }
+
+    template <ConceptBasicTransform Transform, ConceptBasicVector Vec>
+        requires (Transform::Dimension + 1 == Vec::Dimension)
+    [[nodiscard]] constexpr
+    Vec operator* (const Transform& t, const Vec& v) noexcept
+    {
+        Vec result;
+        for (SizeType i = 0; i < Transform::Dimension; ++i)
+        {
+            for (SizeType j = 0; j < Vec::Dimension; ++j)
+            {
+                result[i] += t[i][j] * v[j];
+            }
+        }
+        result[Transform::Dimension] = v[Transform::Dimension];
         return result;
     }
 

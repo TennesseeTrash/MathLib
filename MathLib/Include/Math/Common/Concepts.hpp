@@ -114,6 +114,16 @@ namespace Math
     };
 
     //////////////////////////////////////////////////////////////////////////
+    // Scalar concepts
+    //////////////////////////////////////////////////////////////////////////
+
+    template <typename T>
+    concept ConceptScalar = requires (T s)
+    {
+        requires ArithmeticType<T>;
+    };
+
+    //////////////////////////////////////////////////////////////////////////
     // Vector concepts
     //////////////////////////////////////////////////////////////////////////
 
@@ -123,7 +133,7 @@ namespace Math
         typename T::ScalarType;
         { T::Dimension } -> SameBaseType<SizeType>;
 
-        requires ArithmeticType<typename T::ScalarType>;
+        requires ConceptScalar<typename T::ScalarType>;
 
         requires requires (SizeType i)
         {
@@ -195,7 +205,7 @@ namespace Math
         typename T::VectorType;
         { T::Dimension } -> SameBaseType<SizeType>;
 
-        requires ArithmeticType<typename T::ScalarType>;
+        requires ConceptScalar<typename T::ScalarType>;
 
         requires ConceptBasicVector<typename T::VectorType>;
         requires T::Dimension == T::VectorType::Dimension;
@@ -259,7 +269,7 @@ namespace Math
         typename T::ScalarType;
         { T::Dimension } -> SameBaseType<SizeType>;
 
-        requires ArithmeticType<typename T::ScalarType>;
+        requires ConceptScalar<typename T::ScalarType>;
 
         requires requires (SizeType i)
         {
@@ -321,7 +331,7 @@ namespace Math
         typename T::MatrixType;
         { T::Dimension } -> SameBaseType<SizeType>;
 
-        requires ArithmeticType<typename T::ScalarType>;
+        requires ConceptScalar<typename T::ScalarType>;
         requires ConceptBasicMatrix<typename T::MatrixType>;
         requires T::Dimension + 1 == T::MatrixType::Dimension;
 

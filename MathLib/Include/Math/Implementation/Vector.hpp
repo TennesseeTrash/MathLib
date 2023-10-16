@@ -26,6 +26,9 @@ namespace Math
 
         constexpr T Max() noexcept { return ::Math::Max(x, y); }
         constexpr T Min() noexcept { return ::Math::Min(x, y); }
+
+        static constexpr Vector2T<T> UnitX() noexcept { return Vector2T<T>(Convert<T>(1), Convert<T>(0)); }
+        static constexpr Vector2T<T> UnitY() noexcept { return Vector2T<T>(Convert<T>(0), Convert<T>(1)); }
     };
 
     template <typename T>
@@ -52,6 +55,10 @@ namespace Math
 
         constexpr T Max() noexcept { return ::Math::Max(x, y, z); }
         constexpr T Min() noexcept { return ::Math::Min(x, y, z); }
+
+        static constexpr Vector3T<T> UnitX() noexcept { return Vector3T<T>(Convert<T>(1), Convert<T>(0), Convert<T>(0)); }
+        static constexpr Vector3T<T> UnitY() noexcept { return Vector3T<T>(Convert<T>(0), Convert<T>(1), Convert<T>(0)); }
+        static constexpr Vector3T<T> UnitZ() noexcept { return Vector3T<T>(Convert<T>(0), Convert<T>(0), Convert<T>(1)); }
     };
 
     template <typename T>
@@ -81,6 +88,11 @@ namespace Math
 
         constexpr T Max() noexcept { return ::Math::Max(x, y, z, w); }
         constexpr T Min() noexcept { return ::Math::Min(x, y, z, w); }
+
+        static constexpr Vector4T<T> UnitX() noexcept { return Vector4T<T>(Convert<T>(1), Convert<T>(0), Convert<T>(0), Convert<T>(0)); }
+        static constexpr Vector4T<T> UnitY() noexcept { return Vector4T<T>(Convert<T>(0), Convert<T>(1), Convert<T>(0), Convert<T>(0)); }
+        static constexpr Vector4T<T> UnitZ() noexcept { return Vector4T<T>(Convert<T>(0), Convert<T>(0), Convert<T>(1), Convert<T>(0)); }
+        static constexpr Vector4T<T> UnitW() noexcept { return Vector4T<T>(Convert<T>(0), Convert<T>(0), Convert<T>(0), Convert<T>(1)); }
     };
 }
 

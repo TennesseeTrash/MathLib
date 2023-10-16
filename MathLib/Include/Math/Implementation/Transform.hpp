@@ -40,8 +40,15 @@ namespace Math
         constexpr explicit Transform2T(T m00, T m01, T m02,
                                        T m10, T m11, T m12)
         noexcept
-            : rows({{ {m00, m01, m02},
-                      {m10, m11, m12} }})
+            : rows(Vector3T<T>(m00, m01, m02),
+                   Vector3T<T>(m10, m11, m12))
+        {}
+
+        constexpr explicit Transform2T(const Matrix2T<T>& m,
+                                       const Vector2T<T>& v)
+        noexcept
+            : rows(Vector3T<T>(m[0][0], m[0][1], v[0]),
+                   Vector3T<T>(m[1][0], m[1][1], v[1]))
         {}
 
         constexpr       Vector3T<T>& operator[] (SizeType index)       { return rows[index]; }
@@ -49,8 +56,10 @@ namespace Math
 
         constexpr const Matrix3T<T> ToMatrix() const noexcept
         {
-            return Matrix3T<T>( rows[0], rows[1], { 0, 0, 1 } );
+            return Matrix3T<T>(rows[0], rows[1], { 0, 0, 1 });
         }
+
+        static constexpr Transform2T<T> Identity() noexcept { return Transform2T<T>(Convert<T>(1)); }
     private:
         // Third row is implicit { 0, 0, 1 }
         Array<Vector3T<T>, 2> rows;
@@ -96,9 +105,17 @@ namespace Math
                                        T m10, T m11, T m12, T m13,
                                        T m20, T m21, T m22, T m23)
         noexcept
-            : rows({{ {m00, m01, m02, m03},
-                      {m10, m11, m12, m13},
-                      {m20, m21, m22, m23} }})
+            : rows(Vector4T<T>(m00, m01, m02, m03),
+                   Vector4T<T>(m10, m11, m12, m13),
+                   Vector4T<T>(m20, m21, m22, m23))
+        {}
+
+        constexpr explicit Transform3T(const Matrix3T<T>& m,
+                                       const Vector3T<T>& v)
+        noexcept
+            : rows(Vector4T<T>(m[0][0], m[0][1], m[0][2], v[0]),
+                   Vector4T<T>(m[1][0], m[1][1], m[1][2], v[1]),
+                   Vector4T<T>(m[2][0], m[2][1], m[2][2], v[2]))
         {}
 
         constexpr       Vector4T<T>& operator[] (SizeType index)       { return rows[index]; }
@@ -106,8 +123,10 @@ namespace Math
 
         constexpr const Matrix4T<T> ToMatrix() const noexcept
         {
-            return Matrix4T<T>( rows[0], rows[1], rows[2], { 0, 0, 0, 1 } );
+            return Matrix4T<T>(rows[0], rows[1], rows[2], { 0, 0, 0, 1 });
         }
+
+        static constexpr Transform3T<T> Identity() noexcept { return Transform3T<T>(Convert<T>(1)); }
     private:
         // Fourth row is implicit { 0, 0, 0, 1 }
         Array<Vector4T<T>, 3> rows;

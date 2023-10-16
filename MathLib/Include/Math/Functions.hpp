@@ -176,7 +176,7 @@ namespace Math
     }
 
     //////////////////////////////////////////////////////////////////////////
-    // Trunc, Floor, Ceil
+    // Trunc, Floor, Ceil, Frac
     //////////////////////////////////////////////////////////////////////////
 
     template <SignedIntegralType Int, FloatingPointType Float>
@@ -225,6 +225,13 @@ namespace Math
     {
         using Int = SignedIntegerSelector<sizeof(UnderlyingType<Float>)>;
         return Convert<Float>(Ceil<Int, Float>(val));
+    }
+
+    template <FloatingPointType Float>
+    [[nodiscard]] constexpr
+    Float Frac(Float val) noexcept
+    {
+        return val - Floor<Float>(val);
     }
 
     //////////////////////////////////////////////////////////////////////////

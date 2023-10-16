@@ -2,7 +2,6 @@
 #define MATHLIB_IMPL_MATRIX_HPP
 
 #include "../Common/Array.hpp"
-
 #include "Vector.hpp"
 
 namespace Math
@@ -43,6 +42,8 @@ namespace Math
 
         constexpr T Min() const { return ::Math::Min(rows[0].Min(), rows[1].Min()); }
         constexpr T Max() const { return ::Math::Max(rows[0].Max(), rows[1].Max()); }
+
+        static constexpr Matrix2T<T> Identity() noexcept { return Matrix2T<T>(Convert<T>(1)); }
     private:
         Array<Vector2T<T>, 2> rows;
     };
@@ -87,6 +88,8 @@ namespace Math
 
         constexpr T Min() const { return ::Math::Min(rows[0].Min(), rows[1].Min(), rows[2].Min()); }
         constexpr T Max() const { return ::Math::Max(rows[0].Max(), rows[1].Max(), rows[2].Max()); }
+
+        static constexpr Matrix3T<T> Identity() noexcept { return Matrix3T<T>(Convert<T>(1)); }
     private:
         Array<Vector3T<T>, 3> rows;
     };
@@ -135,6 +138,8 @@ namespace Math
 
         constexpr T Min() const { return ::Math::Min(rows[0].Min(), rows[1].Min(), rows[2].Min(), rows[3].Min()); }
         constexpr T Max() const { return ::Math::Max(rows[0].Max(), rows[1].Max(), rows[2].Max(), rows[3].Max()); }
+
+        static constexpr Matrix4T<T> Identity() noexcept { return Matrix4T<T>(Convert<T>(1)); }
     private:
         Array<Vector4T<T>, 4> rows;
     };

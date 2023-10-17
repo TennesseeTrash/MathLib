@@ -35,14 +35,14 @@ namespace Math
     [[nodiscard]] constexpr
     Transform2T<Scalar> Translate(const Vector2T<Scalar>& v) noexcept
     {
-        Translate<Transform2T<Scalar>, Vector2T<Scalar>>(v);
+        return Translate<Transform2T<Scalar>, Vector2T<Scalar>>(v);
     }
 
     template <ConceptScalar Scalar>
     [[nodiscard]] constexpr
     Transform3T<Scalar> Translate(const Vector3T<Scalar>& v) noexcept
     {
-        Translate<Transform3T<Scalar>, Vector3T<Scalar>>(v);
+        return Translate<Transform3T<Scalar>, Vector3T<Scalar>>(v);
     }
 
     template <ConceptTransform Transform, ConceptVector Vec>
@@ -64,14 +64,14 @@ namespace Math
     [[nodiscard]] constexpr
     Transform2T<Scalar> Scale(const Vector2T<Scalar>& v) noexcept
     {
-        Scale<Transform2T<Scalar>, Vector2T<Scalar>>(v);
+        return Scale<Transform2T<Scalar>, Vector2T<Scalar>>(v);
     }
 
     template <ConceptScalar Scalar>
     [[nodiscard]] constexpr
     Transform3T<Scalar> Scale(const Vector3T<Scalar>& v) noexcept
     {
-        Scale<Transform3T<Scalar>, Vector3T<Scalar>>(v);
+        return Scale<Transform3T<Scalar>, Vector3T<Scalar>>(v);
     }
 
     template <ConceptScalar Scalar>
@@ -232,16 +232,16 @@ namespace Math
         Transform3T<Scalar> result;
         if constexpr (Hand == Handedness::Right)
         {
-            result[0][0] = Scalar<Scalar>(1) / (aspectRatio * tanFovOver2);
-            result[1][1] = Scalar<Scalar>(1) / tanFovOver2;
+            result[0][0] = Convert<Scalar>(1) / (aspectRatio * tanFovOver2);
+            result[1][1] = Convert<Scalar>(1) / tanFovOver2;
             result[2][2] = far / (near - far);
             result[2][3] = -(far * near) / (far - near);
             // result[3][2] = -Scalar<Scalar>(1); - This needs to be handled separately
         }
         else if constexpr (Hand == Handedness::Left)
         {
-            result[0][0] = Scalar<Scalar>(1) / (aspectRatio * tanFovOver2);
-            result[1][1] = Scalar<Scalar>(1) / tanFovOver2;
+            result[0][0] = Convert<Scalar>(1) / (aspectRatio * tanFovOver2);
+            result[1][1] = Convert<Scalar>(1) / tanFovOver2;
             result[2][2] = far / (far - near);
             result[2][3] = -(far * near) / (far - near);
             // result[3][2] = Scalar<Scalar>(1); - This needs to be handled separately

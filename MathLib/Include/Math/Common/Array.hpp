@@ -20,8 +20,9 @@ namespace Math
         Array(const Ts&... values)
             : mArray{ values... }
         {
-            static_assert(sizeof...(Ts) == 0 || (std::is_convertible_v<T, Ts> && ...), "Invalid types");
             static_assert(sizeof...(Ts) == ToUnderlying(Size), "Invalid number of arguments");
+            static_assert(sizeof...(Ts) == 0
+                      || (std::same_as<T, Ts> && ...), "Invalid types");
         }
 
         constexpr
@@ -35,6 +36,15 @@ namespace Math
     private:
         T mArray[ToUnderlying(Size)] = {};
     };
+
+    template <typename T, StaticSizeType N, typename... Ts>
+    [[nodiscard]] constexpr
+    Array<T, N> MakeArray(const Ts&... values)
+    {
+        static_assert(sizeof...(Ts) == ToUnderlying(SizeType(N)), "Invalid number of arguments");
+        static_assert((std::is_convertible_v<UnderlyingType<T>, UnderlyingType<Ts>> && ...), "Invalid types");
+        return Array<T, N>(Convert<T>(values)...);
+    }
 }
 
 #endif //MATHLIB_COMMON_ARRAY_HPP

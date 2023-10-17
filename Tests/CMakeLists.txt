@@ -23,6 +23,7 @@ target_sources(Tests PRIVATE
     "TestMatrices.cpp"
     "TestTransforms.cpp"
     "TestQuaternions.cpp"
+    "TestNoise.cpp"
     "TestUtilsContainerTools.cpp"
 )
 

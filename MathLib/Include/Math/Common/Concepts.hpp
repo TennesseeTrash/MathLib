@@ -113,6 +113,19 @@ namespace Math
         };
     };
 
+    template <typename T, typename Param = void>
+    concept Mapping = requires (T t, Param param)
+    {
+        requires requires {{ t(param) } -> std::same_as<Param>; }
+              || requires {{ T(param) } -> std::same_as<Param>; };
+    };
+
+    template <typename T, typename Param = void>
+    concept Differentiable = requires (Param param)
+    {
+        { Derivative<T>(param) } -> std::same_as<Param>;
+    };
+
     //////////////////////////////////////////////////////////////////////////
     // Scalar concepts
     //////////////////////////////////////////////////////////////////////////

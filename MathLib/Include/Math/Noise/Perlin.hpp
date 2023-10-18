@@ -11,7 +11,7 @@ namespace Math
     // Perlin Noise
     //////////////////////////////////////////////////////////////////////////
 
-    template <FloatingPointType Float, typename Interpolation = decltype([](Float val) -> Float { return Smootherstep(val, Convert<Float>(0), Convert<Float>(1)); })>
+    template <FloatingPointType Float, typename Interpolation = decltype([](Float v) -> Float { return Smootherstep(v, Convert<Float>(0), Convert<Float>(1)); })>
         requires Mapping<Interpolation, Float>
     class PerlinNoise final
     {
@@ -19,9 +19,14 @@ namespace Math
         using ValueType = Float;
 
         [[nodiscard]] constexpr explicit
-        PerlinNoise([[maybe_unused]] i64 seed = 0) noexcept
-            : mPermutation(sDefaultPermutation)
-        {}
+        PerlinNoise(u64 seed = 0) noexcept
+            : mPermutation(ToUnderlying(seed) ? MakeArrayFillAscending<u8, 256>(1) : sDefaultPermutation)
+        {
+            if (ToUnderlying(seed))
+            {
+                Shuffle(mPermutation, seed);
+            }
+        }
 
         [[nodiscard]] constexpr
         Float operator()(Float x, Float y) const noexcept
@@ -43,7 +48,7 @@ namespace Math
             Float v4 = Grad(Hash2(xi, yi, 1, 1), xf - 1, yf - 1);
 
             return (Lerp(v, Lerp(u, v1, v2),
-                            Lerp(u, v3, v4)) + 1) / 2;
+                            Lerp(u, v3, v4)) + 2) / 4;
         }
 
         [[nodiscard]] constexpr

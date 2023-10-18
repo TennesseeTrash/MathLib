@@ -14,8 +14,8 @@ inline
 std::ostream& operator<<(std::ostream& os, const Math::Vector2T<T>& vec)
 {
     os  << "Vector2T("
-        << std::setprecision(4) << vec.x << ", "
-        << std::setprecision(4) << vec.y << ")";
+        << std::setprecision(4) << ToUnderlying(vec.x) << ", "
+        << std::setprecision(4) << ToUnderlying(vec.y) << ")";
     return os;
 }
 
@@ -24,9 +24,9 @@ inline
 std::ostream& operator<<(std::ostream& os, const Math::Vector3T<T>& vec)
 {
     os  << "Vector3T("
-        << std::setprecision(4) << vec.x << ", "
-        << std::setprecision(4) << vec.y << ", "
-        << std::setprecision(4) << vec.z << ")";
+        << std::setprecision(4) << ToUnderlying(vec.x) << ", "
+        << std::setprecision(4) << ToUnderlying(vec.y) << ", "
+        << std::setprecision(4) << ToUnderlying(vec.z) << ")";
     return os;
 }
 
@@ -35,10 +35,10 @@ inline
 std::ostream& operator<<(std::ostream& os, const Math::Vector4T<T>& vec)
 {
     os  << "Vector4T("
-        << std::setprecision(4) << vec.x << ", "
-        << std::setprecision(4) << vec.y << ", "
-        << std::setprecision(4) << vec.z << ", "
-        << std::setprecision(4) << vec.w << ")";
+        << std::setprecision(4) << ToUnderlying(vec.x) << ", "
+        << std::setprecision(4) << ToUnderlying(vec.y) << ", "
+        << std::setprecision(4) << ToUnderlying(vec.z) << ", "
+        << std::setprecision(4) << ToUnderlying(vec.w) << ")";
     return os;
 }
 
@@ -47,8 +47,8 @@ inline
 std::ostream& operator<<(std::ostream& os, const Math::Point2T<T>& vec)
 {
     os  << "Point2T("
-        << std::setprecision(4) << vec.x << ", "
-        << std::setprecision(4) << vec.y << ")";
+        << std::setprecision(4) << ToUnderlying(vec.x) << ", "
+        << std::setprecision(4) << ToUnderlying(vec.y) << ")";
     return os;
 }
 
@@ -57,9 +57,9 @@ inline
 std::ostream& operator<<(std::ostream& os, const Math::Point3T<T>& vec)
 {
     os  << "Point3T("
-        << std::setprecision(4) << vec.x << ", "
-        << std::setprecision(4) << vec.y << ", "
-        << std::setprecision(4) << vec.z << ")";
+        << std::setprecision(4) << ToUnderlying(vec.x) << ", "
+        << std::setprecision(4) << ToUnderlying(vec.y) << ", "
+        << std::setprecision(4) << ToUnderlying(vec.z) << ")";
     return os;
 }
 
@@ -73,7 +73,7 @@ std::ostream& operator<<(std::ostream& os, const Math::Matrix2T<T>& mat)
         os << "    ";
         for (Math::SizeType j = 0; j < 2; ++j)
         {
-            os << std::setprecision(4) << mat[i][j] << ", ";
+            os << std::setprecision(4) << ToUnderlying(mat[i][j]) << ", ";
         }
         os << "\n";
     }
@@ -91,7 +91,7 @@ std::ostream& operator<<(std::ostream& os, const Math::Matrix3T<T>& mat)
         os << "    ";
         for (Math::SizeType j = 0; j < 3; ++j)
         {
-            os << std::setprecision(4) << mat[i][j] << ", ";
+            os << std::setprecision(4) << ToUnderlying(mat[i][j]) << ", ";
         }
         os << "\n";
     }
@@ -109,7 +109,7 @@ std::ostream& operator<<(std::ostream& os, const Math::Matrix4T<T>& mat)
         os << "    ";
         for (Math::SizeType j = 0; j < 4; ++j)
         {
-            os << std::setprecision(4) << mat[i][j] << ", ";
+            os << std::setprecision(4) << ToUnderlying(mat[i][j]) << ", ";
         }
         os << "\n";
     }
@@ -122,10 +122,10 @@ inline
 std::ostream& operator<<(std::ostream& os, const Math::QuaternionT<T>& quat)
 {
     os  << "QuaternionT("
-        << std::setprecision(4) << quat.mV.x << ", "
-        << std::setprecision(4) << quat.mV.y << ", "
-        << std::setprecision(4) << quat.mV.z << ", "
-        << std::setprecision(4) << quat.mS   << ")";
+        << std::setprecision(4) << ToUnderlying(quat.mV.x) << ", "
+        << std::setprecision(4) << ToUnderlying(quat.mV.y) << ", "
+        << std::setprecision(4) << ToUnderlying(quat.mV.z) << ", "
+        << std::setprecision(4) << ToUnderlying(quat.mS  ) << ")";
     return os;
 }
 

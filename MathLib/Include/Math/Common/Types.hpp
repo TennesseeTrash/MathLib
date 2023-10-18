@@ -6,6 +6,7 @@
 #include <cstdint>
 #include <cstddef>
 #include <limits>
+#include <compare>
 
 namespace Math
 {
@@ -62,8 +63,8 @@ namespace Math
         [[nodiscard]] friend constexpr
         auto operator<=>(StrongType<T> a, StrongType<T> b) = default;
 
-        [[nodiscard]] friend constexpr
-        T ToUnderlying(StrongType<T> value) noexcept { return value.mValue; }
+        template <typename U>
+        friend constexpr U ToUnderlying(StrongType<U> value) noexcept;
     private:
         T mValue;
     };
@@ -85,6 +86,13 @@ namespace Math
 
     template <typename T>
     using UnderlyingType = typename Implementation::UnderlyingType<T>::Type;
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    T ToUnderlying(StrongType<T> value) noexcept
+    {
+        return value.mValue;
+    }
 
     template <typename T>
         requires (!IsSpecialization<T, StrongType>)

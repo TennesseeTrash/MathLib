@@ -3,6 +3,11 @@
 
 #include "../Common/Concepts.hpp"
 
+// TODO(3011): Check if it would make sense to replace this
+// with a custom implementation. (To shorten compile times.)
+#include <utility>
+#include <random>
+
 namespace Math
 {
     template <ConceptArray Arr>
@@ -43,6 +48,41 @@ namespace Math
             }
         }
         return max;
+    }
+
+    template <ConceptArray Arr>
+    constexpr
+    void FillAscending(Arr& a)
+    {
+        for (SizeType i = 0; i < Arr::Size; ++i)
+        {
+            a[i] = Convert<typename Arr::ValueType>(i + 1);
+        }
+    }
+
+    template <ConceptArray Arr>
+    constexpr
+    void Shuffle(Arr& a, u64 seed) noexcept
+    {
+        std::mt19937_64 rng(ToUnderlying(seed));
+        std::uniform_int_distribution<std::size_t> dist(0, ToUnderlying(Arr::Size - 1));
+        for (SizeType i = 0; i < Arr::Size; ++i)
+        {
+            SizeType j = dist(rng);
+            std::swap(a[i], a[j]);
+        }
+    }
+
+    template <ConceptArray Arr>
+    constexpr
+    void PoissonFill(Arr& a, u64 seed, f64 mean) noexcept
+    {
+        std::mt19937_64 rng(ToUnderlying(seed));
+        std::poisson_distribution<std::size_t> dist(ToUnderlying(mean));
+        for (SizeType i = 0; i < Arr::Size; ++i)
+        {
+            a[i] = dist(rng);
+        }
     }
 }
 

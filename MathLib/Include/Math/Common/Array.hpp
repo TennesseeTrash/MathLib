@@ -1,7 +1,7 @@
 #ifndef MATHLIB_COMMON_ARRAY_HPP
 #define MATHLIB_COMMON_ARRAY_HPP
 
-#include "Types.hpp"
+#include "Concepts.hpp"
 
 namespace Math
 {
@@ -44,6 +44,18 @@ namespace Math
         static_assert(sizeof...(Ts) == ToUnderlying(SizeType(N)), "Invalid number of arguments");
         static_assert((std::is_convertible_v<UnderlyingType<T>, UnderlyingType<Ts>> && ...), "Invalid types");
         return Array<T, N>(Convert<T>(values)...);
+    }
+
+    template <typename T, StaticSizeType N>
+    [[nodiscard]] constexpr
+    Array<T, N> MakeArrayFillAscending(T offset)
+    {
+        Array<T, N> result;
+        for (SizeType i = 0; i < N; ++i)
+        {
+            result[i] = offset + Convert<T>(i);
+        }
+        return result;
     }
 }
 

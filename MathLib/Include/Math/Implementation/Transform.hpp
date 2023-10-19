@@ -3,6 +3,21 @@
 
 #include "Matrix.hpp"
 
+// TODO(3011): Create a more generic "lower-level" implementation of a
+// transform that can take the final row as a template parameter.
+// This will make it possible to represent more kinds of transformations
+// efficiently.
+
+// TODO(3011): As a follow-up to the previous point, it would be good
+// if there was a way to put these different kinds of transforms into
+// a single container with minimal overhead on performance for calculations.
+// Keyword: type erasure
+
+// Note(3011): With the above plans, it might be effectively impossible to
+// serialize a transform. There could be a way to deal with this for
+// in-library types built on top of this, but more obscure transform
+// specializations could cause problems.
+
 namespace Math
 {
     template <typename T>

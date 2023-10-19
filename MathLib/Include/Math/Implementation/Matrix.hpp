@@ -4,6 +4,8 @@
 #include "../Common/Array.hpp"
 #include "Vector.hpp"
 
+// TODO(3011): Add a generic, n-dimensional matrix implementation.
+
 namespace Math
 {
     template <typename T>

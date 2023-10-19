@@ -5,6 +5,13 @@
 #include "../Common/Array.hpp"
 #include "../Functions.hpp"
 
+// TODO(3011): This is not a good interface. It makes it difficult to
+// get derivatives with minimal overhead. The interface and implementation
+// could use a split. This could also make it possible for the user to further
+// customize the calculation. The "pretty interface" would just overload
+// the () operator and call the underlying implementation that the user could
+// tweak.
+
 namespace Math
 {
     //////////////////////////////////////////////////////////////////////////

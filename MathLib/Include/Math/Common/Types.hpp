@@ -23,13 +23,16 @@ namespace Math
         static_assert(!IsSpecialization<T, StrongType>, "StrongType may not be nested");
         using ValueType = T;
     public:
+        // TODO(3011): Check if making this constructor explicit is a good idea.
+        // It would eliminate many more potential implicit conversions, but it
+        // might also make the library much more of a pain to deal with.
         [[nodiscard]] constexpr
         StrongType(T value = T{}) noexcept
             : mValue(value)
         {}
 
         // Note(3011): Some of these operators will not work for certain types.
-        // This should not be a problem unless you try to use them.
+        // In the future, explicit 'requires' clauses would be nice.
         // e.g. StrongType<float>(4.0f) << 1 will not compile.
         [[nodiscard]]    friend constexpr StrongType<T>  operator+   (StrongType<T> a,  StrongType<T> b)   noexcept { return a.mValue + b.mValue; }
         [[nodiscard]]    friend constexpr StrongType<T>  operator-   (StrongType<T> a,  StrongType<T> b)   noexcept { return a.mValue - b.mValue; }

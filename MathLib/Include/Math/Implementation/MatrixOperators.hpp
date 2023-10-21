@@ -355,6 +355,7 @@ namespace Math
     Pnt operator* (const Mat& m, const Pnt& p) noexcept
     {
         Pnt result;
+        typename Pnt::ScalarType w = 0;
         for (SizeType i = 0; i < Pnt::Dimension; ++i)
         {
             for (SizeType j = 0; j < Pnt::Dimension; ++j)
@@ -362,12 +363,8 @@ namespace Math
                 result[i] += m[i][j] * p[j];
             }
             result[i] += m[i][Pnt::Dimension];
-        }
 
-        typename Pnt::ScalarType w = 0;
-        for (SizeType j = 0; j < Pnt::Dimension; ++j)
-        {
-            w += p[j] * m[Pnt::Dimension][j];
+            w += p[i] * m[Pnt::Dimension][i];
         }
         w += m[Pnt::Dimension][Pnt::Dimension];
         for (SizeType i = 0; i < Pnt::Dimension; ++i)
@@ -384,6 +381,7 @@ namespace Math
     Pnt operator* (const Pnt& p, const Mat& m) noexcept
     {
         Pnt result;
+        typename Pnt::ScalarType w = 0;
         for (SizeType i = 0; i < Pnt::Dimension; ++i)
         {
             for (SizeType j = 0; j < Pnt::Dimension; ++j)
@@ -391,12 +389,8 @@ namespace Math
                 result[i] += p[j] * m[j][i];
             }
             result[i] += m[Pnt::Dimension][i];
-        }
 
-        typename Pnt::ScalarType w = 0;
-        for (SizeType j = 0; j < Pnt::Dimension; ++j)
-        {
-            w += p[j] * m[j][Pnt::Dimension];
+            w += p[i] * m[i][Pnt::Dimension];
         }
         w += m[Pnt::Dimension][Pnt::Dimension];
         for (SizeType i = 0; i < Pnt::Dimension; ++i)

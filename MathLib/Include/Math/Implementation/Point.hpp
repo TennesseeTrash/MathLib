@@ -21,6 +21,7 @@ namespace Math
         constexpr explicit Point2T(const Vector2T<T>& v) noexcept : x(v.x ), y(v.y ) {}
 
         constexpr explicit operator Vector2T<T>()  const noexcept { return Vector2T<T>(x, y); }
+        constexpr explicit operator Vector3T<T>()  const noexcept { return Vector3T<T>(x, y, Convert<T>(1)); }
 
         constexpr       T& operator[] (SizeType idx)       noexcept { return reinterpret_cast<      T *>(this)[ToUnderlying(idx)]; }
         constexpr const T& operator[] (SizeType idx) const noexcept { return reinterpret_cast<const T *>(this)[ToUnderlying(idx)]; }
@@ -50,6 +51,7 @@ namespace Math
         constexpr explicit Point3T(const Vector3T<T>& v)       noexcept : x(v.x ), y(v.y ), z(v.z ) {}
 
         constexpr explicit operator Vector3T<T>()  const noexcept { return Vector3T<T>(x, y, z); }
+        constexpr explicit operator Vector4T<T>()  const noexcept { return Vector4T<T>(x, y, z, Convert<T>(1)); }
 
         constexpr       T& operator[] (SizeType idx)       noexcept { return reinterpret_cast<      T *>(this)[ToUnderlying(idx)]; }
         constexpr const T& operator[] (SizeType idx) const noexcept { return reinterpret_cast<const T *>(this)[ToUnderlying(idx)]; }

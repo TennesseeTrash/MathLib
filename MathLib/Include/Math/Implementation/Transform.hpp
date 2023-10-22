@@ -3,10 +3,12 @@
 
 #include "Matrix.hpp"
 
+// -- SOLVED, left for context for the following points --
 // TODO(3011): Create a more generic "lower-level" implementation of a
 // transform that can take the final row as a template parameter.
 // This will make it possible to represent more kinds of transformations
 // efficiently.
+// -- SOLVED, left for context for the following points --
 
 // TODO(3011): As a follow-up to the previous point, it would be good
 // if there was a way to put these different kinds of transforms into
@@ -20,13 +22,14 @@
 
 namespace Math
 {
-    template <typename T>
+    template <ConceptStrongType T, Vector3T<MakeStaticStrongType<T>> BottomRowParam = Vector3T<MakeStaticStrongType<T>>::UnitZ()>
     class Transform2T final
     {
     public:
         using ScalarType = T;
         using MatrixType = Matrix3T<T>;
         static constexpr SizeType Dimension = 2;
+        static constexpr Vector3T<T> BottomRow = BottomRowParam;
 
         constexpr explicit Transform2T() noexcept
             : rows({})
@@ -71,22 +74,22 @@ namespace Math
 
         constexpr const Matrix3T<T> ToMatrix() const noexcept
         {
-            return Matrix3T<T>(rows[0], rows[1], { 0, 0, 1 });
+            return Matrix3T<T>(rows[0], rows[1], BottomRow);
         }
 
         static constexpr Transform2T<T> Identity() noexcept { return Transform2T<T>(Convert<T>(1)); }
     private:
-        // Third row is implicit { 0, 0, 1 }
         Array<Vector3T<T>, 2> rows;
     };
 
-    template <typename T>
+    template <ConceptStrongType T, Vector4T<MakeStaticStrongType<T>> BottomRowParam = Vector4T<MakeStaticStrongType<T>>::UnitW()>
     class Transform3T final
     {
     public:
         using ScalarType = T;
         using MatrixType = Matrix4T<T>;
         static constexpr SizeType Dimension = 3;
+        static constexpr Vector4T<T> BottomRow = BottomRowParam;
 
         constexpr explicit Transform3T() noexcept
             : rows({})
@@ -138,12 +141,11 @@ namespace Math
 
         constexpr const Matrix4T<T> ToMatrix() const noexcept
         {
-            return Matrix4T<T>(rows[0], rows[1], rows[2], { 0, 0, 0, 1 });
+            return Matrix4T<T>(rows[0], rows[1], rows[2], BottomRow);
         }
 
         static constexpr Transform3T<T> Identity() noexcept { return Transform3T<T>(Convert<T>(1)); }
     private:
-        // Fourth row is implicit { 0, 0, 0, 1 }
         Array<Vector4T<T>, 3> rows;
     };
 }

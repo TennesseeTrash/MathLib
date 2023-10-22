@@ -103,6 +103,16 @@ namespace Math
     //////////////////////////////////////////////////////////////////////////
 
     template <typename T>
+    concept ConceptStrongType = requires (T a)
+    {
+        typename T::ValueType;
+        { ToUnderlying(a) } -> SameBaseType<typename T::ValueType>;
+
+        requires IsSpecialization<T, StrongType>
+              || IsSpecialization<T, StaticStrongType>;
+    };
+
+    template <typename T>
     concept ConceptArray = requires (T a)
     {
         typename T::ValueType;
@@ -344,6 +354,7 @@ namespace Math
         typename T::ScalarType;
         typename T::MatrixType;
         { T::Dimension } -> SameBaseType<SizeType>;
+        requires ConceptBasicVector<decltype(T::BottomRow)>;
 
         requires ConceptScalar<typename T::ScalarType>;
         requires ConceptBasicMatrix<typename T::MatrixType>;

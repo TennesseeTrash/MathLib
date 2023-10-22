@@ -5,7 +5,7 @@
 
 namespace Math
 {
-    template <typename T>
+    template <ConceptStrongType T>
     struct Point2T
     {
         using ScalarType = T;
@@ -26,11 +26,11 @@ namespace Math
         constexpr       T& operator[] (SizeType idx)       noexcept { return reinterpret_cast<      T *>(this)[ToUnderlying(idx)]; }
         constexpr const T& operator[] (SizeType idx) const noexcept { return reinterpret_cast<const T *>(this)[ToUnderlying(idx)]; }
 
-        constexpr T Max() noexcept { return ::Math::Max(x, y); }
-        constexpr T Min() noexcept { return ::Math::Max(x, y); }
+        constexpr T Max() const noexcept { return ::Math::Max(x, y); }
+        constexpr T Min() const noexcept { return ::Math::Max(x, y); }
     };
 
-    template <typename T>
+    template <ConceptStrongType T>
     struct Point3T
     {
         using ScalarType = T;
@@ -56,8 +56,8 @@ namespace Math
         constexpr       T& operator[] (SizeType idx)       noexcept { return reinterpret_cast<      T *>(this)[ToUnderlying(idx)]; }
         constexpr const T& operator[] (SizeType idx) const noexcept { return reinterpret_cast<const T *>(this)[ToUnderlying(idx)]; }
 
-        constexpr T Max() noexcept { return ::Math::Max({x, y, z}); }
-        constexpr T Min() noexcept { return ::Math::Max({x, y, z}); }
+        constexpr T Max() const noexcept { return ::Math::Max({x, y, z}); }
+        constexpr T Min() const noexcept { return ::Math::Max({x, y, z}); }
     };
 }
 

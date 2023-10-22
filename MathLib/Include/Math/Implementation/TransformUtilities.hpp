@@ -8,12 +8,6 @@
 // TODO(3011): This implementation is still not final.
 // Ideally, the overloads to enable TAD should not be necessary.
 
-//TODO(3011): The solution for perspective projection is less
-// than ideal - needs a separate function for the actual multiplication.
-//  - It might make sense to make the Transforms in general a bit more
-//    abstract, so they can support more exotic calculations with a little
-//    effort.
-
 namespace Math
 {
     template <ConceptTransform Transform, ConceptVector Vec>
@@ -205,10 +199,10 @@ namespace Math
 
     template <ConceptTransform3 Transform, ConceptPoint3 Pnt, ConceptVector3 Vec>
     [[nodiscard]] constexpr
-    Transform LookAt(const Pnt& pos, const Vec& dir, const Vec& up) noexcept
+    Transform LookAt(const Pnt& pos, const Vec& dir, const Vec& up = {0, 1, 0}) noexcept
     {
         Vec w = -Normalize(dir);
-        Vec u = Normalize(Cross(up, w));
+        Vec u = Normalize(Cross(Normalize(up), w));
         Vec v = Normalize(Cross(w, u));
         return Transform(
             u.x, u.y, u.z, -pos.x,
@@ -219,35 +213,34 @@ namespace Math
 
     template <ConceptScalar Scalar>
     [[nodiscard]] constexpr
-    Transform3T<Scalar> LookAt(const Point3T<Scalar>& pos, const Vector3T<Scalar>& dir, const Vector3T<Scalar>& up) noexcept
+    Transform3T<Scalar> LookAt(const Point3T<Scalar>& pos, const Vector3T<Scalar>& dir, const Vector3T<Scalar>& up = {0, 1, 0}) noexcept
     {
         return LookAt<Transform3T<Scalar>, Point3T<Scalar>, Vector3T<Scalar>>(pos, dir, up);
     }
 
     template <Handedness Hand = Handedness::Right, ConceptScalar Scalar>
     [[nodiscard]] constexpr
-    Transform3T<Scalar> PerspectiveProjection(Scalar fov, Scalar aspectRatio, Scalar near, Scalar far) noexcept
+    auto PerspectiveProjection(Scalar fov, Scalar aspectRatio, Scalar near, Scalar far) noexcept
     {
         Scalar tanFovOver2 = Tan(fov / Scalar(2));
-        Transform3T<Scalar> result;
         if constexpr (Hand == Handedness::Right)
         {
+            Transform3T<Scalar, Vector3T<Scalar>(0, 0, -1, 0)> result;
             result[0][0] = Convert<Scalar>(1) / (aspectRatio * tanFovOver2);
             result[1][1] = Convert<Scalar>(1) / tanFovOver2;
             result[2][2] = far / (near - far);
             result[2][3] = -(far * near) / (far - near);
-            // result[3][2] = -Scalar<Scalar>(1); - This needs to be handled separately
+            return result;
         }
         else if constexpr (Hand == Handedness::Left)
         {
+            Transform3T<Scalar, Vector3T<Scalar>(0, 0, 1, 0)> result;
             result[0][0] = Convert<Scalar>(1) / (aspectRatio * tanFovOver2);
             result[1][1] = Convert<Scalar>(1) / tanFovOver2;
             result[2][2] = far / (far - near);
             result[2][3] = -(far * near) / (far - near);
-            // result[3][2] = Scalar<Scalar>(1); - This needs to be handled separately
+            return result;
         }
-
-        return result;
     }
 
     template <Handedness Hand = Handedness::Right, ConceptScalar Scalar>
@@ -275,34 +268,6 @@ namespace Math
         }
         return result;
     }
-
-    // Note(3011): This function changes the assumption for the final row of
-    // the matrix from {0, 0, 0, 1} to {0, 0, 1, 0}.
-    template <Handedness Hand = Handedness::Right, ConceptTransform Transform, ConceptPoint Pnt>
-        requires (Transform::Dimension == Pnt::Dimension)
-    [[nodiscard]] constexpr
-    Pnt Project(const Transform& t, const Pnt& p) noexcept
-    {
-        Pnt result;
-        for (SizeType i = 0; i < Transform::Dimension; ++i)
-        {
-            for (SizeType j = 0; j < Transform::Dimension; ++j)
-            {
-                result[i] += t[i][j] * p[j];
-            }
-            result[i] += t[i][Transform::Dimension];
-            if constexpr (Hand == Handedness::Right)
-            {
-                result[i] /= -p[Pnt::Dimension - 1];
-            }
-            else if constexpr (Hand == Handedness::Left)
-            {
-                result[i] /= p[Pnt::Dimension - 1];
-            }
-        }
-        return result;
-    }
-
 
     template <ConceptBasicTransform Transform>
     [[nodiscard]] constexpr

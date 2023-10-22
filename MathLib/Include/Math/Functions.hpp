@@ -94,6 +94,13 @@ namespace Math
         return std::pow(ToUnderlying(val), ToUnderlying(exponent));
     }
 
+    template <typename T>
+    [[nodiscard]] constexpr
+    T Sqrt(T val) noexcept
+    {
+        return std::sqrt(ToUnderlying(val));
+    }
+
     //////////////////////////////////////////////////////////////////////////
     // Trig functions
     //////////////////////////////////////////////////////////////////////////

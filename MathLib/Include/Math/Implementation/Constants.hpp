@@ -1,7 +1,6 @@
 #ifndef MATHLIB_IMPL_CONSTANTS_HPP
 #define MATHLIB_IMPL_CONSTANTS_HPP
 
-#include "../Common/Types.hpp"
 #include "../Common/Concepts.hpp"
 
 namespace Math::Implementation

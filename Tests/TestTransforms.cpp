@@ -4,6 +4,9 @@
 #include <Math/Matrix.hpp>
 #include <Math/Transform.hpp>
 
+#include <Math/Debug/StreamOperators.hpp>
+#include <iostream>
+
 namespace
 {
     Math::Transform2f MakeTransform2f1()
@@ -221,4 +224,42 @@ TEST_CASE("Test 3D transform helpers")
         REQUIRE(Math::Equal(shear3 * Math::Vector3f(1.0f, 1.0f, 1.0f), Math::Vector3f(1.0f, 1.0f, 6.0f)));
         REQUIRE(Math::Equal(shear3 * Math::Point3f(1.0f, 1.0f, 1.0f), Math::Point3f(1.0f, 1.0f, 6.0f)));
     }
+}
+
+TEST_CASE("Test 3D LookAt transform")
+{
+    SECTION("Basic parameters")
+    {
+        Math::Transform3f lookAt = Math::LookAt(Math::Point3f(0.0f, 0.0f, 0.0f), Math::Vector3f(0.0f, 0.0f, 1.0f));
+        REQUIRE(Math::Equal(lookAt * Math::Point3f(0.0f, 0.0f, 0.0f), Math::Point3f(0.0f, 0.0f, 0.0f)));
+        REQUIRE(Math::Equal(lookAt * Math::Point3f(1.0f, 0.0f, 0.0f), Math::Point3f(-1.0f, 0.0f, 0.0f)));
+        REQUIRE(Math::Equal(lookAt * Math::Point3f(0.0f, 1.0f, 0.0f), Math::Point3f(0.0f, 1.0f, 0.0f)));
+        REQUIRE(Math::Equal(lookAt * Math::Point3f(0.0f, 0.0f, 1.0f), Math::Point3f(0.0f, 0.0f, -1.0f)));
+        REQUIRE(Math::Equal(lookAt * Math::Point3f(1.0f, 1.0f, 1.0f), Math::Point3f(-1.0f, 1.0f, -1.0f)));
+    }
+
+    SECTION("Non-zero position")
+    {
+        Math::Transform3f lookAt = Math::LookAt(Math::Point3f(1.0f, 2.0f, 3.0f), Math::Vector3f(0.0f, 0.0f, 1.0f));
+        REQUIRE(Math::Equal(lookAt * Math::Point3f(0.0f, 0.0f, 0.0f), Math::Point3f(-1.0f, -2.0f, -3.0f)));
+        REQUIRE(Math::Equal(lookAt * Math::Point3f(1.0f, 0.0f, 0.0f), Math::Point3f(-2.0f, -2.0f, -3.0f)));
+        REQUIRE(Math::Equal(lookAt * Math::Point3f(0.0f, 1.0f, 0.0f), Math::Point3f(-1.0f, -1.0f, -3.0f)));
+        REQUIRE(Math::Equal(lookAt * Math::Point3f(0.0f, 0.0f, 1.0f), Math::Point3f(-1.0f, -2.0f, -4.0f)));
+        REQUIRE(Math::Equal(lookAt * Math::Point3f(1.0f, 1.0f, 1.0f), Math::Point3f(-2.0f, -1.0f, -4.0f)));
+    }
+
+    SECTION("Non-trivial view direction")
+    {
+        Math::Transform3f lookAt = Math::LookAt(Math::Point3f(0.0f, 0.0f, 0.0f), Math::Vector3f(1.0f, 0.0f, 1.0f));
+        REQUIRE(Math::Equal(lookAt * Math::Point3f(0.0f, 0.0f, 0.0f), Math::Point3f(0.0f, 0.0f, 0.0f)));
+        REQUIRE(Math::Equal(lookAt * Math::Point3f(1.0f, 0.0f, 0.0f), Math::Point3f(Math::Normalize(Math::Vector3f(-1.0f, 0.0f, -1.0f)))));
+        REQUIRE(Math::Equal(lookAt * Math::Point3f(0.0f, 1.0f, 0.0f), Math::Point3f(0.0f, 1.0f, 0.0f)));
+        REQUIRE(Math::Equal(lookAt * Math::Point3f(0.0f, 0.0f, 1.0f), Math::Point3f(Math::Normalize(Math::Vector3f(1.0f, 0.0f, -1.0f)))));
+        REQUIRE(Math::Equal(lookAt * Math::Point3f(1.0f, 1.0f, 1.0f), Math::Point3f(0.0f, 1.0f, -Math::Constants::Sqrt2<Math::f32>)));
+    }
+}
+
+TEST_CASE("Test 3D projections")
+{
+
 }

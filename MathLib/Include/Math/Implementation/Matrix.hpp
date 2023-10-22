@@ -8,7 +8,7 @@
 
 namespace Math
 {
-    template <typename T>
+    template <ConceptStrongType T>
     class Matrix2T final
     {
     public:
@@ -50,7 +50,7 @@ namespace Math
         Array<Vector2T<T>, 2> rows;
     };
 
-    template <typename T>
+    template <ConceptStrongType T>
     class Matrix3T final
     {
     public:
@@ -96,7 +96,7 @@ namespace Math
         Array<Vector3T<T>, 3> rows;
     };
 
-    template <typename T>
+    template <ConceptStrongType T>
     class Matrix4T final
     {
     public:

@@ -22,6 +22,8 @@ namespace Math
     public:
         static_assert(!IsSpecialization<T, StrongType>, "StrongType may not be nested");
         using ValueType = T;
+    private:
+        ValueType mValue;
     public:
         // TODO(3011): Check if making this constructor explicit is a good idea.
         // It would eliminate many more potential implicit conversions, but it
@@ -68,8 +70,30 @@ namespace Math
 
         template <typename U>
         friend constexpr U ToUnderlying(StrongType<U> value) noexcept;
-    private:
-        T mValue;
+    };
+
+    template <typename T>
+    struct StaticStrongType final
+    {
+    public:
+        static_assert(!IsSpecialization<T, StaticStrongType>, "StaticStrongType may not be nested");
+        static_assert(!IsSpecialization<T, StrongType>, "StaticStrongType may not be specialized with StrongType");
+        using ValueType = T;
+        ValueType Value;
+    public:
+        [[nodiscard]] constexpr
+        StaticStrongType(T value) noexcept
+            : Value(value)
+        {}
+
+        [[nodiscard]] constexpr
+        operator StrongType<T>() const noexcept
+        {
+            return StrongType<T>(Value);
+        }
+
+        template <typename U>
+        friend constexpr U ToUnderlying(StaticStrongType<U> value) noexcept;
     };
 
     namespace Implementation
@@ -85,10 +109,58 @@ namespace Math
         {
             using Type = T;
         };
+
+        template <typename T>
+        struct UnderlyingType<StaticStrongType<T>>
+        {
+            using Type = T;
+        };
+
+        template <typename T>
+        struct MakeStrongType
+        {
+            using Type = StrongType<T>;
+        };
+
+        template <typename T>
+        struct MakeStrongType<StrongType<T>>
+        {
+            using Type = StrongType<T>;
+        };
+
+        template <typename T>
+        struct MakeStrongType<StaticStrongType<T>>
+        {
+            using Type = StrongType<T>;
+        };
+
+        template <typename T>
+        struct MakeStaticStrongType
+        {
+            using Type = StaticStrongType<T>;
+        };
+
+        template <typename T>
+        struct MakeStaticStrongType<StrongType<T>>
+        {
+            using Type = StaticStrongType<T>;
+        };
+
+        template <typename T>
+        struct MakeStaticStrongType<StaticStrongType<T>>
+        {
+            using Type = StaticStrongType<T>;
+        };
     }
 
     template <typename T>
     using UnderlyingType = typename Implementation::UnderlyingType<T>::Type;
+
+    template <typename T>
+    using MakeStrongType = typename Implementation::MakeStrongType<T>::Type;
+
+    template <typename T>
+    using MakeStaticStrongType = typename Implementation::MakeStaticStrongType<T>::Type;
 
     template <typename T>
     [[nodiscard]] constexpr
@@ -98,7 +170,15 @@ namespace Math
     }
 
     template <typename T>
-        requires (!IsSpecialization<T, StrongType>)
+    [[nodiscard]] constexpr
+    T ToUnderlying(StaticStrongType<T> value) noexcept
+    {
+        return value.Value;
+    }
+
+    template <typename T>
+        requires (!IsSpecialization<T, StrongType>
+              &&  !IsSpecialization<T, StaticStrongType>)
     [[nodiscard]] constexpr
     T ToUnderlying(T value) noexcept
     {
@@ -114,6 +194,9 @@ namespace Math
 
     using SizeType = StrongType<std::size_t>;
     using SignedSizeType = StrongType<std::int64_t>;
+
+    using StaticSizeType = StaticStrongType<std::size_t>;
+    using StaticSignedSizeType = StaticStrongType<std::int64_t>;
 
     using i8  = StrongType<std::int8_t>;
     using i16 = StrongType<std::int16_t>;
@@ -134,26 +217,9 @@ namespace Math
     using f32 = StrongType<float>;
     using f64 = StrongType<double>;
 
-    class StaticSizeType
-    {
-    public:
-        std::size_t Value;
-
-        [[nodiscard]] constexpr
-        StaticSizeType(std::size_t value) noexcept
-            : Value(value)
-        {}
-
-        [[nodiscard]] constexpr
-        operator SizeType() const noexcept
-        {
-            return SizeType(Value);
-        }
-    };
-
     namespace Implementation
     {
-        template <std::size_t>
+        template <StaticSizeType>
         struct SignedIntegerSelector
         {
             using Type = void;
@@ -164,7 +230,7 @@ namespace Math
         template <> struct SignedIntegerSelector<4> { using Type = i32; };
         template <> struct SignedIntegerSelector<8> { using Type = i64; };
 
-        template <std::size_t>
+        template <StaticSizeType>
         struct UnsignedIntegerSelector
         {
             using Type = void;
@@ -175,7 +241,7 @@ namespace Math
         template <> struct UnsignedIntegerSelector<4> { using Type = u32; };
         template <> struct UnsignedIntegerSelector<8> { using Type = u64; };
 
-        template <std::size_t>
+        template <StaticSizeType>
         struct FloatingPointSelector
         {
             using Type = void;
@@ -185,13 +251,13 @@ namespace Math
         template <> struct FloatingPointSelector<8> { using Type = f64; };
     }
 
-    template <std::size_t Size>
+    template <StaticSizeType Size>
     using SignedIntegerSelector = typename Implementation::SignedIntegerSelector<Size>::Type;
 
-    template <std::size_t Size>
+    template <StaticSizeType Size>
     using UnsignedIntegerSelector = typename Implementation::UnsignedIntegerSelector<Size>::Type;
 
-    template <std::size_t Size>
+    template <StaticSizeType Size>
     using FloatingPointSelector = typename Implementation::FloatingPointSelector<Size>::Type;
 }
 

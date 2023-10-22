@@ -73,7 +73,10 @@ namespace Math
                 result[i] += t[i][j] * v[j];
             }
         }
-        result[Transform::Dimension] = v[Transform::Dimension];
+        for (SizeType i = 0; i <= Transform::Dimension; ++i)
+        {
+            result[Transform::Dimension] += Transform::BottomRow[i] * v[i];
+        }
         return result;
     }
 
@@ -94,6 +97,15 @@ namespace Math
                 result[i] += t[i][j] * p[j];
             }
             result[i] += t[i][Transform::Dimension];
+        }
+        typename Pnt::ScalarType norm = Transform::BottomRow[Transform::Dimension];
+        for (SizeType i = 0; i < Transform::Dimension; ++i)
+        {
+            norm += Transform::BottomRow[i] * p[i];
+        }
+        for (SizeType i = 0; i < Transform::Dimension; ++i)
+        {
+            result[i] /= norm;
         }
         return result;
     }

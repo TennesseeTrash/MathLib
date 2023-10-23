@@ -24,7 +24,7 @@ namespace Math::Implementation
         template <typename T>
         struct Pi<StrongType<T>> final
         {
-            static constexpr T Value = Pi<T>::Value;
+            static constexpr StrongType<T> Value = StrongType<T>(Pi<T>::Value);
         };
 
         template <typename T>
@@ -46,7 +46,7 @@ namespace Math::Implementation
         template <typename T>
         struct E<StrongType<T>> final
         {
-            static constexpr T Value = E<T>::Value;
+            static constexpr StrongType<T> Value = StrongType<T>(E<T>::Value);
         };
 
         template <typename T>
@@ -68,7 +68,7 @@ namespace Math::Implementation
         template <typename T>
         struct Phi<StrongType<T>> final
         {
-            static constexpr T Value = Phi<T>::Value;
+            static constexpr StrongType<T> Value = StrongType<T>(Phi<T>::Value);
         };
 
         template <typename T>
@@ -90,7 +90,7 @@ namespace Math::Implementation
         template <typename T>
         struct Sqrt2<StrongType<T>> final
         {
-            static constexpr T Value = Sqrt2<T>::Value;
+            static constexpr StrongType<T> Value = StrongType<T>(Sqrt2<T>::Value);
         };
 
         template <typename T>
@@ -112,7 +112,7 @@ namespace Math::Implementation
         template <typename T>
         struct Sqrt3<StrongType<T>> final
         {
-            static constexpr T Value = Sqrt3<T>::Value;
+            static constexpr StrongType<T> Value = StrongType<T>(Sqrt3<T>::Value);
         };
 
         template <typename T>
@@ -134,7 +134,7 @@ namespace Math::Implementation
         template <typename T>
         struct Sqrt5<StrongType<T>> final
         {
-            static constexpr T Value = Sqrt5<T>::Value;
+            static constexpr StrongType<T> Value = StrongType<T>(Sqrt5<T>::Value);
         };
 
         template <typename T>
@@ -144,7 +144,7 @@ namespace Math::Implementation
         template <IntegralType T>
         struct Epsilon<T> final
         {
-            static constexpr T Value = 0;
+            static constexpr T Value = T(0);
         };
 
         template <>
@@ -162,7 +162,7 @@ namespace Math::Implementation
         template <typename T>
         struct Epsilon<StrongType<T>> final
         {
-            static constexpr T Value = Epsilon<T>::Value;
+            static constexpr StrongType<T> Value = StrongType<T>(Epsilon<T>::Value);
         };
 }
 

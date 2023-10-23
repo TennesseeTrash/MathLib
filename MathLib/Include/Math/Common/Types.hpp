@@ -25,9 +25,6 @@ namespace Math
     private:
         ValueType mValue;
     public:
-        // TODO(3011): Check if making this constructor explicit is a good idea.
-        // It would eliminate many more potential implicit conversions, but it
-        // might also make the library much more of a pain to deal with.
         [[nodiscard]] constexpr
         StrongType(T value = T{}) noexcept
             : mValue(value)
@@ -63,10 +60,12 @@ namespace Math
         [[maybe_unused]] friend constexpr StrongType<T>& operator<<= (StrongType<T>& a, std::size_t shift) noexcept { a.mValue <<= shift; return a; }
         [[maybe_unused]] friend constexpr StrongType<T>& operator>>= (StrongType<T>& a, std::size_t shift) noexcept { a.mValue >>= shift; return a; }
 
-        // Note(3011): The warning that appears here is bogus.
+        // Note(3011): Default this when the bogus warning in Clang is fixed.
         // Relevant issue - https://github.com/llvm/llvm-project/issues/43670
         [[nodiscard]] friend constexpr
-        auto operator<=>(StrongType<T> a, StrongType<T> b) = default;
+        bool operator==(StrongType<T> a, StrongType<T> b) noexcept { return a.mValue == b.mValue; }
+        [[nodiscard]] friend constexpr
+        auto operator<=>(StrongType<T> a, StrongType<T> b) noexcept { return a.mValue <=> b.mValue; }
 
         template <typename U>
         friend constexpr U ToUnderlying(StrongType<U> value) noexcept;
@@ -189,7 +188,7 @@ namespace Math
     [[nodiscard]] constexpr
     To Convert(From value) noexcept
     {
-        return static_cast<UnderlyingType<To>>(ToUnderlying(value));
+        return To(static_cast<UnderlyingType<To>>(ToUnderlying(value)));
     }
 
     using SizeType = StrongType<std::size_t>;

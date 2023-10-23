@@ -7,7 +7,7 @@
 
 namespace Math
 {
-    template <typename T>
+    template <ConceptStrongType T>
     class QuaternionT final
     {
     public:

@@ -27,7 +27,7 @@ TEST_CASE("Quaternion and Transform similarity", "[Math][Quaternion]")
     }
 }
 
-TEST_CASE("Check MakeFromYawPitchRoll static member function", "[Math][Quaternion]")
+TEST_CASE("Check FromYawPitchRoll static member function", "[Math][Quaternion]")
 {
     SECTION("Trivial parameters")
     {

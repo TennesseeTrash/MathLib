@@ -18,7 +18,7 @@
 // Note(3011): With the above plans, it might be effectively impossible to
 // serialize a transform. There could be a way to deal with this for
 // in-library types built on top of this, but more obscure transform
-// specializations could cause problems.
+// specializations will be problematic.
 
 namespace Math
 {
@@ -71,11 +71,6 @@ namespace Math
 
         constexpr       Vector3T<T>& operator[] (SizeType index)       { return rows[index]; }
         constexpr const Vector3T<T>& operator[] (SizeType index) const { return rows[index]; }
-
-        constexpr const Matrix3T<T> ToMatrix() const noexcept
-        {
-            return Matrix3T<T>(rows[0], rows[1], BottomRow);
-        }
 
         static constexpr Transform2T<T> Identity() noexcept { return Transform2T<T>(Convert<T>(1)); }
     private:
@@ -138,11 +133,6 @@ namespace Math
 
         constexpr       Vector4T<T>& operator[] (SizeType index)       { return rows[index]; }
         constexpr const Vector4T<T>& operator[] (SizeType index) const { return rows[index]; }
-
-        constexpr const Matrix4T<T> ToMatrix() const noexcept
-        {
-            return Matrix4T<T>(rows[0], rows[1], rows[2], BottomRow);
-        }
 
         static constexpr Transform3T<T> Identity() noexcept { return Transform3T<T>(Convert<T>(1)); }
     private:

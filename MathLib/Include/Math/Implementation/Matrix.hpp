@@ -85,6 +85,12 @@ namespace Math
                    Vector3T<T>(m20, m21, m22))
         {}
 
+        constexpr explicit Matrix3T(const Matrix2T<T>& m) noexcept
+            : rows(Vector3T<T>(m[0][0], m[0][1], 0),
+                   Vector3T<T>(m[1][0], m[1][1], 0),
+                   Vector3T<T>(      0,       0, 1))
+        {}
+
         constexpr       Vector3T<T>& operator[] (SizeType index)       { return rows[ToUnderlying(index)]; }
         constexpr const Vector3T<T>& operator[] (SizeType index) const { return rows[ToUnderlying(index)]; }
 
@@ -133,6 +139,20 @@ namespace Math
                    Vector4T<T>(m10, m11, m12, m13),
                    Vector4T<T>(m20, m21, m22, m23),
                    Vector4T<T>(m30, m31, m32, m33))
+        {}
+
+        constexpr explicit Matrix4T(const Matrix2T<T>& m) noexcept
+            : rows(Vector4T<T>(m[0][0], m[0][1], 0, 0),
+                   Vector4T<T>(m[1][0], m[1][1], 0, 0),
+                   Vector4T<T>(      0,       0, 1, 0),
+                   Vector4T<T>(      0,       0, 0, 1))
+        {}
+
+        constexpr explicit Matrix4T(const Matrix3T<T>& m) noexcept
+            : rows(Vector4T<T>(m[0][0], m[0][1], m[0][2], 0),
+                   Vector4T<T>(m[1][0], m[1][1], m[1][2], 0),
+                   Vector4T<T>(m[2][0], m[2][1], m[2][2], 0),
+                   Vector4T<T>(      0,       0,       0, 1))
         {}
 
         constexpr       Vector4T<T>& operator[] (SizeType index)       { return rows[ToUnderlying(index)]; }

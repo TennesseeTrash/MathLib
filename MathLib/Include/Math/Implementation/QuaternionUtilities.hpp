@@ -141,6 +141,13 @@ namespace Math
     {
         return Equal(p.Vector(), q.Vector()) && Equal(p.Scalar(), q.Scalar());
     }
+
+    template <ConceptQuaternion Quat>
+    [[nodiscard]] constexpr
+    bool HasNaN(const Quat& q) noexcept
+    {
+        return HasNaN(q.Vector()) || HasNaN(q.Scalar());
+    }
 }
 
 #endif //MATHLIB_IMPL_QUATERNION_UTILITIES_HPP

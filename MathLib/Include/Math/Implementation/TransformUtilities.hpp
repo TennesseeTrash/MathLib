@@ -10,6 +10,20 @@
 
 namespace Math
 {
+    template <ConceptTransform2 Transform>
+    [[nodiscard]] constexpr
+    typename Transform::MatrixType ToMatrix(const Transform& t) noexcept
+    {
+        return typename Transform::MatrixType( t[0], t[1], Transform::BottomRow );
+    }
+
+    template <ConceptTransform3 Transform>
+    [[nodiscard]] constexpr
+    typename Transform::MatrixType ToMatrix(const Transform& t) noexcept
+    {
+        return typename Transform::MatrixType( t[0], t[1], t[2], Transform::BottomRow );
+    }
+
     template <ConceptTransform Transform, ConceptVector Vec>
         requires (Transform::Dimension == Vec::Dimension)
     [[nodiscard]] constexpr

@@ -2,25 +2,28 @@
 #include <Math/Quaternion.hpp>
 #include <Math/Transform.hpp>
 #include <Math/Debug/StreamOperators.hpp>
+#include <iostream>
+
+using Math::f32;
 
 TEST_CASE("Quaternion and Transform similarity", "[Math][Quaternion]")
 {
     SECTION("Check a basic case")
     {
-        Math::Matrix4f m1 = Math::RotateX(Math::ToRadians(Math::f32(12.f))).ToMatrix();
-        Math::Matrix4f m2 = Math::Quaternionf::MakeRotation(Math::ToRadians(12.f), {1.0f, 0.0f, 0.0f}).ToMatrix4();
+        Math::Transform3f t1 = Math::RotateX(Math::ToRadians(f32(12.0f)));
+        Math::Transform3f t2 = Math::ToTransform(Math::FromAxisAngle({1.0f, 0.0f, 0.0f}, Math::ToRadians(f32(12.0f))));
 
-        REQUIRE(Math::Equal(m1, m2));
+        REQUIRE(Math::Equal(t1, t2));
     }
 
     SECTION("Trivial Slerp check")
     {
-        Math::Matrix4f m1 = Math::RotateY(Math::ToRadians(Math::f32(15.f))).ToMatrix();
-        Math::Quaternionf q1 = Math::Quaternionf::MakeRotation(Math::ToRadians(0.f), {0.0f, 1.0f, 0.0f});
-        Math::Quaternionf q2 = Math::Quaternionf::MakeRotation(Math::ToRadians(60.f), {0.0f, 1.0f, 0.0f});
-        Math::Matrix4f m2 = Math::Slerp(Math::f32(0.25f), q1, q2).ToMatrix4();
+        Math::Transform3f t1 = Math::RotateY(Math::ToRadians(Math::f32(15.0f)));
+        Math::Quaternionf q1 = Math::FromAxisAngle({0.0f, 1.0f, 0.0f}, Math::ToRadians(Math::f32(0.0f )));
+        Math::Quaternionf q2 = Math::FromAxisAngle({0.0f, 1.0f, 0.0f}, Math::ToRadians(Math::f32(60.0f)));
+        Math::Transform3f t2 = Math::ToTransform(Math::Slerp(0.25f, q1, q2));
 
-        REQUIRE(Math::Equal(m1, m2));
+        REQUIRE(Math::Equal(t1, t2));
     }
 }
 
@@ -28,32 +31,32 @@ TEST_CASE("Check MakeFromYawPitchRoll static member function", "[Math][Quaternio
 {
     SECTION("Trivial parameters")
     {
-        Math::Quaternionf q1 = Math::Quaternionf::MakeFromYawPitchRoll(0.0f, 0.0f, 0.0f);
-        Math::Quaternionf q2 = Math::Quaternionf({0.0f, 0.0f, 0.0f}, 1.0f);
+        Math::Quaternionf q1 = Math::FromYawPitchRoll(f32(0.0f), f32(0.0f), f32(0.0f));
+        Math::Quaternionf q2 = Math::Quaternionf::Identity();
 
         REQUIRE(Math::Equal(q1, q2));
     }
 
     SECTION("Yaw check")
     {
-        Math::Quaternionf q1 = Math::Quaternionf::MakeFromYawPitchRoll(Math::ToRadians(30.0f), 0.0f, 0.0f);
-        Math::Quaternionf q2 = Math::Quaternionf::MakeRotation(Math::ToRadians(30.0f), {0.0f, 1.0f, 0.0f});
+        Math::Quaternionf q1 = Math::FromYawPitchRoll(Math::ToRadians(f32(30.0f)), f32(0.0f), f32(0.0f));
+        Math::Quaternionf q2 = Math::FromAxisAngle({0.0f, 0.0f, 1.0f}, Math::ToRadians(f32(30.0f)));
 
         REQUIRE(Math::Equal(q1, q2));
     }
 
     SECTION("Pitch check")
     {
-        Math::Quaternionf q1 = Math::Quaternionf::MakeFromYawPitchRoll(0.0f, Math::ToRadians(45.0f), 0.0f);
-        Math::Quaternionf q2 = Math::Quaternionf::MakeRotation(Math::ToRadians(45.0f), {1.0f, 0.0f, 0.0f});
+        Math::Quaternionf q1 = Math::FromYawPitchRoll(f32(0.0f), Math::ToRadians(f32(45.0f)), f32(0.0f));
+        Math::Quaternionf q2 = Math::FromAxisAngle({0.0f, 1.0f, 0.0f}, Math::ToRadians(f32(45.0f)));
 
         REQUIRE(Math::Equal(q1, q2));
     }
 
     SECTION("Roll check")
     {
-        Math::Quaternionf q1 = Math::Quaternionf::MakeFromYawPitchRoll(0.0f, 0.0f, Math::ToRadians(56.0f));
-        Math::Quaternionf q2 = Math::Quaternionf::MakeRotation(Math::ToRadians(56.0f), {0.0f, 0.0f, 1.0f});
+        Math::Quaternionf q1 = Math::FromYawPitchRoll(f32(0.0f), f32(0.0f), Math::ToRadians(f32(56.0f)));
+        Math::Quaternionf q2 = Math::FromAxisAngle({1.0f, 0.0f, 0.0f}, Math::ToRadians(f32(56.0f)));
 
         REQUIRE(Math::Equal(q1, q2));
     }

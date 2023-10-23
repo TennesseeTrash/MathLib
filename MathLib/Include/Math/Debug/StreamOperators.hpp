@@ -122,10 +122,10 @@ inline
 std::ostream& operator<<(std::ostream& os, const Math::QuaternionT<T>& quat)
 {
     os  << "QuaternionT("
-        << std::setprecision(4) << ToUnderlying(quat.mV.x) << ", "
-        << std::setprecision(4) << ToUnderlying(quat.mV.y) << ", "
-        << std::setprecision(4) << ToUnderlying(quat.mV.z) << ", "
-        << std::setprecision(4) << ToUnderlying(quat.mS  ) << ")";
+        << std::setprecision(4) << ToUnderlying(quat.Vector().x) << ", "
+        << std::setprecision(4) << ToUnderlying(quat.Vector().y) << ", "
+        << std::setprecision(4) << ToUnderlying(quat.Vector().z) << ", "
+        << std::setprecision(4) << ToUnderlying(quat.Scalar()  ) << ")";
     return os;
 }
 

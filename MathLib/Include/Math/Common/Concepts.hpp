@@ -397,6 +397,47 @@ namespace Math
     };
 
     //////////////////////////////////////////////////////////////////////////
+    // Quaternion concepts
+    //////////////////////////////////////////////////////////////////////////
+
+    template <typename T>
+    concept ConceptBasicQuaternion = requires (T q)
+    {
+        typename T::ScalarType;
+        typename T::VectorType;
+        typename T::MatrixType;
+        typename T::TransformType;
+
+        requires ConceptScalar<typename T::ScalarType>;
+        requires ConceptBasicVector<typename T::VectorType>;
+        requires ConceptBasicMatrix<typename T::MatrixType>;
+        requires ConceptBasicTransform<typename T::TransformType>;
+
+        requires T::VectorType::Dimension == 3;
+        requires T::MatrixType::Dimension == 3;
+        requires T::TransformType::Dimension == 3;
+
+        { q.Vector() } -> SameBaseType<typename T::VectorType>;
+        { q.Scalar() } -> SameBaseType<typename T::ScalarType>;
+
+        { q.NormSqr() } -> SameBaseType<typename T::ScalarType>;
+        { q.Norm() } -> SameBaseType<typename T::ScalarType>;
+    };
+
+    template <typename T>
+    concept ConceptQuaternion = requires (T q)
+    {
+        requires ConceptBasicQuaternion<T>;
+
+        requires requires (T p)
+        {
+            { q + p } -> SameBaseType<T>;
+            { q - p } -> SameBaseType<T>;
+            { q * p } -> SameBaseType<T>;
+        };
+    };
+
+    //////////////////////////////////////////////////////////////////////////
     // Utility concepts
     //////////////////////////////////////////////////////////////////////////
 

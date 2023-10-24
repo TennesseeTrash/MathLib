@@ -364,8 +364,6 @@ namespace Math
         {
             { t[i][i] } -> SameBaseType<typename T::ScalarType>;
         };
-
-        { t.ToMatrix() } -> SameBaseType<typename T::MatrixType>;
     };
 
     template <typename T>

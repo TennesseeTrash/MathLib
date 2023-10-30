@@ -32,6 +32,13 @@ namespace Math
         return Vec(-u.y, u.x);
     }
 
+    template <ConceptVector2 Vec>
+    [[nodiscard]] constexpr
+    typename Vec::ScalarType PerpProduct(const Vec& u, const Vec& v) noexcept
+    {
+        return u.x * v.y - u.y * v.x;
+    }
+
     template <Handedness Hand = Handedness::Right, ConceptVector3 Vec>
     [[nodiscard]] constexpr
     Vec Cross(const Vec& u, const Vec& v) noexcept

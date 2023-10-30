@@ -5,9 +5,6 @@
 #include "../Functions.hpp"
 #include "Point.hpp"
 
-// TODO(3011): This implementation is still not final.
-// Ideally, the overloads to enable TAD should not be necessary.
-
 namespace Math
 {
     template <ConceptTransform2 Transform>
@@ -24,62 +21,46 @@ namespace Math
         return typename Transform::MatrixType( t[0], t[1], t[2], Transform::BottomRow );
     }
 
-    template <ConceptTransform Transform, ConceptVector Vec>
-        requires (Transform::Dimension == Vec::Dimension)
-    [[nodiscard]] constexpr
-    Transform Translate(const Vec& v) noexcept
-    {
-        using Scalar = typename Transform::ScalarType;
-
-        Transform result(Convert<Scalar>(1));
-        for (SizeType i = 0; i < Transform::Dimension; ++i)
-        {
-            result[i][Transform::Dimension] = v[i];
-        }
-        return result;
-    }
-
     template <ConceptScalar Scalar>
     [[nodiscard]] constexpr
     Transform2T<Scalar> Translate(const Vector2T<Scalar>& v) noexcept
     {
-        return Translate<Transform2T<Scalar>, Vector2T<Scalar>>(v);
+        return Transform2T<Scalar>(
+            1, 0, v.x,
+            0, 1, v.y
+        );
     }
 
     template <ConceptScalar Scalar>
     [[nodiscard]] constexpr
     Transform3T<Scalar> Translate(const Vector3T<Scalar>& v) noexcept
     {
-        return Translate<Transform3T<Scalar>, Vector3T<Scalar>>(v);
-    }
-
-    template <ConceptTransform Transform, ConceptVector Vec>
-        requires (Transform::Dimension == Vec::Dimension)
-    [[nodiscard]] constexpr
-    Transform Scale(const Vec& v) noexcept
-    {
-        using Scalar = typename Transform::ScalarType;
-
-        Transform result(Convert<Scalar>(1));
-        for (SizeType i = 0; i < Transform::Dimension; ++i)
-        {
-            result[i][i] = v[i];
-        }
-        return result;
+        return Transform3T<Scalar>(
+            1, 0, 0, v.x,
+            0, 1, 0, v.y,
+            0, 0, 1, v.z
+        );
     }
 
     template <ConceptScalar Scalar>
     [[nodiscard]] constexpr
     Transform2T<Scalar> Scale(const Vector2T<Scalar>& v) noexcept
     {
-        return Scale<Transform2T<Scalar>, Vector2T<Scalar>>(v);
+        return Transform2T<Scalar>(
+            v.x, 0, 0,
+            0, v.y, 0
+        );
     }
 
     template <ConceptScalar Scalar>
     [[nodiscard]] constexpr
     Transform3T<Scalar> Scale(const Vector3T<Scalar>& v) noexcept
     {
-        return Scale<Transform3T<Scalar>, Vector3T<Scalar>>(v);
+        return Transform3T<Scalar>(
+            v.x, 0, 0, 0,
+            0, v.y, 0, 0,
+            0, 0, v.z, 0
+        );
     }
 
     template <ConceptScalar Scalar>
@@ -211,74 +192,54 @@ namespace Math
         );
     }
 
-    template <ConceptTransform3 Transform, ConceptPoint3 Pnt, ConceptVector3 Vec>
+    template <ConceptScalar Scalar>
     [[nodiscard]] constexpr
-    Transform LookAt(const Pnt& pos, const Vec& dir, const Vec& up = {0, 1, 0}) noexcept
+    Transform3T<Scalar> LookAt(const Point3T<Scalar>& pos, const Vector3T<Scalar>& dir, const Vector3T<Scalar>& up = {0, 1, 0}) noexcept
     {
-        Vec w = -Normalize(dir);
-        Vec u = Normalize(Cross(Normalize(up), w));
-        Vec v = Normalize(Cross(w, u));
-        return Transform(
+        Vector3T<Scalar> w = -Normalize(dir);
+        Vector3T<Scalar> u = Normalize(Cross(Normalize(up), w));
+        Vector3T<Scalar> v = Normalize(Cross(w, u));
+        return Transform3T<Scalar>(
             u.x, u.y, u.z, -pos.x,
             v.x, v.y, v.z, -pos.y,
             w.x, w.y, w.z, -pos.z
         );
     }
 
-    template <ConceptScalar Scalar>
-    [[nodiscard]] constexpr
-    Transform3T<Scalar> LookAt(const Point3T<Scalar>& pos, const Vector3T<Scalar>& dir, const Vector3T<Scalar>& up = {0, 1, 0}) noexcept
-    {
-        return LookAt<Transform3T<Scalar>, Point3T<Scalar>, Vector3T<Scalar>>(pos, dir, up);
-    }
-
     template <Handedness Hand = Handedness::Right, ConceptScalar Scalar>
     [[nodiscard]] constexpr
     auto PerspectiveProjection(Scalar fov, Scalar aspectRatio, Scalar near, Scalar far) noexcept
     {
+        static_assert(Hand == Handedness::Right || Hand == Handedness::Left, "Orientation must be either Right or Left.");
+        using Vec = Vector4T<Scalar>;
+        using TransformRight = Transform3T<Scalar, Vec(0, 0, -1, 0)>;
+        using TransformLeft = Transform3T<Scalar, Vec(0, 0, 1, 0)>;
+
+        ConditionalType<Hand == Handedness::Right, TransformRight, TransformLeft> result;
         Scalar tanFovOver2 = Tan(fov / Scalar(2));
-        if constexpr (Hand == Handedness::Right)
-        {
-            Transform3T<Scalar, Vector3T<Scalar>(0, 0, -1, 0)> result;
-            result[0][0] = Convert<Scalar>(1) / (aspectRatio * tanFovOver2);
-            result[1][1] = Convert<Scalar>(1) / tanFovOver2;
-            result[2][2] = far / (near - far);
-            result[2][3] = -(far * near) / (far - near);
-            return result;
-        }
-        else if constexpr (Hand == Handedness::Left)
-        {
-            Transform3T<Scalar, Vector3T<Scalar>(0, 0, 1, 0)> result;
-            result[0][0] = Convert<Scalar>(1) / (aspectRatio * tanFovOver2);
-            result[1][1] = Convert<Scalar>(1) / tanFovOver2;
-            result[2][2] = far / (far - near);
-            result[2][3] = -(far * near) / (far - near);
-            return result;
-        }
+        result[0][0] = Convert<Scalar>(1) / (aspectRatio * tanFovOver2);
+        result[1][1] = Convert<Scalar>(1) / tanFovOver2;
+        result[2][2] = far / (near - far);
+        result[2][3] = -(far * near) / (far - near);
+        return result;
     }
 
     template <Handedness Hand = Handedness::Right, ConceptScalar Scalar>
     [[nodiscard]] constexpr
     Transform3T<Scalar> OrthographicProjection(Scalar left, Scalar right, Scalar bottom, Scalar top, Scalar near, Scalar far) noexcept
     {
+        static_assert(Hand == Handedness::Right || Hand == Handedness::Left, "Orientation must be either Right or Left.");
+
         Transform3T<Scalar> result;
+        result[0][0] = Convert<Scalar>(2) / (right - left);
+        result[1][1] = Convert<Scalar>(2) / (top - bottom);
+        result[2][2] = Convert<Scalar>(1) / (far - near);
+        result[0][3] = -(right + left) / (right - left);
+        result[1][3] = -(top + bottom) / (top - bottom);
+        result[2][3] = -near / (far - near);
         if constexpr (Hand == Handedness::Right)
         {
-            result[0][0] = Convert<Scalar>(2) / (right - left);
-            result[1][1] = Convert<Scalar>(2) / (top - bottom);
-            result[2][2] = Convert<Scalar>(1) / (far - near);
-            result[0][3] = -(right + left) / (right - left);
-            result[1][3] = -(top + bottom) / (top - bottom);
-            result[2][3] = -near / (far - near);
-        }
-        else if constexpr (Hand == Handedness::Left)
-        {
-            result[0][0] = Convert<Scalar>(2) / (right - left);
-            result[1][1] = Convert<Scalar>(2) / (top - bottom);
-            result[2][2] = -Convert<Scalar>(1) / (far - near);
-            result[0][3] = -(right + left) / (right - left);
-            result[1][3] = -(top + bottom) / (top - bottom);
-            result[2][3] = -near / (far - near);
+            result[2][2] = -result[2][2];
         }
         return result;
     }

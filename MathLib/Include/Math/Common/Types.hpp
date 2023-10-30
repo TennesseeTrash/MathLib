@@ -10,7 +10,7 @@
 
 namespace Math
 {
-    enum class Handedness
+    enum class Orientation
     {
         Left,
         Right

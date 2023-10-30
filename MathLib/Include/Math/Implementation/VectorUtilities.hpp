@@ -39,18 +39,18 @@ namespace Math
         return u.x * v.y - u.y * v.x;
     }
 
-    template <Handedness Hand = Handedness::Right, ConceptVector3 Vec>
+    template <Orientation Hand = Orientation::Right, ConceptVector3 Vec>
     [[nodiscard]] constexpr
     Vec Cross(const Vec& u, const Vec& v) noexcept
     {
         Vec w;
-        if constexpr (Hand == Handedness::Right)
+        if constexpr (Hand == Orientation::Right)
         {
             w.x = u.y * v.z - u.z * v.y;
             w.y = u.z * v.x - u.x * v.z;
             w.z = u.x * v.y - u.y * v.x;
         }
-        else if constexpr (Hand == Handedness::Left)
+        else if constexpr (Hand == Orientation::Left)
         {
             w.x = u.z * v.y - u.y * v.z;
             w.y = u.x * v.z - u.z * v.x;

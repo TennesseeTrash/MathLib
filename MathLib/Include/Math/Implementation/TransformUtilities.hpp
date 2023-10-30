@@ -73,11 +73,11 @@ namespace Math
         );
     }
 
-    template <Handedness Hand = Handedness::Right, ConceptScalar Scalar>
+    template <Orientation Hand = Orientation::Right, ConceptScalar Scalar>
     [[nodiscard]] constexpr
     Transform3T<Scalar> RotateX(Scalar angle) noexcept
     {
-        if constexpr (Hand == Handedness::Right)
+        if constexpr (Hand == Orientation::Right)
         {
             return Transform3T<Scalar>(
                 1,          0,           0, 0,
@@ -85,7 +85,7 @@ namespace Math
                 0, Sin(angle),  Cos(angle), 0
             );
         }
-        else if constexpr (Hand == Handedness::Left)
+        else if constexpr (Hand == Orientation::Left)
         {
             return Transform3T<Scalar>(
                 1,           0,          0, 0,
@@ -95,11 +95,11 @@ namespace Math
         }
     }
 
-    template <Handedness Hand = Handedness::Right, ConceptScalar Scalar>
+    template <Orientation Hand = Orientation::Right, ConceptScalar Scalar>
     [[nodiscard]] constexpr
     Transform3T<Scalar> RotateY(Scalar angle) noexcept
     {
-        if constexpr (Hand == Handedness::Right)
+        if constexpr (Hand == Orientation::Right)
         {
             return Transform3T<Scalar>(
                  Cos(angle), 0, Sin(angle), 0,
@@ -107,7 +107,7 @@ namespace Math
                 -Sin(angle), 0, Cos(angle), 0
             );
         }
-        else if constexpr (Hand == Handedness::Left)
+        else if constexpr (Hand == Orientation::Left)
         {
             return Transform3T<Scalar>(
                  Cos(angle), 0, -Sin(angle), 0,
@@ -117,11 +117,11 @@ namespace Math
         }
     }
 
-    template <Handedness Hand = Handedness::Right, ConceptScalar Scalar>
+    template <Orientation Hand = Orientation::Right, ConceptScalar Scalar>
     [[nodiscard]] constexpr
     Transform3T<Scalar> RotateZ(Scalar angle) noexcept
     {
-        if constexpr (Hand == Handedness::Right)
+        if constexpr (Hand == Orientation::Right)
         {
             return Transform3T<Scalar>(
                 Cos(angle), -Sin(angle), 0, 0,
@@ -129,7 +129,7 @@ namespace Math
                          0,           0, 1, 0
             );
         }
-        else if constexpr (Hand == Handedness::Left)
+        else if constexpr (Hand == Orientation::Left)
         {
             return Transform3T<Scalar>(
                  Cos(angle), Sin(angle), 0, 0,
@@ -206,16 +206,16 @@ namespace Math
         );
     }
 
-    template <Handedness Hand = Handedness::Right, ConceptScalar Scalar>
+    template <Orientation Hand = Orientation::Right, ConceptScalar Scalar>
     [[nodiscard]] constexpr
     auto PerspectiveProjection(Scalar fov, Scalar aspectRatio, Scalar near, Scalar far) noexcept
     {
-        static_assert(Hand == Handedness::Right || Hand == Handedness::Left, "Orientation must be either Right or Left.");
+        static_assert(Hand == Orientation::Right || Hand == Orientation::Left, "Orientation must be either Right or Left.");
         using Vec = Vector4T<Scalar>;
         using TransformRight = Transform3T<Scalar, Vec(0, 0, -1, 0)>;
         using TransformLeft = Transform3T<Scalar, Vec(0, 0, 1, 0)>;
 
-        ConditionalType<Hand == Handedness::Right, TransformRight, TransformLeft> result;
+        ConditionalType<Hand == Orientation::Right, TransformRight, TransformLeft> result;
         Scalar tanFovOver2 = Tan(fov / Scalar(2));
         result[0][0] = Convert<Scalar>(1) / (aspectRatio * tanFovOver2);
         result[1][1] = Convert<Scalar>(1) / tanFovOver2;
@@ -224,11 +224,11 @@ namespace Math
         return result;
     }
 
-    template <Handedness Hand = Handedness::Right, ConceptScalar Scalar>
+    template <Orientation Hand = Orientation::Right, ConceptScalar Scalar>
     [[nodiscard]] constexpr
     Transform3T<Scalar> OrthographicProjection(Scalar left, Scalar right, Scalar bottom, Scalar top, Scalar near, Scalar far) noexcept
     {
-        static_assert(Hand == Handedness::Right || Hand == Handedness::Left, "Orientation must be either Right or Left.");
+        static_assert(Hand == Orientation::Right || Hand == Orientation::Left, "Orientation must be either Right or Left.");
 
         Transform3T<Scalar> result;
         result[0][0] = Convert<Scalar>(2) / (right - left);
@@ -237,7 +237,7 @@ namespace Math
         result[0][3] = -(right + left) / (right - left);
         result[1][3] = -(top + bottom) / (top - bottom);
         result[2][3] = -near / (far - near);
-        if constexpr (Hand == Handedness::Right)
+        if constexpr (Hand == Orientation::Right)
         {
             result[2][2] = -result[2][2];
         }

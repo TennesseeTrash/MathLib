@@ -12,7 +12,7 @@ TEST_CASE("Test 2D Perlin noise", "[Math][Noise]")
         Math::f32 value = noise(x, y);
         for (Math::SizeType i = 0; i < 25; ++i)
         {
-            REQUIRE(value == noise(x, y));
+            REQUIRE(Math::Equal(value, noise(x, y)));
             value = noise(x, y);
         }
     }
@@ -47,7 +47,7 @@ TEST_CASE("Test 3D Perlin noise", "[Math][Noise]")
         Math::f32 value = noise(x, y, z);
         for (Math::SizeType i = 0; i < 25; ++i)
         {
-            REQUIRE(value == noise(x, y, z));
+            REQUIRE(Math::Equal(value, noise(x, y, z)));
             value = noise(x, y, z);
         }
     }
@@ -90,7 +90,7 @@ TEST_CASE("Test 4D Perlin noise", "[Math][Noise]")
         Math::f32 value = noise(x, y, z, w);
         for (Math::SizeType i = 0; i < 25; ++i)
         {
-            REQUIRE(value == noise(x, y, z, w));
+            REQUIRE(Math::Equal(value, noise(x, y, z, w)));
             value = noise(x, y, z, w);
         }
     }

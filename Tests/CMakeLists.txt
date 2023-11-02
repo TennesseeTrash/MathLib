@@ -15,12 +15,19 @@ target_link_libraries(Tests PRIVATE
 )
 
 target_sources(Tests PRIVATE
+    "VectorTests/VectorTypeTests.cpp"
+    "VectorTests/VectorOperatorTests.cpp"
+    "VectorTests/VectorUtilsTests.cpp"
+    "MatrixTests/MatrixTypeTests.cpp"
+    "MatrixTests/MatrixOperatorTests.cpp"
+    "MatrixTests/MatrixUtilsTests.cpp"
+    "MatrixTests/MatrixScalarOperatorTests.cpp"
+    "MatrixTests/MatrixVectorOperatorTests.cpp"
+    "MatrixTests/MatrixPointOperatorTests.cpp"
     "TestTypes.cpp"
     "TestConcepts.cpp"
     "TestFunctions.cpp"
-    "TestVectors.cpp"
     "TestPoints.cpp"
-    "TestMatrices.cpp"
     "TestTransforms.cpp"
     "TestQuaternions.cpp"
     "TestNoise.cpp"

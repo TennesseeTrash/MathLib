@@ -1,9 +1,9 @@
 #ifndef MATHLIB_COMMON_TYPE_CONCEPTS_HPP
 #define MATHLIB_COMMON_TYPE_CONCEPTS_HPP
 
+#include "Traits.hpp"
 #include "Types.hpp"
 
-#include <type_traits>
 #include <concepts>
 
 namespace Math
@@ -12,40 +12,13 @@ namespace Math
     // General concepts
     //////////////////////////////////////////////////////////////////////////
 
-    namespace Detail
+    namespace Implementation
     {
         auto Prvalue(auto&& arg)
         {
             return arg;
         }
     }
-
-    template <typename T, typename U>
-    concept SameBaseType = std::is_same_v<std::remove_cvref_t<U>, std::remove_cvref_t<T>>;
-
-    template <typename T, typename U>
-    concept SameTypeRef = std::is_same_v<U&, T>;
-
-    template <typename T>
-    concept FundamentalType = std::is_fundamental_v<T>;
-
-    template <typename T>
-    concept IntegralType = std::is_integral_v<T>
-                        || std::is_integral_v<typename T::ValueType>;
-
-    template <typename T>
-    concept SignedIntegralType = IntegralType<T>
-                              &&(std::is_signed_v<T>
-                              || std::is_signed_v<typename T::ValueType>);
-
-    template <typename T>
-    concept UnsignedIntegralType = IntegralType<T>
-                                &&(std::is_unsigned_v<T>
-                                || std::is_unsigned_v<typename T::ValueType>);
-
-    template <typename T>
-    concept FloatingPointType = std::is_floating_point_v<T>
-                             || std::is_floating_point_v<typename T::ValueType>;
 
     template <typename Ta, typename Tb>
     concept Addition = requires (Ta a, Tb b)
@@ -101,6 +74,12 @@ namespace Math
     //////////////////////////////////////////////////////////////////////////
     // Helper type concepts
     //////////////////////////////////////////////////////////////////////////
+
+    template <typename T>
+    class StrongType;
+
+    template <typename T>
+    struct StaticStrongType;
 
     template <typename T>
     concept ConceptStrongType = requires (T a)
@@ -183,8 +162,8 @@ namespace Math
     concept ConceptVector2 = requires (T u)
     {
         requires ConceptVectorN<T>;
-        { Detail::Prvalue(u.x) } -> SameBaseType<typename T::ScalarType>;
-        { Detail::Prvalue(u.x) } -> SameBaseType<typename T::ScalarType>;
+        { Implementation::Prvalue(u.x) } -> SameBaseType<typename T::ScalarType>;
+        { Implementation::Prvalue(u.x) } -> SameBaseType<typename T::ScalarType>;
         requires T::Dimension == 2;
     };
 
@@ -192,9 +171,9 @@ namespace Math
     concept ConceptVector3 = requires (T u)
     {
         requires ConceptVectorN<T>;
-        { Detail::Prvalue(u.x) } -> SameBaseType<typename T::ScalarType>;
-        { Detail::Prvalue(u.y) } -> SameBaseType<typename T::ScalarType>;
-        { Detail::Prvalue(u.z) } -> SameBaseType<typename T::ScalarType>;
+        { Implementation::Prvalue(u.x) } -> SameBaseType<typename T::ScalarType>;
+        { Implementation::Prvalue(u.y) } -> SameBaseType<typename T::ScalarType>;
+        { Implementation::Prvalue(u.z) } -> SameBaseType<typename T::ScalarType>;
         requires T::Dimension == 3;
     };
 
@@ -202,10 +181,10 @@ namespace Math
     concept ConceptVector4 = requires (T u)
     {
         requires ConceptVectorN<T>;
-        { Detail::Prvalue(u.x) } -> SameBaseType<typename T::ScalarType>;
-        { Detail::Prvalue(u.y) } -> SameBaseType<typename T::ScalarType>;
-        { Detail::Prvalue(u.z) } -> SameBaseType<typename T::ScalarType>;
-        { Detail::Prvalue(u.w) } -> SameBaseType<typename T::ScalarType>;
+        { Implementation::Prvalue(u.x) } -> SameBaseType<typename T::ScalarType>;
+        { Implementation::Prvalue(u.y) } -> SameBaseType<typename T::ScalarType>;
+        { Implementation::Prvalue(u.z) } -> SameBaseType<typename T::ScalarType>;
+        { Implementation::Prvalue(u.w) } -> SameBaseType<typename T::ScalarType>;
         requires T::Dimension == 4;
     };
 
@@ -261,8 +240,8 @@ namespace Math
     concept ConceptPoint2 = requires (T p)
     {
         requires ConceptPointN<T>;
-        { Detail::Prvalue(p.x) } -> SameBaseType<typename T::ScalarType>;
-        { Detail::Prvalue(p.x) } -> SameBaseType<typename T::ScalarType>;
+        { Implementation::Prvalue(p.x) } -> SameBaseType<typename T::ScalarType>;
+        { Implementation::Prvalue(p.x) } -> SameBaseType<typename T::ScalarType>;
         requires T::Dimension == 2;
     };
 
@@ -270,9 +249,9 @@ namespace Math
     concept ConceptPoint3 = requires (T p)
     {
         requires ConceptPointN<T>;
-        { Detail::Prvalue(p.x) } -> SameBaseType<typename T::ScalarType>;
-        { Detail::Prvalue(p.y) } -> SameBaseType<typename T::ScalarType>;
-        { Detail::Prvalue(p.z) } -> SameBaseType<typename T::ScalarType>;
+        { Implementation::Prvalue(p.x) } -> SameBaseType<typename T::ScalarType>;
+        { Implementation::Prvalue(p.y) } -> SameBaseType<typename T::ScalarType>;
+        { Implementation::Prvalue(p.z) } -> SameBaseType<typename T::ScalarType>;
         requires T::Dimension == 3;
     };
 

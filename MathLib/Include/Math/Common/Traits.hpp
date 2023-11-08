@@ -1,62 +1,45 @@
 #ifndef MATHLIB_COMMON_TRAITS_HPP
 #define MATHLIB_COMMON_TRAITS_HPP
 
+#include "Implementation/Traits.hpp"
+
+#include <type_traits>
+
 namespace Math
 {
-    namespace Implementation
-    {
-        template <typename Specialization, template <typename...> typename Base>
-        struct IsSpecialization
-        {
-            static constexpr bool Value = false;
-        };
 
-        template <template<typename...> typename Specialization, typename... Args>
-        struct IsSpecialization<Specialization<Args...>, Specialization>
-        {
-            static constexpr bool Value = true;
-        };
+    template <typename T, typename U>
+    concept SameBaseType = std::is_same_v<std::remove_cvref_t<U>, std::remove_cvref_t<T>>;
 
-        template <bool Condition, typename TrueType, typename FalseType>
-        struct ConditionalType
-        {
-            using Type = TrueType;
-        };
-
-        template <typename TrueType, typename FalseType>
-        struct ConditionalType<false, TrueType, FalseType>
-        {
-            using Type = FalseType;
-        };
-
-        template <typename T>
-        concept HasValueType = requires
-        {
-            typename T::ValueType;
-        };
-
-        template <typename T>
-        struct GetValueType
-        {
-            using Type = void;
-        };
-
-        template <typename T>
-            requires HasValueType<T>
-        struct GetValueType<T>
-        {
-            using Type = typename T::ValueType;
-        };
-    }
-
-    template <typename Specialization, template <typename...> typename Base>
-    inline constexpr bool IsSpecialization = Implementation::IsSpecialization<Specialization, Base>::Value;
-
-    template <bool Condition, typename TrueType, typename FalseType>
-    using ConditionalType = typename Implementation::ConditionalType<Condition, TrueType, FalseType>::Type;
+    template <typename T, typename U>
+    concept SameTypeRef = std::is_same_v<U&, T>;
 
     template <typename T>
-    using GetValueType = typename Implementation::GetValueType<T>::Type;
+    concept FundamentalType = std::is_fundamental_v<T>;
+
+    template <typename T>
+    concept IntegralType = std::is_integral_v<T>
+                        || std::is_integral_v<typename T::ValueType>;
+
+    template <typename T>
+    concept SignedIntegralType = IntegralType<T>
+                              &&(std::is_signed_v<T>
+                              || std::is_signed_v<typename T::ValueType>);
+
+    template <typename T>
+    concept UnsignedIntegralType = IntegralType<T>
+                                &&(std::is_unsigned_v<T>
+                                || std::is_unsigned_v<typename T::ValueType>);
+
+    template <typename T>
+    concept FloatingPointType = std::is_floating_point_v<T>
+                             || std::is_floating_point_v<typename T::ValueType>;
+
+    template <typename T>
+    concept IsEmpty = std::is_empty_v<T>;
+
+    template <typename Specialization, template<typename...> typename Base>
+    concept IsSpecialization = Implementation::IsSpecialization<Specialization, Base>::Value;
 }
 
 #endif //MATHLIB_COMMON_TRAITS_HPP

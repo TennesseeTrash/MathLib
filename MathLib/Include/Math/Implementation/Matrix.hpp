@@ -22,7 +22,7 @@ namespace Math
         constexpr explicit Matrix2T(T diag) noexcept
             : rows({})
         {
-            for (SizeType i = 0; i < 2; ++i) { rows[ToUnderlying(i)][ToUnderlying(i)] = diag; }
+            for (SizeType i = 0; i < 2; ++i) { rows[i][i] = diag; }
         }
 
         constexpr explicit Matrix2T(const Vector2T<T>& row0,
@@ -39,8 +39,8 @@ namespace Math
                    Vector2T<T>(m10, m11))
         {}
 
-        constexpr       Vector2T<T>& operator[] (SizeType index)       { return rows[ToUnderlying(index)]; }
-        constexpr const Vector2T<T>& operator[] (SizeType index) const { return rows[ToUnderlying(index)]; }
+        constexpr       Vector2T<T>& operator[] (SizeType index)       { return rows[index]; }
+        constexpr const Vector2T<T>& operator[] (SizeType index) const { return rows[index]; }
 
         constexpr T Min() const { return ::Math::Min(rows[0].Min(), rows[1].Min()); }
         constexpr T Max() const { return ::Math::Max(rows[0].Max(), rows[1].Max()); }
@@ -64,7 +64,7 @@ namespace Math
         constexpr explicit Matrix3T(T diag) noexcept
             : rows({})
         {
-            for (SizeType i = 0; i < 3; ++i) { rows[ToUnderlying(i)][ToUnderlying(i)] = diag; }
+            for (SizeType i = 0; i < 3; ++i) { rows[i][i] = diag; }
         }
 
         constexpr explicit Matrix3T(const Vector3T<T>& row0,
@@ -91,8 +91,8 @@ namespace Math
                    Vector3T<T>(      0,       0, 1))
         {}
 
-        constexpr       Vector3T<T>& operator[] (SizeType index)       { return rows[ToUnderlying(index)]; }
-        constexpr const Vector3T<T>& operator[] (SizeType index) const { return rows[ToUnderlying(index)]; }
+        constexpr       Vector3T<T>& operator[] (SizeType index)       { return rows[index]; }
+        constexpr const Vector3T<T>& operator[] (SizeType index) const { return rows[index]; }
 
         constexpr T Min() const { return ::Math::Min(rows[0].Min(), rows[1].Min(), rows[2].Min()); }
         constexpr T Max() const { return ::Math::Max(rows[0].Max(), rows[1].Max(), rows[2].Max()); }
@@ -116,7 +116,7 @@ namespace Math
         constexpr explicit Matrix4T(T diag) noexcept
             : rows({})
         {
-            for (SizeType i = 0; i < 4; ++i) { rows[ToUnderlying(i)][ToUnderlying(i)] = diag; }
+            for (SizeType i = 0; i < 4; ++i) { rows[i][i] = diag; }
         }
 
         constexpr explicit Matrix4T(const Vector4T<T>& row0,
@@ -155,8 +155,8 @@ namespace Math
                    Vector4T<T>(      0,       0,       0, 1))
         {}
 
-        constexpr       Vector4T<T>& operator[] (SizeType index)       { return rows[ToUnderlying(index)]; }
-        constexpr const Vector4T<T>& operator[] (SizeType index) const { return rows[ToUnderlying(index)]; }
+        constexpr       Vector4T<T>& operator[] (SizeType index)       { return rows[index]; }
+        constexpr const Vector4T<T>& operator[] (SizeType index) const { return rows[index]; }
 
         constexpr T Min() const { return ::Math::Min(rows[0].Min(), rows[1].Min(), rows[2].Min(), rows[3].Min()); }
         constexpr T Max() const { return ::Math::Max(rows[0].Max(), rows[1].Max(), rows[2].Max(), rows[3].Max()); }

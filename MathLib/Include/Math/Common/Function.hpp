@@ -62,10 +62,128 @@
 //    - struct TrueFor<Values...> or struct FalseFor<Values...>
 //             (else false)                 (else true)
 
+#include "Traits.hpp"
+#include "Types.hpp"
+
+#include <utility>
 
 namespace Math
 {
+    namespace Implementation
+    {
+        template <StaticSizeType CheckValue, StaticSizeType... TrueValues>
+        struct TrueFor
+        {
+            static constexpr bool Value = ((SizeType(TrueValues) == SizeType(CheckValue)) || ...);
+        };
 
+        template <StaticSizeType CheckValue, StaticSizeType... FalseValues>
+        struct FalseFor
+        {
+            static constexpr bool Value = !TrueFor<CheckValue, FalseValues...>::Value;
+        };
+    }
+
+    template <typename FunctionImpl>
+    class Function final
+    {
+    public:
+        using ValueType = GetValueType<FunctionImpl>;
+
+        template <StaticSizeType Dim>
+        static constexpr bool HasDimension = FunctionImpl::template HasDimension<Dim>;
+
+        template <StaticSizeType Order>
+        static constexpr bool HasDerivative = FunctionImpl::template HasDerivative<Order>;
+
+        template <StaticSizeType Order>
+        static constexpr bool HasPartials = FunctionImpl::template HasPartials<Order>;
+
+        template <typename... Args>
+        Function(Args&&... args)
+            : mFunc(std::forward<Args>(args)...)
+        {}
+
+        template <typename... Args>
+        auto operator()(Args&&... args) const
+        {
+            return mFunc.Value(std::forward<Args>(args)...);
+        }
+
+        template <StaticSizeType Order = 1, typename... Args>
+        auto Derivative(Args&&... args) const
+        {
+            static_assert(HasDerivative<Order>, "This function does not have a derivative of this order");
+            return mFunc.template DerivativeValue<Order>(std::forward<Args>(args)...);
+        }
+
+        template <StaticSizeType Order = 1, typename... Args>
+        auto Partials(Args&&... args) const
+        {
+            static_assert(HasPartials<Order>, "This function does not have partial derivatives of this order");
+            return mFunc.template PartialsValue<Order>(std::forward<Args>(args)...);
+        }
+    private:
+        FunctionImpl mFunc;
+    };
+
+    template <typename FunctionParam, StaticSizeType Order = 1>
+        requires IsSpecialization<FunctionParam, Function>
+    class Derivative final
+    {
+    private:
+        using FunctionImpl = TemplateArgument<FunctionParam, Function>;
+        static_assert(FunctionImpl::template HasDerivative<Order>, "This function does not have a derivative of this order");
+    public:
+        using ValueType = GetValueType<FunctionImpl>;
+
+        template <StaticSizeType Dim>
+        static constexpr bool HasDimension = FunctionImpl::template HasDimension<Dim>;
+
+        template <typename... Args>
+        [[nodiscard]] constexpr
+        Derivative(Args&&... args)
+            : mFunc(std::forward<Args>(args)...)
+        {}
+
+        template <typename... Args>
+        [[nodiscard]] constexpr
+        auto operator()(Args&&... args) const
+        {
+            return mFunc.template DerivativeValue<Order>(std::forward<Args>(args)...);
+        }
+    private:
+        FunctionImpl mFunc;
+    };
+
+    template <typename FunctionParam, StaticSizeType Order = 1>
+        requires IsSpecialization<FunctionParam, Function>
+    class Partials final
+    {
+    private:
+        using FunctionImpl = TemplateArgument<FunctionParam, Function>;
+        static_assert(FunctionImpl::template HasPartials<Order>, "This function does not have partial derivatives of this order");
+    public:
+        using ValueType = GetValueType<FunctionImpl>;
+
+        template <StaticSizeType Dim>
+        static constexpr bool HasDimension = FunctionImpl::template HasDimension<Dim>;
+
+        template <typename... Args>
+        [[nodiscard]] constexpr
+        Partials(Args&&... args)
+            : mFunc(std::forward<Args>(args)...)
+        {}
+
+        template <typename... Args>
+        [[nodiscard]] constexpr
+        auto operator()(Args&&... args) const
+        {
+            return mFunc.PartialsValue(std::forward<Args>(args)...);
+        }
+    private:
+        FunctionImpl mFunc;
+    };
 }
 
 #endif //MATHLIB_COMMON_FUNCTION_HPP

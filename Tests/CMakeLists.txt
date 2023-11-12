@@ -15,6 +15,7 @@ target_link_libraries(Tests PRIVATE
 )
 
 target_sources(Tests PRIVATE
+    "CommonTests/FunctionTests.cpp"
     "VectorTests/VectorTypeTests.cpp"
     "VectorTests/VectorOperatorTests.cpp"
     "VectorTests/VectorUtilsTests.cpp"

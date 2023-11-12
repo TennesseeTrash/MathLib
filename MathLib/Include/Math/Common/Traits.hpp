@@ -38,8 +38,17 @@ namespace Math
     template <typename T>
     concept IsEmpty = std::is_empty_v<T>;
 
+    template <typename T>
+    concept HasValueType = requires
+    {
+        typename T::ValueType;
+    };
+
     template <typename Specialization, template<typename...> typename Base>
     concept IsSpecialization = Implementation::IsSpecialization<Specialization, Base>::Value;
+
+    template <typename Specialization, template<typename...> typename... Bases>
+    concept IsSpecializationOfAny = Implementation::IsSpecializationOfAny<Specialization, Bases...>::Value;
 }
 
 #endif //MATHLIB_COMMON_TRAITS_HPP

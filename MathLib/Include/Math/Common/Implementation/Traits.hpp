@@ -14,6 +14,12 @@ namespace Math::Implementation
     {
         static constexpr bool Value = true;
     };
+
+    template <typename Specialization, template <typename...> typename... Bases>
+    struct IsSpecializationOfAny
+    {
+        static constexpr bool Value = (IsSpecialization<Specialization, Bases>::Value || ...);
+    };
 }
 
 #endif //MATHLIB_COMMON_IMPL_TRAITS_HPP

@@ -35,6 +35,9 @@ namespace Math
 
     template <typename T>
     using GetValueType = typename Implementation::GetValueType<T>::Type;
+
+    template <typename Specialized, template <typename...> typename Base, StaticSizeType Index = 0>
+    using TemplateArgument = typename Implementation::TemplateArgument<Specialized, Base, Index>::Type;
 }
 
 #endif //MATHLIB_COMMON_TYPES_HPP

@@ -1,7 +1,7 @@
 #ifndef MATHLIB_COMMON_IMPL_STRONG_TYPES_UTILS_HPP
 #define MATHLIB_COMMON_IMPL_STRONG_TYPES_UTILS_HPP
 
-#include "StrongType.hpp"
+#include "StrongTypes.hpp"
 
 namespace Math::Implementation
 {

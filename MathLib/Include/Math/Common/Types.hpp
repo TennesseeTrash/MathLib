@@ -2,9 +2,9 @@
 #define MATHLIB_COMMON_TYPES_HPP
 
 #include "Implementation/Types.hpp"
-#include "Implementation/StrongType.hpp"
-#include "Implementation/StrongTypeUtils.hpp"
-#include "Implementation/StrongTypeSelectors.hpp"
+#include "Implementation/StrongTypes.hpp"
+#include "Implementation/StrongTypesUtils.hpp"
+#include "Implementation/StrongTypesSelectors.hpp"
 
 #include <limits>
 

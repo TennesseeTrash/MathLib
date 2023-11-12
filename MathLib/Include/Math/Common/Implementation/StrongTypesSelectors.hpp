@@ -1,7 +1,7 @@
-#ifndef MATHLIB_COMMON_IMPL_TYPE_SELECTORS_HPP
-#define MATHLIB_COMMON_IMPL_TYPE_SELECTORS_HPP
+#ifndef MATHLIB_COMMON_IMPL_TYPES_SELECTORS_HPP
+#define MATHLIB_COMMON_IMPL_TYPES_SELECTORS_HPP
 
-#include "StrongType.hpp"
+#include "StrongTypes.hpp"
 
 namespace Math::Implementation
 {
@@ -49,4 +49,4 @@ namespace Math
     using FloatingPointSelector = typename Implementation::FloatingPointSelector<Size>::Type;
 }
 
-#endif //MATHLIB_COMMON_IMPL_TYPE_SELECTORS_HPP
+#endif //MATHLIB_COMMON_IMPL_TYPES_SELECTORS_HPP

@@ -2,6 +2,7 @@
 #define MATHLIB_COMMON_IMPL_PACKS_HPP
 
 #include "StrongTypes.hpp"
+#include "StrongTypesUtils.hpp"
 
 namespace Math::Implementation
 {

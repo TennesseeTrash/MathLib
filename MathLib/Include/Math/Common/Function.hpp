@@ -69,21 +69,6 @@
 
 namespace Math
 {
-    namespace Implementation
-    {
-        template <StaticSizeType CheckValue, StaticSizeType... TrueValues>
-        struct TrueFor
-        {
-            static constexpr bool Value = ((SizeType(TrueValues) == SizeType(CheckValue)) || ...);
-        };
-
-        template <StaticSizeType CheckValue, StaticSizeType... FalseValues>
-        struct FalseFor
-        {
-            static constexpr bool Value = !TrueFor<CheckValue, FalseValues...>::Value;
-        };
-    }
-
     template <typename FunctionImpl>
     class Function final
     {
@@ -125,6 +110,14 @@ namespace Math
         }
     private:
         FunctionImpl mFunc;
+
+        template <typename FunctionParam, StaticSizeType Order>
+            requires IsSpecialization<FunctionParam, Function>
+        friend class Derivative;
+
+        template <typename FunctionParam, StaticSizeType Order>
+            requires IsSpecialization<FunctionParam, Function>
+        friend class Partials;
     };
 
     template <typename FunctionParam, StaticSizeType Order = 1>
@@ -141,9 +134,15 @@ namespace Math
         static constexpr bool HasDimension = FunctionImpl::template HasDimension<Dim>;
 
         template <typename... Args>
+            requires (sizeof...(Args) != 1 && ((!IsSpecialization<Args, Function>) && ...))
         [[nodiscard]] constexpr
         Derivative(Args&&... args)
             : mFunc(std::forward<Args>(args)...)
+        {}
+
+        [[nodiscard]] constexpr
+        Derivative(const Function<FunctionImpl>& func)
+            : mFunc(func.mFunc)
         {}
 
         template <typename... Args>
@@ -170,16 +169,22 @@ namespace Math
         static constexpr bool HasDimension = FunctionImpl::template HasDimension<Dim>;
 
         template <typename... Args>
+            requires (sizeof...(Args) != 1 && ((!IsSpecialization<Args, Function>) && ...))
         [[nodiscard]] constexpr
         Partials(Args&&... args)
             : mFunc(std::forward<Args>(args)...)
+        {}
+
+        [[nodiscard]] constexpr
+        Partials(const Function<FunctionImpl>& func)
+            : mFunc(func.mFunc)
         {}
 
         template <typename... Args>
         [[nodiscard]] constexpr
         auto operator()(Args&&... args) const
         {
-            return mFunc.PartialsValue(std::forward<Args>(args)...);
+            return mFunc.template PartialsValue<Order>(std::forward<Args>(args)...);
         }
     private:
         FunctionImpl mFunc;

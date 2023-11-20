@@ -217,8 +217,8 @@ namespace Math
 
         ConditionalType<Hand == Orientation::Right, TransformRight, TransformLeft> result;
         Scalar tanFovOver2 = Tan(fov / Scalar(2));
-        result[0][0] = Convert<Scalar>(1) / (aspectRatio * tanFovOver2);
-        result[1][1] = Convert<Scalar>(1) / tanFovOver2;
+        result[0][0] = Cast<Scalar>(1) / (aspectRatio * tanFovOver2);
+        result[1][1] = Cast<Scalar>(1) / tanFovOver2;
         result[2][2] = far / (near - far);
         result[2][3] = -(far * near) / (far - near);
         return result;
@@ -231,9 +231,9 @@ namespace Math
         static_assert(Hand == Orientation::Right || Hand == Orientation::Left, "Orientation must be either Right or Left.");
 
         Transform3T<Scalar> result;
-        result[0][0] = Convert<Scalar>(2) / (right - left);
-        result[1][1] = Convert<Scalar>(2) / (top - bottom);
-        result[2][2] = Convert<Scalar>(1) / (far - near);
+        result[0][0] = Cast<Scalar>(2) / (right - left);
+        result[1][1] = Cast<Scalar>(2) / (top - bottom);
+        result[2][2] = Cast<Scalar>(1) / (far - near);
         result[0][3] = -(right + left) / (right - left);
         result[1][3] = -(top + bottom) / (top - bottom);
         result[2][3] = -near / (far - near);

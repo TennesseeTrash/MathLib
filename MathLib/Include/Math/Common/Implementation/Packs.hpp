@@ -16,7 +16,7 @@ namespace Math::Implementation
         template <StaticSizeType Index, typename Head, typename... AtImplTypes>
         struct AtImpl<Index, Head, AtImplTypes...>
         {
-            using Type = typename AtImpl<Convert<StaticSizeType>(SizeType(Index) - 1), Types...>::Type;
+            using Type = typename AtImpl<Cast<StaticSizeType>(SizeType(Index) - 1), Types...>::Type;
         };
 
         template <typename Head, typename... AtImplTypes>

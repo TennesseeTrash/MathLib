@@ -20,14 +20,14 @@ namespace Math
     [[nodiscard]] constexpr
     T Sign(T val) noexcept
     {
-        return (Convert<T>(0) < val) - (val < Convert<T>(0));
+        return (Cast<T>(0) < val) - (val < Cast<T>(0));
     }
 
     template <typename T>
     [[nodiscard]] constexpr
     T Abs(T val) noexcept
     {
-        return val > Convert<T>(0) ? val : -val;
+        return val > Cast<T>(0) ? val : -val;
     }
 
     //////////////////////////////////////////////////////////////////////////
@@ -191,7 +191,7 @@ namespace Math
     [[nodiscard]] constexpr
     Int Trunc(Float val) noexcept
     {
-        return Convert<Int>(val);
+        return Cast<Int>(val);
     }
 
     template <FloatingPointType Float>
@@ -199,7 +199,7 @@ namespace Math
     Float Trunc(Float val) noexcept
     {
         using Int = SignedIntegerSelector<sizeof(UnderlyingType<Float>)>;
-        return Convert<Float>(Trunc<Int, Float>(val));
+        return Cast<Float>(Trunc<Int, Float>(val));
     }
 
     template <SignedIntegralType Int, FloatingPointType Float>
@@ -207,7 +207,7 @@ namespace Math
     [[nodiscard]] constexpr
     Int Floor(Float val) noexcept
     {
-        return Convert<Int>(val - (val < Trunc<Float>(val)));
+        return Cast<Int>(val - (val < Trunc<Float>(val)));
     }
 
     template <FloatingPointType Float>
@@ -215,7 +215,7 @@ namespace Math
     Float Floor(Float val) noexcept
     {
         using Int = SignedIntegerSelector<sizeof(UnderlyingType<Float>)>;
-        return Convert<Float>(Floor<Int, Float>(val));
+        return Cast<Float>(Floor<Int, Float>(val));
     }
 
     template <SignedIntegralType Int, FloatingPointType Float>
@@ -223,7 +223,7 @@ namespace Math
     [[nodiscard]] constexpr
     Int Ceil(Float val) noexcept
     {
-        return Convert<Int>(val + (val > Trunc<Float>(val)));
+        return Cast<Int>(val + (val > Trunc<Float>(val)));
     }
 
     template <FloatingPointType Float>
@@ -231,7 +231,7 @@ namespace Math
     Float Ceil(Float val) noexcept
     {
         using Int = SignedIntegerSelector<sizeof(UnderlyingType<Float>)>;
-        return Convert<Float>(Ceil<Int, Float>(val));
+        return Cast<Float>(Ceil<Int, Float>(val));
     }
 
     template <FloatingPointType Float>

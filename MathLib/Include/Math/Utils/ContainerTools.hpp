@@ -25,7 +25,7 @@ namespace Math
 
             for (SizeType i = 0; i < Vec::Dimension; ++i)
             {
-                hash ^= Convert<SizeType>(vec[i]) * sHashPrimes[i];
+                hash ^= Cast<SizeType>(vec[i]) * sHashPrimes[i];
             }
 
             return ToUnderlying(hash);

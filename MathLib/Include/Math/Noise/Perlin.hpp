@@ -18,8 +18,7 @@ namespace Math
     // Perlin Noise
     //////////////////////////////////////////////////////////////////////////
 
-    template <FloatingPointType Float, typename Interpolation = decltype([](Float v) -> Float { return Smootherstep(v, Convert<Float>(0), Convert<Float>(1)); })>
-        requires Mapping<Interpolation, Float>
+    template <FloatingPointType Float, typename Interpolation = decltype([](Float v) -> Float { return Smootherstep(v, Cast<Float>(0), Cast<Float>(1)); })>
     class PerlinNoise final
     {
     public:
@@ -40,8 +39,8 @@ namespace Math
         {
             using Int = SignedIntegerSelector<sizeof(Float)>;
 
-            u8 xi = Convert<u8>(Abs(Floor<Int>(x)) & 255);
-            u8 yi = Convert<u8>(Abs(Floor<Int>(y)) & 255);
+            u8 xi = Cast<u8>(Abs(Floor<Int>(x)) & 255);
+            u8 yi = Cast<u8>(Abs(Floor<Int>(y)) & 255);
 
             Float xf = Frac(x);
             Float yf = Frac(y);
@@ -63,9 +62,9 @@ namespace Math
         {
             using Int = SignedIntegerSelector<sizeof(Float)>;
 
-            u8 xi = Convert<u8>(Abs(Floor<Int>(x)) & 255);
-            u8 yi = Convert<u8>(Abs(Floor<Int>(y)) & 255);
-            u8 zi = Convert<u8>(Abs(Floor<Int>(z)) & 255);
+            u8 xi = Cast<u8>(Abs(Floor<Int>(x)) & 255);
+            u8 yi = Cast<u8>(Abs(Floor<Int>(y)) & 255);
+            u8 zi = Cast<u8>(Abs(Floor<Int>(z)) & 255);
 
             Float xf = Frac(x);
             Float yf = Frac(y);
@@ -95,10 +94,10 @@ namespace Math
         {
             using Int = SignedIntegerSelector<sizeof(Float)>;
 
-            u8 xi = Convert<u8>(Abs(Floor<Int>(x)) & 255);
-            u8 yi = Convert<u8>(Abs(Floor<Int>(y)) & 255);
-            u8 zi = Convert<u8>(Abs(Floor<Int>(z)) & 255);
-            u8 wi = Convert<u8>(Abs(Floor<Int>(w)) & 255);
+            u8 xi = Cast<u8>(Abs(Floor<Int>(x)) & 255);
+            u8 yi = Cast<u8>(Abs(Floor<Int>(y)) & 255);
+            u8 zi = Cast<u8>(Abs(Floor<Int>(z)) & 255);
+            u8 wi = Cast<u8>(Abs(Floor<Int>(w)) & 255);
 
             Float xf = Frac(x);
             Float yf = Frac(y);
@@ -159,30 +158,30 @@ namespace Math
         u8 Hash2(u8 x, u8 y, u8 i = 0, u8 j = 0) const noexcept
         {
             u16 hash = 0;
-            hash = Convert<u16>(mPermutation[Convert<SizeType>(Convert<u16>(x) + Convert<u16>(i)) & 255]);
-            hash = Convert<u16>(mPermutation[Convert<SizeType>(Convert<u16>(y) + Convert<u16>(j) + hash) & 255]);
-            return Convert<u8>(hash);
+            hash = Cast<u16>(mPermutation[Cast<SizeType>(Cast<u16>(x) + Cast<u16>(i)) & 255]);
+            hash = Cast<u16>(mPermutation[Cast<SizeType>(Cast<u16>(y) + Cast<u16>(j) + hash) & 255]);
+            return Cast<u8>(hash);
         }
 
         [[nodiscard]] constexpr
         u8 Hash3(u8 x, u8 y, u8 z, u8 i = 0, u8 j = 0, u8 k = 0) const noexcept
         {
             u16 hash = 0;
-            hash = Convert<u16>(mPermutation[Convert<SizeType>(Convert<u16>(x) + Convert<u16>(i)) & 255]);
-            hash = Convert<u16>(mPermutation[Convert<SizeType>(Convert<u16>(y) + Convert<u16>(j) + hash) & 255]);
-            hash = Convert<u16>(mPermutation[Convert<SizeType>(Convert<u16>(z) + Convert<u16>(k) + hash) & 255]);
-            return Convert<u8>(hash);
+            hash = Cast<u16>(mPermutation[Cast<SizeType>(Cast<u16>(x) + Cast<u16>(i)) & 255]);
+            hash = Cast<u16>(mPermutation[Cast<SizeType>(Cast<u16>(y) + Cast<u16>(j) + hash) & 255]);
+            hash = Cast<u16>(mPermutation[Cast<SizeType>(Cast<u16>(z) + Cast<u16>(k) + hash) & 255]);
+            return Cast<u8>(hash);
         }
 
         [[nodiscard]] constexpr
         u8 Hash4(u8 x, u8 y, u8 z, u8 w, u8 i = 0, u8 j = 0, u8 k = 0, u8 l = 0) const noexcept
         {
             u16 hash = 0;
-            hash = Convert<u16>(mPermutation[Convert<SizeType>(Convert<u16>(x) + Convert<u16>(i)) & 255]);
-            hash = Convert<u16>(mPermutation[Convert<SizeType>(Convert<u16>(y) + Convert<u16>(j) + hash) & 255]);
-            hash = Convert<u16>(mPermutation[Convert<SizeType>(Convert<u16>(z) + Convert<u16>(k) + hash) & 255]);
-            hash = Convert<u16>(mPermutation[Convert<SizeType>(Convert<u16>(w) + Convert<u16>(l) + hash) & 255]);
-            return Convert<u8>(hash);
+            hash = Cast<u16>(mPermutation[Cast<SizeType>(Cast<u16>(x) + Cast<u16>(i)) & 255]);
+            hash = Cast<u16>(mPermutation[Cast<SizeType>(Cast<u16>(y) + Cast<u16>(j) + hash) & 255]);
+            hash = Cast<u16>(mPermutation[Cast<SizeType>(Cast<u16>(z) + Cast<u16>(k) + hash) & 255]);
+            hash = Cast<u16>(mPermutation[Cast<SizeType>(Cast<u16>(w) + Cast<u16>(l) + hash) & 255]);
+            return Cast<u8>(hash);
         }
 
         [[nodiscard]] constexpr
@@ -192,7 +191,7 @@ namespace Math
             Float u = (hash < 4) ? x : y;
             Float v = (hash < 4) ? y : x;
             return (ToUnderlying(hash & 1) ? -u : u)
-                 + (ToUnderlying(hash & 2) ? Convert<Float>(-2) * v : Convert<Float>(2) * v);
+                 + (ToUnderlying(hash & 2) ? Cast<Float>(-2) * v : Cast<Float>(2) * v);
         }
 
         [[nodiscard]] constexpr

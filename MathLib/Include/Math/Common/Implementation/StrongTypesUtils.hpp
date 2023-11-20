@@ -96,7 +96,7 @@ namespace Math
 
     template <typename To, typename From>
     [[nodiscard]] constexpr
-    To Convert(From value) noexcept
+    To Cast(From value) noexcept
     {
         return To(static_cast<typename Implementation::UnderlyingType<To>::Type>(ToUnderlying(value)));
     }

@@ -72,7 +72,7 @@ namespace Math
         constexpr       Vector3T<T>& operator[] (SizeType index)       { return rows[index]; }
         constexpr const Vector3T<T>& operator[] (SizeType index) const { return rows[index]; }
 
-        static constexpr Transform2T<T> Identity() noexcept { return Transform2T<T>(Convert<T>(1)); }
+        static constexpr Transform2T<T> Identity() noexcept { return Transform2T<T>(Cast<T>(1)); }
     private:
         Array<Vector3T<T>, 2> rows;
     };
@@ -134,7 +134,7 @@ namespace Math
         constexpr       Vector4T<T>& operator[] (SizeType index)       { return rows[index]; }
         constexpr const Vector4T<T>& operator[] (SizeType index) const { return rows[index]; }
 
-        static constexpr Transform3T<T> Identity() noexcept { return Transform3T<T>(Convert<T>(1)); }
+        static constexpr Transform3T<T> Identity() noexcept { return Transform3T<T>(Cast<T>(1)); }
     private:
         Array<Vector4T<T>, 3> rows;
     };

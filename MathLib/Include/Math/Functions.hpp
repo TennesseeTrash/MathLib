@@ -241,6 +241,71 @@ namespace Math
     }
 
     //////////////////////////////////////////////////////////////////////////
+    // ValueShift
+    //////////////////////////////////////////////////////////////////////////
+
+    // TODO(3011):
+    // - Add overloads for unequal sizes.
+
+    template <SignedIntegralType To, SignedIntegralType From>
+        requires (sizeof(To) >= sizeof(From))
+    [[nodiscard]] constexpr
+    To ValueShift(From value) noexcept
+    {
+        return Cast<To>(value);
+    }
+
+    template <UnsignedIntegralType To, UnsignedIntegralType From>
+        requires (sizeof(To) >= sizeof(From))
+    [[nodiscard]] constexpr
+    To ValueShift(From value) noexcept
+    {
+        return Cast<To>(value);
+    }
+
+    template <SignedIntegralType To, UnsignedIntegralType From>
+        requires (sizeof(To) == sizeof(From))
+    [[nodiscard]] constexpr
+    To ValueShift(From value) noexcept
+    {
+        // TODO(3011): Make the variables static constexpr
+        // once it's feasible to move to C++23.
+
+        if (value >= (1 << ((sizeof(To) * 8) - 1)))
+        {
+            constexpr From sub = 1 << ((sizeof(From) * 8) - 1);
+            return Cast<To>(value - sub);
+        }
+        else
+        {
+            // ((sizeof(To) * 8) - 1) is not representable by To
+            constexpr To sub = 1 << ((sizeof(To) * 8) - 2);
+            return Cast<To>(value) - sub - sub;
+        }
+    }
+
+    template <UnsignedIntegralType To, SignedIntegralType From>
+        requires (sizeof(To) == sizeof(From))
+    [[nodiscard]] constexpr
+    To ValueShift(From value) noexcept
+    {
+        // TODO(3011): Make the variables static constexpr
+        // once it's feasible to move to C++23.
+
+        if (value >= 0)
+        {
+            constexpr To add = 1 << ((sizeof(To) * 8) - 1);
+            return Cast<To>(value) + add;
+        }
+        else
+        {
+            // ((sizeof(From) * 8) - 1) is not representable by From
+            constexpr From add = 1 << ((sizeof(From) * 8) - 2);
+            return Cast<To>(value + add + add);
+        }
+    }
+
+    //////////////////////////////////////////////////////////////////////////
     // Smoothstep, Smootherstep
     //////////////////////////////////////////////////////////////////////////
 

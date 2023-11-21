@@ -2,6 +2,7 @@
 #define MATHLIB_IMPL_RANDOM_UNIFORM_DISTRIBUTION_HPP
 
 #include "../../Common/Concepts.hpp"
+#include "../../Functions.hpp"
 
 namespace Math
 {

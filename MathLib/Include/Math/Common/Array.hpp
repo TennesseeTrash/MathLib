@@ -3,8 +3,6 @@
 
 #include "Concepts.hpp"
 
-#include <initializer_list>
-
 namespace Math
 {
     template <typename T, StaticSizeType N>

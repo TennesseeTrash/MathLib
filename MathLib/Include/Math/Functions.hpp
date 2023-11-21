@@ -4,7 +4,6 @@
 #include "Common/Concepts.hpp"
 #include "Common/Array.hpp"
 #include "Constants.hpp"
-#include "Implementation/Algorithms.hpp"
 
 // Note(3011): Currently used for std::pow and trig functions.
 // TODO(3011): Add custom implementation and remove this include later.
@@ -304,7 +303,7 @@ namespace Math
     T Min(T v1, Ts... values) noexcept
     {
         static_assert(sizeof...(Ts) == 0 || (IsSame<T, Ts> || ...));
-        return Min(Array<T, sizeof...(Ts) + 1>(v1, values...));
+        return Array<T, sizeof...(Ts) + 1>(v1, values...).Min();
     }
 
     template <typename T, typename... Ts>
@@ -312,7 +311,7 @@ namespace Math
     T Max(T v1, Ts... values) noexcept
     {
         static_assert(sizeof...(Ts) == 0 || (IsSame<T, Ts> || ...));
-        return Max(Array<T, sizeof...(Ts) + 1>(v1, values...));
+        return Array<T, sizeof...(Ts) + 1>(v1, values...).Max();
     }
 }
 

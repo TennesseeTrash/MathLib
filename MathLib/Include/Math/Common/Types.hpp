@@ -4,9 +4,6 @@
 #include "Implementation/Types.hpp"
 #include "Implementation/StrongTypes.hpp"
 #include "Implementation/StrongTypesUtils.hpp"
-#include "Implementation/StrongTypesSelectors.hpp"
-
-#include <limits>
 
 namespace Math
 {

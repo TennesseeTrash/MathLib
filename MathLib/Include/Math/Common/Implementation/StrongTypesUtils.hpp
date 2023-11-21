@@ -59,6 +59,37 @@ namespace Math::Implementation
     {
         using Type = StaticStrongType<T>;
     };
+
+    template <StaticSizeType>
+    struct SignedIntegerSelector
+    {
+        using Type = void;
+    };
+
+    template <> struct SignedIntegerSelector<1> { using Type = i8;  };
+    template <> struct SignedIntegerSelector<2> { using Type = i16; };
+    template <> struct SignedIntegerSelector<4> { using Type = i32; };
+    template <> struct SignedIntegerSelector<8> { using Type = i64; };
+
+    template <StaticSizeType>
+    struct UnsignedIntegerSelector
+    {
+        using Type = void;
+    };
+
+    template <> struct UnsignedIntegerSelector<1> { using Type = u8;  };
+    template <> struct UnsignedIntegerSelector<2> { using Type = u16; };
+    template <> struct UnsignedIntegerSelector<4> { using Type = u32; };
+    template <> struct UnsignedIntegerSelector<8> { using Type = u64; };
+
+    template <StaticSizeType>
+    struct FloatingPointSelector
+    {
+        using Type = void;
+    };
+
+    template <> struct FloatingPointSelector<4> { using Type = f32; };
+    template <> struct FloatingPointSelector<8> { using Type = f64; };
 }
 
 namespace Math
@@ -71,6 +102,15 @@ namespace Math
 
     template <typename T>
     using MakeStaticStrongType = typename Implementation::MakeStaticStrongType<T>::Type;
+
+    template <StaticSizeType Size>
+    using SignedIntegerSelector = typename Implementation::SignedIntegerSelector<Size>::Type;
+
+    template <StaticSizeType Size>
+    using UnsignedIntegerSelector = typename Implementation::UnsignedIntegerSelector<Size>::Type;
+
+    template <StaticSizeType Size>
+    using FloatingPointSelector = typename Implementation::FloatingPointSelector<Size>::Type;
 
     template <typename U>
     [[nodiscard]] constexpr
@@ -127,15 +167,18 @@ namespace Math
     [[nodiscard]] constexpr
     To ValueShift(From value) noexcept
     {
+        // TODO(3011): Make the variables static constexpr
+        // once it's feasible to move to C++23.
+
         if (value >= (1 << ((sizeof(To) * 8) - 1)))
         {
-            static constexpr From sub = 1 << ((sizeof(From) * 8) - 1);
+            constexpr From sub = 1 << ((sizeof(From) * 8) - 1);
             return Cast<To>(value - sub);
         }
         else
         {
             // ((sizeof(To) * 8) - 1) is not representable by To
-            static constexpr To sub = 1 << ((sizeof(To) * 8) - 2);
+            constexpr To sub = 1 << ((sizeof(To) * 8) - 2);
             return Cast<To>(value) - sub - sub;
         }
     }
@@ -145,15 +188,18 @@ namespace Math
     [[nodiscard]] constexpr
     To ValueShift(From value) noexcept
     {
+        // TODO(3011): Make the variables static constexpr
+        // once it's feasible to move to C++23.
+
         if (value >= 0)
         {
-            static constexpr To add = 1 << ((sizeof(To) * 8) - 1);
+            constexpr To add = 1 << ((sizeof(To) * 8) - 1);
             return Cast<To>(value) + add;
         }
         else
         {
             // ((sizeof(From) * 8) - 1) is not representable by From
-            static constexpr From add = 1 << ((sizeof(From) * 8) - 2);
+            constexpr From add = 1 << ((sizeof(From) * 8) - 2);
             return Cast<To>(value + add + add);
         }
     }

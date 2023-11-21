@@ -9,16 +9,16 @@ namespace Math
 {
     template <ConceptTransform2 Transform>
     [[nodiscard]] constexpr
-    typename Transform::MatrixType ToMatrix(const Transform& t) noexcept
+    typename Transform::TransformMatrixType ToMatrix(const Transform& t) noexcept
     {
-        return typename Transform::MatrixType( t[0], t[1], Transform::BottomRow );
+        return typename Transform::TransformMatrixType( t[0], t[1], Transform::BottomRow );
     }
 
     template <ConceptTransform3 Transform>
     [[nodiscard]] constexpr
-    typename Transform::MatrixType ToMatrix(const Transform& t) noexcept
+    typename Transform::TransformMatrixType ToMatrix(const Transform& t) noexcept
     {
-        return typename Transform::MatrixType( t[0], t[1], t[2], Transform::BottomRow );
+        return typename Transform::TransformMatrixType( t[0], t[1], t[2], Transform::BottomRow );
     }
 
     template <ConceptScalar Scalar>

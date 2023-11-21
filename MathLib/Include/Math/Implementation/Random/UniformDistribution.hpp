@@ -1,7 +1,7 @@
 #ifndef MATHLIB_IMPL_RANDOM_UNIFORM_DISTRIBUTION_HPP
 #define MATHLIB_IMPL_RANDOM_UNIFORM_DISTRIBUTION_HPP
 
-#include "Concepts.hpp"
+#include "../../Common/Concepts.hpp"
 
 namespace Math
 {
@@ -17,7 +17,10 @@ namespace Math
             : mBegin(begin), mEnd(end)
         {}
 
-        template <RandomNumberGenerator RNG>
+        // TODO(3011):
+        // Relax the equality requirement once ValueShift is implemented
+        // for unequal sizes.
+        template <ConceptRandomNumberGenerator RNG>
             requires (sizeof(typename RNG::ValueType) == sizeof(ValueType))
         [[nodiscard]] constexpr
         ValueType operator()(RNG& rng) const noexcept
@@ -42,6 +45,9 @@ namespace Math
         ValueType mBegin;
         ValueType mEnd;
     };
+
+    // TODO(3011):
+    // Add uniform float distribution.
 }
 
 #endif //MATHLIB_IMPL_RANDOM_UNIFORM_DISTRIBUTION_HPP

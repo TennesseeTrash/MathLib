@@ -13,20 +13,21 @@ namespace Math
     {
     public:
         using ScalarType = T;
+        using VectorType = Vector2T<T>;
         static constexpr SizeType Dimension = 2;
 
         constexpr explicit Matrix2T() noexcept
-            : rows({})
+            : rows()
         {}
 
         constexpr explicit Matrix2T(T diag) noexcept
-            : rows({})
+            : rows()
         {
             for (SizeType i = 0; i < 2; ++i) { rows[i][i] = diag; }
         }
 
-        constexpr explicit Matrix2T(const Vector2T<T>& row0,
-                                    const Vector2T<T>& row1)
+        constexpr explicit Matrix2T(const VectorType& row0,
+                                    const VectorType& row1)
         noexcept
             : rows({ row0,
                      row1 })
@@ -35,19 +36,19 @@ namespace Math
         constexpr explicit Matrix2T(T m00, T m01,
                                     T m10, T m11)
         noexcept
-            : rows(Vector2T<T>(m00, m01),
-                   Vector2T<T>(m10, m11))
+            : rows(VectorType(m00, m01),
+                   VectorType(m10, m11))
         {}
 
-        constexpr       Vector2T<T>& operator[] (SizeType index)       { return rows[index]; }
-        constexpr const Vector2T<T>& operator[] (SizeType index) const { return rows[index]; }
+        constexpr       VectorType& operator[] (SizeType index)       { return rows[index]; }
+        constexpr const VectorType& operator[] (SizeType index) const { return rows[index]; }
 
         constexpr T Min() const { return ::Math::Min(rows[0].Min(), rows[1].Min()); }
         constexpr T Max() const { return ::Math::Max(rows[0].Max(), rows[1].Max()); }
 
         static constexpr Matrix2T<T> Identity() noexcept { return Matrix2T<T>(Cast<T>(1)); }
     private:
-        Array<Vector2T<T>, 2> rows;
+        Array<VectorType, 2> rows;
     };
 
     template <ConceptStrongType T>
@@ -55,21 +56,22 @@ namespace Math
     {
     public:
         using ScalarType = T;
+        using VectorType = Vector3T<T>;
         static constexpr SizeType Dimension = 3;
 
         constexpr explicit Matrix3T() noexcept
-            : rows({})
+            : rows{}
         {}
 
         constexpr explicit Matrix3T(T diag) noexcept
-            : rows({})
+            : rows{}
         {
             for (SizeType i = 0; i < 3; ++i) { rows[i][i] = diag; }
         }
 
-        constexpr explicit Matrix3T(const Vector3T<T>& row0,
-                                    const Vector3T<T>& row1,
-                                    const Vector3T<T>& row2)
+        constexpr explicit Matrix3T(const VectorType& row0,
+                                    const VectorType& row1,
+                                    const VectorType& row2)
         noexcept
             : rows({ row0,
                      row1,
@@ -80,26 +82,26 @@ namespace Math
                                     T m10, T m11, T m12,
                                     T m20, T m21, T m22)
         noexcept
-            : rows(Vector3T<T>(m00, m01, m02),
-                   Vector3T<T>(m10, m11, m12),
-                   Vector3T<T>(m20, m21, m22))
+            : rows(VectorType(m00, m01, m02),
+                   VectorType(m10, m11, m12),
+                   VectorType(m20, m21, m22))
         {}
 
         constexpr explicit Matrix3T(const Matrix2T<T>& m) noexcept
-            : rows(Vector3T<T>(m[0][0], m[0][1], 0),
-                   Vector3T<T>(m[1][0], m[1][1], 0),
-                   Vector3T<T>(      0,       0, 1))
+            : rows(VectorType(m[0][0], m[0][1], 0),
+                   VectorType(m[1][0], m[1][1], 0),
+                   VectorType(      0,       0, 1))
         {}
 
-        constexpr       Vector3T<T>& operator[] (SizeType index)       { return rows[index]; }
-        constexpr const Vector3T<T>& operator[] (SizeType index) const { return rows[index]; }
+        constexpr       VectorType& operator[] (SizeType index)       { return rows[index]; }
+        constexpr const VectorType& operator[] (SizeType index) const { return rows[index]; }
 
         constexpr T Min() const { return ::Math::Min(rows[0].Min(), rows[1].Min(), rows[2].Min()); }
         constexpr T Max() const { return ::Math::Max(rows[0].Max(), rows[1].Max(), rows[2].Max()); }
 
         static constexpr Matrix3T<T> Identity() noexcept { return Matrix3T<T>(Cast<T>(1)); }
     private:
-        Array<Vector3T<T>, 3> rows;
+        Array<VectorType, 3> rows;
     };
 
     template <ConceptStrongType T>
@@ -107,22 +109,23 @@ namespace Math
     {
     public:
         using ScalarType = T;
+        using VectorType = Vector4T<T>;
         static constexpr SizeType Dimension = 4;
 
         constexpr explicit Matrix4T() noexcept
-            : rows({})
+            : rows{}
         {}
 
         constexpr explicit Matrix4T(T diag) noexcept
-            : rows({})
+            : rows{}
         {
             for (SizeType i = 0; i < 4; ++i) { rows[i][i] = diag; }
         }
 
-        constexpr explicit Matrix4T(const Vector4T<T>& row0,
-                                    const Vector4T<T>& row1,
-                                    const Vector4T<T>& row2,
-                                    const Vector4T<T>& row3)
+        constexpr explicit Matrix4T(const VectorType& row0,
+                                    const VectorType& row1,
+                                    const VectorType& row2,
+                                    const VectorType& row3)
         noexcept
             : rows({ row0,
                      row1,
@@ -135,35 +138,35 @@ namespace Math
                                     T m20, T m21, T m22, T m23,
                                     T m30, T m31, T m32, T m33)
         noexcept
-            : rows(Vector4T<T>(m00, m01, m02, m03),
-                   Vector4T<T>(m10, m11, m12, m13),
-                   Vector4T<T>(m20, m21, m22, m23),
-                   Vector4T<T>(m30, m31, m32, m33))
+            : rows(VectorType(m00, m01, m02, m03),
+                   VectorType(m10, m11, m12, m13),
+                   VectorType(m20, m21, m22, m23),
+                   VectorType(m30, m31, m32, m33))
         {}
 
         constexpr explicit Matrix4T(const Matrix2T<T>& m) noexcept
-            : rows(Vector4T<T>(m[0][0], m[0][1], 0, 0),
-                   Vector4T<T>(m[1][0], m[1][1], 0, 0),
-                   Vector4T<T>(      0,       0, 1, 0),
-                   Vector4T<T>(      0,       0, 0, 1))
+            : rows(VectorType(m[0][0], m[0][1], 0, 0),
+                   VectorType(m[1][0], m[1][1], 0, 0),
+                   VectorType(      0,       0, 1, 0),
+                   VectorType(      0,       0, 0, 1))
         {}
 
         constexpr explicit Matrix4T(const Matrix3T<T>& m) noexcept
-            : rows(Vector4T<T>(m[0][0], m[0][1], m[0][2], 0),
-                   Vector4T<T>(m[1][0], m[1][1], m[1][2], 0),
-                   Vector4T<T>(m[2][0], m[2][1], m[2][2], 0),
-                   Vector4T<T>(      0,       0,       0, 1))
+            : rows(VectorType(m[0][0], m[0][1], m[0][2], 0),
+                   VectorType(m[1][0], m[1][1], m[1][2], 0),
+                   VectorType(m[2][0], m[2][1], m[2][2], 0),
+                   VectorType(      0,       0,       0, 1))
         {}
 
-        constexpr       Vector4T<T>& operator[] (SizeType index)       { return rows[index]; }
-        constexpr const Vector4T<T>& operator[] (SizeType index) const { return rows[index]; }
+        constexpr       VectorType& operator[] (SizeType index)       { return rows[index]; }
+        constexpr const VectorType& operator[] (SizeType index) const { return rows[index]; }
 
         constexpr T Min() const { return ::Math::Min(rows[0].Min(), rows[1].Min(), rows[2].Min(), rows[3].Min()); }
         constexpr T Max() const { return ::Math::Max(rows[0].Max(), rows[1].Max(), rows[2].Max(), rows[3].Max()); }
 
         static constexpr Matrix4T<T> Identity() noexcept { return Matrix4T<T>(Cast<T>(1)); }
     private:
-        Array<Vector4T<T>, 4> rows;
+        Array<VectorType, 4> rows;
     };
 }
 

@@ -4,6 +4,7 @@
 #include "../Common/Concepts.hpp"
 #include "../Common/Array.hpp"
 #include "../Functions.hpp"
+#include "../Random.hpp"
 
 // TODO(3011): This is not a good interface. It makes it difficult to
 // get derivatives with minimal overhead. The interface and implementation
@@ -30,7 +31,8 @@ namespace Math
         {
             if (ToUnderlying(seed))
             {
-                Shuffle(mPermutation, seed);
+                Random64 rng(seed);
+                mPermutation.Shuffle<Random64, UniformIntegerDistribution>(rng);
             }
         }
 

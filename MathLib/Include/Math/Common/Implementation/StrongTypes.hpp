@@ -99,9 +99,17 @@ namespace Math
             return StrongType<T>(Value);
         }
 
+        static const StaticStrongType<T> Min;
+        static const StaticStrongType<T> Max;
+
         template <typename U>
         friend constexpr U ToUnderlying(StaticStrongType<U> value) noexcept;
     };
+
+    template <typename T>
+    constexpr StaticStrongType<T> StaticStrongType<T>::Min = std::numeric_limits<T>::min();
+    template <typename T>
+    constexpr StaticStrongType<T> StaticStrongType<T>::Max = std::numeric_limits<T>::max();
 
     using SizeType = StrongType<std::size_t>;
     using SignedSizeType = StrongType<std::int64_t>;

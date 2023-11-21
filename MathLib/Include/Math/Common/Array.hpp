@@ -1,7 +1,9 @@
 #ifndef MATHLIB_COMMON_ARRAY_HPP
 #define MATHLIB_COMMON_ARRAY_HPP
 
-#include "Types.hpp"
+#include "Concepts.hpp"
+
+#include <initializer_list>
 
 namespace Math
 {
@@ -22,13 +24,102 @@ namespace Math
         {
             static_assert(sizeof...(Ts) == ToUnderlying(Size), "Invalid number of arguments");
             static_assert(sizeof...(Ts) == 0
-                      || (std::same_as<T, Ts> && ...), "Invalid types");
+                      || (IsSame<T, Ts> && ...), "Invalid types");
+        }
+
+        [[nodiscard]] constexpr
+        Array(const ValueType (&initializer)[ToUnderlying(Size)])
+        {
+            for (SizeType i = 0; i < Size; ++i)
+            {
+                (*this)[i] = initializer[ToUnderlying(i)];
+            }
+        }
+
+        template <typename Func>
+            requires IsInvocable<Func, T&>
+        [[maybe_unused]] constexpr
+        Func ForEach(Func func) noexcept
+        {
+            for (SizeType i = 0; i < Size; ++i)
+            {
+                func((*this)[i]);
+            }
+
+            return func;
+        }
+
+        template <typename Func>
+            requires IsInvocable<Func, SizeType, const T&>
+        [[maybe_unused]] constexpr
+        Func ForEach(Func func) const noexcept
+        {
+            for (SizeType i = 0; i < Size; ++i)
+            {
+                func(i, (*this)[i]);
+            }
+
+            return func;
         }
 
         constexpr
         void Fill(const T& value) noexcept
         {
-            for (SizeType i = 0; i < Size; ++i) { mArray[i] = value; }
+            for (SizeType i = 0; i < Size; ++i)
+            {
+                (*this)[i] = value;
+            }
+        }
+
+        template <ConceptRandomNumberGenerator RNG, template <typename> typename Dist>
+            requires ConceptDistribution<Dist<SizeType>, RNG>
+        constexpr
+        void Shuffle(RNG& rng) noexcept
+        {
+            Dist<SizeType> dist(0, Size - 1);
+            for (SizeType i = 0; i < Size; ++i)
+            {
+                SizeType j = dist(rng);
+                std::swap((*this)[i], (*this)[j]);
+            }
+        }
+
+        [[nodiscard]] constexpr
+        T Min() const noexcept
+        {
+            if constexpr (Size == 0)
+            {
+                return T{};
+            }
+
+            T result = mArray[0];
+            for (SizeType i = 1; i < Size; ++i)
+            {
+                if ((*this)[i] < result)
+                {
+                    result = (*this)[i];
+                }
+            }
+            return result;
+        }
+
+        [[nodiscard]] constexpr
+        T Max() const noexcept
+        {
+            if constexpr (Size == 0)
+            {
+                return T{};
+            }
+
+            T result = mArray[0];
+            for (SizeType i = 1; i < Size; ++i)
+            {
+                if ((*this)[i] > result)
+                {
+                    result = (*this)[i];
+                }
+            }
+            return result;
         }
 
         [[nodiscard]] constexpr       T& operator[] (SizeType i)       { return mArray[ToUnderlying(i)]; }
@@ -41,8 +132,8 @@ namespace Math
     [[nodiscard]] constexpr
     Array<T, N> MakeArray(const Ts&... values)
     {
-        static_assert(sizeof...(Ts) == ToUnderlying(SizeType(N)), "Invalid number of arguments");
-        static_assert((std::is_convertible_v<UnderlyingType<T>, UnderlyingType<Ts>> && ...), "Invalid types");
+        static_assert(sizeof...(Ts) == ToUnderlying(N), "Invalid number of arguments");
+        static_assert((IsConvertible<UnderlyingType<T>, UnderlyingType<Ts>> && ...), "Invalid types");
         return Array<T, N>(Cast<T>(values)...);
     }
 

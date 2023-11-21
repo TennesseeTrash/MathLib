@@ -22,12 +22,6 @@ namespace Math
     template <typename T>
     concept IsEmpty = std::is_empty_v<T>;
 
-    template <typename Func, typename... Args>
-    concept IsInvocable = std::is_invocable_v<Func, Args...>;
-
-    template <typename Ret, typename Func, typename... Args>
-    concept IsInvocableWithReturn = std::is_invocable_r_v<Ret, Func, Args...>;
-
     template <typename Specialization, template<typename...> typename Base>
     concept IsSpecialization = Implementation::IsSpecialization<Specialization, Base>::Value;
 
@@ -39,6 +33,12 @@ namespace Math
     {
         typename T::ValueType;
     };
+
+    template <typename Func, typename... Args>
+    concept Invocable = std::is_invocable_v<Func, Args...>;
+
+    template <typename Ret, typename Func, typename... Args>
+    concept InvocableWithReturn = std::is_invocable_r_v<Ret, Func, Args...>;
 
     template <typename T>
     concept FundamentalType = std::is_fundamental_v<T>;

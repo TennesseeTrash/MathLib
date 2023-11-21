@@ -27,7 +27,7 @@ namespace Math
 
         [[nodiscard]] constexpr explicit
         PerlinNoise(u64 seed = 0) noexcept
-            : mPermutation(ToUnderlying(seed) ? MakeArrayFillAscending<u8, 256>(1) : sDefaultPermutation)
+            : mPermutation(ToUnderlying(seed) ? MakeArray<u8, 256>([](SizeType i, u8& v){ v = Cast<u8>(i); }) : sDefaultPermutation)
         {
             if (ToUnderlying(seed))
             {

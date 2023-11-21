@@ -34,8 +34,7 @@ namespace Math
             }
         }
 
-        template <typename Func>
-            requires IsInvocable<Func, T&>
+        template <Invocable<T&> Func>
         [[maybe_unused]] constexpr
         Func ForEach(Func func) noexcept
         {
@@ -47,10 +46,9 @@ namespace Math
             return func;
         }
 
-        template <typename Func>
-            requires IsInvocable<Func, SizeType, const T&>
+        template <Invocable<SizeType, T&> Func>
         [[maybe_unused]] constexpr
-        Func ForEach(Func func) const noexcept
+        Func ForEach(Func func) noexcept
         {
             for (SizeType i = 0; i < Size; ++i)
             {
@@ -135,15 +133,21 @@ namespace Math
         return Array<T, N>(Cast<T>(values)...);
     }
 
-    template <typename T, StaticSizeType N>
+    template <typename T, StaticSizeType N, Invocable<T&> Func>
     [[nodiscard]] constexpr
-    Array<T, N> MakeArrayFillAscending(T offset)
+    Array<T, N> MakeArray(Func func)
     {
         Array<T, N> result;
-        for (SizeType i = 0; i < N; ++i)
-        {
-            result[i] = offset + Cast<T>(i);
-        }
+        result.template ForEach<Func>(func);
+        return result;
+    }
+
+    template <typename T, StaticSizeType N, Invocable<SizeType, T&> Func>
+    [[nodiscard]] constexpr
+    Array<T, N> MakeArray(Func func)
+    {
+        Array<T, N> result;
+        result.template ForEach<Func>(func);
         return result;
     }
 }

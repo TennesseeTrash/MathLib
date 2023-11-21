@@ -104,9 +104,6 @@ namespace Math
     // Trig functions
     //////////////////////////////////////////////////////////////////////////
 
-    // TODO(3011): Add tests, for use later when the custom implementation is
-    // going to need testing.
-
     template <FloatingPointType T>
     [[nodiscard]] constexpr
     T Sin(T val) noexcept
@@ -237,7 +234,7 @@ namespace Math
     [[nodiscard]] constexpr
     Float Frac(Float val) noexcept
     {
-        return val - Floor<Float>(val);
+        return val - Trunc<Float>(val);
     }
 
     //////////////////////////////////////////////////////////////////////////
@@ -271,15 +268,15 @@ namespace Math
         // TODO(3011): Make the variables static constexpr
         // once it's feasible to move to C++23.
 
-        if (value >= (1 << ((sizeof(To) * 8) - 1)))
+        if (value >= (From(1) << ((sizeof(To) * 8) - 1)))
         {
-            constexpr From sub = 1 << ((sizeof(From) * 8) - 1);
+            constexpr From sub = From(1) << ((sizeof(From) * 8) - 1);
             return Cast<To>(value - sub);
         }
         else
         {
             // ((sizeof(To) * 8) - 1) is not representable by To
-            constexpr To sub = 1 << ((sizeof(To) * 8) - 2);
+            constexpr To sub = To(1) << ((sizeof(To) * 8) - 2);
             return Cast<To>(value) - sub - sub;
         }
     }
@@ -294,13 +291,13 @@ namespace Math
 
         if (value >= 0)
         {
-            constexpr To add = 1 << ((sizeof(To) * 8) - 1);
+            constexpr To add = To(1) << ((sizeof(To) * 8) - 1);
             return Cast<To>(value) + add;
         }
         else
         {
             // ((sizeof(From) * 8) - 1) is not representable by From
-            constexpr From add = 1 << ((sizeof(From) * 8) - 2);
+            constexpr From add = From(1) << ((sizeof(From) * 8) - 2);
             return Cast<To>(value + add + add);
         }
     }
@@ -308,6 +305,9 @@ namespace Math
     //////////////////////////////////////////////////////////////////////////
     // Smoothstep, Smootherstep
     //////////////////////////////////////////////////////////////////////////
+
+    // OBSOLETE - All these functions are obsolete and will be removed once
+    // the Function API is implemented.
 
     template <FloatingPointType T>
     [[nodiscard]] constexpr

@@ -8,6 +8,9 @@
 namespace Math
 {
     template <typename T, typename U>
+    concept IsSame = std::is_same_v<T, U>;
+
+    template <typename T, typename U>
     concept SameBaseType = std::is_same_v<std::remove_cvref_t<U>, std::remove_cvref_t<T>>;
 
     template <typename T, typename U>

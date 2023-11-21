@@ -303,7 +303,7 @@ namespace Math
     [[nodiscard]] constexpr
     T Min(T v1, Ts... values) noexcept
     {
-        static_assert(sizeof...(Ts) == 0 || (std::is_same_v<T, Ts> || ...));
+        static_assert(sizeof...(Ts) == 0 || (IsSame<T, Ts> || ...));
         return Min(Array<T, sizeof...(Ts) + 1>(v1, values...));
     }
 
@@ -311,7 +311,7 @@ namespace Math
     [[nodiscard]] constexpr
     T Max(T v1, Ts... values) noexcept
     {
-        static_assert(sizeof...(Ts) == 0 || (std::is_same_v<T, Ts> || ...));
+        static_assert(sizeof...(Ts) == 0 || (IsSame<T, Ts> || ...));
         return Max(Array<T, sizeof...(Ts) + 1>(v1, values...));
     }
 }

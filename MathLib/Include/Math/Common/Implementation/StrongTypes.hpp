@@ -6,6 +6,7 @@
 #include <cstdint>
 #include <cstddef>
 #include <compare>
+#include <limits>
 
 namespace Math
 {
@@ -16,42 +17,46 @@ namespace Math
         static_assert(!Implementation::IsSpecialization<T, StrongType>::Value, "StrongType may not be nested");
         using ValueType = T;
     private:
-        ValueType mValue;
+        using STVT = StrongType<ValueType>;
+        using STSZ = StrongType<std::size_t>;
     public:
         [[nodiscard]] constexpr
         StrongType(T value = T{}) noexcept
             : mValue(value)
         {}
 
+        static const StrongType<ValueType> Min;
+        static const StrongType<ValueType> Max;
+    public:
         // Note(3011): Some of these operators will not work for certain types.
         // In the future, explicit 'requires' clauses would be nice.
         // e.g. StrongType<float>(4.0f) << 1 will not compile.
-        [[nodiscard]]    friend constexpr StrongType<T>  operator+   (StrongType<T> a,  StrongType<T> b)   noexcept { return a.mValue + b.mValue; }
-        [[nodiscard]]    friend constexpr StrongType<T>  operator-   (StrongType<T> a,  StrongType<T> b)   noexcept { return a.mValue - b.mValue; }
-        [[nodiscard]]    friend constexpr StrongType<T>  operator*   (StrongType<T> a,  StrongType<T> b)   noexcept { return a.mValue * b.mValue; }
-        [[nodiscard]]    friend constexpr StrongType<T>  operator/   (StrongType<T> a,  StrongType<T> b)   noexcept { return a.mValue / b.mValue; }
-        [[nodiscard]]    friend constexpr StrongType<T>  operator%   (StrongType<T> a,  StrongType<T> b)   noexcept { return a.mValue % b.mValue; }
-        [[nodiscard]]    friend constexpr StrongType<T>  operator-   (StrongType<T> a)                     noexcept { return -a.mValue; }
-        [[nodiscard]]    friend constexpr StrongType<T>  operator&   (StrongType<T> a,  StrongType<T> b)   noexcept { return a.mValue & b.mValue; }
-        [[nodiscard]]    friend constexpr StrongType<T>  operator|   (StrongType<T> a,  StrongType<T> b)   noexcept { return a.mValue | b.mValue; }
-        [[nodiscard]]    friend constexpr StrongType<T>  operator^   (StrongType<T> a,  StrongType<T> b)   noexcept { return a.mValue ^ b.mValue; }
-        [[nodiscard]]    friend constexpr StrongType<T>  operator&   (StrongType<T> a)                     noexcept { return ~a.mValue; }
-        [[nodiscard]]    friend constexpr StrongType<T>  operator<<  (StrongType<T> a,  std::size_t shift) noexcept { return a.mValue << shift; }
-        [[nodiscard]]    friend constexpr StrongType<T>  operator>>  (StrongType<T> a,  std::size_t shift) noexcept { return a.mValue >> shift; }
-        [[maybe_unused]] friend constexpr StrongType<T>  operator++  (StrongType<T>& a)                    noexcept { return ++a.mValue; }
-        [[maybe_unused]] friend constexpr StrongType<T>  operator--  (StrongType<T>& a)                    noexcept { return --a.mValue; }
-        [[maybe_unused]] friend constexpr StrongType<T>  operator++  (StrongType<T>& a, int)               noexcept { return a.mValue++; }
-        [[maybe_unused]] friend constexpr StrongType<T>  operator--  (StrongType<T>& a, int)               noexcept { return a.mValue--; }
-        [[maybe_unused]] friend constexpr StrongType<T>& operator+=  (StrongType<T>& a, StrongType<T> b)   noexcept { a.mValue += b.mValue; return a; }
-        [[maybe_unused]] friend constexpr StrongType<T>& operator-=  (StrongType<T>& a, StrongType<T> b)   noexcept { a.mValue -= b.mValue; return a; }
-        [[maybe_unused]] friend constexpr StrongType<T>& operator*=  (StrongType<T>& a, StrongType<T> b)   noexcept { a.mValue *= b.mValue; return a; }
-        [[maybe_unused]] friend constexpr StrongType<T>& operator/=  (StrongType<T>& a, StrongType<T> b)   noexcept { a.mValue /= b.mValue; return a; }
-        [[maybe_unused]] friend constexpr StrongType<T>& operator%=  (StrongType<T>& a, StrongType<T> b)   noexcept { a.mValue %= b.mValue; return a; }
-        [[maybe_unused]] friend constexpr StrongType<T>& operator&=  (StrongType<T>& a, StrongType<T> b)   noexcept { a.mValue &= b.mValue; return a; }
-        [[maybe_unused]] friend constexpr StrongType<T>& operator|=  (StrongType<T>& a, StrongType<T> b)   noexcept { a.mValue |= b.mValue; return a; }
-        [[maybe_unused]] friend constexpr StrongType<T>& operator^=  (StrongType<T>& a, StrongType<T> b)   noexcept { a.mValue ^= b.mValue; return a; }
-        [[maybe_unused]] friend constexpr StrongType<T>& operator<<= (StrongType<T>& a, std::size_t shift) noexcept { a.mValue <<= shift; return a; }
-        [[maybe_unused]] friend constexpr StrongType<T>& operator>>= (StrongType<T>& a, std::size_t shift) noexcept { a.mValue >>= shift; return a; }
+        [[nodiscard]]    friend constexpr STVT  operator+   (STVT  a, STVT b)     noexcept { return a.mValue + b.mValue; }
+        [[nodiscard]]    friend constexpr STVT  operator-   (STVT  a, STVT b)     noexcept { return a.mValue - b.mValue; }
+        [[nodiscard]]    friend constexpr STVT  operator*   (STVT  a, STVT b)     noexcept { return a.mValue * b.mValue; }
+        [[nodiscard]]    friend constexpr STVT  operator/   (STVT  a, STVT b)     noexcept { return a.mValue / b.mValue; }
+        [[nodiscard]]    friend constexpr STVT  operator%   (STVT  a, STVT b)     noexcept { return a.mValue % b.mValue; }
+        [[nodiscard]]    friend constexpr STVT  operator-   (STVT  a)             noexcept { return -a.mValue; }
+        [[nodiscard]]    friend constexpr STVT  operator&   (STVT  a, STVT b)     noexcept { return a.mValue & b.mValue; }
+        [[nodiscard]]    friend constexpr STVT  operator|   (STVT  a, STVT b)     noexcept { return a.mValue | b.mValue; }
+        [[nodiscard]]    friend constexpr STVT  operator^   (STVT  a, STVT b)     noexcept { return a.mValue ^ b.mValue; }
+        [[nodiscard]]    friend constexpr STVT  operator&   (STVT  a)             noexcept { return ~a.mValue; }
+        [[nodiscard]]    friend constexpr STVT  operator<<  (STVT  a, STSZ shift) noexcept { return a.mValue << shift.mValue; }
+        [[nodiscard]]    friend constexpr STVT  operator>>  (STVT  a, STSZ shift) noexcept { return a.mValue >> shift.mValue; }
+        [[maybe_unused]] friend constexpr STVT  operator++  (STVT& a)             noexcept { return ++a.mValue; }
+        [[maybe_unused]] friend constexpr STVT  operator--  (STVT& a)             noexcept { return --a.mValue; }
+        [[maybe_unused]] friend constexpr STVT  operator++  (STVT& a, int)        noexcept { return a.mValue++; }
+        [[maybe_unused]] friend constexpr STVT  operator--  (STVT& a, int)        noexcept { return a.mValue--; }
+        [[maybe_unused]] friend constexpr STVT& operator+=  (STVT& a, STVT b)     noexcept { a.mValue += b.mValue; return a; }
+        [[maybe_unused]] friend constexpr STVT& operator-=  (STVT& a, STVT b)     noexcept { a.mValue -= b.mValue; return a; }
+        [[maybe_unused]] friend constexpr STVT& operator*=  (STVT& a, STVT b)     noexcept { a.mValue *= b.mValue; return a; }
+        [[maybe_unused]] friend constexpr STVT& operator/=  (STVT& a, STVT b)     noexcept { a.mValue /= b.mValue; return a; }
+        [[maybe_unused]] friend constexpr STVT& operator%=  (STVT& a, STVT b)     noexcept { a.mValue %= b.mValue; return a; }
+        [[maybe_unused]] friend constexpr STVT& operator&=  (STVT& a, STVT b)     noexcept { a.mValue &= b.mValue; return a; }
+        [[maybe_unused]] friend constexpr STVT& operator|=  (STVT& a, STVT b)     noexcept { a.mValue |= b.mValue; return a; }
+        [[maybe_unused]] friend constexpr STVT& operator^=  (STVT& a, STVT b)     noexcept { a.mValue ^= b.mValue; return a; }
+        [[maybe_unused]] friend constexpr STVT& operator<<= (STVT& a, STSZ shift) noexcept { a.mValue <<= shift.mValue; return a; }
+        [[maybe_unused]] friend constexpr STVT& operator>>= (STVT& a, STSZ shift) noexcept { a.mValue >>= shift.mValue; return a; }
 
         // Note(3011): Default this when the bogus warning in Clang is fixed.
         // Relevant issue - https://github.com/llvm/llvm-project/issues/43670
@@ -62,7 +67,17 @@ namespace Math
 
         template <typename U>
         friend constexpr U ToUnderlying(StrongType<U> value) noexcept;
+
+        template <typename U>
+        friend class StrongType;
+    private:
+        ValueType mValue;
     };
+
+    template <typename T>
+    constexpr StrongType<T> StrongType<T>::Min = std::numeric_limits<T>::min();
+    template <typename T>
+    constexpr StrongType<T> StrongType<T>::Max = std::numeric_limits<T>::max();
 
     template <typename T>
     struct StaticStrongType final

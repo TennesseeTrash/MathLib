@@ -8,5 +8,5 @@ target_include_directories(MathLib
 
 target_compile_features(MathLib
     INTERFACE
-    cxx_std_23
+    cxx_std_20
 )

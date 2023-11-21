@@ -2,6 +2,7 @@
 #define MATHLIB_IMPL_ALGORITHMS_HPP
 
 #include "../Common/Concepts.hpp"
+#include "../Random.hpp"
 
 // TODO(3011): Check if it would make sense to replace this
 // with a custom implementation. (To shorten compile times.)
@@ -56,7 +57,7 @@ namespace Math
     {
         for (SizeType i = 0; i < Arr::Size; ++i)
         {
-            a[i] = Convert<typename Arr::ValueType>(i + 1);
+            a[i] = Cast<typename Arr::ValueType>(i + 1);
         }
     }
 
@@ -64,8 +65,8 @@ namespace Math
     constexpr
     void Shuffle(Arr& a, u64 seed) noexcept
     {
-        std::mt19937_64 rng(ToUnderlying(seed));
-        std::uniform_int_distribution<std::size_t> dist(0, ToUnderlying(Arr::Size - 1));
+        Random64 rng(seed);
+        UniformIntegerDistribution<SizeType> dist(0, Arr::Size - 1);
         for (SizeType i = 0; i < Arr::Size; ++i)
         {
             SizeType j = dist(rng);
@@ -77,12 +78,12 @@ namespace Math
     constexpr
     void PoissonFill(Arr& a, u64 seed, f64 mean) noexcept
     {
-        std::mt19937_64 rng(ToUnderlying(seed));
-        std::poisson_distribution<std::size_t> dist(ToUnderlying(mean));
-        for (SizeType i = 0; i < Arr::Size; ++i)
-        {
-            a[i] = dist(rng);
-        }
+        //std::mt19937_64 rng(ToUnderlying(seed));
+        //std::poisson_distribution<std::size_t> dist(ToUnderlying(mean));
+        //for (SizeType i = 0; i < Arr::Size; ++i)
+        //{
+        //    a[i] = dist(rng);
+        //}
     }
 }
 

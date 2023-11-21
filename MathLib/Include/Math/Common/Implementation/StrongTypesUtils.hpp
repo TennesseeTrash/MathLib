@@ -2,6 +2,7 @@
 #define MATHLIB_COMMON_IMPL_STRONG_TYPES_UTILS_HPP
 
 #include "StrongTypes.hpp"
+#include "../Traits.hpp"
 
 namespace Math::Implementation
 {
@@ -99,6 +100,62 @@ namespace Math
     To Cast(From value) noexcept
     {
         return To(static_cast<typename Implementation::UnderlyingType<To>::Type>(ToUnderlying(value)));
+    }
+
+    // TODO(3011):
+    // - Add overloads for unequal sizes.
+    // - Move somewhere else, it doesn't really fit here.
+
+    template <SignedIntegralType To, SignedIntegralType From>
+        requires (sizeof(To) >= sizeof(From))
+    [[nodiscard]] constexpr
+    To ValueShift(From value) noexcept
+    {
+        return Cast<To>(value);
+    }
+
+    template <UnsignedIntegralType To, UnsignedIntegralType From>
+        requires (sizeof(To) >= sizeof(From))
+    [[nodiscard]] constexpr
+    To ValueShift(From value) noexcept
+    {
+        return Cast<To>(value);
+    }
+
+    template <SignedIntegralType To, UnsignedIntegralType From>
+        requires (sizeof(To) == sizeof(From))
+    [[nodiscard]] constexpr
+    To ValueShift(From value) noexcept
+    {
+        if (value >= (1 << ((sizeof(To) * 8) - 1)))
+        {
+            static constexpr From sub = 1 << ((sizeof(From) * 8) - 1);
+            return Cast<To>(value - sub);
+        }
+        else
+        {
+            // ((sizeof(To) * 8) - 1) is not representable by To
+            static constexpr To sub = 1 << ((sizeof(To) * 8) - 2);
+            return Cast<To>(value) - sub - sub;
+        }
+    }
+
+    template <UnsignedIntegralType To, SignedIntegralType From>
+        requires (sizeof(To) == sizeof(From))
+    [[nodiscard]] constexpr
+    To ValueShift(From value) noexcept
+    {
+        if (value >= 0)
+        {
+            static constexpr To add = 1 << ((sizeof(To) * 8) - 1);
+            return Cast<To>(value) + add;
+        }
+        else
+        {
+            // ((sizeof(From) * 8) - 1) is not representable by From
+            static constexpr From add = 1 << ((sizeof(From) * 8) - 2);
+            return Cast<To>(value + add + add);
+        }
     }
 }
 

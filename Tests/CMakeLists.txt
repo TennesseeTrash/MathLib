@@ -2,7 +2,7 @@ Include(FetchContent)
 FetchContent_Declare(
   Catch2
   GIT_REPOSITORY https://github.com/catchorg/Catch2.git
-  GIT_TAG        v3.0.1
+  GIT_TAG        v3.4.0
 )
 
 FetchContent_MakeAvailable(Catch2)
@@ -16,15 +16,16 @@ target_link_libraries(Tests PRIVATE
 
 target_sources(Tests PRIVATE
     "CommonTests/BoolToolsTests.cpp"
-    "CommonTests/FunctionTests.cpp"
-    "FunctionsTests/SignAbsTests.cpp"
-    "FunctionsTests/PowerTests.cpp"
-    "FunctionsTests/TrigonometryTests.cpp"
-    "FunctionsTests/ClampLerpInvLerpTests.cpp"
-    "FunctionsTests/TruncFloorCeilFracTests.cpp"
-    "FunctionsTests/ValueShiftTests.cpp"
-    "FunctionsTests/DegreeRadianConversionTests.cpp"
-    "FunctionsTests/MinMaxTests.cpp"
+    "FunctionsTests/BasicFunctionsTests/SignAbsTests.cpp"
+    "FunctionsTests/BasicFunctionsTests/PowerTests.cpp"
+    "FunctionsTests/BasicFunctionsTests/TrigonometryTests.cpp"
+    "FunctionsTests/BasicFunctionsTests/ClampLerpInvLerpTests.cpp"
+    "FunctionsTests/BasicFunctionsTests/TruncFloorCeilFracTests.cpp"
+    "FunctionsTests/BasicFunctionsTests/ValueShiftTests.cpp"
+    "FunctionsTests/BasicFunctionsTests/DegreeRadianConversionTests.cpp"
+    "FunctionsTests/BasicFunctionsTests/MinMaxTests.cpp"
+    "FunctionsTests/ElementaryFunctionsTests.cpp"
+    "FunctionsTests/CompositionFunctionsTests.cpp"
     "VectorTests/VectorTypeTests.cpp"
     "VectorTests/VectorOperatorTests.cpp"
     "VectorTests/VectorUtilsTests.cpp"

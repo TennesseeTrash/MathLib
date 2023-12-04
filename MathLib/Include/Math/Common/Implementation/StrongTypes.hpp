@@ -25,8 +25,8 @@ namespace Math
             : mValue(value)
         {}
 
-        static const StrongType<ValueType> Min;
-        static const StrongType<ValueType> Max;
+        static constexpr StrongType<ValueType> Min() { return StrongType(std::numeric_limits<ValueType>::min()); }
+        static constexpr StrongType<ValueType> Max() { return StrongType(std::numeric_limits<ValueType>::max()); }
     public:
         // Note(3011): Some of these operators will not work for certain types.
         // In the future, explicit 'requires' clauses would be nice.
@@ -41,8 +41,8 @@ namespace Math
         [[nodiscard]]    friend constexpr STVT  operator|   (STVT  a, STVT b)     noexcept { return a.mValue | b.mValue; }
         [[nodiscard]]    friend constexpr STVT  operator^   (STVT  a, STVT b)     noexcept { return a.mValue ^ b.mValue; }
         [[nodiscard]]    friend constexpr STVT  operator&   (STVT  a)             noexcept { return ~a.mValue; }
-        [[nodiscard]]    friend constexpr STVT  operator<<  (STVT  a, STSZ shift) noexcept { return a.mValue << shift.mValue; }
-        [[nodiscard]]    friend constexpr STVT  operator>>  (STVT  a, STSZ shift) noexcept { return a.mValue >> shift.mValue; }
+        [[nodiscard]]    friend constexpr STVT  operator<<  (STVT  a, STSZ shift) noexcept { return ValueType(a.mValue << shift.mValue); }
+        [[nodiscard]]    friend constexpr STVT  operator>>  (STVT  a, STSZ shift) noexcept { return ValueType(a.mValue >> shift.mValue); }
         [[maybe_unused]] friend constexpr STVT  operator++  (STVT& a)             noexcept { return ++a.mValue; }
         [[maybe_unused]] friend constexpr STVT  operator--  (STVT& a)             noexcept { return --a.mValue; }
         [[maybe_unused]] friend constexpr STVT  operator++  (STVT& a, int)        noexcept { return a.mValue++; }
@@ -75,11 +75,6 @@ namespace Math
     };
 
     template <typename T>
-    constexpr StrongType<T> StrongType<T>::Min = std::numeric_limits<T>::min();
-    template <typename T>
-    constexpr StrongType<T> StrongType<T>::Max = std::numeric_limits<T>::max();
-
-    template <typename T>
     struct StaticStrongType final
     {
     public:
@@ -94,22 +89,22 @@ namespace Math
         {}
 
         [[nodiscard]] constexpr
+        StaticStrongType(StrongType<T> value) noexcept
+            : Value(ToUnderlying(value))
+        {}
+
+        [[nodiscard]] constexpr
         operator StrongType<T>() const noexcept
         {
             return StrongType<T>(Value);
         }
 
-        static const StaticStrongType<T> Min;
-        static const StaticStrongType<T> Max;
+        static constexpr StaticStrongType<T> Min() { return StaticStrongType(std::numeric_limits<ValueType>::min()); }
+        static constexpr StaticStrongType<T> Max() { return StaticStrongType(std::numeric_limits<ValueType>::max()); }
 
         template <typename U>
         friend constexpr U ToUnderlying(StaticStrongType<U> value) noexcept;
     };
-
-    template <typename T>
-    constexpr StaticStrongType<T> StaticStrongType<T>::Min = std::numeric_limits<T>::min();
-    template <typename T>
-    constexpr StaticStrongType<T> StaticStrongType<T>::Max = std::numeric_limits<T>::max();
 
     using SizeType = StrongType<std::size_t>;
     using SignedSizeType = StrongType<std::int64_t>;

@@ -102,7 +102,7 @@ namespace Math
         [[nodiscard]] constexpr
         u32 RoL(u32 val, SizeType shift) const noexcept
         {
-            return (val << shift) | (val >> 32 - shift);
+            return (val << shift) | (val >> (32 - shift));
         }
 
         Array<u32, 4> mState;
@@ -208,7 +208,7 @@ namespace Math
         [[nodiscard]] constexpr static
         u64 RoL(u64 val, SizeType shift) noexcept
         {
-            return (val << shift) | (val >> 64 - shift);
+            return (val << shift) | (val >> (64 - shift));
         }
 
         Array<u64, 4> mState;

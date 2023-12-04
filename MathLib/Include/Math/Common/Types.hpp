@@ -30,8 +30,8 @@ namespace Math
     template <bool Condition, typename TrueType, typename FalseType>
     using ConditionalType = typename Implementation::ConditionalType<Condition, TrueType, FalseType>::Type;
 
-    template <typename T>
-    using GetValueType = typename Implementation::GetValueType<T>::Type;
+    template <typename... T>
+    using GetValueType = typename Implementation::GetValueType<T...>::Type;
 
     template <typename Specialized, template <typename...> typename Base, StaticSizeType Index = 0>
     using TemplateArgument = typename Implementation::TemplateArgument<Specialized, Base, Index>::Type;

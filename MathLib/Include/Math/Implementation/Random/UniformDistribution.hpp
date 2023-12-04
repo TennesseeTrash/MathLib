@@ -28,12 +28,12 @@ namespace Math
         {
             using RNGVT = typename RNG::ValueType;
             RNGVT range = ValueShift<RNGVT>(mEnd) - ValueShift<RNGVT>(mBegin);
-            if (range == RNGVT::Max)
+            if (range == RNGVT::Max())
             {
                 return ValueShift<ValueType>(rng());
             }
 
-            RNGVT repeat = RNGVT::Max - (RNGVT::Max % range) + 1;
+            RNGVT repeat = RNGVT::Max() - (RNGVT::Max() % range) + 1;
             RNGVT result = rng();
             while (result >= repeat)
             {

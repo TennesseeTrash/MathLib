@@ -81,8 +81,8 @@ namespace Math
         typename T::ValueType;
         { ToUnderlying(a) } -> IsSameBaseType<typename T::ValueType>;
 
-        { Implementation::Prvalue(T::Min) } -> IsSame<T>;
-        { Implementation::Prvalue(T::Max) } -> IsSame<T>;
+        { T::Min()  } -> IsSame<T>;
+        { T::Max()  } -> IsSame<T>;
 
         requires IsSpecialization<T, StrongType>
               || IsSpecialization<T, StaticStrongType>;
@@ -105,9 +105,10 @@ namespace Math
     {
         typename T::ValueType;
 
-        // TODO(3011): Complete
-        //  - Specify the bools (HasDimension, HasDerivative, HasPartials)
-        //  - Specify the requirements for the existence of member functions
+        requires requires (typename T::ValueType val)
+        {
+            { f(val) } -> IsSame<T>;
+        };
     };
 
     //////////////////////////////////////////////////////////////////////////

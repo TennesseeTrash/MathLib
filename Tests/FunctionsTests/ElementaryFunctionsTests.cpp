@@ -74,6 +74,41 @@ TEST_CASE("Test Linear function and its derivatives")
     }
 }
 
+TEST_CASE("Test Quadratic function and its derivatives")
+{
+    using Quadratic = MF::Quadratic<f32, 1.0f, 2.0f, 3.0f>;
+
+    SECTION("Quadratic value")
+    {
+        constexpr Quadratic quadratic;
+        REQUIRE(Math::Equal(quadratic(0.0f), 3.0f));
+        REQUIRE(Math::Equal(quadratic(1.0f), 6.0f));
+        REQUIRE(Math::Equal(quadratic(2.0f), 11.0f));
+        REQUIRE(Math::Equal(quadratic(3.0f), 18.0f));
+        REQUIRE(Math::Equal(quadratic(4.0f), 27.0f));
+    }
+
+    SECTION("Quadratic derivative value")
+    {
+        constexpr MF::Derivative<Quadratic> derivative;
+        REQUIRE(Math::Equal(derivative(0.0f), 2.0f));
+        REQUIRE(Math::Equal(derivative(1.0f), 4.0f));
+        REQUIRE(Math::Equal(derivative(2.0f), 6.0f));
+        REQUIRE(Math::Equal(derivative(3.0f), 8.0f));
+        REQUIRE(Math::Equal(derivative(4.0f), 10.0f));
+    }
+
+    SECTION("Quadratic 2nd order derivative value")
+    {
+        constexpr MF::Derivative<Quadratic, 2> derivative;
+        REQUIRE(Math::Equal(derivative(0.0f), 2.0f));
+        REQUIRE(Math::Equal(derivative(1.0f), 2.0f));
+        REQUIRE(Math::Equal(derivative(2.0f), 2.0f));
+        REQUIRE(Math::Equal(derivative(3.0f), 2.0f));
+        REQUIRE(Math::Equal(derivative(4.0f), 2.0f));
+    }
+}
+
 TEST_CASE("Test Power function and its derivatives")
 {
     using Power = MF::Power<f32, 2.0f>;

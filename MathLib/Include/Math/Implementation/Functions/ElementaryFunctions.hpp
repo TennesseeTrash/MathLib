@@ -35,7 +35,7 @@ namespace Math::Function
         }
     };
 
-    template <typename T, MakeStrongType<T> TSquare, MakeStrongType<T> TLinear, MakeStrongType<T> TConstant>
+    template <typename T, MakeStaticStrongType<T> TSquare, MakeStaticStrongType<T> TLinear, MakeStaticStrongType<T> TConstant>
     struct Quadratic
     {
     public:

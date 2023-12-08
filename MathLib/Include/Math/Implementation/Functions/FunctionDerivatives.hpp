@@ -4,7 +4,7 @@
 #include "ElementaryFunctions.hpp"
 #include "CompositionFunctions.hpp"
 
-namespace Math::Function
+namespace Math
 {
     namespace Implementation
     {
@@ -39,7 +39,7 @@ namespace Math::Function
             using Type = Linear<ValueType, Cast<ValueType>(2) * TSquare, TLinear>;
         };
 
-        template <typename T, ::Math::MakeStaticStrongType<T> TExponent, MakeStaticStrongType<T> TMultiplier>
+        template <typename T, ::Math::MakeStaticStrongType<T> TExponent, ::Math::MakeStaticStrongType<T> TMultiplier>
         struct Derivative<Power<T, TExponent, TMultiplier>, 1>
         {
             using ValueType = ::Math::GetValueType<Power<T, TExponent, TMultiplier>>;

@@ -4,7 +4,7 @@
 #include "../../Common/Types.hpp"
 #include "BasicFunctions.hpp"
 
-namespace Math::Function
+namespace Math
 {
     template <typename T, MakeStaticStrongType<T> TValue>
     struct Constant

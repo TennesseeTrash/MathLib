@@ -3,7 +3,49 @@
 
 TEST_CASE("Test ValueShift functions with identical types", "[Math][Functions]")
 {
+    SECTION("Test ValueShift with i8")
+    {
+        using i8 = Math::i8;
 
+        REQUIRE(Math::ValueShift<i8>(i8::Min()) == i8::Min());
+        REQUIRE(Math::ValueShift<i8>(i8(-128 )) == i8(-128));
+        REQUIRE(Math::ValueShift<i8>(i8(0    )) == i8(0));
+        REQUIRE(Math::ValueShift<i8>(i8(127  )) == i8(127));
+        REQUIRE(Math::ValueShift<i8>(i8::Max()) == i8::Max());
+    }
+
+    SECTION("Test ValueShift with u8")
+    {
+        using u8 = Math::u8;
+
+        REQUIRE(Math::ValueShift<u8>(u8::Min()) == u8::Min());
+        REQUIRE(Math::ValueShift<u8>(u8(0    )) == u8(0));
+        REQUIRE(Math::ValueShift<u8>(u8(128  )) == u8(128));
+        REQUIRE(Math::ValueShift<u8>(u8(255  )) == u8(255));
+        REQUIRE(Math::ValueShift<u8>(u8::Max()) == u8::Max());
+    }
+
+    SECTION("Test ValueShift with i16")
+    {
+        using i16 = Math::i16;
+
+        REQUIRE(Math::ValueShift<i16>(i16::Min()) == i16::Min());
+        REQUIRE(Math::ValueShift<i16>(i16(-32768)) == i16(-32768));
+        REQUIRE(Math::ValueShift<i16>(i16(0     )) == i16(0));
+        REQUIRE(Math::ValueShift<i16>(i16(32767 )) == i16(32767));
+        REQUIRE(Math::ValueShift<i16>(i16::Max()) == i16::Max());
+    }
+
+    SECTION("Test ValueShift with u16")
+    {
+        using u16 = Math::u16;
+
+        REQUIRE(Math::ValueShift<u16>(u16::Min()) == u16::Min());
+        REQUIRE(Math::ValueShift<u16>(u16(0    )) == u16(0));
+        REQUIRE(Math::ValueShift<u16>(u16(32768)) == u16(32768));
+        REQUIRE(Math::ValueShift<u16>(u16(65535)) == u16(65535));
+        REQUIRE(Math::ValueShift<u16>(u16::Max()) == u16::Max());
+    }
 }
 
 TEST_CASE("Test ValueShift functions with same size types", "[Math][Functions]")

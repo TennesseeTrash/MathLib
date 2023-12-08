@@ -26,7 +26,8 @@ namespace Math
     [[nodiscard]] constexpr
     T Abs(T val) noexcept
     {
-        return val > Cast<T>(0) ? val : -val;
+        // Note(3011): This might not necessarily work, e.g. i8(-128).
+        return (val > Cast<T>(0)) ? val : -val;
     }
 
     //////////////////////////////////////////////////////////////////////////
@@ -356,14 +357,14 @@ namespace Math
     [[nodiscard]] constexpr
     T ToRadians(T degrees) noexcept
     {
-        return Constants::Pi<T> * (degrees / static_cast<T>(180));
+        return Constants::Pi<T> * (degrees / Cast<T>(180));
     }
 
     template <FloatingPointType T>
     [[nodiscard]] constexpr
     T ToDegrees(T radians) noexcept
     {
-        return 180 * (radians / Constants::Pi<T>);
+        return Cast<T>(180) * (radians / Constants::Pi<T>);
     }
 
     //////////////////////////////////////////////////////////////////////////
@@ -374,6 +375,7 @@ namespace Math
     [[nodiscard]] constexpr
     T Min(T v1, Ts... values) noexcept
     {
+        // TODO(3011): This needs a refactor, making an array is unnecessary.
         static_assert(sizeof...(Ts) == 0 || (IsSame<T, Ts> || ...));
         return Array<T, sizeof...(Ts) + 1>(v1, values...).Min();
     }
@@ -382,6 +384,7 @@ namespace Math
     [[nodiscard]] constexpr
     T Max(T v1, Ts... values) noexcept
     {
+        // TODO(3011): This needs a refactor, making an array is unnecessary.
         static_assert(sizeof...(Ts) == 0 || (IsSame<T, Ts> || ...));
         return Array<T, sizeof...(Ts) + 1>(v1, values...).Max();
     }

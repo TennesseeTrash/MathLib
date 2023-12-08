@@ -1,7 +1,7 @@
 #ifndef MATHLIB_IMPL_FUNCTIONS_COMPOSITION_FUNCTIONS_HPP
 #define MATHLIB_IMPL_FUNCTIONS_COMPOSITION_FUNCTIONS_HPP
 
-namespace Math::Function
+namespace Math
 {
     template <typename Func>
     struct Minus

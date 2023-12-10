@@ -4,7 +4,7 @@
 #include "../../Common/Types.hpp"
 #include "BasicFunctions.hpp"
 
-namespace Math
+namespace Math::Function
 {
     template <typename T, MakeStaticStrongType<T> TValue>
     struct Constant
@@ -14,7 +14,7 @@ namespace Math
         static constexpr ValueType Value = TValue;
 
         [[nodiscard]] constexpr
-        ValueType operator() ([[maybe_unused]] ValueType x) const
+        ValueType operator() ([[maybe_unused]] ValueType x) const noexcept
         {
             return Value;
         }
@@ -29,25 +29,38 @@ namespace Math
         static constexpr ValueType Intercept = TIntercept;
 
         [[nodiscard]] constexpr
-        ValueType operator() (ValueType x) const
+        ValueType operator() (ValueType x) const noexcept
         {
-            return Slope * x + Intercept;
+            ValueType result = Cast<ValueType>(0);
+            if constexpr (!Equal(Intercept, Cast<ValueType>(0)))
+            {
+                result += Intercept;
+            }
+            if constexpr (!Equal(Slope, Cast<ValueType>(0)))
+            {
+                result += x * Slope;
+            }
+            return result;
         }
     };
 
-    template <typename T, MakeStaticStrongType<T> TSquare, MakeStaticStrongType<T> TLinear, MakeStaticStrongType<T> TConstant>
+    template <typename T, MakeStaticStrongType<T> TSquare = Cast<T>(1), MakeStaticStrongType<T> TLinear = Cast<T>(0), MakeStaticStrongType<T> TConstant = Cast<T>(0)>
     struct Quadratic
     {
     public:
         using ValueType = MakeStrongType<T>;
-        static constexpr ValueType Square = TSquare;
-        static constexpr ValueType Linear = TLinear;
-        static constexpr ValueType Constant = TConstant;
+        static constexpr ValueType                  Square = TSquare;
+        static constexpr Linear<ValueType, TLinear, TConstant> LinearFunction;
 
         [[nodiscard]] constexpr
-        ValueType operator() (ValueType x) const
+        ValueType operator() (ValueType x) const noexcept
         {
-            return Square * Squared(x) + Linear * x + Constant;
+            ValueType result = LinearFunction(x);
+            if constexpr (!Equal(Square, Cast<ValueType>(0)))
+            {
+                result += Square * Squared(x);
+            }
+            return result;
         }
     };
 
@@ -60,7 +73,7 @@ namespace Math
         static constexpr ValueType Multiplier = TMultiplier;
 
         [[nodiscard]] constexpr
-        ValueType operator() (ValueType x) const
+        ValueType operator() (ValueType x) const noexcept
         {
             return Pow(x, Exponent) * Multiplier;
         }
@@ -75,7 +88,7 @@ namespace Math
         static constexpr ValueType ExponentMultiplier = TExponentMultiplier;
 
         [[nodiscard]] constexpr
-        ValueType operator() (ValueType x) const
+        ValueType operator() (ValueType x) const noexcept
         {
             return Pow(Base, ExponentMultiplier * x);
         }
@@ -88,7 +101,7 @@ namespace Math
         using ValueType = MakeStrongType<T>;
 
         [[nodiscard]] constexpr
-        ValueType operator() (ValueType x) const
+        ValueType operator() (ValueType x) const noexcept
         {
             return Log(x);
         }
@@ -102,7 +115,7 @@ namespace Math
         static constexpr ValueType Base = TBase;
 
         [[nodiscard]] constexpr
-        ValueType operator() (ValueType x) const
+        ValueType operator() (ValueType x) const noexcept
         {
             return Log(x) / Log(Base);
         }

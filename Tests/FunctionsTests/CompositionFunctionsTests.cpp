@@ -6,8 +6,8 @@ using Math::Equal;
 
 TEST_CASE("Test Minus composite function")
 {
-    using Linear = Math::Linear<f32, 2.0f, 1.0f>;
-    using Minus = Math::Minus<Linear>;
+    using Linear = Math::Function::Linear<f32, 2.0f, 1.0f>;
+    using Minus = Math::Function::Minus<Linear>;
 
     SECTION("Minus value")
     {
@@ -21,7 +21,7 @@ TEST_CASE("Test Minus composite function")
 
     SECTION("Minus derivative value")
     {
-        constexpr Math::Derivative<Minus> derivative;
+        constexpr Math::Function::Derivative<Minus> derivative;
         REQUIRE(Equal(derivative(0.0f), -2.0f));
         REQUIRE(Equal(derivative(1.0f), -2.0f));
         REQUIRE(Equal(derivative(2.0f), -2.0f));
@@ -31,7 +31,7 @@ TEST_CASE("Test Minus composite function")
 
     SECTION("Minus 2nd order derivative value")
     {
-        constexpr Math::Derivative<Minus, 2> derivative;
+        constexpr Math::Function::Derivative<Minus, 2> derivative;
         REQUIRE(Equal(derivative(0.0f), 0.0f));
         REQUIRE(Equal(derivative(1.0f), 0.0f));
         REQUIRE(Equal(derivative(2.0f), 0.0f));
@@ -42,10 +42,10 @@ TEST_CASE("Test Minus composite function")
 
 TEST_CASE("Test Add composite function")
 {
-    using Constant = Math::Constant<f32, 4.0f>;
-    using Linear = Math::Linear<f32, 2.0f, 1.0f>;
-    using Power = Math::Power<f32, 2.0f>;
-    using Add = Math::Add<Constant, Linear, Power>;
+    using Constant = Math::Function::Constant<f32, 4.0f>;
+    using Linear = Math::Function::Linear<f32, 2.0f, 1.0f>;
+    using Power = Math::Function::Power<f32, 2.0f>;
+    using Add = Math::Function::Add<Constant, Linear, Power>;
 
     SECTION("Add value")
     {
@@ -59,7 +59,7 @@ TEST_CASE("Test Add composite function")
 
     SECTION("Add derivative value")
     {
-        constexpr Math::Derivative<Add> derivative;
+        constexpr Math::Function::Derivative<Add> derivative;
         REQUIRE(Equal(derivative(0.0f), 2.0f));
         REQUIRE(Equal(derivative(1.0f), 4.0f));
         REQUIRE(Equal(derivative(2.0f), 6.0f));
@@ -69,7 +69,7 @@ TEST_CASE("Test Add composite function")
 
     SECTION("Add 2nd order derivative value")
     {
-        constexpr Math::Derivative<Add, 2> derivative;
+        constexpr Math::Function::Derivative<Add, 2> derivative;
         REQUIRE(Equal(derivative(0.0f), 2.0f));
         REQUIRE(Equal(derivative(1.0f), 2.0f));
         REQUIRE(Equal(derivative(2.0f), 2.0f));
@@ -80,9 +80,9 @@ TEST_CASE("Test Add composite function")
 
 TEST_CASE("Test Subtract composite function")
 {
-    using Quadratic = Math::Quadratic<f32, 3.0f, 2.0f, 1.0f>;
-    using Linear = Math::Linear<f32, 2.0f, 1.0f>;
-    using Subtract = Math::Subtract<Quadratic, Linear>;
+    using Quadratic = Math::Function::Quadratic<f32, 3.0f, 2.0f, 1.0f>;
+    using Linear = Math::Function::Linear<f32, 2.0f, 1.0f>;
+    using Subtract = Math::Function::Subtract<Quadratic, Linear>;
 
     SECTION("Subtract value")
     {
@@ -96,7 +96,7 @@ TEST_CASE("Test Subtract composite function")
 
     SECTION("Subtract derivative value")
     {
-        constexpr Math::Derivative<Subtract> derivative;
+        constexpr Math::Function::Derivative<Subtract> derivative;
         REQUIRE(Equal(derivative(0.0f), 0.0f));
         REQUIRE(Equal(derivative(1.0f), 6.0f));
         REQUIRE(Equal(derivative(2.0f), 12.0f));
@@ -106,7 +106,7 @@ TEST_CASE("Test Subtract composite function")
 
     SECTION("Subtract 2nd order derivative value")
     {
-        constexpr Math::Derivative<Subtract, 2> derivative;
+        constexpr Math::Function::Derivative<Subtract, 2> derivative;
         REQUIRE(Equal(derivative(0.0f), 6.0f));
         REQUIRE(Equal(derivative(1.0f), 6.0f));
         REQUIRE(Equal(derivative(2.0f), 6.0f));
@@ -117,8 +117,8 @@ TEST_CASE("Test Subtract composite function")
 
 TEST_CASE("Test Multiply conposite function")
 {
-    using Linear = Math::Linear<f32, 2.0f, 0.0f>;
-    using Multiplied = Math::Multiply<Linear, Linear>;
+    using Linear = Math::Function::Linear<f32, 2.0f, 0.0f>;
+    using Multiplied = Math::Function::Multiply<Linear, Linear>;
 
     SECTION("Multiply value")
     {
@@ -132,7 +132,7 @@ TEST_CASE("Test Multiply conposite function")
 
     SECTION("Multiply derivative value")
     {
-        constexpr Math::Derivative<Multiplied> derivative;
+        constexpr Math::Function::Derivative<Multiplied> derivative;
         REQUIRE(Equal(derivative(0.0f), 0.0f));
         REQUIRE(Equal(derivative(1.0f), 8.0f));
         REQUIRE(Equal(derivative(2.0f), 16.0f));
@@ -142,7 +142,7 @@ TEST_CASE("Test Multiply conposite function")
 
     SECTION("Multiply 2nd order derivative value")
     {
-        constexpr Math::Derivative<Multiplied, 2> derivative;
+        constexpr Math::Function::Derivative<Multiplied, 2> derivative;
         REQUIRE(Equal(derivative(0.0f), 8.0f));
         REQUIRE(Equal(derivative(1.0f), 8.0f));
         REQUIRE(Equal(derivative(2.0f), 8.0f));
@@ -153,9 +153,9 @@ TEST_CASE("Test Multiply conposite function")
 
 TEST_CASE("Test Divide composite function")
 {
-    using Quadratic = Math::Quadratic<f32, 1.0f, 0.0f, 0.0f>;
-    using Linear = Math::Linear<f32, 1.0f, 0.0f>;
-    using Divide = Math::Divide<Quadratic, Linear>;
+    using Quadratic = Math::Function::Quadratic<f32, 1.0f, 0.0f, 0.0f>;
+    using Linear = Math::Function::Linear<f32, 1.0f, 0.0f>;
+    using Divide = Math::Function::Divide<Quadratic, Linear>;
 
     SECTION("Divide value")
     {
@@ -169,7 +169,7 @@ TEST_CASE("Test Divide composite function")
 
     SECTION("Divide derivative value")
     {
-        constexpr Math::Derivative<Divide> derivative;
+        constexpr Math::Function::Derivative<Divide> derivative;
         REQUIRE(Equal(derivative(1.0f), 1.0f));
         REQUIRE(Equal(derivative(2.0f), 1.0f));
         REQUIRE(Equal(derivative(3.0f), 1.0f));
@@ -179,7 +179,7 @@ TEST_CASE("Test Divide composite function")
 
     SECTION("Divide 2nd order derivative value")
     {
-        constexpr Math::Derivative<Divide, 2> derivative;
+        constexpr Math::Function::Derivative<Divide, 2> derivative;
         REQUIRE(Equal(derivative(1.0f), 0.0f));
         REQUIRE(Equal(derivative(2.0f), 0.0f));
         REQUIRE(Equal(derivative(3.0f), 0.0f));
@@ -190,8 +190,8 @@ TEST_CASE("Test Divide composite function")
 
 TEST_CASE("Test Compose composite function")
 {
-    using Linear = Math::Linear<f32, 2.0f, 0.0f>;
-    using Composed = Math::Compose<Math::NaturalLogarithm<f32>, Linear>;
+    using Linear = Math::Function::Linear<f32, 2.0f, 0.0f>;
+    using Composed = Math::Function::Compose<Math::Function::NaturalLogarithm<f32>, Linear>;
 
     SECTION("Compose value")
     {
@@ -206,7 +206,7 @@ TEST_CASE("Test Compose composite function")
 
     SECTION("Compose derivative value")
     {
-        constexpr Math::Derivative<Composed> derivative;
+        constexpr Math::Function::Derivative<Composed> derivative;
         REQUIRE(Equal(derivative(1.0f), 1.0f));
         REQUIRE(Equal(derivative(2.0f), 0.5f));
         REQUIRE(Equal(derivative(3.0f), 1.0f / 3.0f));
@@ -216,7 +216,7 @@ TEST_CASE("Test Compose composite function")
 
     SECTION("Compose 2nd order derivative value")
     {
-        constexpr Math::Derivative<Composed, 2> derivative;
+        constexpr Math::Function::Derivative<Composed, 2> derivative;
         REQUIRE(Equal(derivative(1.0f), -1.0f));
         REQUIRE(Equal(derivative(2.0f), -0.25f));
         REQUIRE(Equal(derivative(3.0f), -1.0f / 9.0f));
@@ -227,10 +227,10 @@ TEST_CASE("Test Compose composite function")
 
 TEST_CASE("Test PowerCompose composite function")
 {
-    using Constant = Math::Constant<f32, Math::Constants::E<f32>>;
-    using Linear = Math::Linear<f32, 1.0f, 0.0f>;
-    using PowerComposed = Math::PowerCompose<Constant, Linear>;
-    constexpr Math::Exponential<f32> exponential;
+    using Constant = Math::Function::Constant<f32, Math::Constants::E<f32>>;
+    using Linear = Math::Function::Linear<f32, 1.0f, 0.0f>;
+    using PowerComposed = Math::Function::PowerCompose<Constant, Linear>;
+    constexpr Math::Function::Exponential<f32> exponential;
 
     SECTION("PowerCompose value")
     {
@@ -244,7 +244,7 @@ TEST_CASE("Test PowerCompose composite function")
 
     SECTION("PowerCompose derivative value")
     {
-        constexpr Math::Derivative<PowerComposed> derivative;
+        constexpr Math::Function::Derivative<PowerComposed> derivative;
         REQUIRE(Equal(derivative(0.0f), exponential(0.0f)));
         REQUIRE(Equal(derivative(1.0f), exponential(1.0f)));
         REQUIRE(Equal(derivative(2.0f), exponential(2.0f)));
@@ -254,7 +254,7 @@ TEST_CASE("Test PowerCompose composite function")
 
     SECTION("PowerCompose 2nd order derivative value")
     {
-        constexpr Math::Derivative<PowerComposed, 2> derivative;
+        constexpr Math::Function::Derivative<PowerComposed, 2> derivative;
         REQUIRE(Equal(derivative(0.0f), exponential(0.0f)));
         REQUIRE(Equal(derivative(1.0f), exponential(1.0f)));
         REQUIRE(Equal(derivative(2.0f), exponential(2.0f)));

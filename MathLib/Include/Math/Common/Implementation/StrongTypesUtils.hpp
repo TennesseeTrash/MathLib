@@ -112,29 +112,6 @@ namespace Math
     template <StaticSizeType Size>
     using FloatingPointSelector = typename Implementation::FloatingPointSelector<Size>::Type;
 
-    template <typename U>
-    [[nodiscard]] constexpr
-    U ToUnderlying(StrongType<U> value) noexcept
-    {
-        return value.mValue;
-    }
-
-    template <typename T>
-    [[nodiscard]] constexpr
-    T ToUnderlying(StaticStrongType<T> value) noexcept
-    {
-        return value.Value;
-    }
-
-    template <typename T>
-        requires (!Implementation::IsSpecialization<T, StrongType>::Value
-              &&  !Implementation::IsSpecialization<T, StaticStrongType>::Value)
-    [[nodiscard]] constexpr
-    T ToUnderlying(T value) noexcept
-    {
-        return value;
-    }
-
     template <typename To, typename From>
     [[nodiscard]] constexpr
     To Cast(From value) noexcept

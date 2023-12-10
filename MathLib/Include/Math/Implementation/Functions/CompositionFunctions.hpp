@@ -1,7 +1,7 @@
 #ifndef MATHLIB_IMPL_FUNCTIONS_COMPOSITION_FUNCTIONS_HPP
 #define MATHLIB_IMPL_FUNCTIONS_COMPOSITION_FUNCTIONS_HPP
 
-namespace Math
+namespace Math::Function
 {
     template <typename Func>
     struct Minus
@@ -12,9 +12,9 @@ namespace Math
 
         template <typename... Args>
         [[nodiscard]] constexpr
-        ValueType operator()(Args&&... args) const
+        ValueType operator()(Args... args) const
         {
-            return -FuncInstance(std::forward<Args>(args)...);
+            return -FuncInstance(args...);
         }
     };
 

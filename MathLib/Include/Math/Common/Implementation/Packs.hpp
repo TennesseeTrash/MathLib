@@ -4,7 +4,7 @@
 #include "StrongTypes.hpp"
 #include "StrongTypesUtils.hpp"
 
-namespace Math::Implementation
+namespace Math
 {
     template <typename... Types>
     struct TypePack
@@ -16,7 +16,7 @@ namespace Math::Implementation
         template <StaticSizeType Index, typename Head, typename... AtImplTypes>
         struct AtImpl<Index, Head, AtImplTypes...>
         {
-            using Type = typename AtImpl<Cast<StaticSizeType>(SizeType(Index) - 1), Types...>::Type;
+            using Type = typename AtImpl<SizeType(Index) - 1, AtImplTypes...>::Type;
         };
 
         template <typename Head, typename... AtImplTypes>
@@ -25,10 +25,42 @@ namespace Math::Implementation
             using Type = Head;
         };
     public:
-        static constexpr StaticSizeType Size = sizeof...(Types);
+        static constexpr SizeType Size = sizeof...(Types);
 
         template <StaticSizeType Index>
         using At = typename AtImpl<Index, Types...>::Type;
+
+        template <typename T>
+        using Append = TypePack<Types..., T>;
+    };
+
+    template <typename T, T... Pack>
+    struct ValuePack
+    {
+    private:
+        template <StaticSizeType Index, T... AtImplPack>
+        struct AtImpl;
+
+        template <StaticSizeType Index, T Head, T... AtImplPack>
+        struct AtImpl<Index, Head, AtImplPack...>
+        {
+            static constexpr T Value = AtImpl<SizeType(Index) - 1, AtImplPack...>::Value;
+        };
+
+        template <T Head, T... AtImplPack>
+        struct AtImpl<0, Head, AtImplPack...>
+        {
+            static constexpr T Value = Head;
+        };
+    public:
+        static constexpr SizeType Size = sizeof...(Pack);
+        using ValueType = T;
+
+        template <StaticSizeType Index>
+        static constexpr T At = AtImpl<Index, Pack...>::Value;
+
+        template <T Value>
+        using Append = ValuePack<T, Pack..., Value>;
     };
 }
 

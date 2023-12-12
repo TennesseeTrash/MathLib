@@ -143,6 +143,19 @@ namespace Math
 
     using f32 = StrongType<float>;
     using f64 = StrongType<double>;
+
+    using i8s  = StaticStrongType<std::int8_t>;
+    using i16s = StaticStrongType<std::int16_t>;
+    using i32s = StaticStrongType<std::int32_t>;
+    using i64s = StaticStrongType<std::int64_t>;
+
+    using u8s  = StaticStrongType<std::uint8_t>;
+    using u16s = StaticStrongType<std::uint16_t>;
+    using u32s = StaticStrongType<std::uint32_t>;
+    using u64s = StaticStrongType<std::uint64_t>;
+
+    using f32s = StaticStrongType<float>;
+    using f64s = StaticStrongType<double>;
 }
 
 #endif //MATHLIB_COMMON_IMPL_STRONG_TYPES_HPP

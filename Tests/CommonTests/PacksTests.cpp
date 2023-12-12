@@ -2,12 +2,12 @@
 #include <Math/Common/Packs.hpp>
 #include <Math/Common/Types.hpp>
 
-using i32 = Math::i32;
-using i64 = Math::i64;
-using f32 = Math::f32;
-using f64 = Math::f64;
-using SizeType = Math::SizeType;
-using i32s = Math::i32s;
+using Math::i32;
+using Math::i64;
+using Math::f32;
+using Math::f64;
+using Math::SizeType;
+using Math::i32s;
 
 namespace
 {

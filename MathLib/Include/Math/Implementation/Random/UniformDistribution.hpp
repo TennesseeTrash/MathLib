@@ -33,7 +33,8 @@ namespace Math
                 return ValueShift<ValueType>(rng());
             }
 
-            RNGVT repeat = RNGVT::Max() - (RNGVT::Max() % range) + 1;
+            // TODO(3011): This is now probably incorrect, write tests.
+            RNGVT repeat = RNGVT::Max() - ((RNGVT::Max() % range) + 1);
             RNGVT result = rng();
             while (result >= repeat)
             {

@@ -25,15 +25,6 @@ namespace Math
                       || (IsSame<T, Ts> && ...), "Invalid types");
         }
 
-        [[nodiscard]] constexpr
-        Array(const ValueType (&initializer)[ToUnderlying(Size)])
-        {
-            for (SizeType i = 0; i < Size; ++i)
-            {
-                (*this)[i] = initializer[ToUnderlying(i)];
-            }
-        }
-
         template <Invocable<T&> Func>
         [[maybe_unused]] constexpr
         Func ForEach(Func func) noexcept
@@ -149,6 +140,26 @@ namespace Math
         Array<T, N> result;
         result.template ForEach<Func>(func);
         return result;
+    }
+
+    namespace Implementation
+    {
+        template <typename ValueType, typename T>
+        struct MakeArrayImpl;
+
+        template <typename ValueType, typename T, T... Values>
+        struct MakeArrayImpl<ValueType, ValuePack<T, Values...>>
+        {
+            using Type = Array<ValueType, sizeof...(Values)>;
+            static constexpr Type Value{ Cast<ValueType>(Values)... };
+        };
+    }
+
+    template <typename ValueType, typename T>
+    [[nodiscard]] constexpr
+    typename Implementation::MakeArrayImpl<ValueType, T>::Type MakeArray()
+    {
+        return Implementation::MakeArrayImpl<ValueType, T>::Value;
     }
 }
 

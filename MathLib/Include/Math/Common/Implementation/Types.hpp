@@ -23,24 +23,15 @@ namespace Math::Implementation
     struct GetValueType
     {};
 
-    template <typename T1, typename T2>
-    struct GetValueType<T1, T2>
+    template <typename T1, typename... T>
+    struct GetValueType<T1, T...>
     {
     private:
         using ValueType1 = typename GetValueType<T1>::Type;
-        using ValueType2 = typename GetValueType<T2>::Type;
-    public:
-        using Type = typename ConditionalType<IsSame<ValueType1, ValueType2>, ValueType1, void>::Type;
-    };
-
-    template <typename T1, typename T2, typename... T>
-    struct GetValueType<T1, T2, T...>
-    {
-    private:
-        using ValueType1 = typename GetValueType<T1, T2>::Type;
         using ValueType2 = typename GetValueType<T...>::Type;
+        static_assert(IsSame<ValueType1, ValueType2>);
     public:
-        using Type = typename ConditionalType<IsSame<ValueType1, ValueType2>, ValueType1, void>::Type;
+        using Type = ValueType1;
     };
 
     template <typename T>

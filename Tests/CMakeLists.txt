@@ -16,6 +16,7 @@ target_link_libraries(Tests PRIVATE
 
 target_sources(Tests PRIVATE
     "CommonTests/PacksTests.cpp"
+    "CommonTests/ArrayTests.cpp"
     "CommonTests/BoolToolsTests.cpp"
     "FunctionsTests/BasicFunctionsTests/SignAbsTests.cpp"
     "FunctionsTests/BasicFunctionsTests/PowerTests.cpp"

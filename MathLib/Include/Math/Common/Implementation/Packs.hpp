@@ -32,6 +32,9 @@ namespace Math
 
         template <typename T>
         using Append = TypePack<Types..., T>;
+
+        template <typename T>
+        using Prepend = TypePack<T, Types...>;
     };
 
     template <typename T, T... Pack>
@@ -52,6 +55,7 @@ namespace Math
         {
             static constexpr T Value = Head;
         };
+
     public:
         static constexpr SizeType Size = sizeof...(Pack);
         using ValueType = T;
@@ -61,6 +65,40 @@ namespace Math
 
         template <T Value>
         using Append = ValuePack<T, Pack..., Value>;
+
+        template <T Value>
+        using Prepend = ValuePack<T, Value, Pack...>;
+
+    private:
+        template <StaticSizeType Count, StaticSizeType Index = 0>
+        struct MakeAscendingImpl
+        {
+            using Type = typename MakeAscendingImpl<Count, SizeType(Index) + 1>::Type::template Prepend<Cast<T>(Index)>;
+        };
+
+        template <StaticSizeType Count>
+        struct MakeAscendingImpl<Count, Count>
+        {
+            using Type = ValuePack<T>;
+        };
+
+        template <StaticSizeType Count, StaticSizeType Index = 0>
+        struct MakeDescendingImpl
+        {
+            using Type = typename MakeDescendingImpl<Count, SizeType(Index) + 1>::Type::template Append<Cast<T>(Index)>;
+        };
+
+        template <StaticSizeType Count>
+        struct MakeDescendingImpl<Count, Count>
+        {
+            using Type = ValuePack<T>;
+        };
+    public:
+        template <StaticSizeType Count>
+        using MakeAscending = typename MakeAscendingImpl<Count, 0>::Type;
+
+        template <StaticSizeType Count>
+        using MakeDescending = typename MakeDescendingImpl<Count, 0>::Type;
     };
 }
 

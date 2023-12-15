@@ -2,6 +2,7 @@
 #define MATHLIB_IMPL_FUNCTIONS_ELEMENTARY_FUNCTIONS_HPP
 
 #include "../../Common/Types.hpp"
+#include "../../Common/Array.hpp"
 #include "BasicFunctions.hpp"
 
 namespace Math::Function
@@ -59,6 +60,29 @@ namespace Math::Function
             if constexpr (!Equal(Square, Cast<ValueType>(0)))
             {
                 result += Square * Squared(x);
+            }
+            return result;
+        }
+    };
+
+    template <typename T, MakeStaticStrongType<T>... TCoefficients>
+    struct Polynomial
+    {
+    public:
+        using ValueType = MakeStrongType<T>;
+        static constexpr Array<ValueType, sizeof...(TCoefficients)> Coefficients = { Cast<ValueType>(TCoefficients)... };
+
+        [[nodiscard]] constexpr
+        ValueType operator() (ValueType x) const noexcept
+        {
+            if constexpr (Coefficients.Size == 0)
+            {
+                return Cast<ValueType>(0);
+            }
+            ValueType result = Coefficients[0];
+            for (SizeType i = 1; i < Coefficients.Size; ++i)
+            {
+                result = result * x + Coefficients[i];
             }
             return result;
         }

@@ -46,6 +46,17 @@ TEST_CASE("TypePack creation and basic utilities", "[Math][Common]")
         STATIC_REQUIRE(Math::IsSame<ResultPack::At<4>, SizeType>);
     }
 
+    SECTION("Test Pack::Prepend")
+    {
+        using ResultPack = Pack::Prepend<SizeType>;
+        STATIC_REQUIRE(ResultPack::Size == 5);
+        STATIC_REQUIRE(Math::IsSame<ResultPack::At<0>, SizeType>);
+        STATIC_REQUIRE(Math::IsSame<ResultPack::At<1>, i32>);
+        STATIC_REQUIRE(Math::IsSame<ResultPack::At<2>, i64>);
+        STATIC_REQUIRE(Math::IsSame<ResultPack::At<3>, f32>);
+        STATIC_REQUIRE(Math::IsSame<ResultPack::At<4>, f64>);
+    }
+
     SECTION("Test Concatenate")
     {
         using ResultPack = Math::Concatenate<Pack, Math::TypePack<SizeType>>;
@@ -149,6 +160,39 @@ TEST_CASE("ValuePack creation and basic utilities", "[Math][Common]")
         STATIC_REQUIRE(i32(ResultPack::At<2>) == 3);
         STATIC_REQUIRE(i32(ResultPack::At<3>) == 4);
         STATIC_REQUIRE(i32(ResultPack::At<4>) == 5);
+    }
+
+    SECTION("Test Pack::Prepend")
+    {
+        using ResultPack = Pack::Prepend<5>;
+        STATIC_REQUIRE(ResultPack::Size == 5);
+        STATIC_REQUIRE(i32(ResultPack::At<0>) == 5);
+        STATIC_REQUIRE(i32(ResultPack::At<1>) == 1);
+        STATIC_REQUIRE(i32(ResultPack::At<2>) == 2);
+        STATIC_REQUIRE(i32(ResultPack::At<3>) == 3);
+        STATIC_REQUIRE(i32(ResultPack::At<4>) == 4);
+    }
+
+    SECTION("Test ValuePack::MakeAscending")
+    {
+        using ResultPack = Math::ValuePack<i32s>::MakeAscending<5>;
+        STATIC_REQUIRE(ResultPack::Size == 5);
+        STATIC_REQUIRE(i32(ResultPack::At<0>) == 0);
+        STATIC_REQUIRE(i32(ResultPack::At<1>) == 1);
+        STATIC_REQUIRE(i32(ResultPack::At<2>) == 2);
+        STATIC_REQUIRE(i32(ResultPack::At<3>) == 3);
+        STATIC_REQUIRE(i32(ResultPack::At<4>) == 4);
+    }
+
+    SECTION("Test ValuePack::MakeDescending")
+    {
+        using ResultPack = Math::ValuePack<i32s>::MakeDescending<5>;
+        STATIC_REQUIRE(ResultPack::Size == 5);
+        STATIC_REQUIRE(i32(ResultPack::At<0>) == 4);
+        STATIC_REQUIRE(i32(ResultPack::At<1>) == 3);
+        STATIC_REQUIRE(i32(ResultPack::At<2>) == 2);
+        STATIC_REQUIRE(i32(ResultPack::At<3>) == 1);
+        STATIC_REQUIRE(i32(ResultPack::At<4>) == 0);
     }
 
     SECTION("Test Concatenate")

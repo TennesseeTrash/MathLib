@@ -3,6 +3,7 @@
 
 #include "ElementaryFunctions.hpp"
 #include "CompositionFunctions.hpp"
+#include "../../Common/Packs.hpp"
 
 namespace Math::Function
 {
@@ -39,6 +40,27 @@ namespace Math::Function
             using ValueType = GetValueType<Quadratic<T, TSquare, TLinear, TConstant>>;
         public:
             using Type = Linear<ValueType, Cast<ValueType>(2) * TSquare, TLinear>;
+        };
+
+        template <typename T, MakeStaticStrongType<T>... TCoefficients>
+        struct Derivative<Polynomial<T, TCoefficients...>, 1>
+        {
+        private:
+            template <typename CoefficientsPack>
+            struct ConvertToPolynomial;
+
+            template <typename ValuePackValueType, ValuePackValueType... ValuePackCoefficients>
+            struct ConvertToPolynomial<ValuePack<ValuePackValueType, ValuePackCoefficients...>>
+            {
+                using Type = Polynomial<T, ValuePackCoefficients...>;
+            };
+
+            using ValueType = GetValueType<Polynomial<T, TCoefficients...>>;
+            using ShiftedCoefficients = RemoveLast<ValuePack<MakeStaticStrongType<ValueType>, TCoefficients...>>;
+            using Multipliers = RemoveLast<typename ValuePack<MakeStaticStrongType<ValueType>>::template MakeDescending<sizeof...(TCoefficients)>>;
+            using DerivedCoefficients = ZipWith<decltype([](ValueType a, ValueType b) { return a * b; }), ShiftedCoefficients, Multipliers>;
+        public:
+            using Type = typename ConvertToPolynomial<DerivedCoefficients>::Type;
         };
 
         template <typename T, MakeStaticStrongType<T> TExponent, MakeStaticStrongType<T> TMultiplier>

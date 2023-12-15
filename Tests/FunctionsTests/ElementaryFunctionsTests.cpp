@@ -109,6 +109,41 @@ TEST_CASE("Test Quadratic function and its derivatives")
     }
 }
 
+TEST_CASE("Test Polynomial function and its derivatives")
+{
+    using Polynomial = Math::Function::Polynomial<f32, 1.0f, 2.0f, 3.0f, 4.0f>;
+
+    SECTION("Polynomial value")
+    {
+        constexpr Polynomial polynomial;
+        REQUIRE(Equal(polynomial(0.0f), 4.0f));
+        REQUIRE(Equal(polynomial(1.0f), 10.0f));
+        REQUIRE(Equal(polynomial(2.0f), 26.0f));
+        REQUIRE(Equal(polynomial(3.0f), 58.0f));
+        REQUIRE(Equal(polynomial(4.0f), 112.0f));
+    }
+
+    SECTION("Polynomial derivative value")
+    {
+        constexpr Math::Function::Derivative<Polynomial> derivative;
+        REQUIRE(Equal(derivative(0.0f), 3.0f));
+        REQUIRE(Equal(derivative(1.0f), 10.0f));
+        REQUIRE(Equal(derivative(2.0f), 23.0f));
+        REQUIRE(Equal(derivative(3.0f), 42.0f));
+        REQUIRE(Equal(derivative(4.0f), 67.0f));
+    }
+
+    SECTION("Polynomial 2nd order derivative value")
+    {
+        constexpr Math::Function::Derivative<Polynomial, 2> derivative;
+        REQUIRE(Equal(derivative(0.0f), 4.0f));
+        REQUIRE(Equal(derivative(1.0f), 10.0f));
+        REQUIRE(Equal(derivative(2.0f), 16.0f));
+        REQUIRE(Equal(derivative(3.0f), 22.0f));
+        REQUIRE(Equal(derivative(4.0f), 28.0f));
+    }
+}
+
 TEST_CASE("Test Power function and its derivatives")
 {
     using Power = Math::Function::Power<f32, 2.0f>;

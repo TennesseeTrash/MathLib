@@ -32,7 +32,7 @@ namespace Math
             if (ToUnderlying(seed))
             {
                 Random64 rng(seed);
-                mPermutation.Shuffle<Random64, UniformIntegerDistribution>(rng);
+                mPermutation.Shuffle<Random64, UniformDistribution>(rng);
             }
         }
 

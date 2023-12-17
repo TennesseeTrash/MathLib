@@ -8,13 +8,13 @@ namespace Math
 {
     template <ConceptStrongType T>
         requires IntegralType<T>
-    class UniformIntegerDistribution
+    class UniformDistribution
     {
     public:
         using ValueType = T;
 
         [[nodiscard]] constexpr
-        UniformIntegerDistribution(ValueType begin = ValueType::Min, ValueType end = ValueType::Max) noexcept
+        UniformDistribution(ValueType begin = ValueType::Min(), ValueType end = ValueType::Max()) noexcept
             : mBegin(begin), mEnd(end)
         {}
 
@@ -27,21 +27,22 @@ namespace Math
         ValueType operator()(RNG& rng) const noexcept
         {
             using RNGVT = typename RNG::ValueType;
-            RNGVT range = ValueShift<RNGVT>(mEnd) - ValueShift<RNGVT>(mBegin);
+            RNGVT begin = ValueShift<RNGVT>(mBegin);
+            RNGVT range = ValueShift<RNGVT>(mEnd) - begin;
             if (range == RNGVT::Max())
             {
                 return ValueShift<ValueType>(rng());
             }
 
-            // TODO(3011): This is now probably incorrect, write tests.
-            RNGVT repeat = RNGVT::Max() - ((RNGVT::Max() % range) + 1);
+            ++range;
+            RNGVT repeat = RNGVT::Max() - (RNGVT::Max() % range);
             RNGVT result = rng();
-            while (result >= repeat)
+            while (result > repeat)
             {
                 result = rng();
             }
 
-            return mBegin + ValueShift<ValueType>(result % range);
+            return ValueShift<ValueType>(begin + (result % range));
         }
     private:
         ValueType mBegin;

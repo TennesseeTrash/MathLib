@@ -12,8 +12,8 @@ namespace Math
     static_assert(ConceptRandomNumberGenerator<Random32>);
     static_assert(ConceptRandomNumberGenerator<Random64>);
 
-    static_assert(ConceptDistribution<UniformIntegerDistribution<u32>, Random32>);
-    static_assert(ConceptDistribution<UniformIntegerDistribution<u64>, Random64>);
+    static_assert(ConceptDistribution<UniformDistribution<u32>, Random32>);
+    static_assert(ConceptDistribution<UniformDistribution<u64>, Random64>);
 }
 
 #endif //MATHLIB_RANDOM_HPP

@@ -68,9 +68,9 @@ TEST_CASE("Test Array basics", "[Math][Common]")
     {
         Math::Random64 random;
         Math::Array<f32, 4> array(f32(1.0f), f32(2.0f), f32(3.0f), f32(4.0f));
-        array.Shuffle<Math::Random64, Math::UniformIntegerDistribution>(random);
-        REQUIRE(Equal(array[0], 3.0f));
-        REQUIRE(Equal(array[1], 4.0f));
+        array.Shuffle<Math::Random64, Math::UniformDistribution>(random);
+        REQUIRE(Equal(array[0], 4.0f));
+        REQUIRE(Equal(array[1], 3.0f));
         REQUIRE(Equal(array[2], 1.0f));
         REQUIRE(Equal(array[3], 2.0f));
     }

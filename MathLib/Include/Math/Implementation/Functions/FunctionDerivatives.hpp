@@ -21,27 +21,6 @@ namespace Math::Function
             using Type = T;
         };
 
-        template <typename T, MakeStaticStrongType<T> TValue>
-        struct Derivative<Constant<T, TValue>, 1>
-        {
-            using Type = Constant<T, Cast<T>(0)>;
-        };
-
-        template <typename T, MakeStaticStrongType<T> TSlope, MakeStaticStrongType<T> TIntercept>
-        struct Derivative<Linear<T, TSlope, TIntercept>, 1>
-        {
-            using Type = Constant<T, TSlope>;
-        };
-
-        template <typename T, MakeStaticStrongType<T> TSquare, MakeStaticStrongType<T> TLinear, MakeStaticStrongType<T> TConstant>
-        struct Derivative<Quadratic<T, TSquare, TLinear, TConstant>, 1>
-        {
-        private:
-            using ValueType = GetValueType<Quadratic<T, TSquare, TLinear, TConstant>>;
-        public:
-            using Type = Linear<ValueType, Cast<ValueType>(2) * TSquare, TLinear>;
-        };
-
         template <typename T, MakeStaticStrongType<T>... TCoefficients>
         struct Derivative<Polynomial<T, TCoefficients...>, 1>
         {
@@ -59,8 +38,10 @@ namespace Math::Function
             using ShiftedCoefficients = RemoveLast<ValuePack<MakeStaticStrongType<ValueType>, TCoefficients...>>;
             using Multipliers = RemoveLast<typename ValuePack<MakeStaticStrongType<ValueType>>::template MakeDescending<sizeof...(TCoefficients)>>;
             using DerivedCoefficients = ZipWith<decltype([](ValueType a, ValueType b) { return a * b; }), ShiftedCoefficients, Multipliers>;
+            using DerivedPolynomial = typename ConvertToPolynomial<DerivedCoefficients>::Type;
+            using Zero = Polynomial<T, Cast<ValueType>(0)>;
         public:
-            using Type = typename ConvertToPolynomial<DerivedCoefficients>::Type;
+            using Type = ConditionalType<sizeof...(TCoefficients) == 1, Zero, DerivedPolynomial>;
         };
 
         template <typename T, MakeStaticStrongType<T> TExponent, MakeStaticStrongType<T> TMultiplier>

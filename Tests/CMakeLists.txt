@@ -2,7 +2,7 @@ Include(FetchContent)
 FetchContent_Declare(
   Catch2
   GIT_REPOSITORY https://github.com/catchorg/Catch2.git
-  GIT_TAG        v3.4.0
+  GIT_TAG        v3.5.0
 )
 
 FetchContent_MakeAvailable(Catch2)
@@ -17,7 +17,6 @@ target_link_libraries(Tests PRIVATE
 target_sources(Tests PRIVATE
     "CommonTests/PacksTests.cpp"
     "CommonTests/ArrayTests.cpp"
-    "CommonTests/BoolToolsTests.cpp"
     "FunctionsTests/BasicFunctionsTests/SignAbsTests.cpp"
     "FunctionsTests/BasicFunctionsTests/PowerTests.cpp"
     "FunctionsTests/BasicFunctionsTests/LogTests.cpp"

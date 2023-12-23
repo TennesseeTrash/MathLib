@@ -58,11 +58,11 @@ target_sources(Tests PRIVATE
 )
 
 if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-    target_compile_options(Tests PRIVATE /W4)
+    message(FATAL_ERROR "The library does not currently support MSVC!")
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     target_compile_options(Tests PRIVATE -Wall -Wextra -Wpedantic)
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Clang" OR CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
-    target_compile_options(Tests PRIVATE -Weverything -Wpedantic -Wno-c++98-compat -Wno-c++98-compat-pedantic)
+    target_compile_options(Tests PRIVATE -Weverything -Wpedantic -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-unsafe-buffer-usage)
 else()
     message(WARNING "Unknown compiler, no compiler warnings set for Tests target!")
 endif()

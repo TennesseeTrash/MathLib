@@ -93,6 +93,7 @@ namespace Math
         {
             using Type = ValuePack<T>;
         };
+
     public:
         template <StaticSizeType Count>
         using MakeAscending = typename MakeAscendingImpl<Count, 0>::Type;

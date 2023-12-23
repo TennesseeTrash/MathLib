@@ -39,8 +39,8 @@ namespace Math
         [[nodiscard]]    friend constexpr StrongType<ValueType>  operator&   (StrongType<ValueType>  a, StrongType<ValueType> b) noexcept { return a.mValue & b.mValue; }
         [[nodiscard]]    friend constexpr StrongType<ValueType>  operator|   (StrongType<ValueType>  a, StrongType<ValueType> b) noexcept { return a.mValue | b.mValue; }
         [[nodiscard]]    friend constexpr StrongType<ValueType>  operator^   (StrongType<ValueType>  a, StrongType<ValueType> b) noexcept { return a.mValue ^ b.mValue; }
-        [[nodiscard]]    friend constexpr StrongType<ValueType>  operator<<  (StrongType<ValueType>  a, StrongType<ValueType> s) noexcept { return a.mValue << s.mValue; }
-        [[nodiscard]]    friend constexpr StrongType<ValueType>  operator>>  (StrongType<ValueType>  a, StrongType<ValueType> s) noexcept { return a.mValue >> s.mValue; }
+        [[nodiscard]]    friend constexpr StrongType<ValueType>  operator<<  (StrongType<ValueType>  a, StrongType<ValueType> s) noexcept { return ValueType(a.mValue << s.mValue); }
+        [[nodiscard]]    friend constexpr StrongType<ValueType>  operator>>  (StrongType<ValueType>  a, StrongType<ValueType> s) noexcept { return ValueType(a.mValue >> s.mValue); }
 
         [[maybe_unused]] friend constexpr StrongType<ValueType>  operator++  (StrongType<ValueType>& a)                          noexcept { return ++a.mValue; }
         [[maybe_unused]] friend constexpr StrongType<ValueType>  operator--  (StrongType<ValueType>& a)                          noexcept { return --a.mValue; }

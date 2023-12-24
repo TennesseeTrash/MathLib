@@ -8,7 +8,7 @@
 namespace Math::Function
 {
     template <typename T, MakeStaticStrongType<T>... TCoefficients>
-    struct Polynomial
+    struct Polynomial final
     {
     public:
         using ValueType = MakeStrongType<T>;
@@ -40,7 +40,7 @@ namespace Math::Function
     using Quadratic = Polynomial<T, TSquare, TLinear, TConstant>;
 
     template <typename T, MakeStaticStrongType<T> TExponent, MakeStaticStrongType<T> TMultiplier = Cast<T>(1)>
-    struct Power
+    struct Power final
     {
     public:
         using ValueType = MakeStrongType<T>;
@@ -55,7 +55,7 @@ namespace Math::Function
     };
 
     template <typename T, MakeStaticStrongType<T> TBase = Math::Constant::E<T>, MakeStaticStrongType<T> TExponentMultiplier = Cast<T>(1)>
-    struct Exponential
+    struct Exponential final
     {
     public:
         using ValueType = MakeStrongType<T>;
@@ -70,7 +70,7 @@ namespace Math::Function
     };
 
     template <typename T>
-    struct NaturalLogarithm
+    struct NaturalLogarithm final
     {
     public:
         using ValueType = MakeStrongType<T>;
@@ -83,7 +83,7 @@ namespace Math::Function
     };
 
     template <typename T, MakeStaticStrongType<T> TBase>
-    struct Logarithm
+    struct Logarithm final
     {
     public:
         using ValueType = MakeStrongType<T>;

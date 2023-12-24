@@ -4,7 +4,7 @@
 namespace Math::Function
 {
     template <typename Func>
-    struct Minus
+    struct Minus final
     {
     public:
         using ValueType = GetValueType<Func>;
@@ -22,7 +22,7 @@ namespace Math::Function
     struct Add;
 
     template <typename Func1, typename Func2>
-    struct Add<Func1, Func2>
+    struct Add<Func1, Func2> final
     {
     public:
         using ValueType = GetValueType<Func1, Func2>;
@@ -38,7 +38,7 @@ namespace Math::Function
     };
 
     template <typename Func, typename... RemainingFuncs>
-    struct Add<Func, RemainingFuncs...>
+    struct Add<Func, RemainingFuncs...> final
     {
     public:
         using ValueType = GetValueType<Func, RemainingFuncs...>;
@@ -54,7 +54,7 @@ namespace Math::Function
     };
 
     template <typename Subtrahend, typename Subtractor>
-    struct Subtract
+    struct Subtract final
     {
     public:
         using ValueType = GetValueType<Subtrahend, Subtractor>;
@@ -70,7 +70,7 @@ namespace Math::Function
     };
 
     template <typename Func1, typename Func2>
-    struct Multiply
+    struct Multiply final
     {
     public:
         using ValueType = GetValueType<Func1, Func2>;
@@ -86,7 +86,7 @@ namespace Math::Function
     };
 
     template <typename Dividend, typename Divisor>
-    struct Divide
+    struct Divide final
     {
     public:
         using ValueType = GetValueType<Dividend, Divisor>;
@@ -102,7 +102,7 @@ namespace Math::Function
     };
 
     template <typename Outer, typename Inner>
-    struct Compose
+    struct Compose final
     {
     public:
         using ValueType = GetValueType<Outer, Inner>;
@@ -118,7 +118,7 @@ namespace Math::Function
     };
 
     template <typename Base, typename Exponent>
-    struct PowerCompose
+    struct PowerCompose final
     {
     public:
         using ValueType = GetValueType<Base, Exponent>;

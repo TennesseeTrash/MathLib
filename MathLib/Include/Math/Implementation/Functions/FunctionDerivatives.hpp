@@ -11,19 +11,19 @@ namespace Math::Function
     namespace Implementation
     {
         template <typename T, StaticSizeType Order>
-        struct Derivative
+        struct Derivative final
         {
             using Type = typename Derivative<typename Derivative<T, 1>::Type, Cast<SizeType>(Order) - 1>::Type;
         };
 
         template <typename T>
-        struct Derivative<T, 0>
+        struct Derivative<T, 0> final
         {
             using Type = T;
         };
 
         template <typename T, MakeStaticStrongType<T>... TCoefficients>
-        struct Derivative<Polynomial<T, TCoefficients...>, 1>
+        struct Derivative<Polynomial<T, TCoefficients...>, 1> final
         {
         private:
             template <typename CoefficientsPack>
@@ -46,7 +46,7 @@ namespace Math::Function
         };
 
         template <typename T, MakeStaticStrongType<T> TExponent, MakeStaticStrongType<T> TMultiplier>
-        struct Derivative<Power<T, TExponent, TMultiplier>, 1>
+        struct Derivative<Power<T, TExponent, TMultiplier>, 1> final
         {
         private:
             using ValueType = GetValueType<Power<T, TExponent, TMultiplier>>;
@@ -55,7 +55,7 @@ namespace Math::Function
         };
 
         template <typename T, MakeStaticStrongType<T> TBase, MakeStaticStrongType<T> TExponentMultiplier>
-        struct Derivative<Exponential<T, TBase, TExponentMultiplier>, 1>
+        struct Derivative<Exponential<T, TBase, TExponentMultiplier>, 1> final
         {
         private:
             // TODO(3011): Currently does not compile due to non-constexpr Log, implement or wait until C++26
@@ -67,7 +67,7 @@ namespace Math::Function
         };
 
         template <typename T>
-        struct Derivative<NaturalLogarithm<T>, 1>
+        struct Derivative<NaturalLogarithm<T>, 1> final
         {
         private:
             using ValueType = GetValueType<NaturalLogarithm<T>>;
@@ -76,7 +76,7 @@ namespace Math::Function
         };
 
         template <typename T, MakeStaticStrongType<T> TBase>
-        struct Derivative<Logarithm<T, TBase>, 1>
+        struct Derivative<Logarithm<T, TBase>, 1> final
         {
         private:
             // TODO(3011): Currently does not compile due to non-constexpr Log, implement or wait until C++26
@@ -86,31 +86,31 @@ namespace Math::Function
         };
 
         template <typename Func>
-        struct Derivative<Minus<Func>, 1>
+        struct Derivative<Minus<Func>, 1> final
         {
             using Type = Minus<typename Derivative<Func, 1>::Type>;
         };
 
         template <typename... Funcs>
-        struct Derivative<Add<Funcs...>, 1>
+        struct Derivative<Add<Funcs...>, 1> final
         {
             using Type = Add<typename Derivative<Funcs, 1>::Type...>;
         };
 
         template <typename Subtrahend, typename Subtractor>
-        struct Derivative<Subtract<Subtrahend, Subtractor>, 1>
+        struct Derivative<Subtract<Subtrahend, Subtractor>, 1> final
         {
             using Type = Subtract<typename Derivative<Subtrahend, 1>::Type, typename Derivative<Subtractor, 1>::Type>;
         };
 
         template <typename Func1, typename Func2>
-        struct Derivative<Multiply<Func1, Func2>, 1>
+        struct Derivative<Multiply<Func1, Func2>, 1> final
         {
             using Type = Add<Multiply<typename Derivative<Func1, 1>::Type, Func2>, Multiply<Func1, typename Derivative<Func2, 1>::Type>>;
         };
 
         template <typename Dividend, typename Divisor>
-        struct Derivative<Divide<Dividend, Divisor>, 1>
+        struct Derivative<Divide<Dividend, Divisor>, 1> final
         {
         private:
             using ValueType = GetValueType<Divide<Dividend, Divisor>>;
@@ -121,13 +121,13 @@ namespace Math::Function
         };
 
         template <typename Outer, typename Inner>
-        struct Derivative<Compose<Outer, Inner>, 1>
+        struct Derivative<Compose<Outer, Inner>, 1> final
         {
             using Type = Multiply<Compose<typename Derivative<Outer, 1>::Type, Inner>, typename Derivative<Inner, 1>::Type>;
         };
 
         template <typename Base, typename Exponent>
-        struct Derivative<PowerCompose<Base, Exponent>, 1>
+        struct Derivative<PowerCompose<Base, Exponent>, 1> final
         {
         private:
             using ValueType = GetValueType<PowerCompose<Base, Exponent>>;

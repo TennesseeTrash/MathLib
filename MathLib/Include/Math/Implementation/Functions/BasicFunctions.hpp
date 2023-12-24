@@ -36,7 +36,7 @@ namespace Math
 
     template <FundamentalType T>
     [[nodiscard]] constexpr
-    bool Equal(T val1, T val2, T epsilon = Constants::Epsilon<T>) noexcept
+    bool Equal(T val1, T val2, T epsilon = Constant::Epsilon<T>) noexcept
     {
         if constexpr (FloatingPointType<T>)
         {
@@ -50,21 +50,21 @@ namespace Math
 
     template <FundamentalType T>
     [[nodiscard]] constexpr
-    bool Equal(StrongType<T> val1, StrongType<T> val2, StrongType<T> epsilon = Constants::Epsilon<StrongType<T>>) noexcept
+    bool Equal(StrongType<T> val1, StrongType<T> val2, StrongType<T> epsilon = Constant::Epsilon<StrongType<T>>) noexcept
     {
         return Equal(ToUnderlying(val1), ToUnderlying(val2), ToUnderlying(epsilon));
     }
 
     template <FundamentalType T>
     [[nodiscard]] constexpr
-    bool Equal(StrongType<T> val1, T val2, StrongType<T> epsilon = Constants::Epsilon<StrongType<T>>) noexcept
+    bool Equal(StrongType<T> val1, T val2, StrongType<T> epsilon = Constant::Epsilon<StrongType<T>>) noexcept
     {
         return Equal(ToUnderlying(val1), val2, ToUnderlying(epsilon));
     }
 
     template <FundamentalType T>
     [[nodiscard]] constexpr
-    bool Equal(T val1, StrongType<T> val2, StrongType<T> epsilon = Constants::Epsilon<StrongType<T>>) noexcept
+    bool Equal(T val1, StrongType<T> val2, StrongType<T> epsilon = Constant::Epsilon<StrongType<T>>) noexcept
     {
         return Equal(val1, ToUnderlying(val2), ToUnderlying(epsilon));
     }
@@ -357,14 +357,14 @@ namespace Math
     [[nodiscard]] constexpr
     T ToRadians(T degrees) noexcept
     {
-        return Constants::Pi<T> * (degrees / Cast<T>(180));
+        return Constant::Pi<T> * (degrees / Cast<T>(180));
     }
 
     template <FloatingPointType T>
     [[nodiscard]] constexpr
     T ToDegrees(T radians) noexcept
     {
-        return Cast<T>(180) * (radians / Constants::Pi<T>);
+        return Cast<T>(180) * (radians / Constant::Pi<T>);
     }
 
     //////////////////////////////////////////////////////////////////////////

@@ -19,7 +19,7 @@ TEST_CASE("Test Log with basic values", "[Math][Functions]")
 
     SECTION("Powers of e with f32")
     {
-        static constexpr auto e = Math::Constants::E<f32>;
+        static constexpr auto e = Math::Constant::E<f32>;
         static constexpr auto intPow = [](f32 base, i32 exp) constexpr noexcept
         {
             f32 result = 1.0f;

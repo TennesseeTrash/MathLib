@@ -12,10 +12,10 @@ TEST_CASE("Test Sqrt with basic values", "[Math][Functions]")
     {
         REQUIRE(Equal(Sqrt(f32(0.0f)), 0.0f));
         REQUIRE(Equal(Sqrt(f32(1.0f)), 1.0f));
-        REQUIRE(Equal(Sqrt(f32(2.0f)), Math::Constants::Sqrt2<f32>));
-        REQUIRE(Equal(Sqrt(f32(3.0f)), Math::Constants::Sqrt3<f32>));
+        REQUIRE(Equal(Sqrt(f32(2.0f)), Math::Constant::Sqrt2<f32>));
+        REQUIRE(Equal(Sqrt(f32(3.0f)), Math::Constant::Sqrt3<f32>));
         REQUIRE(Equal(Sqrt(f32(4.0f)), 2.0f));
-        REQUIRE(Equal(Sqrt(f32(5.0f)), Math::Constants::Sqrt5<f32>));
+        REQUIRE(Equal(Sqrt(f32(5.0f)), Math::Constant::Sqrt5<f32>));
         REQUIRE(Equal(Sqrt(f32(16.0f)), 4.0f));
     }
 

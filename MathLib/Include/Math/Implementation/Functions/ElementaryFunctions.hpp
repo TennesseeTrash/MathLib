@@ -54,7 +54,7 @@ namespace Math::Function
         }
     };
 
-    template <typename T, MakeStaticStrongType<T> TBase = Math::Constants::E<T>, MakeStaticStrongType<T> TExponentMultiplier = Cast<T>(1)>
+    template <typename T, MakeStaticStrongType<T> TBase = Math::Constant::E<T>, MakeStaticStrongType<T> TExponentMultiplier = Cast<T>(1)>
     struct Exponential
     {
     public:

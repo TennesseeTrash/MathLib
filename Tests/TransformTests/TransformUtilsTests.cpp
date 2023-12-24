@@ -24,7 +24,7 @@ TEST_CASE("Test 2D transform helpers", "[Math][Transform]")
 
     SECTION("Rotation")
     {
-        Math::Transform2f rotation1 = Math::Rotate(Math::Constants::Pi<Math::f32> / 4.0f);
+        Math::Transform2f rotation1 = Math::Rotate(Math::Constant::Pi<Math::f32> / 4.0f);
         Math::Vector2f check = Math::Normalize(Math::Vector2f(1.0f, 1.0f));
         REQUIRE(Math::Equal(rotation1 * Math::Vector2f(1.0f, 0.0f), check));
         REQUIRE(Math::Equal(rotation1 * Math::Point2f(1.0f, 0.0f), Math::Point2f(check)));
@@ -60,19 +60,19 @@ TEST_CASE("Test 3D transform helpers")
 
     SECTION("Rotation")
     {
-        auto sq2div2 = Math::Constants::Sqrt2<Math::f32> / 2.0f;
+        auto sq2div2 = Math::Constant::Sqrt2<Math::f32> / 2.0f;
 
-        Math::Transform3f rotation1 = Math::RotateX(Math::Constants::Pi<Math::f32> / 4.0f);
+        Math::Transform3f rotation1 = Math::RotateX(Math::Constant::Pi<Math::f32> / 4.0f);
         Math::Vector3f check = Math::Vector3f(1.0f, sq2div2, sq2div2);
         REQUIRE(Math::Equal(rotation1 * Math::Vector3f(1.0f, 1.0f, 0.0f), check));
         REQUIRE(Math::Equal(rotation1 * Math::Point3f(1.0f, 1.0f, 0.0f), Math::Point3f(check)));
 
-        Math::Transform3f rotation2 = Math::RotateY(Math::Constants::Pi<Math::f32> / 4.0f);
+        Math::Transform3f rotation2 = Math::RotateY(Math::Constant::Pi<Math::f32> / 4.0f);
         check = Math::Vector3f(sq2div2, 1.0f, sq2div2);
         REQUIRE(Math::Equal(rotation2 * Math::Vector3f(0.0f, 1.0f, 1.0f), check));
         REQUIRE(Math::Equal(rotation2 * Math::Point3f(0.0f, 1.0f, 1.0f), Math::Point3f(check)));
 
-        Math::Transform3f rotation3 = Math::RotateZ(Math::Constants::Pi<Math::f32> / 4.0f);
+        Math::Transform3f rotation3 = Math::RotateZ(Math::Constant::Pi<Math::f32> / 4.0f);
         check = Math::Vector3f(sq2div2, sq2div2, 1.0f);
         REQUIRE(Math::Equal(rotation3 * Math::Vector3f(1.0f, 0.0f, 1.0f), check));
         REQUIRE(Math::Equal(rotation3 * Math::Point3f(1.0f, 0.0f, 1.0f), Math::Point3f(check)));
@@ -123,7 +123,7 @@ TEST_CASE("Test 3D LookAt transform")
         REQUIRE(Math::Equal(lookAt * Math::Point3f(1.0f, 0.0f, 0.0f), Math::Point3f(Math::Normalize(Math::Vector3f(-1.0f, 0.0f, -1.0f)))));
         REQUIRE(Math::Equal(lookAt * Math::Point3f(0.0f, 1.0f, 0.0f), Math::Point3f(0.0f, 1.0f, 0.0f)));
         REQUIRE(Math::Equal(lookAt * Math::Point3f(0.0f, 0.0f, 1.0f), Math::Point3f(Math::Normalize(Math::Vector3f(1.0f, 0.0f, -1.0f)))));
-        REQUIRE(Math::Equal(lookAt * Math::Point3f(1.0f, 1.0f, 1.0f), Math::Point3f(0.0f, 1.0f, -Math::Constants::Sqrt2<Math::f32>)));
+        REQUIRE(Math::Equal(lookAt * Math::Point3f(1.0f, 1.0f, 1.0f), Math::Point3f(0.0f, 1.0f, -Math::Constant::Sqrt2<Math::f32>)));
     }
 }
 

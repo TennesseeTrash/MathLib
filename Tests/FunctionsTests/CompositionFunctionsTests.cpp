@@ -195,7 +195,7 @@ TEST_CASE("Test Compose composite function")
 
     SECTION("Compose value")
     {
-        static constexpr f32 e = Math::Constants::E<f32>;
+        static constexpr f32 e = Math::Constant::E<f32>;
         constexpr Composed composed;
         REQUIRE(Equal(composed(0.5f * e), 1.0f));
         REQUIRE(Equal(composed(0.5f * Math::Squared(e)), 2.0f));
@@ -227,7 +227,7 @@ TEST_CASE("Test Compose composite function")
 
 TEST_CASE("Test PowerCompose composite function")
 {
-    using Constant = Math::Function::Constant<f32, Math::Constants::E<f32>>;
+    using Constant = Math::Function::Constant<f32, Math::Constant::E<f32>>;
     using Linear = Math::Function::Linear<f32, 1.0f, 0.0f>;
     using PowerComposed = Math::Function::PowerCompose<Constant, Linear>;
     constexpr Math::Function::Exponential<f32> exponential;

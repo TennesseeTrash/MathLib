@@ -181,7 +181,7 @@ TEST_CASE("Test Power function and its derivatives")
 
 TEST_CASE("Test Exponential and its derivatives")
 {
-    static constexpr f32 e = Math::Constants::E<f32>;
+    static constexpr f32 e = Math::Constant::E<f32>;
 
     SECTION("Basic Exponential value")
     {
@@ -217,7 +217,7 @@ TEST_CASE("Test Exponential and its derivatives")
 
 TEST_CASE("Test NaturalLogarithm and its derivatives")
 {
-    static constexpr f32 e = Math::Constants::E<f32>;
+    static constexpr f32 e = Math::Constant::E<f32>;
 
     SECTION("NaturalLogarithm value")
     {

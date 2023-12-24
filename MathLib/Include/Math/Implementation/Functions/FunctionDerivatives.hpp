@@ -3,6 +3,7 @@
 
 #include "ElementaryFunctions.hpp"
 #include "CompositionFunctions.hpp"
+#include "../../Constants.hpp"
 #include "../../Common/Packs.hpp"
 
 namespace Math::Function
@@ -62,7 +63,7 @@ namespace Math::Function
             using BaseE = Multiply<Constant<ValueType, TExponentMultiplier>, Exponential<ValueType, TBase, TExponentMultiplier>>;
             using GeneralCase = Multiply<BaseE, Constant<ValueType, Log(TBase)>>;
         public:
-            using Type = ConditionalType<Equal(Cast<ValueType>(TBase), Constants::E<ValueType>), BaseE, GeneralCase>;
+            using Type = ConditionalType<Equal(Cast<ValueType>(TBase), Math::Constant::E<ValueType>), BaseE, GeneralCase>;
         };
 
         template <typename T>

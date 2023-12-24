@@ -2,7 +2,7 @@
 #include <Math/Functions.hpp>
 
 using f32 = Math::f32;
-static constexpr f32 pi = Math::Constants::Pi<f32>;
+static constexpr f32 pi = Math::Constant::Pi<f32>;
 using Math::ToRadians;
 using Math::ToDegrees;
 using Math::Equal;

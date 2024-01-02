@@ -1,0 +1,11 @@
+#ifndef MATHLIB_IMPL_FUNCTIONS_INSTANTIABLE_UTILITY_FUNCTIONS_HPP
+#define MATHLIB_IMPL_FUNCTIONS_INSTANTIABLE_UTILITY_FUNCTIONS_HPP
+
+// Note(3011): This fill is going to contain Smoothstep, Smootherstep and their derivatives.
+
+namespace Math::Function
+{
+
+}
+
+#endif //MATHLIB_IMPL_FUNCTIONS_INSTANTIABLE_UTILITY_FUNCTIONS_HPP

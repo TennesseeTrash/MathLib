@@ -1,9 +1,11 @@
-#ifndef MATHLIB_IMPL_FUNCTIONS_ELEMENTARY_FUNCTIONS_HPP
-#define MATHLIB_IMPL_FUNCTIONS_ELEMENTARY_FUNCTIONS_HPP
+#ifndef MATHLIB_IMPL_FUNCTIONS_INSTANTIABLE_ELEMENTARY_FUNCTIONS_HPP
+#define MATHLIB_IMPL_FUNCTIONS_INSTANTIABLE_ELEMENTARY_FUNCTIONS_HPP
 
 #include "../../../Common/Types.hpp"
 #include "../../../Common/Array.hpp"
+#include "../../../Common/Packs.hpp"
 #include "../BasicFunctions.hpp"
+#include "CompositionFunctions.hpp"
 
 namespace Math::Function
 {
@@ -28,6 +30,26 @@ namespace Math::Function
             }
             return result;
         }
+
+    private:
+        template <typename CoefficientsPack>
+        struct ConvertToPolynomial;
+
+        template <typename ValuePackValueType, ValuePackValueType... ValuePackCoefficients>
+        struct ConvertToPolynomial<ValuePack<ValuePackValueType, ValuePackCoefficients...>>
+        {
+            using Type = Polynomial<T, ValuePackCoefficients...>;
+        };
+
+        using StaticValueType = MakeStaticStrongType<ValueType>;
+        using CoefficientsPack = ValuePack<StaticValueType, TCoefficients...>;
+        using Multipliers = typename ValuePack<StaticValueType>::template MakeDescending<sizeof...(TCoefficients)>;
+        using MultipliedCoefficients = ZipWith<decltype([](ValueType a, ValueType b) { return a * b; }), CoefficientsPack, Multipliers>;
+        using DerivedCoefficients = RemoveLast<MultipliedCoefficients>;
+        using DerivedPolynomial = typename ConvertToPolynomial<DerivedCoefficients>::Type;
+        using Zero = Polynomial<T, Cast<StaticValueType>(0)>;
+    public:
+        using DerivativeType = ConditionalType<sizeof...(TCoefficients) == 1, Zero, DerivedPolynomial>;
     };
 
     template <typename T, MakeStaticStrongType<T> TConstant>
@@ -52,6 +74,8 @@ namespace Math::Function
         {
             return Pow(x, Exponent) * Multiplier;
         }
+
+        using DerivativeType = Multiply<Constant<ValueType, Exponent * Multiplier>, Power<ValueType, Exponent - Cast<ValueType>(1)>>;
     };
 
     template <typename T, MakeStaticStrongType<T> TBase = Math::Constant::E<T>, MakeStaticStrongType<T> TExponentMultiplier = Cast<T>(1)>
@@ -67,6 +91,8 @@ namespace Math::Function
         {
             return Pow(Base, ExponentMultiplier * x);
         }
+
+        using DerivativeType = Multiply<Constant<ValueType, ExponentMultiplier>, Exponential<ValueType, Base, ExponentMultiplier>>;
     };
 
     template <typename T>
@@ -80,6 +106,8 @@ namespace Math::Function
         {
             return Log(x);
         }
+
+        using DerivativeType = Divide<Constant<ValueType, Cast<ValueType>(1)>, Linear<ValueType, Cast<ValueType>(1), Cast<ValueType>(0)>>;
     };
 
     template <typename T, MakeStaticStrongType<T> TBase>
@@ -94,7 +122,11 @@ namespace Math::Function
         {
             return Log(x) / Log(Base);
         }
+
+        // TODO: Implement Log
+        //using DerivativeType = Divide<Constant<ValueType, Cast<ValueType>(1)>, Multiply<Linear<ValueType>, Constant<ValueType, Log(Base)>>>;
+        using DerivativeType = Constant<ValueType, Cast<ValueType>(1)>;
     };
 }
 
-#endif //MATHLIB_IMPL_FUNCTIONS_ELEMENTARY_FUNCTIONS_HPP
+#endif //MATHLIB_IMPL_FUNCTIONS_INSTANTIABLE_ELEMENTARY_FUNCTIONS_HPP

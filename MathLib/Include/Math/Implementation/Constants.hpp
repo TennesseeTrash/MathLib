@@ -1,5 +1,5 @@
-#ifndef MATHLIB_IMPL_CONSTANTS_HPP
-#define MATHLIB_IMPL_CONSTANTS_HPP
+#ifndef MATHLIB_IMPLEMENTATION_CONSTANTS_HPP
+#define MATHLIB_IMPLEMENTATION_CONSTANTS_HPP
 
 #include "../Common/Concepts.hpp"
 
@@ -166,4 +166,4 @@ namespace Math::Constant::Implementation
     };
 }
 
-#endif //MATHLIB_IMPL_CONSTANTS_HPP
+#endif //MATHLIB_IMPLEMENTATION_CONSTANTS_HPP

@@ -1,5 +1,5 @@
-#ifndef MATHLIB_COMMON_IMPL_TYPES_HPP
-#define MATHLIB_COMMON_IMPL_TYPES_HPP
+#ifndef MATHLIB_COMMON_IMPLEMENTATION_TYPES_HPP
+#define MATHLIB_COMMON_IMPLEMENTATION_TYPES_HPP
 
 #include "../Traits.hpp"
 #include "StrongTypes.hpp"
@@ -60,4 +60,4 @@ namespace Math::Implementation
     };
 }
 
-#endif //MATHLIB_COMMON_IMPL_TYPES_HPP
+#endif //MATHLIB_COMMON_IMPLEMENTATION_TYPES_HPP

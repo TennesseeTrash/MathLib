@@ -1,5 +1,5 @@
-#ifndef MATHLIB_IMPL_RANDOM_XOSHIRO_HPP
-#define MATHLIB_IMPL_RANDOM_XOSHIRO_HPP
+#ifndef MATHLIB_IMPLEMENTATION_RANDOM_XOSHIRO_HPP
+#define MATHLIB_IMPLEMENTATION_RANDOM_XOSHIRO_HPP
 
 // Note(3011):
 // Big thanks to Sebastiano Vigna and David Blackman for their work on
@@ -226,4 +226,4 @@ namespace Math
     };
 }
 
-#endif //MATHLIB_IMPL_RANDOM_XOSHIRO_HPP
+#endif //MATHLIB_IMPLEMENTATION_RANDOM_XOSHIRO_HPP

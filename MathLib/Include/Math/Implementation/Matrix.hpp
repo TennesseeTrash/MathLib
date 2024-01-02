@@ -1,5 +1,5 @@
-#ifndef MATHLIB_IMPL_MATRIX_HPP
-#define MATHLIB_IMPL_MATRIX_HPP
+#ifndef MATHLIB_IMPLEMENTATION_MATRIX_HPP
+#define MATHLIB_IMPLEMENTATION_MATRIX_HPP
 
 #include "../Common/Array.hpp"
 #include "Vector.hpp"
@@ -170,4 +170,4 @@ namespace Math
     };
 }
 
-#endif //MATHLIB_IMPL_MATRIX_HPP
+#endif //MATHLIB_IMPLEMENTATION_MATRIX_HPP

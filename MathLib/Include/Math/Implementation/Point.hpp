@@ -1,5 +1,5 @@
-#ifndef MATHLIB_IMPL_POINT_HPP
-#define MATHLIB_IMPL_POINT_HPP
+#ifndef MATHLIB_IMPLEMENTATION_POINT_HPP
+#define MATHLIB_IMPLEMENTATION_POINT_HPP
 
 #include "Vector.hpp"
 
@@ -61,4 +61,4 @@ namespace Math
     };
 }
 
-#endif //MATHLIB_IMPL_POINT_HPP
+#endif //MATHLIB_IMPLEMENTATION_POINT_HPP

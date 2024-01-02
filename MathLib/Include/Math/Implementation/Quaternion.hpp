@@ -1,5 +1,5 @@
-#ifndef MATHLIB_IMPL_QUATERNION_HPP
-#define MATHLIB_IMPL_QUATERNION_HPP
+#ifndef MATHLIB_IMPLEMENTATION_QUATERNION_HPP
+#define MATHLIB_IMPLEMENTATION_QUATERNION_HPP
 
 #include "../Common/Concepts.hpp"
 #include "Vector.hpp"
@@ -44,4 +44,4 @@ namespace Math
     };
 }
 
-#endif //MATHLIB_IMPL_QUATERNION_HPP
+#endif //MATHLIB_IMPLEMENTATION_QUATERNION_HPP

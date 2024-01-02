@@ -19,7 +19,7 @@ namespace Math::Implementation
         using Type = FalseType;
     };
 
-    template <typename... T>
+    template <typename... Ts>
     struct GetValueType
     {};
 
@@ -39,6 +39,12 @@ namespace Math::Implementation
     struct GetValueType<T>
     {
         using Type = typename T::ValueType;
+    };
+
+    template <typename... Ts>
+    struct GetValueType<TypePack<Ts...>>
+    {
+        using Type = typename GetValueType<Ts...>::Type;
     };
 
     template <typename Specialized, template <typename...> typename Base, StaticSizeType Index = 0>

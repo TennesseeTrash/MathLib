@@ -29,6 +29,7 @@ target_sources(Tests PRIVATE
     "FunctionsTests/BasicFunctionsTests/TrigTests/CosTests.cpp"
     "FunctionsTests/InstantiableFunctionsTests/ElementaryFunctionsTests.cpp"
     "FunctionsTests/InstantiableFunctionsTests/CompositionFunctionsTests.cpp"
+    "FunctionsTests/InstantiableFunctionsTests/PiecewiseFunctionsTests.cpp"
     "VectorTests/VectorTypeTests.cpp"
     "VectorTests/VectorOperatorTests.cpp"
     "VectorTests/VectorUtilsTests.cpp"

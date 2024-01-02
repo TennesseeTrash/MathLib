@@ -3,8 +3,8 @@
 
 #include "ElementaryFunctions.hpp"
 #include "CompositionFunctions.hpp"
-#include "../../Constants.hpp"
-#include "../../Common/Packs.hpp"
+#include "../../../Constants.hpp"
+#include "../../../Common/Packs.hpp"
 
 namespace Math::Function
 {
@@ -36,10 +36,10 @@ namespace Math::Function
             };
 
             using ValueType = GetValueType<Polynomial<T, TCoefficients...>>;
-            using ShiftedCoefficients = RemoveLast<ValuePack<MakeStaticStrongType<ValueType>, TCoefficients...>>;
-            using Multipliers = RemoveLast<typename ValuePack<MakeStaticStrongType<ValueType>>::template MakeDescending<sizeof...(TCoefficients)>>;
+            using ShiftedCoefficients = ValuePack<MakeStaticStrongType<ValueType>, TCoefficients...>;
+            using Multipliers = typename ValuePack<MakeStaticStrongType<ValueType>>::template MakeDescending<sizeof...(TCoefficients)>;
             using DerivedCoefficients = ZipWith<decltype([](ValueType a, ValueType b) { return a * b; }), ShiftedCoefficients, Multipliers>;
-            using DerivedPolynomial = typename ConvertToPolynomial<DerivedCoefficients>::Type;
+            using DerivedPolynomial = typename ConvertToPolynomial<RemoveLast<DerivedCoefficients>>::Type;
             using Zero = Polynomial<T, Cast<ValueType>(0)>;
         public:
             using Type = ConditionalType<sizeof...(TCoefficients) == 1, Zero, DerivedPolynomial>;

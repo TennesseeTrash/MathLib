@@ -1,0 +1,61 @@
+#ifndef MATHLIB_IMPL_FUNCTIONS_TRIGONOMETRIC_FUNCTIONS_HPP
+#define MATHLIB_IMPL_FUNCTIONS_TRIGONOMETRIC_FUNCTIONS_HPP
+
+#include "../../Common/Types.hpp"
+
+// TODO(3011): Add custom implementation and remove this include later.
+#include <cmath>
+
+namespace Math
+{
+    template <FloatingPointType T>
+    [[nodiscard]] constexpr
+    T Sin(T val) noexcept
+    {
+        return std::sin(ToUnderlying(val));
+    }
+
+    template <FloatingPointType T>
+    [[nodiscard]] constexpr
+    T Cos(T val) noexcept
+    {
+        return std::cos(ToUnderlying(val));
+    }
+
+    template <FloatingPointType T>
+    [[nodiscard]] constexpr
+    T Tan(T val) noexcept
+    {
+        return std::tan(ToUnderlying(val));
+    }
+
+    template <FloatingPointType T>
+    [[nodiscard]] constexpr
+    T Asin(T val) noexcept
+    {
+        return std::asin(ToUnderlying(val));
+    }
+
+    template <FloatingPointType T>
+    [[nodiscard]] constexpr
+    T Acos(T val) noexcept
+    {
+        return std::acos(ToUnderlying(val));
+    }
+
+    template <FloatingPointType T>
+    [[nodiscard]] constexpr
+    T Atan(T val) noexcept
+    {
+        return std::atan(ToUnderlying(val));
+    }
+
+    template <FloatingPointType T>
+    [[nodiscard]] constexpr
+    T Atan2(T y, T x) noexcept
+    {
+        return std::atan2(ToUnderlying(y), ToUnderlying(x));
+    }
+}
+
+#endif //MATHLIB_IMPL_FUNCTIONS_TRIGONOMETRIC_FUNCTIONS_HPP

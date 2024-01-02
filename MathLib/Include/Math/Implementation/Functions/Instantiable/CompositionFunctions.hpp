@@ -69,8 +69,11 @@ namespace Math::Function
         }
     };
 
+    template <typename... Funcs>
+    struct Multiply;
+
     template <typename Func1, typename Func2>
-    struct Multiply final
+    struct Multiply<Func1, Func2> final
     {
     public:
         using ValueType = GetValueType<Func1, Func2>;
@@ -82,6 +85,22 @@ namespace Math::Function
         ValueType operator()(Args... args) const
         {
             return Func1Instance(args...) * Func2Instance(args...);
+        }
+    };
+
+    template <typename Func, typename... RemainingFuncs>
+    struct Multiply<Func, RemainingFuncs...> final
+    {
+    public:
+        using ValueType = GetValueType<Func, RemainingFuncs...>;
+        static constexpr Func                        FuncInstance;
+        static constexpr Multiply<RemainingFuncs...> RemainingFuncsInstance;
+
+        template <typename... Args>
+        [[nodiscard]] constexpr
+        ValueType operator()(Args... args) const
+        {
+            return FuncInstance(args...) * RemainingFuncsInstance(args...);
         }
     };
 

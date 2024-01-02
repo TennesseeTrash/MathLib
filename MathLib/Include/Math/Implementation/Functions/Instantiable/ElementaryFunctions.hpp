@@ -1,9 +1,9 @@
 #ifndef MATHLIB_IMPL_FUNCTIONS_ELEMENTARY_FUNCTIONS_HPP
 #define MATHLIB_IMPL_FUNCTIONS_ELEMENTARY_FUNCTIONS_HPP
 
-#include "../../Common/Types.hpp"
-#include "../../Common/Array.hpp"
-#include "BasicFunctions.hpp"
+#include "../../../Common/Types.hpp"
+#include "../../../Common/Array.hpp"
+#include "../BasicFunctions.hpp"
 
 namespace Math::Function
 {

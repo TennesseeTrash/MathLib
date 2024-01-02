@@ -2,13 +2,10 @@
 #define MATHLIB_FUNCTIONS_HPP
 
 #include "Implementation/Functions/BasicFunctions.hpp"
-#include "Implementation/Functions/ElementaryFunctions.hpp"
-#include "Implementation/Functions/CompositionFunctions.hpp"
-#include "Implementation/Functions/FunctionDerivatives.hpp"
-
-namespace Math
-{
-
-}
+#include "Implementation/Functions/TrigonometricFunctions.hpp"
+#include "Implementation/Functions/ValueShift.hpp"
+#include "Implementation/Functions/Instantiable/ElementaryFunctions.hpp"
+#include "Implementation/Functions/Instantiable/CompositionFunctions.hpp"
+#include "Implementation/Functions/Instantiable/FunctionDerivatives.hpp"
 
 #endif //MATHLIB_FUNCTIONS_HPP

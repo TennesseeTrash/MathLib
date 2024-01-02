@@ -7,7 +7,7 @@
 namespace Math
 {
     template <typename... Types>
-    struct TypePack
+    struct TypePack final
     {
     private:
         template <StaticSizeType Index, typename... AtImplTypes>
@@ -38,7 +38,7 @@ namespace Math
     };
 
     template <typename T, T... Pack>
-    struct ValuePack
+    struct ValuePack final
     {
     private:
         template <StaticSizeType Index, T... AtImplPack>

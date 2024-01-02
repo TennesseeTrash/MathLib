@@ -5,7 +5,7 @@
 #include "../../Common/Array.hpp"
 #include "../../Constants.hpp"
 
-// Note(3011): Currently used for std::pow and trig functions.
+// Note(3011): Currently used for std::pow, std::log and std::sqrt.
 // TODO(3011): Add custom implementation and remove this include later.
 #include <cmath>
 
@@ -109,59 +109,6 @@ namespace Math
     }
 
     //////////////////////////////////////////////////////////////////////////
-    // Trig functions
-    //////////////////////////////////////////////////////////////////////////
-
-    template <FloatingPointType T>
-    [[nodiscard]] constexpr
-    T Sin(T val) noexcept
-    {
-        return std::sin(ToUnderlying(val));
-    }
-
-    template <FloatingPointType T>
-    [[nodiscard]] constexpr
-    T Cos(T val) noexcept
-    {
-        return std::cos(ToUnderlying(val));
-    }
-
-    template <FloatingPointType T>
-    [[nodiscard]] constexpr
-    T Tan(T val) noexcept
-    {
-        return std::tan(ToUnderlying(val));
-    }
-
-    template <FloatingPointType T>
-    [[nodiscard]] constexpr
-    T Asin(T val) noexcept
-    {
-        return std::asin(ToUnderlying(val));
-    }
-
-    template <FloatingPointType T>
-    [[nodiscard]] constexpr
-    T Acos(T val) noexcept
-    {
-        return std::acos(ToUnderlying(val));
-    }
-
-    template <FloatingPointType T>
-    [[nodiscard]] constexpr
-    T Atan(T val) noexcept
-    {
-        return std::atan(ToUnderlying(val));
-    }
-
-    template <FloatingPointType T>
-    [[nodiscard]] constexpr
-    T Atan2(T y, T x) noexcept
-    {
-        return std::atan2(ToUnderlying(y), ToUnderlying(x));
-    }
-
-    //////////////////////////////////////////////////////////////////////////
     // Clamp, Lerp
     //////////////////////////////////////////////////////////////////////////
 
@@ -246,71 +193,6 @@ namespace Math
     }
 
     //////////////////////////////////////////////////////////////////////////
-    // ValueShift
-    //////////////////////////////////////////////////////////////////////////
-
-    // TODO(3011):
-    // - Add overloads for unequal sizes.
-
-    template <SignedIntegralType To, SignedIntegralType From>
-        requires (sizeof(To) >= sizeof(From))
-    [[nodiscard]] constexpr
-    To ValueShift(From value) noexcept
-    {
-        return Cast<To>(value);
-    }
-
-    template <UnsignedIntegralType To, UnsignedIntegralType From>
-        requires (sizeof(To) >= sizeof(From))
-    [[nodiscard]] constexpr
-    To ValueShift(From value) noexcept
-    {
-        return Cast<To>(value);
-    }
-
-    template <SignedIntegralType To, UnsignedIntegralType From>
-        requires (sizeof(To) == sizeof(From))
-    [[nodiscard]] constexpr
-    To ValueShift(From value) noexcept
-    {
-        // TODO(3011): Make the variables static constexpr
-        // once it's feasible to move to C++23.
-
-        if (value >= (From(1) << ((sizeof(To) * 8) - 1)))
-        {
-            constexpr From sub = Cast<From>(1) << ((sizeof(From) * 8) - 1);
-            return Cast<To>(value - sub);
-        }
-        else
-        {
-            // ((sizeof(To) * 8) - 1) is not representable by To
-            constexpr To sub = Cast<To>(1) << ((sizeof(To) * 8) - 2);
-            return Cast<To>(value) - sub - sub;
-        }
-    }
-
-    template <UnsignedIntegralType To, SignedIntegralType From>
-        requires (sizeof(To) == sizeof(From))
-    [[nodiscard]] constexpr
-    To ValueShift(From value) noexcept
-    {
-        // TODO(3011): Make the variables static constexpr
-        // once it's feasible to move to C++23.
-
-        if (value >= 0)
-        {
-            constexpr To add = Cast<To>(1) << ((sizeof(To) * 8) - 1);
-            return Cast<To>(value) + add;
-        }
-        else
-        {
-            // ((sizeof(From) * 8) - 1) is not representable by From
-            constexpr From add = Cast<From>(1) << ((sizeof(From) * 8) - 2);
-            return Cast<To>(value + add + add);
-        }
-    }
-
-    //////////////////////////////////////////////////////////////////////////
     // Smoothstep, Smootherstep
     //////////////////////////////////////////////////////////////////////////
 
@@ -390,4 +272,4 @@ namespace Math
     }
 }
 
-#endif //MATHLIB_IMPL_FUNCTION_BASIC_FUNCTIONS_HPP
+#endif //MATHLIB_IMPL_FUNCTIONS_BASIC_FUNCTIONS_HPP

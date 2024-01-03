@@ -30,6 +30,9 @@ namespace Math
         template <StaticSizeType Index>
         using At = typename AtImpl<Index, Types...>::Type;
 
+        using First = At<0>;
+        using Last  = At<Size - 1>;
+
         template <typename T>
         using Append = TypePack<Types..., T>;
 
@@ -61,7 +64,10 @@ namespace Math
         using ValueType = T;
 
         template <StaticSizeType Index>
-        static constexpr T At = AtImpl<Index, Pack...>::Value;
+        static constexpr ValueType At = AtImpl<Index, Pack...>::Value;
+
+        static constexpr ValueType First = At<0>;
+        static constexpr ValueType Last  = At<Size - 1>;
 
         template <T Value>
         using Append = ValuePack<T, Pack..., Value>;

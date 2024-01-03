@@ -54,12 +54,12 @@ TEST_CASE("Test Piecewise function with three segments")
     static constexpr Math::Function::ControlPoint<f32> FirstBoundary{ 0.0f, Math::Orientation::Right };
     static constexpr Math::Function::ControlPoint<f32> SecondBoundary{ 2.0f, Math::Orientation::Left };
 
-    using Piecewise = Math::Function::Piecewise<FirstConstant, Linear, FirstBoundary>;
-    using FullPiecewise = Piecewise::AddSegment<SecondConstant, SecondBoundary>;
+    using Piecewise = Math::Function::Piecewise<FirstConstant, Linear, FirstBoundary>
+                                    ::AddSegment<SecondConstant, SecondBoundary>;
 
     SECTION("Test function values")
     {
-        constexpr FullPiecewise piecewise;
+        constexpr Piecewise piecewise;
         REQUIRE(Equal(piecewise(-1.0f), 2.0f));
         REQUIRE(Equal(piecewise(0.0f), 2.0f));
         REQUIRE(Equal(piecewise(1.0f), 3.0f));
@@ -70,7 +70,7 @@ TEST_CASE("Test Piecewise function with three segments")
 
     SECTION("Test function derivatives")
     {
-        constexpr Math::Function::Derivative<FullPiecewise> derivative;
+        constexpr Math::Function::Derivative<Piecewise> derivative;
         REQUIRE(Equal(derivative(-1.0f), 0.0f));
         REQUIRE(Equal(derivative(0.0f), 1.0f));
         REQUIRE(Equal(derivative(1.0f), 1.0f));
@@ -81,7 +81,7 @@ TEST_CASE("Test Piecewise function with three segments")
 
     SECTION("Test function second derivatives")
     {
-        constexpr Math::Function::Derivative<FullPiecewise, 2> derivative;
+        constexpr Math::Function::Derivative<Piecewise, 2> derivative;
         REQUIRE(Equal(derivative(-1.0f), 0.0f));
         REQUIRE(Equal(derivative(0.0f), 0.0f));
         REQUIRE(Equal(derivative(1.0f), 0.0f));
@@ -93,21 +93,22 @@ TEST_CASE("Test Piecewise function with three segments")
 
 TEST_CASE("Test Piecewise function with four segments")
 {
-    using FirstConstant = Math::Function::Constant<f32, 2.0f>;
-    using FirstLinear = Math::Function::Linear<f32, 1.0f, 2.0f>;
+    using FirstConstant  = Math::Function::Constant<f32, 2.0f>;
+    using FirstLinear    = Math::Function::Linear<f32, 1.0f, 2.0f>;
     using SecondConstant = Math::Function::Constant<f32, 4.0f>;
-    using SecondLinear = Math::Function::Linear<f32, 1.0f, 0.0f>;
+    using SecondLinear   = Math::Function::Linear<f32, 1.0f, 0.0f>;
 
     static constexpr Math::Function::ControlPoint<f32> FirstBoundary{ 0.0f, Math::Orientation::Right };
     static constexpr Math::Function::ControlPoint<f32> SecondBoundary{ 2.0f, Math::Orientation::Left };
     static constexpr Math::Function::ControlPoint<f32> ThirdBoundary{ 4.0f, Math::Orientation::Left };
 
-    using Piecewise = Math::Function::Piecewise<FirstConstant, FirstLinear, FirstBoundary>;
-    using FullPiecewise = Piecewise::AddSegment<SecondConstant, SecondBoundary>::AddSegment<SecondLinear, ThirdBoundary>;
+    using Piecewise = Math::Function::Piecewise<FirstConstant, FirstLinear, FirstBoundary>
+                                    ::AddSegment<SecondConstant, SecondBoundary>
+                                    ::AddSegment<SecondLinear, ThirdBoundary>;
 
     SECTION("Test function values")
     {
-        constexpr FullPiecewise piecewise;
+        constexpr Piecewise piecewise;
         REQUIRE(Equal(piecewise(-1.0f), 2.0f));
         REQUIRE(Equal(piecewise(0.0f), 2.0f));
         REQUIRE(Equal(piecewise(1.0f), 3.0f));
@@ -120,7 +121,7 @@ TEST_CASE("Test Piecewise function with four segments")
 
     SECTION("Test function derivatives")
     {
-        constexpr Math::Function::Derivative<FullPiecewise> derivative;
+        constexpr Math::Function::Derivative<Piecewise> derivative;
         REQUIRE(Equal(derivative(-1.0f), 0.0f));
         REQUIRE(Equal(derivative(0.0f), 1.0f));
         REQUIRE(Equal(derivative(1.0f), 1.0f));
@@ -133,7 +134,7 @@ TEST_CASE("Test Piecewise function with four segments")
 
     SECTION("Test function second derivatives")
     {
-        constexpr Math::Function::Derivative<FullPiecewise, 2> derivative;
+        constexpr Math::Function::Derivative<Piecewise, 2> derivative;
         REQUIRE(Equal(derivative(-1.0f), 0.0f));
         REQUIRE(Equal(derivative(0.0f), 0.0f));
         REQUIRE(Equal(derivative(1.0f), 0.0f));

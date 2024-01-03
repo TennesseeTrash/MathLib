@@ -196,9 +196,6 @@ namespace Math
     // Smoothstep, Smootherstep
     //////////////////////////////////////////////////////////////////////////
 
-    // OBSOLETE - All these functions are obsolete and will be removed once
-    // the Function API is implemented.
-
     template <FloatingPointType T>
     [[nodiscard]] constexpr
     T Smoothstep(T val, T begin, T end) noexcept
@@ -209,26 +206,10 @@ namespace Math
 
     template <FloatingPointType T>
     [[nodiscard]] constexpr
-    T SmoothstepDerivative(T val, T begin, T end) noexcept
-    {
-        val = Clamp(InvLerp(val, begin, end));
-        return static_cast<T>(6) * val * (static_cast<T>(1) - val);
-    }
-
-    template <FloatingPointType T>
-    [[nodiscard]] constexpr
     T Smootherstep(T val, T begin, T end) noexcept
     {
         val = Clamp(InvLerp(val, begin, end));
         return ((static_cast<T>(6) * val - static_cast<T>(15)) * val + static_cast<T>(10)) * Cubed(val);
-    }
-
-    template <FloatingPointType T>
-    [[nodiscard]] constexpr
-    T SmootherstepDerivative(T val, T begin, T end) noexcept
-    {
-        val = Clamp(InvLerp(val, begin, end));
-        return static_cast<T>(30) * (Squared(val) - static_cast<T>(2) * val + static_cast<T>(1)) * Squared(val);
     }
 
     //////////////////////////////////////////////////////////////////////////

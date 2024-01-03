@@ -19,7 +19,7 @@ namespace Math
     // Perlin Noise
     //////////////////////////////////////////////////////////////////////////
 
-    template <FloatingPointType Float, typename Interpolation = decltype([](Float v) -> Float { return Smootherstep(v, Cast<Float>(0), Cast<Float>(1)); })>
+    template <FloatingPointType Float, typename Interpolation = Function::Smootherstep<Float>>
     class PerlinNoise final
     {
     public:

@@ -18,7 +18,7 @@ namespace Math::Function
 
         template <typename... Args>
         [[nodiscard]] constexpr
-        ValueType operator()(Args... args) const
+        ValueType operator()(Args... args) const noexcept
         {
             return -FuncInstance(args...);
         }
@@ -39,7 +39,7 @@ namespace Math::Function
 
         template <typename... Args>
         [[nodiscard]] constexpr
-        ValueType operator()(Args... args) const
+        ValueType operator()(Args... args) const noexcept
         {
             return FirstFuncInstance(args...) + SecondFuncInstance(args...);
         }
@@ -57,7 +57,7 @@ namespace Math::Function
 
         template <typename... Args>
         [[nodiscard]] constexpr
-        ValueType operator()(Args... args) const
+        ValueType operator()(Args... args) const noexcept
         {
             return FuncInstance(args...) + RemainingFuncsInstance(args...);
         }
@@ -75,7 +75,7 @@ namespace Math::Function
 
         template <typename... Args>
         [[nodiscard]] constexpr
-        ValueType operator()(Args... args) const
+        ValueType operator()(Args... args) const noexcept
         {
             return SubtrahendInstance(args...) - SubtractorInstance(args...);
         }
@@ -96,7 +96,7 @@ namespace Math::Function
 
         template <typename... Args>
         [[nodiscard]] constexpr
-        ValueType operator()(Args... args) const
+        ValueType operator()(Args... args) const noexcept
         {
             return FirstFuncInstance(args...) * SecondFuncInstance(args...);
         }
@@ -114,7 +114,7 @@ namespace Math::Function
 
         template <typename... Args>
         [[nodiscard]] constexpr
-        ValueType operator()(Args... args) const
+        ValueType operator()(Args... args) const noexcept
         {
             return FuncInstance(args...) * RemainingFuncsInstance(args...);
         }
@@ -132,7 +132,7 @@ namespace Math::Function
 
         template <typename... Args>
         [[nodiscard]] constexpr
-        ValueType operator()(Args... args) const
+        ValueType operator()(Args... args) const noexcept
         {
             return DividendInstance(args...) / DivisorInstance(args...);
         }
@@ -150,7 +150,7 @@ namespace Math::Function
 
         template <typename... Args>
         [[nodiscard]] constexpr
-        ValueType operator()(Args... args) const
+        ValueType operator()(Args... args) const noexcept
         {
             return OuterInstance(InnerInstance(args...));
         }
@@ -168,7 +168,7 @@ namespace Math::Function
 
         template <typename... Args>
         [[nodiscard]] constexpr
-        ValueType operator()(Args... args) const
+        ValueType operator()(Args... args) const noexcept
         {
             return Pow(BaseInstance(args...), ExponentInstance(args...));
         }

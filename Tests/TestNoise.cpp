@@ -1,9 +1,9 @@
 #include <catch2/catch_test_macros.hpp>
-#include <Math/Noise/Perlin.hpp>
+#include <Math/Noise.hpp>
 
 TEST_CASE("Test 2D Perlin noise", "[Math][Noise]")
 {
-    Math::PerlinNoise<Math::f32> noise;
+    Math::Noise::Perlin<Math::f32> noise;
 
     SECTION("Test determinism")
     {
@@ -39,7 +39,7 @@ TEST_CASE("Test 3D Perlin noise", "[Math][Noise]")
 {
     SECTION("Test determinism")
     {
-        Math::PerlinNoise<Math::f32> noise;
+        Math::Noise::Perlin<Math::f32> noise;
 
         Math::f32 x = 2.0f;
         Math::f32 y = 2.0f;
@@ -54,7 +54,7 @@ TEST_CASE("Test 3D Perlin noise", "[Math][Noise]")
 
     SECTION("Test range")
     {
-        Math::PerlinNoise<Math::f32> noise;
+        Math::Noise::Perlin<Math::f32> noise;
 
         Math::f32 x = 0.0f;
         Math::f32 y = 0.0f;
@@ -81,7 +81,7 @@ TEST_CASE("Test 4D Perlin noise", "[Math][Noise]")
 {
     SECTION("Test determinism")
     {
-        Math::PerlinNoise<Math::f32> noise;
+        Math::Noise::Perlin<Math::f32> noise;
 
         Math::f32 x = 2.0f;
         Math::f32 y = 2.0f;
@@ -97,7 +97,7 @@ TEST_CASE("Test 4D Perlin noise", "[Math][Noise]")
 
     SECTION("Test range")
     {
-        Math::PerlinNoise<Math::f32> noise;
+        Math::Noise::Perlin<Math::f32> noise;
 
         Math::f32 x = 0.0f;
         Math::f32 y = 0.0f;

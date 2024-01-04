@@ -1,10 +1,10 @@
-#ifndef MATHLIB_NOISE_PERLIN_HPP
-#define MATHLIB_NOISE_PERLIN_HPP
+#ifndef MATHLIB_IMPLEMENTATION_NOISE_PERLIN_HPP
+#define MATHLIB_IMPLEMENTATION_NOISE_PERLIN_HPP
 
-#include "../Common/Concepts.hpp"
-#include "../Common/Array.hpp"
-#include "../Functions.hpp"
-#include "../Random.hpp"
+#include "../../Common/Concepts.hpp"
+#include "../../Common/Array.hpp"
+#include "../../Functions.hpp"
+#include "../../Random.hpp"
 
 // TODO(3011): This is not a good interface. It makes it difficult to
 // get derivatives with minimal overhead. The interface and implementation
@@ -13,20 +13,16 @@
 // the () operator and call the underlying implementation that the user could
 // tweak.
 
-namespace Math
+namespace Math::Noise
 {
-    //////////////////////////////////////////////////////////////////////////
-    // Perlin Noise
-    //////////////////////////////////////////////////////////////////////////
-
     template <FloatingPointType Float, typename Interpolation = Function::Smootherstep<Float>>
-    class PerlinNoise final
+    class Perlin final
     {
     public:
         using ValueType = Float;
 
         [[nodiscard]] constexpr explicit
-        PerlinNoise(u64 seed = 0) noexcept
+        Perlin(u64 seed = 0) noexcept
             : mPermutation(ToUnderlying(seed) ? MakeArray<u8, 256>([](SizeType i, u8& v){ v = Cast<u8>(i); }) : sDefaultPermutation)
         {
             if (ToUnderlying(seed))
@@ -242,4 +238,4 @@ namespace Math
     };
 }
 
-#endif //MATHLIB_NOISE_PERLIN_HPP
+#endif //MATHLIB_IMPLEMENTATION_NOISE_PERLIN_HPP

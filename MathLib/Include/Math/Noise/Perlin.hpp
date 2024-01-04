@@ -47,8 +47,8 @@ namespace Math
             Float xf = Frac(x);
             Float yf = Frac(y);
 
-            Float u = Interpolation{}(xf);
-            Float v = Interpolation{}(yf);
+            Float u = mInterpolation(xf);
+            Float v = mInterpolation(yf);
 
             Float v1 = Grad(Hash2(xi, yi, 0, 0), xf,     yf    );
             Float v2 = Grad(Hash2(xi, yi, 1, 0), xf - 1, yf    );
@@ -72,9 +72,9 @@ namespace Math
             Float yf = Frac(y);
             Float zf = Frac(z);
 
-            Float u = Interpolation{}(xf);
-            Float v = Interpolation{}(yf);
-            Float w = Interpolation{}(zf);
+            Float u = mInterpolation(xf);
+            Float v = mInterpolation(yf);
+            Float w = mInterpolation(zf);
 
             Float v1 = Grad(Hash3(xi, yi, zi, 0, 0, 0), xf,     yf,     zf    );
             Float v2 = Grad(Hash3(xi, yi, zi, 1, 0, 0), xf - 1, yf,     zf    );
@@ -106,10 +106,10 @@ namespace Math
             Float zf = Frac(z);
             Float wf = Frac(w);
 
-            Float u = Interpolation{}(xf);
-            Float v = Interpolation{}(yf);
-            Float s = Interpolation{}(zf);
-            Float t = Interpolation{}(wf);
+            Float u = mInterpolation(xf);
+            Float v = mInterpolation(yf);
+            Float s = mInterpolation(zf);
+            Float t = mInterpolation(wf);
 
             Float v1  = Grad(Hash4(xi, yi, zi, wi, 0, 0, 0, 0), xf,     yf,     zf,     wf    );
             Float v2  = Grad(Hash4(xi, yi, zi, wi, 1, 0, 0, 0), xf - 1, yf,     zf,     wf    );
@@ -218,6 +218,7 @@ namespace Math
                  + (!ToUnderlying(hash & 4) ? v : -v);
         }
 
+        Interpolation  mInterpolation;
         Array<u8, 256> mPermutation;
 
         static constexpr Array<u8, 256> sDefaultPermutation = MakeArray<u8, 256>(

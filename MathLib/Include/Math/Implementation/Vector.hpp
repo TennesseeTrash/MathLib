@@ -29,8 +29,8 @@ namespace Math
 
         constexpr T LenSqr() const noexcept { return x * x + y * y; }
         constexpr T Length() const noexcept { return Sqrt(LenSqr()); }
-        constexpr T Max()    const noexcept { return ::Math::Max(x, y); }
-        constexpr T Min()    const noexcept { return ::Math::Min(x, y); }
+        constexpr T Max()    const noexcept { return Math::Max(x, y); }
+        constexpr T Min()    const noexcept { return Math::Min(x, y); }
 
         static constexpr Vector2T<T> UnitX() noexcept { return Vector2T<T>(Cast<T>(1), Cast<T>(0)); }
         static constexpr Vector2T<T> UnitY() noexcept { return Vector2T<T>(Cast<T>(0), Cast<T>(1)); }
@@ -61,8 +61,8 @@ namespace Math
 
         constexpr T LenSqr() const noexcept { return x * x + y * y + z * z; }
         constexpr T Length() const noexcept { return Sqrt(LenSqr()); }
-        constexpr T Max()    const noexcept { return ::Math::Max(x, y, z); }
-        constexpr T Min()    const noexcept { return ::Math::Min(x, y, z); }
+        constexpr T Max()    const noexcept { return Math::Max(x, y, z); }
+        constexpr T Min()    const noexcept { return Math::Min(x, y, z); }
 
         static constexpr Vector3T<T> UnitX() noexcept { return Vector3T<T>(Cast<T>(1), Cast<T>(0), Cast<T>(0)); }
         static constexpr Vector3T<T> UnitY() noexcept { return Vector3T<T>(Cast<T>(0), Cast<T>(1), Cast<T>(0)); }
@@ -97,8 +97,8 @@ namespace Math
 
         constexpr T LenSqr() const noexcept { return x * x + y * y + z * z + w * w; }
         constexpr T Length() const noexcept { return Sqrt(LenSqr()); }
-        constexpr T Max()    const noexcept { return ::Math::Max(x, y, z, w); }
-        constexpr T Min()    const noexcept { return ::Math::Min(x, y, z, w); }
+        constexpr T Max()    const noexcept { return Math::Max(x, y, z, w); }
+        constexpr T Min()    const noexcept { return Math::Min(x, y, z, w); }
 
         static constexpr Vector4T<T> UnitX() noexcept { return Vector4T<T>(Cast<T>(1), Cast<T>(0), Cast<T>(0), Cast<T>(0)); }
         static constexpr Vector4T<T> UnitY() noexcept { return Vector4T<T>(Cast<T>(0), Cast<T>(1), Cast<T>(0), Cast<T>(0)); }

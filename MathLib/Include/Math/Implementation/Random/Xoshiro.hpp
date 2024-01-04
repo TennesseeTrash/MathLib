@@ -63,7 +63,7 @@ namespace Math
             {
                 for (SizeType b = 0; b < SizeType(32); ++b)
                 {
-                    if (::Math::ToUnderlying(sJump[i] & (u32(1) << b)))
+                    if (ToUnderlying(sJump[i] & (u32(1) << b)))
                     {
                         mState[0] ^= temp.mState[0];
                         mState[1] ^= temp.mState[1];
@@ -86,7 +86,7 @@ namespace Math
             {
                 for (SizeType b = 0; b < SizeType(32); ++b)
                 {
-                    if (::Math::ToUnderlying(sLongJump[i] & (u32(1) << b)))
+                    if (ToUnderlying(sLongJump[i] & (u32(1) << b)))
                     {
                         mState[0] ^= temp.mState[0];
                         mState[1] ^= temp.mState[1];

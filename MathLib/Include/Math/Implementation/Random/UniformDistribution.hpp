@@ -18,11 +18,7 @@ namespace Math
             : mBegin(begin), mEnd(end)
         {}
 
-        // TODO(3011):
-        // Relax the equality requirement once ValueShift is implemented
-        // for unequal sizes.
         template <ConceptRandomNumberGenerator RNG>
-            requires (sizeof(typename RNG::ValueType) == sizeof(ValueType))
         [[nodiscard]] constexpr
         ValueType operator()(RNG& rng) const noexcept
         {

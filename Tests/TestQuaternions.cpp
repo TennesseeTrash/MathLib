@@ -1,8 +1,6 @@
 #include <catch2/catch_test_macros.hpp>
 #include <Math/Quaternion.hpp>
 #include <Math/Transform.hpp>
-#include <Math/Debug/StreamOperators.hpp>
-#include <iostream>
 
 using Math::f32;
 

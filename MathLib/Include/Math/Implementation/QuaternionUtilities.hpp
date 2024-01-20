@@ -2,6 +2,7 @@
 #define MATHLIB_IMPLEMENTATION_QUATERNION_UTILITIES_HPP
 
 #include "../Common/Concepts.hpp"
+#include "VectorUtilities.hpp"
 
 namespace Math
 {

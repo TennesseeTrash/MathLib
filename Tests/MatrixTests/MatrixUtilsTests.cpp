@@ -1,6 +1,7 @@
 #include <catch2/catch_test_macros.hpp>
 
 #include "MatrixTestsCommon.hpp"
+#include <Math/Implementation/Functions/Equal.hpp>
 
 TEST_CASE("Check determinant calculations", "[Math][Matrix]")
 {

@@ -1,6 +1,7 @@
 #include <catch2/catch_test_macros.hpp>
 
 #include <Math/Point.hpp>
+#include <Math/Implementation/Functions/Equal.hpp>
 
 TEST_CASE("Point2f constructors", "[Point][Math]")
 {

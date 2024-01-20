@@ -1,7 +1,7 @@
 #ifndef MATHLIB_IMPLEMENTATION_TRANSFORM_UTILITIES_HPP
 #define MATHLIB_IMPLEMENTATION_TRANSFORM_UTILITIES_HPP
 
-#include "../Common/Concepts.hpp"
+#include "Base/Concepts.hpp"
 #include "../Functions.hpp"
 #include "Point.hpp"
 

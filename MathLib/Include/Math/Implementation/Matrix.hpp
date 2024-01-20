@@ -1,7 +1,8 @@
 #ifndef MATHLIB_IMPLEMENTATION_MATRIX_HPP
 #define MATHLIB_IMPLEMENTATION_MATRIX_HPP
 
-#include "../Common/Array.hpp"
+#include "Base/Concepts.hpp"
+#include "Base/Array.hpp"
 #include "Vector.hpp"
 
 // TODO(3011): Add a generic, n-dimensional matrix implementation.

@@ -1,5 +1,5 @@
-#ifndef MATHLIB_COMMON_IMPLEMENTATION_STRONG_TYPES_UTILS_HPP
-#define MATHLIB_COMMON_IMPLEMENTATION_STRONG_TYPES_UTILS_HPP
+#ifndef MATHLIB_IMPLEMENTATION_BASE_STRONG_TYPE_UTILS_HPP
+#define MATHLIB_IMPLEMENTATION_BASE_STRONG_TYPE_UTILS_HPP
 
 #include "StrongTypes.hpp"
 
@@ -117,6 +117,35 @@ namespace Math
     {
         return To(static_cast<typename Implementation::UnderlyingType<To>::Type>(ToUnderlying(value)));
     }
+
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    StrongType<T> operator<< (const StrongType<T>& u, const SizeType& v) noexcept
+    {
+        return StrongType<T>(ToUnderlying(u) << ToUnderlying(v));
+    }
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    StrongType<T> operator>> (const StrongType<T>& u, const SizeType& v) noexcept
+    {
+        return StrongType<T>(ToUnderlying(u) >> ToUnderlying(v));
+    }
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    StrongType<T> operator<<= (StrongType<T>& u, const SizeType& v) noexcept
+    {
+        return u = u << v;
+    }
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    StrongType<T> operator>>= (StrongType<T>& u, const SizeType& v) noexcept
+    {
+        return u = u >> v;
+    }
 }
 
-#endif //MATHLIB_COMMON_IMPLEMENTATION_STRONG_TYPES_UTILS_HPP
+#endif //MATHLIB_IMPLEMENTATION_BASE_STRONG_TYPE_UTILS_HPP

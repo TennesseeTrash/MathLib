@@ -1,9 +1,7 @@
 #ifndef MATHLIB_UTILS_CONTAINER_TOOLS_HPP
 #define MATHLIB_UTILS_CONTAINER_TOOLS_HPP
 
-#include "../Common/Types.hpp"
-#include "../Common/Concepts.hpp"
-#include "../Common/Array.hpp"
+#include "../Base.hpp"
 
 #include <unordered_map>
 

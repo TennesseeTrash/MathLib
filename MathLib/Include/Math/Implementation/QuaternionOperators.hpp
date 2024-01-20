@@ -1,7 +1,7 @@
 #ifndef MATHLIB_IMPLEMENTATION_QUATERNION_OPERATORS_HPP
 #define MATHLIB_IMPLEMENTATION_QUATERNION_OPERATORS_HPP
 
-#include "../Common/Concepts.hpp"
+#include "Base/Concepts.hpp"
 #include "VectorOperators.hpp"
 
 namespace Math

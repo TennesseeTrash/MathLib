@@ -3,6 +3,7 @@
 #include "MatrixTestsCommon.hpp"
 // TODO: Remove vvv
 #include <Math/Vector.hpp>
+#include <Math/Implementation/Functions/Equal.hpp>
 
 TEST_CASE("Test scalar addition operators", "[Math][Matrix]")
 {

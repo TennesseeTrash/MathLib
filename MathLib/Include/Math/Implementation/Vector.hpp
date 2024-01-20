@@ -1,7 +1,9 @@
 #ifndef MATHLIB_IMPLEMENTATION_VECTOR_HPP
 #define MATHLIB_IMPLEMENTATION_VECTOR_HPP
 
-#include "../Functions.hpp"
+#include "Base/Concepts.hpp"
+#include "Functions/BasicFunctions.hpp"
+#include "Functions/TrigonometricFunctions.hpp"
 
 // TODO(3011): Add a generic, n-dimensional vector implementation.
 

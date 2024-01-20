@@ -2,6 +2,7 @@
 
 #include "MatrixTestsCommon.hpp"
 #include <Math/Vector.hpp>
+#include <Math/Implementation/Functions/Equal.hpp>
 
 TEST_CASE("Test matrix vector multiplication", "[Math][Matrix]")
 {

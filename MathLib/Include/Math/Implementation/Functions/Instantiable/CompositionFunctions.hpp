@@ -1,7 +1,7 @@
 #ifndef MATHLIB_IMPLEMENTATION_FUNCTIONS_INSTANTIABLE_COMPOSITION_FUNCTIONS_HPP
 #define MATHLIB_IMPLEMENTATION_FUNCTIONS_INSTANTIABLE_COMPOSITION_FUNCTIONS_HPP
 
-#include "../../../Common/Types.hpp"
+#include "../../Base/Types.hpp"
 
 namespace Math::Function
 {

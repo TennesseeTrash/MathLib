@@ -1,8 +1,7 @@
 #ifndef MATHLIB_VECTOR_HPP
 #define MATHLIB_VECTOR_HPP
 
-#include "Common/Types.hpp"
-
+#include "Implementation/Base/Types.hpp"
 #include "Implementation/Vector.hpp"
 #include "Implementation/VectorOperators.hpp"
 #include "Implementation/VectorUtilities.hpp"

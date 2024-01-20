@@ -1,7 +1,7 @@
 #ifndef MATHLIB_MATRIX_HPP
 #define MATHLIB_MATRIX_HPP
 
-#include "Common/Types.hpp"
+#include "Implementation/Base/Types.hpp"
 #include "Implementation/Matrix.hpp"
 #include "Implementation/MatrixOperators.hpp"
 #include "Implementation/MatrixUtilities.hpp"

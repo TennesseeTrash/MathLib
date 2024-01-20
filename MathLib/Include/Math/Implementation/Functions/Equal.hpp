@@ -1,7 +1,7 @@
 #ifndef MATHLIB_IMPLEMENTATION_FUNCTIONS_EQUAL_HPP
 #define MATHLIB_IMPLEMENTATION_FUNCTIONS_EQUAL_HPP
 
-#include "../../Common/Concepts.hpp"
+#include "../Base/Concepts.hpp"
 
 namespace Math
 {

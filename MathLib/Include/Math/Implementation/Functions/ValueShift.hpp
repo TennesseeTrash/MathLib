@@ -1,7 +1,7 @@
 #ifndef MATHLIB_IMPLEMENTATION_FUNCTIONS_VALUE_SHIFT_HPP
 #define MATHLIB_IMPLEMENTATION_FUNCTIONS_VALUE_SHIFT_HPP
 
-#include "../../Common/Types.hpp"
+#include "../Base/Types.hpp"
 
 namespace Math
 {

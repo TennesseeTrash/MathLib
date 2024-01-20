@@ -1,7 +1,7 @@
 #ifndef MATHLIB_IMPLEMENTATION_RANDOM_SPLITMIX_HPP
 #define MATHLIB_IMPLEMENTATION_RANDOM_SPLITMIX_HPP
 
-#include "../../Common/Types.hpp"
+#include "../Base/Types.hpp"
 
 namespace Math::Implementation
 {

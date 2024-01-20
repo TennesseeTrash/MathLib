@@ -1,5 +1,6 @@
 #include <catch2/catch_test_macros.hpp>
 #include <Math/Vector.hpp>
+#include <Math/Implementation/Functions/Equal.hpp>
 
 // TODO(3011): Add tests for
 //   - Area

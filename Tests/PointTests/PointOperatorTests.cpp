@@ -2,6 +2,7 @@
 
 #include <Math/Point.hpp>
 #include <Math/Vector.hpp>
+#include <Math/Implementation/Functions/Equal.hpp>
 
 TEST_CASE("Point-Point operators", "[Point][Math]")
 {

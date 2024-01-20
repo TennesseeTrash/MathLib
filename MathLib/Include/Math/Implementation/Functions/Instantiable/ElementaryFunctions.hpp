@@ -1,9 +1,7 @@
 #ifndef MATHLIB_IMPLEMENTATION_FUNCTIONS_INSTANTIABLE_ELEMENTARY_FUNCTIONS_HPP
 #define MATHLIB_IMPLEMENTATION_FUNCTIONS_INSTANTIABLE_ELEMENTARY_FUNCTIONS_HPP
 
-#include "../../../Common/Types.hpp"
-#include "../../../Common/Array.hpp"
-#include "../../../Common/Packs.hpp"
+#include "../../../Base.hpp"
 #include "../BasicFunctions.hpp"
 #include "CompositionFunctions.hpp"
 

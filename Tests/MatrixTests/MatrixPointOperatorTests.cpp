@@ -2,6 +2,7 @@
 
 #include "MatrixTestsCommon.hpp"
 #include <Math/Point.hpp>
+#include <Math/Implementation/Functions/Equal.hpp>
 
 TEST_CASE("Point2f-Matrix2f operators", "[Point][Math]")
 {

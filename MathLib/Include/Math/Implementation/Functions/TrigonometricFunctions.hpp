@@ -1,7 +1,7 @@
 #ifndef MATHLIB_IMPLEMENTATION_FUNCTIONS_TRIGONOMETRIC_FUNCTIONS_HPP
 #define MATHLIB_IMPLEMENTATION_FUNCTIONS_TRIGONOMETRIC_FUNCTIONS_HPP
 
-#include "../../Common/Types.hpp"
+#include "../Base/Types.hpp"
 
 // TODO(3011): Add custom implementation and remove this include later.
 #include <cmath>

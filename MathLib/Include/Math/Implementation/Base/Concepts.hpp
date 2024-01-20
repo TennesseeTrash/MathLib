@@ -1,7 +1,7 @@
-#ifndef MATHLIB_COMMON_TYPE_CONCEPTS_HPP
-#define MATHLIB_COMMON_TYPE_CONCEPTS_HPP
+#ifndef MATHLIB_IMPLEMENTATION_BASE_CONCEPTS_HPP
+#define MATHLIB_IMPLEMENTATION_BASE_CONCEPTS_HPP
 
-#include "Types.hpp"
+#include "StrongTypes.hpp"
 
 #include <type_traits>
 #include <concepts>
@@ -671,4 +671,4 @@ namespace Math
     };
 }
 
-#endif //MATHLIB_COMMON_TYPE_CONCEPTS_HPP
+#endif //MATHLIB_IMPLEMENTATION_BASE_CONCEPTS_HPP

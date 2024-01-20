@@ -1,6 +1,7 @@
-#ifndef MATHLIB_COMMON_ARRAY_HPP
-#define MATHLIB_COMMON_ARRAY_HPP
+#ifndef MATHLIB_IMPLEMENTATION_BASE_ARRAY_HPP
+#define MATHLIB_IMPLEMENTATION_BASE_ARRAY_HPP
 
+#include "Types.hpp"
 #include "Concepts.hpp"
 
 namespace Math
@@ -163,4 +164,4 @@ namespace Math
     }
 }
 
-#endif //MATHLIB_COMMON_ARRAY_HPP
+#endif //MATHLIB_IMPLEMENTATION_BASE_ARRAY_HPP

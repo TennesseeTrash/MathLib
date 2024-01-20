@@ -1,7 +1,7 @@
 #ifndef MATHLIB_IMPLEMENTATION_QUATERNION_HPP
 #define MATHLIB_IMPLEMENTATION_QUATERNION_HPP
 
-#include "../Common/Concepts.hpp"
+#include "Base/Concepts.hpp"
 #include "Vector.hpp"
 #include "Transform.hpp"
 

@@ -1,6 +1,5 @@
 #include <catch2/catch_test_macros.hpp>
-#include <Math/Common/Packs.hpp>
-#include <Math/Common/Concepts.hpp>
+#include <Math/Base.hpp>
 
 using Math::i32;
 using Math::i64;

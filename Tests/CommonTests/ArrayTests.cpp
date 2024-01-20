@@ -1,5 +1,5 @@
 #include <catch2/catch_test_macros.hpp>
-#include <Math/Common/Array.hpp>
+#include <Math/Base.hpp>
 #include <Math/Functions.hpp>
 #include <Math/Random.hpp>
 

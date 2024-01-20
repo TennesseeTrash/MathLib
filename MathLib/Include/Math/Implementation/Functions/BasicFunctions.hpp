@@ -1,8 +1,7 @@
 #ifndef MATHLIB_IMPLEMENTATION_FUNCTIONS_BASIC_FUNCTIONS_HPP
 #define MATHLIB_IMPLEMENTATION_FUNCTIONS_BASIC_FUNCTIONS_HPP
 
-#include "../../Common/Concepts.hpp"
-#include "../../Common/Array.hpp"
+#include "../../Base.hpp"
 #include "../../Constants.hpp"
 
 // Note(3011): Currently used for std::pow, std::log and std::sqrt.

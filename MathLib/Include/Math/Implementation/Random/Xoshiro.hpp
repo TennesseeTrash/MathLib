@@ -13,8 +13,8 @@
 // possible to easily advance the state of the PRNG by just calling the
 // Jump functions and discarding the result.
 
-#include "../../Common/Types.hpp"
-#include "../../Common/Array.hpp"
+#include "../Base/Types.hpp"
+#include "../Base/Array.hpp"
 #include "Splitmix.hpp"
 
 namespace Math

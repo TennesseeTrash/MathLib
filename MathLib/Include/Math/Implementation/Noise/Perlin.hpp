@@ -1,8 +1,7 @@
 #ifndef MATHLIB_IMPLEMENTATION_NOISE_PERLIN_HPP
 #define MATHLIB_IMPLEMENTATION_NOISE_PERLIN_HPP
 
-#include "../../Common/Concepts.hpp"
-#include "../../Common/Array.hpp"
+#include "../Base/Array.hpp"
 #include "../../Functions.hpp"
 #include "../../Random.hpp"
 

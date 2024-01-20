@@ -1,5 +1,5 @@
 #include <catch2/catch_test_macros.hpp>
-#include <Math/Common/Types.hpp>
+#include <Math/Implementation/Base/Types.hpp>
 #include <Math/Functions.hpp>
 
 using Math::f32;

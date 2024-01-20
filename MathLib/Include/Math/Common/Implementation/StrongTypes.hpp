@@ -1,12 +1,15 @@
 #ifndef MATHLIB_COMMON_IMPLEMENTATION_STRONG_TYPES_HPP
 #define MATHLIB_COMMON_IMPLEMENTATION_STRONG_TYPES_HPP
 
-#include "Traits.hpp"
-
 #include <cstdint>
 #include <cstddef>
 #include <compare>
 #include <limits>
+
+// TODO(3011):
+//  - It might prove beneficial to make StrongType into a struct with
+//    the member value being public. This would make it possible to
+//    get rid of StaticStrongType.
 
 namespace Math
 {
@@ -14,7 +17,7 @@ namespace Math
     class StrongType final
     {
     public:
-        static_assert(!Implementation::IsSpecialization<T, StrongType>::Value, "StrongType may not be nested");
+        //static_assert(!Implementation::IsSpecialization<T, StrongType>::Value, "StrongType may not be nested");
         using ValueType = T;
 
         [[nodiscard]] constexpr
@@ -74,8 +77,8 @@ namespace Math
     template <typename T>
     struct StaticStrongType final
     {
-        static_assert(!Implementation::IsSpecialization<T, StaticStrongType>::Value, "StaticStrongType may not be nested");
-        static_assert(!Implementation::IsSpecialization<T, StrongType>::Value, "StaticStrongType may not be specialized with StrongType");
+        //static_assert(!Implementation::IsSpecialization<T, StaticStrongType>::Value, "StaticStrongType may not be nested");
+        //static_assert(!Implementation::IsSpecialization<T, StrongType>::Value, "StaticStrongType may not be specialized with StrongType");
         using ValueType = T;
         ValueType Value;
 
@@ -117,8 +120,6 @@ namespace Math
     }
 
     template <typename T>
-        requires (!Implementation::IsSpecialization<T, StrongType>::Value
-              &&  !Implementation::IsSpecialization<T, StaticStrongType>::Value)
     [[nodiscard]] constexpr
     T ToUnderlying(T value) noexcept
     {

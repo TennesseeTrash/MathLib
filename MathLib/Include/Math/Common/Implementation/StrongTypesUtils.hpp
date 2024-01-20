@@ -2,7 +2,6 @@
 #define MATHLIB_COMMON_IMPLEMENTATION_STRONG_TYPES_UTILS_HPP
 
 #include "StrongTypes.hpp"
-#include "../Traits.hpp"
 
 namespace Math::Implementation
 {

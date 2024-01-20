@@ -1,7 +1,6 @@
 #ifndef MATHLIB_COMMON_IMPLEMENTATION_TYPES_HPP
 #define MATHLIB_COMMON_IMPLEMENTATION_TYPES_HPP
 
-#include "../Traits.hpp"
 #include "StrongTypes.hpp"
 #include "Packs.hpp"
 
@@ -23,17 +22,6 @@ namespace Math::Implementation
     struct GetValueType
     {};
 
-    template <typename T1, typename... T>
-    struct GetValueType<T1, T...>
-    {
-    private:
-        using ValueType1 = typename GetValueType<T1>::Type;
-        using ValueType2 = typename GetValueType<T...>::Type;
-        static_assert(IsSame<ValueType1, ValueType2>);
-    public:
-        using Type = ValueType1;
-    };
-
     template <typename T>
         requires requires { typename T::ValueType; }
     struct GetValueType<T>
@@ -41,10 +29,23 @@ namespace Math::Implementation
         using Type = typename T::ValueType;
     };
 
-    template <typename... Ts>
-    struct GetValueType<TypePack<Ts...>>
+    template <typename T, typename... Ts>
+    struct GetValueType<T, Ts...>
     {
-        using Type = typename GetValueType<Ts...>::Type;
+    private:
+        template <typename... InTypes>
+        struct SameTypes;
+
+        template <typename InType>
+        struct SameTypes<InType, InType>
+        {
+            using Type = InType;
+        };
+
+        using ValueType  = typename GetValueType<T>::Type;
+        using ValueTypes = typename GetValueType<Ts...>::Type;
+    public:
+        using Type = typename SameTypes<ValueType, ValueTypes>::Type;
     };
 
     template <typename Specialized, template <typename...> typename Base, StaticSizeType Index = 0>

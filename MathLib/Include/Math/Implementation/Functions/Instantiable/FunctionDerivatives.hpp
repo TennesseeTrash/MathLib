@@ -1,10 +1,7 @@
 #ifndef MATHLIB_IMPLEMENTATION_FUNCTIONS_INSTANTIABLE_FUNCTION_DERIVATIVES_HPP
 #define MATHLIB_IMPLEMENTATION_FUNCTIONS_INSTANTIABLE_FUNCTION_DERIVATIVES_HPP
 
-#include "ElementaryFunctions.hpp"
-#include "CompositionFunctions.hpp"
-#include "../../../Constants.hpp"
-#include "../../../Common/Packs.hpp"
+#include "../../../Common/Types.hpp"
 
 namespace Math::Function
 {

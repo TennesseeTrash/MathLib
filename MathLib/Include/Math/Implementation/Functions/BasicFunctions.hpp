@@ -31,45 +31,6 @@ namespace Math
     }
 
     //////////////////////////////////////////////////////////////////////////
-    // Equal function for fundamental types
-    //////////////////////////////////////////////////////////////////////////
-
-    template <FundamentalType T>
-    [[nodiscard]] constexpr
-    bool Equal(T val1, T val2, T epsilon = Constant::Epsilon<T>) noexcept
-    {
-        if constexpr (FloatingPointType<T>)
-        {
-            return Abs(val1 - val2) < epsilon;
-        }
-        else
-        {
-            return val1 == val2;
-        }
-    }
-
-    template <FundamentalType T>
-    [[nodiscard]] constexpr
-    bool Equal(StrongType<T> val1, StrongType<T> val2, StrongType<T> epsilon = Constant::Epsilon<StrongType<T>>) noexcept
-    {
-        return Equal(ToUnderlying(val1), ToUnderlying(val2), ToUnderlying(epsilon));
-    }
-
-    template <FundamentalType T>
-    [[nodiscard]] constexpr
-    bool Equal(StrongType<T> val1, T val2, StrongType<T> epsilon = Constant::Epsilon<StrongType<T>>) noexcept
-    {
-        return Equal(ToUnderlying(val1), val2, ToUnderlying(epsilon));
-    }
-
-    template <FundamentalType T>
-    [[nodiscard]] constexpr
-    bool Equal(T val1, StrongType<T> val2, StrongType<T> epsilon = Constant::Epsilon<StrongType<T>>) noexcept
-    {
-        return Equal(val1, ToUnderlying(val2), ToUnderlying(epsilon));
-    }
-
-    //////////////////////////////////////////////////////////////////////////
     // Power functions, logarithms
     //////////////////////////////////////////////////////////////////////////
 
@@ -243,6 +204,14 @@ namespace Math
         return Array<T, sizeof...(Ts) + 1>(v1, values...).Min();
     }
 
+    template <ConceptMathTypeUtil T>
+        requires requires (T t) { { t.Min() } -> IsSame<typename T::ScalarType>; }
+    [[nodiscard]] constexpr
+    typename T::ScalarType Min(const T& val) noexcept
+    {
+        return val.Min();
+    }
+
     template <typename T, typename... Ts>
     [[nodiscard]] constexpr
     T Max(T v1, Ts... values) noexcept
@@ -250,6 +219,14 @@ namespace Math
         // TODO(3011): This needs a refactor, making an array is unnecessary.
         static_assert(sizeof...(Ts) == 0 || (IsSame<T, Ts> || ...));
         return Array<T, sizeof...(Ts) + 1>(v1, values...).Max();
+    }
+
+    template <ConceptMathTypeUtil T>
+        requires requires (T t) { { t.Max() } -> IsSame<typename T::ScalarType>; }
+    [[nodiscard]] constexpr
+    typename T::ScalarType Max(const T& val) noexcept
+    {
+        return val.Max();
     }
 }
 

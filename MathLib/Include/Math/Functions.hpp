@@ -4,6 +4,7 @@
 #include "Implementation/Functions/BasicFunctions.hpp"
 #include "Implementation/Functions/TrigonometricFunctions.hpp"
 #include "Implementation/Functions/ValueShift.hpp"
+#include "Implementation/Functions/Equal.hpp"
 #include "Implementation/Functions/Instantiable/ElementaryFunctions.hpp"
 #include "Implementation/Functions/Instantiable/CompositionFunctions.hpp"
 #include "Implementation/Functions/Instantiable/FunctionDerivatives.hpp"

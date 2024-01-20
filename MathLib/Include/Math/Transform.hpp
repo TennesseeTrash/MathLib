@@ -4,7 +4,6 @@
 #include "Implementation/Transform.hpp"
 #include "Implementation/TransformOperators.hpp"
 #include "Implementation/TransformUtilities.hpp"
-#include "Implementation/Utilities.hpp"
 
 namespace Math
 {

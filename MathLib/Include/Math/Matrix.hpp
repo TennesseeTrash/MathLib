@@ -5,7 +5,6 @@
 #include "Implementation/Matrix.hpp"
 #include "Implementation/MatrixOperators.hpp"
 #include "Implementation/MatrixUtilities.hpp"
-#include "Implementation/Utilities.hpp"
 
 namespace Math
 {

@@ -3,7 +3,7 @@
 
 #include "Base/Concepts.hpp"
 #include "Functions/BasicFunctions.hpp"
-#include "Functions/TrigonometricFunctions.hpp"
+#include "Functions/Trigonometric.hpp"
 
 // TODO(3011): Add a generic, n-dimensional vector implementation.
 

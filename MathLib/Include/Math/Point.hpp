@@ -21,11 +21,11 @@ namespace Math
     // Enforce concepts on provided types
     //////////////////////////////////////////////////////////////////////////
 
-    static_assert(ConceptPoint2<Point2f>);
-    static_assert(ConceptPoint3<Point3f>);
+    static_assert(Concept::Point2<Point2f>);
+    static_assert(Concept::Point3<Point3f>);
 
-    static_assert(ConceptPoint2<Point2d>);
-    static_assert(ConceptPoint3<Point3d>);
+    static_assert(Concept::Point2<Point2d>);
+    static_assert(Concept::Point3<Point3d>);
 }
 
 #endif //MATHLIB_POINT_HPP

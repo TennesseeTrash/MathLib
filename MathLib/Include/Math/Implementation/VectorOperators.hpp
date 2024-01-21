@@ -9,7 +9,7 @@ namespace Math
     // Vector-Vector operators
     //////////////////////////////////////////////////////////////////////////
 
-    template <ConceptBasicVector Vec>
+    template <Concept::BasicVector Vec>
     [[nodiscard]] constexpr
     Vec operator+ (const Vec& u, const Vec& v) noexcept
     {
@@ -21,7 +21,7 @@ namespace Math
         return result;
     }
 
-    template <ConceptBasicVector Vec>
+    template <Concept::BasicVector Vec>
     [[nodiscard]] constexpr
     Vec operator- (const Vec& u, const Vec& v) noexcept
     {
@@ -33,7 +33,7 @@ namespace Math
         return result;
     }
 
-    template <ConceptBasicVector Vec>
+    template <Concept::BasicVector Vec>
     [[nodiscard]] constexpr
     Vec operator* (const Vec& u, const Vec& v) noexcept
     {
@@ -45,7 +45,7 @@ namespace Math
         return result;
     }
 
-    template <ConceptBasicVector Vec>
+    template <Concept::BasicVector Vec>
     [[nodiscard]] constexpr
     Vec operator/ (const Vec& u, const Vec& v) noexcept
     {
@@ -57,7 +57,7 @@ namespace Math
         return result;
     }
 
-    template <ConceptBasicVector Vec>
+    template <Concept::BasicVector Vec>
     [[nodiscard]] constexpr
     Vec operator- (const Vec& u) noexcept
     {
@@ -71,7 +71,7 @@ namespace Math
 
 
 
-    template <ConceptBasicVector Vec>
+    template <Concept::BasicVector Vec>
     [[maybe_unused]] constexpr
     Vec& operator+= (Vec& u, const Vec& v) noexcept
     {
@@ -82,7 +82,7 @@ namespace Math
         return u;
     }
 
-    template <ConceptBasicVector Vec>
+    template <Concept::BasicVector Vec>
     [[maybe_unused]] constexpr
     Vec& operator-= (Vec& u, const Vec& v) noexcept
     {
@@ -93,7 +93,7 @@ namespace Math
         return u;
     }
 
-    template <ConceptBasicVector Vec>
+    template <Concept::BasicVector Vec>
     [[maybe_unused]] constexpr
     Vec& operator*= (Vec& u, const Vec& v) noexcept
     {
@@ -104,7 +104,7 @@ namespace Math
         return u;
     }
 
-    template <ConceptBasicVector Vec>
+    template <Concept::BasicVector Vec>
     [[maybe_unused]] constexpr
     Vec& operator/= (Vec& u, const Vec& v) noexcept
     {
@@ -119,7 +119,7 @@ namespace Math
     // Vector-Scalar operators
     //////////////////////////////////////////////////////////////////////////
 
-    template <ConceptBasicVector Vec>
+    template <Concept::BasicVector Vec>
     [[nodiscard]] constexpr
     Vec operator+ (const Vec& u, typename Vec::ScalarType s) noexcept
     {
@@ -131,7 +131,7 @@ namespace Math
         return result;
     }
 
-    template <ConceptBasicVector Vec>
+    template <Concept::BasicVector Vec>
     [[nodiscard]] constexpr
     Vec operator+ (typename Vec::ScalarType s, const Vec& u) noexcept
     {
@@ -143,7 +143,7 @@ namespace Math
         return result;
     }
 
-    template <ConceptBasicVector Vec>
+    template <Concept::BasicVector Vec>
     [[nodiscard]] constexpr
     Vec operator- (const Vec& u, typename Vec::ScalarType s) noexcept
     {
@@ -155,7 +155,7 @@ namespace Math
         return result;
     }
 
-    template <ConceptBasicVector Vec>
+    template <Concept::BasicVector Vec>
     [[nodiscard]] constexpr
     Vec operator- (typename Vec::ScalarType s, const Vec& u) noexcept
     {
@@ -167,7 +167,7 @@ namespace Math
         return result;
     }
 
-    template <ConceptBasicVector Vec>
+    template <Concept::BasicVector Vec>
     [[nodiscard]] constexpr
     Vec operator* (const Vec& u, typename Vec::ScalarType s) noexcept
     {
@@ -179,7 +179,7 @@ namespace Math
         return result;
     }
 
-    template <ConceptBasicVector Vec>
+    template <Concept::BasicVector Vec>
     [[nodiscard]] constexpr
     Vec operator* (typename Vec::ScalarType s, const Vec& u) noexcept
     {
@@ -191,7 +191,7 @@ namespace Math
         return result;
     }
 
-    template <ConceptBasicVector Vec>
+    template <Concept::BasicVector Vec>
     [[nodiscard]] constexpr
     Vec operator/ (const Vec& u, typename Vec::ScalarType s) noexcept
     {
@@ -203,7 +203,7 @@ namespace Math
         return result;
     }
 
-    template <ConceptBasicVector Vec>
+    template <Concept::BasicVector Vec>
     [[nodiscard]] constexpr
     Vec operator/ (typename Vec::ScalarType s, const Vec& u) noexcept
     {
@@ -217,7 +217,7 @@ namespace Math
 
 
 
-    template <ConceptBasicVector Vec>
+    template <Concept::BasicVector Vec>
     [[maybe_unused]] constexpr
     Vec& operator+= (Vec& u, typename Vec::ScalarType s) noexcept
     {
@@ -228,7 +228,7 @@ namespace Math
         return u;
     }
 
-    template <ConceptBasicVector Vec>
+    template <Concept::BasicVector Vec>
     [[maybe_unused]] constexpr
     Vec& operator-= (Vec& u, typename Vec::ScalarType s) noexcept
     {
@@ -239,7 +239,7 @@ namespace Math
         return u;
     }
 
-    template <ConceptBasicVector Vec>
+    template <Concept::BasicVector Vec>
     [[maybe_unused]] constexpr
     Vec& operator*= (Vec& u, typename Vec::ScalarType s) noexcept
     {
@@ -250,7 +250,7 @@ namespace Math
         return u;
     }
 
-    template <ConceptBasicVector Vec>
+    template <Concept::BasicVector Vec>
     [[maybe_unused]] constexpr
     Vec& operator/= (Vec& u, typename Vec::ScalarType s) noexcept
     {

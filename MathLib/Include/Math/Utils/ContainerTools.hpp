@@ -7,8 +7,8 @@
 
 namespace Math
 {
-    template <ConceptBasicVector Vec>
-        requires IntegralType<typename Vec::ScalarType>
+    template <Concept::BasicVector Vec>
+        requires Concept::IntegralType<typename Vec::ScalarType>
     class VectorHasher
     {
     private:
@@ -30,8 +30,8 @@ namespace Math
         }
     };
 
-    template <ConceptBasicVector Vec>
-        requires IntegralType<typename Vec::ScalarType>
+    template <Concept::BasicVector Vec>
+        requires Concept::IntegralType<typename Vec::ScalarType>
     class VectorEqual
     {
     public:
@@ -49,7 +49,7 @@ namespace Math
         }
     };
 
-    template <ConceptBasicVector Vec, typename T>
+    template <Concept::BasicVector Vec, typename T>
     using UnorderedVecMap = std::unordered_map<Vec, T, VectorHasher<Vec>, VectorEqual<Vec>>;
 }
 

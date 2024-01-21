@@ -26,8 +26,8 @@ namespace Math
     // Enforce concepts on provided types
     //////////////////////////////////////////////////////////////////////////
 
-    static_assert(ConceptQuaternion<Quaternionf>);
-    static_assert(ConceptQuaternion<Quaterniond>);
+    static_assert(Concept::Quaternion<Quaternionf>);
+    static_assert(Concept::Quaternion<Quaterniond>);
 }
 
 #endif //MATHLIB_QUATERNION_HPP

@@ -25,8 +25,8 @@ TEST_CASE("Basic UniformDistribution tests", "[Math][Random]")
 {
     SECTION("Check correctness")
     {
-        STATIC_REQUIRE(Math::ConceptRandomNumberGenerator<ConstantFakeRNG>);
-        STATIC_REQUIRE(Math::ConceptDistribution<Math::UniformDistribution<u32>, ConstantFakeRNG>);
+        STATIC_REQUIRE(Math::Concept::RandomNumberGenerator<ConstantFakeRNG>);
+        STATIC_REQUIRE(Math::Concept::Distribution<Math::UniformDistribution<u32>, ConstantFakeRNG>);
     }
 
     SECTION("Check u32 correctness in min/max range")

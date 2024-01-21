@@ -6,7 +6,7 @@
 #include <type_traits>
 #include <concepts>
 
-namespace Math
+namespace Math::Concept
 {
     //////////////////////////////////////////////////////////////////////////
     // Implementation details
@@ -159,7 +159,7 @@ namespace Math
     //////////////////////////////////////////////////////////////////////////
 
     template <typename T>
-    concept ConceptStrongType = requires (T a)
+    concept StrongType = requires (T a)
     {
         typename T::ValueType;
         { ToUnderlying(a) } -> IsSameBaseType<typename T::ValueType>;
@@ -169,7 +169,7 @@ namespace Math
     };
 
     template <typename T>
-    concept ConceptArray = requires (T a)
+    concept Array = requires (T a)
     {
         typename T::ValueType;
         { T::Size } -> std::convertible_to<SizeType>;
@@ -181,7 +181,7 @@ namespace Math
     };
 
     template <typename T>
-    concept ConceptFunction = requires (T f)
+    concept Function = requires (T f)
     {
         typename T::ValueType;
 
@@ -196,7 +196,7 @@ namespace Math
     //////////////////////////////////////////////////////////////////////////
 
     template <typename T>
-    concept ConceptRandomNumberGenerator = requires(T rng)
+    concept RandomNumberGenerator = requires(T rng)
     {
         typename T::ValueType;
 
@@ -213,16 +213,16 @@ namespace Math
     };
 
     template <typename T, typename RNG>
-    concept ConceptDistribution = requires (T dist)
+    concept Distribution = requires (T dist)
     {
         typename T::ValueType;
-        requires ConceptStrongType<typename T::ValueType>;
+        requires StrongType<typename T::ValueType>;
         requires requires (typename T::ValueType val)
         {
             { T(val, val) } -> IsSame<T>;
         };
 
-        requires ConceptRandomNumberGenerator<RNG>;
+        requires RandomNumberGenerator<RNG>;
         requires requires (RNG rng)
         {
             { dist(rng) } -> IsSame<typename T::ValueType>;
@@ -234,7 +234,7 @@ namespace Math
     //////////////////////////////////////////////////////////////////////////
 
     template <typename T>
-    concept ConceptScalar = requires (T s)
+    concept Scalar = requires (T s)
     {
         requires ArithmeticType<T>;
     };
@@ -244,12 +244,12 @@ namespace Math
     //////////////////////////////////////////////////////////////////////////
 
     template <typename T>
-    concept ConceptBasicVector = requires (T u)
+    concept BasicVector = requires (T u)
     {
         typename T::ScalarType;
         { T::Dimension } -> IsSameBaseType<SizeType>;
 
-        requires ConceptScalar<typename T::ScalarType>;
+        requires Scalar<typename T::ScalarType>;
 
         requires requires (SizeType i)
         {
@@ -264,17 +264,17 @@ namespace Math
     };
 
     template <typename T>
-    concept ConceptVectorN = requires (T u, T v)
+    concept VectorN = requires (T u, T v)
     {
-        requires ConceptBasicVector<T>;
+        requires BasicVector<T>;
         requires ArithmeticType<T>;
         requires BinaryArithmetic<T, typename T::ScalarType>;
     };
 
     template <typename T>
-    concept ConceptVector2 = requires (T u)
+    concept Vector2 = requires (T u)
     {
-        requires ConceptVectorN<T>;
+        requires VectorN<T>;
         { Implementation::Prvalue(u.x) } -> IsSameBaseType<typename T::ScalarType>;
         { Implementation::Prvalue(u.x) } -> IsSameBaseType<typename T::ScalarType>;
 
@@ -287,9 +287,9 @@ namespace Math
     };
 
     template <typename T>
-    concept ConceptVector3 = requires (T u)
+    concept Vector3 = requires (T u)
     {
-        requires ConceptVectorN<T>;
+        requires VectorN<T>;
         { Implementation::Prvalue(u.x) } -> IsSameBaseType<typename T::ScalarType>;
         { Implementation::Prvalue(u.y) } -> IsSameBaseType<typename T::ScalarType>;
         { Implementation::Prvalue(u.z) } -> IsSameBaseType<typename T::ScalarType>;
@@ -303,9 +303,9 @@ namespace Math
     };
 
     template <typename T>
-    concept ConceptVector4 = requires (T u)
+    concept Vector4 = requires (T u)
     {
-        requires ConceptVectorN<T>;
+        requires VectorN<T>;
         { Implementation::Prvalue(u.x) } -> IsSameBaseType<typename T::ScalarType>;
         { Implementation::Prvalue(u.y) } -> IsSameBaseType<typename T::ScalarType>;
         { Implementation::Prvalue(u.z) } -> IsSameBaseType<typename T::ScalarType>;
@@ -320,12 +320,12 @@ namespace Math
     };
 
     template <typename T>
-    concept ConceptVector = requires
+    concept Vector = requires
     {
-        requires ConceptVector2<T>
-              || ConceptVector3<T>
-              || ConceptVector4<T>
-              || (ConceptVectorN<T> && T::Dimension > 4);
+        requires Vector2<T>
+              || Vector3<T>
+              || Vector4<T>
+              || VectorN<T>;
     };
 
     //////////////////////////////////////////////////////////////////////////
@@ -333,15 +333,15 @@ namespace Math
     //////////////////////////////////////////////////////////////////////////
 
     template <typename T>
-    concept ConceptBasicPoint = requires (T p)
+    concept BasicPoint = requires (T p)
     {
         typename T::ScalarType;
         typename T::VectorType;
         { T::Dimension } -> IsSameBaseType<SizeType>;
 
-        requires ConceptScalar<typename T::ScalarType>;
+        requires Scalar<typename T::ScalarType>;
 
-        requires ConceptBasicVector<typename T::VectorType>;
+        requires BasicVector<typename T::VectorType>;
         requires T::Dimension == T::VectorType::Dimension;
 
         requires requires (SizeType i)
@@ -354,9 +354,9 @@ namespace Math
     };
 
     template <typename T>
-    concept ConceptPointN = requires (T p)
+    concept PointN = requires (T p)
     {
-        requires ConceptBasicPoint<T>;
+        requires BasicPoint<T>;
 
         requires requires (T q)
         {
@@ -368,9 +368,9 @@ namespace Math
     };
 
     template <typename T>
-    concept ConceptPoint2 = requires (T p)
+    concept Point2 = requires (T p)
     {
-        requires ConceptPointN<T>;
+        requires PointN<T>;
         { Implementation::Prvalue(p.x) } -> IsSameBaseType<typename T::ScalarType>;
         { Implementation::Prvalue(p.x) } -> IsSameBaseType<typename T::ScalarType>;
 
@@ -388,9 +388,9 @@ namespace Math
     };
 
     template <typename T>
-    concept ConceptPoint3 = requires (T p)
+    concept Point3 = requires (T p)
     {
-        requires ConceptPointN<T>;
+        requires PointN<T>;
         { Implementation::Prvalue(p.x) } -> IsSameBaseType<typename T::ScalarType>;
         { Implementation::Prvalue(p.y) } -> IsSameBaseType<typename T::ScalarType>;
         { Implementation::Prvalue(p.z) } -> IsSameBaseType<typename T::ScalarType>;
@@ -409,10 +409,10 @@ namespace Math
     };
 
     template <typename T>
-    concept ConceptPoint = requires
+    concept Point = requires
     {
-        requires ConceptPoint2<T>
-              || ConceptPoint3<T>;
+        requires Point2<T>
+              || Point3<T>;
     };
 
     //////////////////////////////////////////////////////////////////////////
@@ -420,14 +420,14 @@ namespace Math
     //////////////////////////////////////////////////////////////////////////
 
     template <typename T>
-    concept ConceptBasicMatrix = requires (T m)
+    concept BasicMatrix = requires (T m)
     {
         typename T::ScalarType;
         typename T::VectorType;
         { T::Dimension } -> IsSameBaseType<SizeType>;
 
-        requires ConceptScalar<typename T::ScalarType>;
-        requires ConceptBasicVector<typename T::VectorType>;
+        requires Scalar<typename T::ScalarType>;
+        requires BasicVector<typename T::VectorType>;
         requires T::Dimension == T::VectorType::Dimension;
 
         requires requires (SizeType i)
@@ -440,9 +440,9 @@ namespace Math
     };
 
     template <typename T>
-    concept ConceptMatrixN = requires (T m)
+    concept MatrixN = requires (T m)
     {
-        requires ConceptBasicMatrix<T>;
+        requires BasicMatrix<T>;
         requires BinaryArithmetic<T, typename T::ScalarType>;
         requires Addition<T, T>;
         requires Subtraction<T, T>;
@@ -450,9 +450,9 @@ namespace Math
     };
 
     template <typename T>
-    concept ConceptMatrix2 = requires (T m)
+    concept Matrix2 = requires (T m)
     {
-        requires ConceptMatrixN<T>;
+        requires MatrixN<T>;
 
         requires requires (typename T::ScalarType s)
         {
@@ -469,9 +469,9 @@ namespace Math
     };
 
     template <typename T>
-    concept ConceptMatrix3 = requires (T m)
+    concept Matrix3 = requires (T m)
     {
-        requires ConceptMatrixN<T>;
+        requires MatrixN<T>;
 
         requires requires (typename T::ScalarType s)
         {
@@ -489,9 +489,9 @@ namespace Math
     };
 
     template <typename T>
-    concept ConceptMatrix4 = requires (T m)
+    concept Matrix4 = requires (T m)
     {
-        requires ConceptMatrixN<T>;
+        requires MatrixN<T>;
 
         requires requires (typename T::ScalarType s)
         {
@@ -510,12 +510,12 @@ namespace Math
     };
 
     template <typename T>
-    concept ConceptMatrix = requires
+    concept Matrix = requires
     {
-        requires ConceptMatrix2<T>
-              || ConceptMatrix3<T>
-              || ConceptMatrix4<T>
-              || (ConceptMatrixN<T> && T::Dimension > 4);
+        requires Matrix2<T>
+              || Matrix3<T>
+              || Matrix4<T>
+              || MatrixN<T>;
     };
 
     //////////////////////////////////////////////////////////////////////////
@@ -523,7 +523,7 @@ namespace Math
     //////////////////////////////////////////////////////////////////////////
 
     template <typename T>
-    concept ConceptBasicTransform = requires (T t)
+    concept BasicTransform = requires (T t)
     {
         typename T::ScalarType;
         typename T::VectorType;
@@ -531,13 +531,13 @@ namespace Math
         typename T::RowVectorType;
         typename T::TransformMatrixType;
         { T::Dimension } -> IsSameBaseType<SizeType>;
-        requires ConceptBasicVector<decltype(T::BottomRow)>;
+        requires BasicVector<decltype(T::BottomRow)>;
 
-        requires ConceptScalar<typename T::ScalarType>;
-        requires ConceptBasicVector<typename T::VectorType>;
-        requires ConceptBasicMatrix<typename T::MatrixType>;
-        requires ConceptBasicVector<typename T::RowVectorType>;
-        requires ConceptBasicMatrix<typename T::TransformMatrixType>;
+        requires Scalar<typename T::ScalarType>;
+        requires BasicVector<typename T::VectorType>;
+        requires BasicMatrix<typename T::MatrixType>;
+        requires BasicVector<typename T::RowVectorType>;
+        requires BasicMatrix<typename T::TransformMatrixType>;
         requires T::Dimension == T::VectorType::Dimension;
         requires T::Dimension == T::MatrixType::Dimension;
         requires T::Dimension + 1 == T::RowVectorType::Dimension;
@@ -550,16 +550,16 @@ namespace Math
     };
 
     template <typename T>
-    concept ConceptTransformN = requires (T t)
+    concept TransformN = requires (T t)
     {
-        requires ConceptBasicTransform<T>;
+        requires BasicTransform<T>;
         requires Multiplication<T, T>;
     };
 
     template <typename T>
-    concept ConceptTransform2 = requires (T t)
+    concept Transform2 = requires (T t)
     {
-        requires ConceptTransformN<T>;
+        requires TransformN<T>;
 
         requires requires (typename T::ScalarType s)
         {
@@ -583,9 +583,9 @@ namespace Math
     };
 
     template <typename T>
-    concept ConceptTransform3 = requires (T t)
+    concept Transform3 = requires (T t)
     {
-        requires ConceptTransformN<T>;
+        requires TransformN<T>;
 
         requires requires (typename T::ScalarType s)
         {
@@ -610,10 +610,10 @@ namespace Math
     };
 
     template <typename T>
-    concept ConceptTransform = requires
+    concept Transform = requires
     {
-        requires ConceptTransform2<T>
-              || ConceptTransform3<T>;
+        requires Transform2<T>
+              || Transform3<T>;
     };
 
     //////////////////////////////////////////////////////////////////////////
@@ -621,17 +621,17 @@ namespace Math
     //////////////////////////////////////////////////////////////////////////
 
     template <typename T>
-    concept ConceptBasicQuaternion = requires (T q)
+    concept BasicQuaternion = requires (T q)
     {
         typename T::ScalarType;
         typename T::VectorType;
         typename T::MatrixType;
         typename T::TransformType;
 
-        requires ConceptScalar<typename T::ScalarType>;
-        requires ConceptBasicVector<typename T::VectorType>;
-        requires ConceptBasicMatrix<typename T::MatrixType>;
-        requires ConceptBasicTransform<typename T::TransformType>;
+        requires Scalar<typename T::ScalarType>;
+        requires BasicVector<typename T::VectorType>;
+        requires BasicMatrix<typename T::MatrixType>;
+        requires BasicTransform<typename T::TransformType>;
 
         requires T::VectorType::Dimension == 3;
         requires T::MatrixType::Dimension == 3;
@@ -645,9 +645,9 @@ namespace Math
     };
 
     template <typename T>
-    concept ConceptQuaternion = requires (T q)
+    concept Quaternion = requires (T q)
     {
-        requires ConceptBasicQuaternion<T>;
+        requires BasicQuaternion<T>;
 
         requires requires (T p)
         {
@@ -662,12 +662,12 @@ namespace Math
     //////////////////////////////////////////////////////////////////////////
 
     template <typename T>
-    concept ConceptMathTypeUtil = requires
+    concept MathTypeUtil = requires
     {
-        requires ConceptBasicVector<T>
-              || ConceptBasicPoint<T>
-              || ConceptBasicMatrix<T>
-              || ConceptBasicTransform<T>;
+        requires BasicVector<T>
+              || BasicPoint<T>
+              || BasicMatrix<T>
+              || BasicTransform<T>;
     };
 }
 

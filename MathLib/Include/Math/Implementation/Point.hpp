@@ -5,7 +5,7 @@
 
 namespace Math
 {
-    template <ConceptStrongType T>
+    template <Concept::StrongType T>
     struct Point2T
     {
         using ScalarType = T;
@@ -30,7 +30,7 @@ namespace Math
         constexpr T Min() const noexcept { return Math::Max(x, y); }
     };
 
-    template <ConceptStrongType T>
+    template <Concept::StrongType T>
     struct Point3T
     {
         using ScalarType = T;

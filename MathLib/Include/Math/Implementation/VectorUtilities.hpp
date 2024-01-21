@@ -5,7 +5,7 @@
 
 namespace Math
 {
-    template <ConceptVector Vec>
+    template <Concept::Vector Vec>
     [[nodiscard]] constexpr
     typename Vec::ScalarType Dot(const Vec& u, const Vec& v) noexcept
     {
@@ -17,7 +17,7 @@ namespace Math
         return dot;
     }
 
-    template <ConceptVector Vec>
+    template <Concept::Vector Vec>
     [[nodiscard]] constexpr
     Vec Normalize(const Vec& u) noexcept
     {
@@ -25,28 +25,28 @@ namespace Math
         return u / len;
     }
 
-    template <ConceptVector2 Vec>
+    template <Concept::Vector2 Vec>
     [[nodiscard]] constexpr
     Vec Perp(const Vec& u) noexcept
     {
         return Vec(-u.y, u.x);
     }
 
-    template <ConceptVector2 Vec>
+    template <Concept::Vector2 Vec>
     [[nodiscard]] constexpr
     typename Vec::ScalarType Area(const Vec& u, const Vec& v) noexcept
     {
         return u.x * v.y - u.y * v.x;
     }
 
-    template <ConceptVector2 Vec>
+    template <Concept::Vector2 Vec>
     [[nodiscard]] constexpr
     typename Vec::ScalarType TriangleArea(const Vec& u, const Vec& v) noexcept
     {
         return Area(u, v) / 2;
     }
 
-    template <Orientation Hand = Orientation::Right, ConceptVector3 Vec>
+    template <Orientation Hand = Orientation::Right, Concept::Vector3 Vec>
     [[nodiscard]] constexpr
     Vec Cross(const Vec& u, const Vec& v) noexcept
     {
@@ -66,35 +66,35 @@ namespace Math
         return w;
     }
 
-    template <ConceptVector3 Vec>
+    template <Concept::Vector3 Vec>
     [[nodiscard]] constexpr
     typename Vec::ScalarType Area(const Vec& u, const Vec& v) noexcept
     {
         return Cross(u, v).Length();
     }
 
-    template <ConceptVector3 Vec>
+    template <Concept::Vector3 Vec>
     [[nodiscard]] constexpr
     typename Vec::ScalarType TriangleArea(const Vec& u, const Vec& v) noexcept
     {
         return Area(u, v) / 2;
     }
 
-    template <ConceptVector3 Vec>
+    template <Concept::Vector3 Vec>
     [[nodiscard]] constexpr
     typename Vec::ScalarType Volume(const Vec& u, const Vec& v, const Vec& w) noexcept
     {
         return Dot(u, Cross(v, w));
     }
 
-    template <ConceptVector3 Vec>
+    template <Concept::Vector3 Vec>
     [[nodiscard]] constexpr
     typename Vec::ScalarType TetrahedronVolume(const Vec& u, const Vec& v, const Vec& w) noexcept
     {
         return Volume(u, v, w) / 6;
     }
 
-    template <ConceptVector Vec>
+    template <Concept::Vector Vec>
     [[nodiscard]] constexpr
     Vec Reflect(const Vec& u, const Vec& n) noexcept
     {
@@ -102,14 +102,14 @@ namespace Math
         return u - 2 * Dot(u, unitN) * unitN;
     }
 
-    template <ConceptVector3 Vec>
+    template <Concept::Vector3 Vec>
     [[nodiscard]] constexpr
     Vec ReflectLocalZ(const Vec& u) noexcept
     {
         return Vec(-u.x, -u.y, u.z);
     }
 
-    template <ConceptVector3 Vec>
+    template <Concept::Vector3 Vec>
     [[nodiscard]] constexpr
     Vec Refract(const Vec& u, const Vec& n, typename Vec::ScalarType eta) noexcept
     {

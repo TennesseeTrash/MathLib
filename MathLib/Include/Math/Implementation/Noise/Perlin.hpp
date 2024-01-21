@@ -14,7 +14,7 @@
 
 namespace Math::Noise
 {
-    template <FloatingPointType Float, typename Interpolation = Function::Smootherstep<Float>>
+    template <Concept::FloatingPointType Float, typename Interpolation = Function::Smootherstep<Float>>
     class Perlin final
     {
     public:
@@ -133,19 +133,19 @@ namespace Math::Noise
                                             Lerp(u, v15, v16)))) + 1) / 2;
         }
 
-        template <ConceptVector Vec>
+        template <Concept::Vector Vec>
         [[nodiscard]] constexpr
         Float operator()(const Vec& vec) const noexcept
         {
-            if constexpr (ConceptVector2<Vec>)
+            if constexpr (Concept::Vector2<Vec>)
             {
                 return (*this)(vec.x, vec.y);
             }
-            else if constexpr (ConceptVector3<Vec>)
+            else if constexpr (Concept::Vector3<Vec>)
             {
                 return (*this)(vec.x, vec.y, vec.z);
             }
-            else if constexpr (ConceptVector4<Vec>)
+            else if constexpr (Concept::Vector4<Vec>)
             {
                 return (*this)(vec.x, vec.y, vec.z, vec.w);
             }

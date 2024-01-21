@@ -9,7 +9,7 @@ namespace Math
     // Matrix-Matrix operators
     //////////////////////////////////////////////////////////////////////////
 
-    template <ConceptBasicMatrix Mat>
+    template <Concept::BasicMatrix Mat>
     [[nodiscard]] constexpr
     Mat operator+ (const Mat& a, const Mat& b) noexcept
     {
@@ -24,7 +24,7 @@ namespace Math
         return c;
     }
 
-    template <ConceptBasicMatrix Mat>
+    template <Concept::BasicMatrix Mat>
     [[nodiscard]] constexpr
     Mat operator- (const Mat& a, const Mat& b) noexcept
     {
@@ -39,7 +39,7 @@ namespace Math
         return c;
     }
 
-    template <ConceptBasicMatrix Mat>
+    template <Concept::BasicMatrix Mat>
     [[nodiscard]] constexpr
     Mat operator* (const Mat& a, const Mat& b) noexcept
     {
@@ -59,7 +59,7 @@ namespace Math
 
 
 
-    template <ConceptBasicMatrix Mat>
+    template <Concept::BasicMatrix Mat>
     [[maybe_unused]] constexpr
     Mat& operator+= (Mat& a, const Mat& b) noexcept
     {
@@ -73,7 +73,7 @@ namespace Math
         return a;
     }
 
-    template <ConceptBasicMatrix Mat>
+    template <Concept::BasicMatrix Mat>
     [[maybe_unused]] constexpr
     Mat& operator-= (Mat& a, const Mat& b) noexcept
     {
@@ -87,7 +87,7 @@ namespace Math
         return a;
     }
 
-    template <ConceptBasicMatrix Mat>
+    template <Concept::BasicMatrix Mat>
     [[maybe_unused]] constexpr
     Mat& operator*= (Mat& a, const Mat& b) noexcept
     {
@@ -99,7 +99,7 @@ namespace Math
     // Matrix-Scalar operators
     //////////////////////////////////////////////////////////////////////////
 
-    template <ConceptBasicMatrix Mat>
+    template <Concept::BasicMatrix Mat>
     [[nodiscard]] constexpr
     Mat operator+ (const Mat& m, typename Mat::ScalarType s) noexcept
     {
@@ -114,7 +114,7 @@ namespace Math
         return scaled;
     }
 
-    template <ConceptBasicMatrix Mat>
+    template <Concept::BasicMatrix Mat>
     [[nodiscard]] constexpr
     Mat operator+ (typename Mat::ScalarType s, const Mat& m) noexcept
     {
@@ -129,7 +129,7 @@ namespace Math
         return scaled;
     }
 
-    template <ConceptBasicMatrix Mat>
+    template <Concept::BasicMatrix Mat>
     [[nodiscard]] constexpr
     Mat operator- (const Mat& m, typename Mat::ScalarType s) noexcept
     {
@@ -144,7 +144,7 @@ namespace Math
         return scaled;
     }
 
-    template <ConceptBasicMatrix Mat>
+    template <Concept::BasicMatrix Mat>
     [[nodiscard]] constexpr
     Mat operator- (typename Mat::ScalarType s, const Mat& m) noexcept
     {
@@ -159,7 +159,7 @@ namespace Math
         return scaled;
     }
 
-    template <ConceptBasicMatrix Mat>
+    template <Concept::BasicMatrix Mat>
     [[nodiscard]] constexpr
     Mat operator* (const Mat& m, typename Mat::ScalarType s) noexcept
     {
@@ -174,7 +174,7 @@ namespace Math
         return scaled;
     }
 
-    template <ConceptBasicMatrix Mat>
+    template <Concept::BasicMatrix Mat>
     [[nodiscard]] constexpr
     Mat operator* (typename Mat::ScalarType s, const Mat& m) noexcept
     {
@@ -189,7 +189,7 @@ namespace Math
         return scaled;
     }
 
-    template <ConceptBasicMatrix Mat>
+    template <Concept::BasicMatrix Mat>
     [[nodiscard]] constexpr
     Mat operator/ (const Mat& m, typename Mat::ScalarType s) noexcept
     {
@@ -204,7 +204,7 @@ namespace Math
         return scaled;
     }
 
-    template <ConceptBasicMatrix Mat>
+    template <Concept::BasicMatrix Mat>
     [[nodiscard]] constexpr
     Mat operator/ (typename Mat::ScalarType s, const Mat& m) noexcept
     {
@@ -221,7 +221,7 @@ namespace Math
 
 
 
-    template <ConceptBasicMatrix Mat>
+    template <Concept::BasicMatrix Mat>
     [[maybe_unused]] constexpr
     Mat& operator+= (Mat& m, typename Mat::ScalarType s) noexcept
     {
@@ -235,7 +235,7 @@ namespace Math
         return m;
     }
 
-    template <ConceptBasicMatrix Mat>
+    template <Concept::BasicMatrix Mat>
     [[maybe_unused]] constexpr
     Mat& operator-= (Mat& m, typename Mat::ScalarType s) noexcept
     {
@@ -249,7 +249,7 @@ namespace Math
         return m;
     }
 
-    template <ConceptBasicMatrix Mat>
+    template <Concept::BasicMatrix Mat>
     [[maybe_unused]] constexpr
     Mat& operator*= (Mat& m, typename Mat::ScalarType s) noexcept
     {
@@ -263,7 +263,7 @@ namespace Math
         return m;
     }
 
-    template <ConceptBasicMatrix Mat>
+    template <Concept::BasicMatrix Mat>
     [[maybe_unused]] constexpr
     Mat& operator/= (Mat& m, typename Mat::ScalarType s) noexcept
     {
@@ -281,7 +281,7 @@ namespace Math
     // Matrix-Vector operators
     //////////////////////////////////////////////////////////////////////////
 
-    template <ConceptBasicMatrix Mat, ConceptBasicVector Vec>
+    template <Concept::BasicMatrix Mat, Concept::BasicVector Vec>
         requires (Mat::Dimension == Vec::Dimension)
     [[nodiscard]] constexpr
     Vec operator* (const Mat& m, const Vec& u) noexcept
@@ -297,7 +297,7 @@ namespace Math
         return result;
     }
 
-    template <ConceptBasicMatrix Mat, ConceptBasicVector Vec>
+    template <Concept::BasicMatrix Mat, Concept::BasicVector Vec>
         requires (Mat::Dimension == Vec::Dimension)
     [[nodiscard]] constexpr
     Vec operator* (const Vec& u, const Mat& m) noexcept
@@ -317,7 +317,7 @@ namespace Math
     // Matrix-Point operators
     //////////////////////////////////////////////////////////////////////////
 
-    template <ConceptBasicMatrix Mat, ConceptBasicPoint Pnt>
+    template <Concept::BasicMatrix Mat, Concept::BasicPoint Pnt>
         requires (Mat::Dimension == Pnt::Dimension)
     [[nodiscard]] constexpr
     Pnt operator* (const Mat& m, const Pnt& p) noexcept
@@ -333,7 +333,7 @@ namespace Math
         return result;
     }
 
-    template <ConceptBasicMatrix Mat, ConceptBasicPoint Pnt>
+    template <Concept::BasicMatrix Mat, Concept::BasicPoint Pnt>
         requires (Mat::Dimension == Pnt::Dimension)
     [[nodiscard]] constexpr
     Pnt operator* (const Pnt& p, const Mat& m) noexcept
@@ -349,7 +349,7 @@ namespace Math
         return result;
     }
 
-    template <ConceptBasicMatrix Mat, ConceptBasicPoint Pnt>
+    template <Concept::BasicMatrix Mat, Concept::BasicPoint Pnt>
         requires (Mat::Dimension == Pnt::Dimension + 1)
     [[nodiscard]] constexpr
     Pnt operator* (const Mat& m, const Pnt& p) noexcept
@@ -375,7 +375,7 @@ namespace Math
         return result;
     }
 
-    template <ConceptBasicMatrix Mat, ConceptBasicPoint Pnt>
+    template <Concept::BasicMatrix Mat, Concept::BasicPoint Pnt>
         requires (Mat::Dimension == Pnt::Dimension + 1)
     [[nodiscard]] constexpr
     Pnt operator* (const Pnt& p, const Mat& m) noexcept

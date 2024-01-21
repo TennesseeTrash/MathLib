@@ -23,10 +23,10 @@ namespace Math
         {
             static_assert(sizeof...(Ts) == ToUnderlying(Size), "Invalid number of arguments");
             static_assert(sizeof...(Ts) == 0
-                      || (IsSame<T, Ts> && ...), "Invalid types");
+                      || (Concept::IsSame<T, Ts> && ...), "Invalid types");
         }
 
-        template <Invocable<T&> Func>
+        template <Concept::Invocable<T&> Func>
         [[maybe_unused]] constexpr
         Func ForEach(Func func) noexcept
         {
@@ -38,7 +38,7 @@ namespace Math
             return func;
         }
 
-        template <Invocable<SizeType, T&> Func>
+        template <Concept::Invocable<SizeType, T&> Func>
         [[maybe_unused]] constexpr
         Func ForEach(Func func) noexcept
         {
@@ -59,8 +59,8 @@ namespace Math
             }
         }
 
-        template <ConceptRandomNumberGenerator RNG, template <typename> typename Dist>
-            requires ConceptDistribution<Dist<SizeType>, RNG>
+        template <Concept::RandomNumberGenerator RNG, template <typename> typename Dist>
+            requires Concept::Distribution<Dist<SizeType>, RNG>
         constexpr
         void Shuffle(RNG& rng) noexcept
         {
@@ -121,11 +121,11 @@ namespace Math
     Array<T, N> MakeArray(const Ts&... values)
     {
         static_assert(sizeof...(Ts) == ToUnderlying(N), "Invalid number of arguments");
-        static_assert((IsConvertible<UnderlyingType<T>, UnderlyingType<Ts>> && ...), "Invalid types");
+        static_assert((Concept::IsConvertible<UnderlyingType<T>, UnderlyingType<Ts>> && ...), "Invalid types");
         return Array<T, N>(Cast<T>(values)...);
     }
 
-    template <typename T, StaticSizeType N, Invocable<T&> Func>
+    template <typename T, StaticSizeType N, Concept::Invocable<T&> Func>
     [[nodiscard]] constexpr
     Array<T, N> MakeArray(Func func)
     {
@@ -134,7 +134,7 @@ namespace Math
         return result;
     }
 
-    template <typename T, StaticSizeType N, Invocable<SizeType, T&> Func>
+    template <typename T, StaticSizeType N, Concept::Invocable<SizeType, T&> Func>
     [[nodiscard]] constexpr
     Array<T, N> MakeArray(Func func)
     {

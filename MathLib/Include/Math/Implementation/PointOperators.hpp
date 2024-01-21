@@ -9,7 +9,7 @@ namespace Math
     // Point-Point operators
     //////////////////////////////////////////////////////////////////////////
 
-    template <ConceptBasicPoint Pnt>
+    template <Concept::BasicPoint Pnt>
     [[nodiscard]] constexpr
     typename Pnt::VectorType operator- (const Pnt& p1, const Pnt& p2) noexcept
     {
@@ -25,7 +25,7 @@ namespace Math
     // Point-Vector operators
     //////////////////////////////////////////////////////////////////////////
 
-    template <ConceptBasicPoint Pnt, ConceptBasicVector Vec>
+    template <Concept::BasicPoint Pnt, Concept::BasicVector Vec>
         requires (Pnt::Dimension == Vec::Dimension)
     [[nodiscard]] constexpr
     Pnt operator+ (const Pnt& p, const Vec& v) noexcept
@@ -38,7 +38,7 @@ namespace Math
         return result;
     }
 
-    template <ConceptBasicPoint Pnt, ConceptBasicVector Vec>
+    template <Concept::BasicPoint Pnt, Concept::BasicVector Vec>
         requires (Pnt::Dimension == Vec::Dimension)
     [[nodiscard]] constexpr
     Pnt operator+ (const Vec& v, const Pnt& p) noexcept
@@ -51,7 +51,7 @@ namespace Math
         return result;
     }
 
-    template <ConceptBasicPoint Pnt, ConceptBasicVector Vec>
+    template <Concept::BasicPoint Pnt, Concept::BasicVector Vec>
         requires (Pnt::Dimension == Vec::Dimension)
     [[nodiscard]] constexpr
     Pnt operator- (const Pnt& p, const Vec& v) noexcept
@@ -64,7 +64,7 @@ namespace Math
         return result;
     }
 
-    template <ConceptBasicPoint Pnt, ConceptBasicVector Vec>
+    template <Concept::BasicPoint Pnt, Concept::BasicVector Vec>
         requires (Pnt::Dimension == Vec::Dimension)
     [[nodiscard]] constexpr
     Pnt operator- (const Vec& v, const Pnt& p) noexcept
@@ -79,7 +79,7 @@ namespace Math
 
 
 
-    template <ConceptBasicPoint Pnt, ConceptBasicVector Vec>
+    template <Concept::BasicPoint Pnt, Concept::BasicVector Vec>
         requires (Pnt::Dimension == Vec::Dimension)
     [[maybe_unused]] constexpr
     Pnt& operator+= (Pnt& p, const Vec& v) noexcept
@@ -91,7 +91,7 @@ namespace Math
         return p;
     }
 
-    template <ConceptBasicPoint Pnt, ConceptBasicVector Vec>
+    template <Concept::BasicPoint Pnt, Concept::BasicVector Vec>
         requires (Pnt::Dimension == Vec::Dimension)
     [[maybe_unused]] constexpr
     Pnt& operator-= (Pnt& p, const Vec& v) noexcept

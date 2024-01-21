@@ -21,11 +21,11 @@ namespace Math
     // Enforce concepts on provided types
     //////////////////////////////////////////////////////////////////////////
 
-    static_assert(ConceptTransform2<Transform2f>);
-    static_assert(ConceptTransform3<Transform3f>);
+    static_assert(Concept::Transform2<Transform2f>);
+    static_assert(Concept::Transform3<Transform3f>);
 
-    static_assert(ConceptTransform2<Transform2d>);
-    static_assert(ConceptTransform3<Transform3d>);
+    static_assert(Concept::Transform2<Transform2d>);
+    static_assert(Concept::Transform3<Transform3d>);
 }
 
 #endif //MATHLIB_TRANSFORM_HPP

@@ -5,7 +5,7 @@
 
 namespace Math
 {
-    template <ConceptBasicPoint Pnt>
+    template <Concept::BasicPoint Pnt>
     [[nodiscard]] constexpr
     bool HasNaN(const Pnt& p) noexcept
     {

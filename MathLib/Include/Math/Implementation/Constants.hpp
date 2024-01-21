@@ -141,7 +141,7 @@ namespace Math::Constant::Implementation
     struct Epsilon final
     {};
 
-    template <IntegralType T>
+    template <Concept::IntegralType T>
     struct Epsilon<T> final
     {
         static constexpr T Value = T(0);

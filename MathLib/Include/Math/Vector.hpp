@@ -40,21 +40,21 @@ namespace Math
     // Enforce concepts on provided types
     //////////////////////////////////////////////////////////////////////////
 
-    static_assert(ConceptVector2<Vector2f>);
-    static_assert(ConceptVector3<Vector3f>);
-    static_assert(ConceptVector4<Vector4f>);
+    static_assert(Concept::Vector2<Vector2f>);
+    static_assert(Concept::Vector3<Vector3f>);
+    static_assert(Concept::Vector4<Vector4f>);
 
-    static_assert(ConceptVector2<Vector2d>);
-    static_assert(ConceptVector3<Vector3d>);
-    static_assert(ConceptVector4<Vector4d>);
+    static_assert(Concept::Vector2<Vector2d>);
+    static_assert(Concept::Vector3<Vector3d>);
+    static_assert(Concept::Vector4<Vector4d>);
 
-    static_assert(ConceptVector2<Vector2i>);
-    static_assert(ConceptVector3<Vector3i>);
-    static_assert(ConceptVector4<Vector4i>);
+    static_assert(Concept::Vector2<Vector2i>);
+    static_assert(Concept::Vector3<Vector3i>);
+    static_assert(Concept::Vector4<Vector4i>);
 
-    static_assert(ConceptVector2<Vector2l>);
-    static_assert(ConceptVector3<Vector3l>);
-    static_assert(ConceptVector4<Vector4l>);
+    static_assert(Concept::Vector2<Vector2l>);
+    static_assert(Concept::Vector3<Vector3l>);
+    static_assert(Concept::Vector4<Vector4l>);
 }
 
 #endif //MATHLIB_VECTOR_HPP

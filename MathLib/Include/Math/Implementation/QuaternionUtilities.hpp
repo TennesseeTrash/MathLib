@@ -6,21 +6,21 @@
 
 namespace Math
 {
-    template <ConceptQuaternion Quat>
+    template <Concept::Quaternion Quat>
     [[nodiscard]] constexpr
     typename Quat::ScalarType Dot(const Quat& p, const Quat& q) noexcept
     {
         return Dot(p.Vector(), q.Vector()) + p.Scalar() * q.Scalar();
     }
 
-    template <ConceptQuaternion Quat>
+    template <Concept::Quaternion Quat>
     [[nodiscard]] constexpr
     Quat Conjugate(const Quat& q) noexcept
     {
         return Quat(-q.Vector(), q.Scalar());
     }
 
-    template <ConceptQuaternion Quat>
+    template <Concept::Quaternion Quat>
     [[nodiscard]] constexpr
     Quat Normalize(const Quat& q) noexcept
     {
@@ -28,7 +28,7 @@ namespace Math
         return Quat(q.Vector() / norm, q.Scalar() / norm);
     }
 
-    template <ConceptQuaternion Quat>
+    template <Concept::Quaternion Quat>
     [[nodiscard]] constexpr
     Quat Inverse(const Quat& q) noexcept
     {
@@ -36,21 +36,21 @@ namespace Math
         return Quat(-q.Vector() / normSqr, q.Scalar() / normSqr);
     }
 
-    template <ConceptQuaternion Quat, ConceptVector3 Vec>
+    template <Concept::Quaternion Quat, Concept::Vector3 Vec>
     [[nodiscard]] constexpr
     Vec Transform(const Quat& q, const Vec& v) noexcept
     {
         return (q * Quat(v, 0) * Inverse(q)).Vector();
     }
 
-    template <ConceptQuaternion Quat, ConceptPoint3 Pnt>
+    template <Concept::Quaternion Quat, Concept::Point3 Pnt>
     [[nodiscard]] constexpr
     Pnt Transform(const Quat& q, const Pnt& p) noexcept
     {
         return Pnt((q * Quat(Vec(p), 0) * Inverse(q)).Vector());
     }
 
-    template <ConceptQuaternion Quat>
+    template <Concept::Quaternion Quat>
     [[nodiscard]] constexpr
     Quat Lerp(typename Quat::ScalarType val, const Quat& p, const Quat& q) noexcept
     {
@@ -65,7 +65,7 @@ namespace Math
         }
     }
 
-    template <ConceptQuaternion Quat>
+    template <Concept::Quaternion Quat>
     [[nodiscard]] constexpr
     Quat Slerp(typename Quat::ScalarType val, const Quat& p, const Quat& q) noexcept
     {
@@ -77,7 +77,7 @@ namespace Math
         return (p * Sin((1 - val) * angle) + q * Sin(val * angle)) * (1 / sinAngle);
     }
 
-    template <ConceptQuaternion Quat>
+    template <Concept::Quaternion Quat>
     [[nodiscard]] constexpr
     typename Quat::MatrixType ToMatrix(const Quat& q) noexcept
     {
@@ -100,14 +100,14 @@ namespace Math
         );
     }
 
-    template <ConceptQuaternion Quat>
+    template <Concept::Quaternion Quat>
     [[nodiscard]] constexpr
     typename Quat::TransformType ToTransform(const Quat& q) noexcept
     {
         return typename Quat::TransformType(ToMatrix(q), {});
     }
 
-    template <ConceptScalar Scalar>
+    template <Concept::Scalar Scalar>
     [[nodiscard]] constexpr
     QuaternionT<Scalar> FromAxisAngle(const Vector3T<Scalar>& axis, Scalar angle) noexcept
     {
@@ -118,7 +118,7 @@ namespace Math
         );
     }
 
-    template <ConceptScalar Scalar>
+    template <Concept::Scalar Scalar>
     [[nodiscard]] constexpr
     QuaternionT<Scalar> FromYawPitchRoll(Scalar yaw, Scalar pitch, Scalar roll) noexcept
     {
@@ -136,14 +136,14 @@ namespace Math
              cy * cp * cr + sy * sp * sr);
     }
 
-    template <ConceptQuaternion Quat>
+    template <Concept::Quaternion Quat>
     [[nodiscard]] constexpr
     bool Equal(const Quat& p, const Quat& q) noexcept
     {
         return Equal(p.Vector(), q.Vector()) && Equal(p.Scalar(), q.Scalar());
     }
 
-    template <ConceptQuaternion Quat>
+    template <Concept::Quaternion Quat>
     [[nodiscard]] constexpr
     bool HasNaN(const Quat& q) noexcept
     {

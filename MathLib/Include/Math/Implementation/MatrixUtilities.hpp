@@ -5,7 +5,7 @@
 
 namespace Math
 {
-    template <ConceptMatrix Mat>
+    template <Concept::Matrix Mat>
     [[nodiscard]] constexpr
     Mat Transpose(const Mat& m) noexcept
     {
@@ -20,7 +20,7 @@ namespace Math
         return result;
     }
 
-    template <ConceptMatrix2 Mat>
+    template <Concept::Matrix2 Mat>
     [[nodiscard]] constexpr
     typename Mat::ScalarType Determinant(const Mat& m) noexcept
     {
@@ -28,7 +28,7 @@ namespace Math
              - (m[0][1] * m[1][0]);
     }
 
-    template <ConceptMatrix3 Mat>
+    template <Concept::Matrix3 Mat>
     [[nodiscard]] constexpr
     typename Mat::ScalarType Determinant(const Mat& m) noexcept
     {
@@ -40,7 +40,7 @@ namespace Math
              - (m[0][0] * m[1][2] * m[2][1]);
     }
 
-    template <ConceptMatrix4 Mat>
+    template <Concept::Matrix4 Mat>
     [[nodiscard]] constexpr
     typename Mat::ScalarType Determinant(const Mat& m) noexcept
     {
@@ -70,7 +70,7 @@ namespace Math
              + (m[0][1] * m[1][3] * m[2][2] * m[3][0]);
     }
 
-    template <ConceptMatrix2 Mat>
+    template <Concept::Matrix2 Mat>
     [[nodiscard]] constexpr
     Mat Invert(const Mat& m) noexcept
     {
@@ -83,7 +83,7 @@ namespace Math
         return result;
     }
 
-    template <ConceptMatrix3 Mat>
+    template <Concept::Matrix3 Mat>
     [[nodiscard]] constexpr
     Mat Invert(const Mat& m) noexcept
     {
@@ -103,7 +103,7 @@ namespace Math
 
     // TODO(3011): Investigate better calculations with better precision.
     // (Possibly at the cost of some performance.)
-    template <ConceptMatrix4 Mat>
+    template <Concept::Matrix4 Mat>
     [[nodiscard]] constexpr
     Mat Invert(const Mat& m) noexcept
     {
@@ -158,7 +158,7 @@ namespace Math
         return result;
     }
 
-    template <ConceptBasicMatrix Mat>
+    template <Concept::BasicMatrix Mat>
     [[nodiscard]] constexpr
     bool HasNaN(const Mat& m)
     {

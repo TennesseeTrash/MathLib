@@ -7,21 +7,21 @@
 
 namespace Math
 {
-    template <ConceptTransform2 Transform>
+    template <Concept::Transform2 Transform>
     [[nodiscard]] constexpr
     typename Transform::TransformMatrixType ToMatrix(const Transform& t) noexcept
     {
         return typename Transform::TransformMatrixType( t[0], t[1], Transform::BottomRow );
     }
 
-    template <ConceptTransform3 Transform>
+    template <Concept::Transform3 Transform>
     [[nodiscard]] constexpr
     typename Transform::TransformMatrixType ToMatrix(const Transform& t) noexcept
     {
         return typename Transform::TransformMatrixType( t[0], t[1], t[2], Transform::BottomRow );
     }
 
-    template <ConceptScalar Scalar>
+    template <Concept::Scalar Scalar>
     [[nodiscard]] constexpr
     Transform2T<Scalar> Translate(const Vector2T<Scalar>& v) noexcept
     {
@@ -31,7 +31,7 @@ namespace Math
         );
     }
 
-    template <ConceptScalar Scalar>
+    template <Concept::Scalar Scalar>
     [[nodiscard]] constexpr
     Transform3T<Scalar> Translate(const Vector3T<Scalar>& v) noexcept
     {
@@ -42,7 +42,7 @@ namespace Math
         );
     }
 
-    template <ConceptScalar Scalar>
+    template <Concept::Scalar Scalar>
     [[nodiscard]] constexpr
     Transform2T<Scalar> Scale(const Vector2T<Scalar>& v) noexcept
     {
@@ -52,7 +52,7 @@ namespace Math
         );
     }
 
-    template <ConceptScalar Scalar>
+    template <Concept::Scalar Scalar>
     [[nodiscard]] constexpr
     Transform3T<Scalar> Scale(const Vector3T<Scalar>& v) noexcept
     {
@@ -63,7 +63,7 @@ namespace Math
         );
     }
 
-    template <ConceptScalar Scalar>
+    template <Concept::Scalar Scalar>
     [[nodiscard]] constexpr
     Transform2T<Scalar> Rotate(Scalar angle) noexcept
     {
@@ -73,7 +73,7 @@ namespace Math
         );
     }
 
-    template <Orientation Hand = Orientation::Right, ConceptScalar Scalar>
+    template <Orientation Hand = Orientation::Right, Concept::Scalar Scalar>
     [[nodiscard]] constexpr
     Transform3T<Scalar> RotateX(Scalar angle) noexcept
     {
@@ -95,7 +95,7 @@ namespace Math
         }
     }
 
-    template <Orientation Hand = Orientation::Right, ConceptScalar Scalar>
+    template <Orientation Hand = Orientation::Right, Concept::Scalar Scalar>
     [[nodiscard]] constexpr
     Transform3T<Scalar> RotateY(Scalar angle) noexcept
     {
@@ -117,7 +117,7 @@ namespace Math
         }
     }
 
-    template <Orientation Hand = Orientation::Right, ConceptScalar Scalar>
+    template <Orientation Hand = Orientation::Right, Concept::Scalar Scalar>
     [[nodiscard]] constexpr
     Transform3T<Scalar> RotateZ(Scalar angle) noexcept
     {
@@ -139,7 +139,7 @@ namespace Math
         }
     }
 
-    template <ConceptScalar Scalar>
+    template <Concept::Scalar Scalar>
     [[nodiscard]] constexpr
     Transform2T<Scalar> ShearX(Scalar s) noexcept
     {
@@ -149,7 +149,7 @@ namespace Math
         );
     }
 
-    template <ConceptScalar Scalar>
+    template <Concept::Scalar Scalar>
     [[nodiscard]] constexpr
     Transform2T<Scalar> ShearY(Scalar s) noexcept
     {
@@ -159,7 +159,7 @@ namespace Math
         );
     }
 
-    template <ConceptScalar Scalar>
+    template <Concept::Scalar Scalar>
     [[nodiscard]] constexpr
     Transform3T<Scalar> ShearX(Scalar s, Scalar t) noexcept
     {
@@ -170,7 +170,7 @@ namespace Math
         );
     }
 
-    template <ConceptScalar Scalar>
+    template <Concept::Scalar Scalar>
     [[nodiscard]] constexpr
     Transform3T<Scalar> ShearY(Scalar s, Scalar t) noexcept
     {
@@ -181,7 +181,7 @@ namespace Math
         );
     }
 
-    template <ConceptScalar Scalar>
+    template <Concept::Scalar Scalar>
     [[nodiscard]] constexpr
     Transform3T<Scalar> ShearZ(Scalar s, Scalar t) noexcept
     {
@@ -192,7 +192,7 @@ namespace Math
         );
     }
 
-    template <ConceptScalar Scalar>
+    template <Concept::Scalar Scalar>
     [[nodiscard]] constexpr
     Transform3T<Scalar> LookAt(const Point3T<Scalar>& pos, const Vector3T<Scalar>& dir, const Vector3T<Scalar>& up = {0, 1, 0}) noexcept
     {
@@ -206,7 +206,7 @@ namespace Math
         );
     }
 
-    template <Orientation Hand = Orientation::Right, ConceptScalar Scalar>
+    template <Orientation Hand = Orientation::Right, Concept::Scalar Scalar>
     [[nodiscard]] constexpr
     auto PerspectiveProjection(Scalar fov, Scalar aspectRatio, Scalar near, Scalar far) noexcept
     {
@@ -224,7 +224,7 @@ namespace Math
         return result;
     }
 
-    template <Orientation Hand = Orientation::Right, ConceptScalar Scalar>
+    template <Orientation Hand = Orientation::Right, Concept::Scalar Scalar>
     [[nodiscard]] constexpr
     Transform3T<Scalar> OrthographicProjection(Scalar left, Scalar right, Scalar bottom, Scalar top, Scalar near, Scalar far) noexcept
     {
@@ -244,7 +244,7 @@ namespace Math
         return result;
     }
 
-    template <ConceptBasicTransform Transform>
+    template <Concept::BasicTransform Transform>
     [[nodiscard]] constexpr
     bool HasNaN(const Transform& t)
     {

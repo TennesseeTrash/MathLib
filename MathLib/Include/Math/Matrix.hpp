@@ -24,13 +24,13 @@ namespace Math
     // Enforce concepts on provided types
     //////////////////////////////////////////////////////////////////////////
 
-    static_assert(ConceptMatrix2<Matrix2f>);
-    static_assert(ConceptMatrix3<Matrix3f>);
-    static_assert(ConceptMatrix4<Matrix4f>);
+    static_assert(Concept::Matrix2<Matrix2f>);
+    static_assert(Concept::Matrix3<Matrix3f>);
+    static_assert(Concept::Matrix4<Matrix4f>);
 
-    static_assert(ConceptMatrix2<Matrix2d>);
-    static_assert(ConceptMatrix3<Matrix3d>);
-    static_assert(ConceptMatrix4<Matrix4d>);
+    static_assert(Concept::Matrix2<Matrix2d>);
+    static_assert(Concept::Matrix3<Matrix3d>);
+    static_assert(Concept::Matrix4<Matrix4d>);
 }
 
 #endif //MATHLIB_MATRIX_HPP

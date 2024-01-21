@@ -79,14 +79,14 @@ namespace Math
         return (val > max) ? max : ((val < min) ? min : val);
     }
 
-    template <FloatingPointType T>
+    template <Concept::FloatingPointType T>
     [[nodiscard]] constexpr
     T Lerp(T val, T begin, T end) noexcept
     {
         return ((1 - val) * begin) + (val * end);
     }
 
-    template <FloatingPointType T>
+    template <Concept::FloatingPointType T>
     [[nodiscard]] constexpr
     T InvLerp(T val, T begin, T end) noexcept
     {
@@ -97,7 +97,7 @@ namespace Math
     // Trunc, Floor, Ceil, Frac
     //////////////////////////////////////////////////////////////////////////
 
-    template <SignedIntegralType Int, FloatingPointType Float>
+    template <Concept::SignedIntegralType Int, Concept::FloatingPointType Float>
         requires (sizeof(Int) >= sizeof(Float))
     [[nodiscard]] constexpr
     Int Trunc(Float val) noexcept
@@ -105,7 +105,7 @@ namespace Math
         return Cast<Int>(val);
     }
 
-    template <FloatingPointType Float>
+    template <Concept::FloatingPointType Float>
     [[nodiscard]] constexpr
     Float Trunc(Float val) noexcept
     {
@@ -113,7 +113,7 @@ namespace Math
         return Cast<Float>(Trunc<Int, Float>(val));
     }
 
-    template <SignedIntegralType Int, FloatingPointType Float>
+    template <Concept::SignedIntegralType Int, Concept::FloatingPointType Float>
         requires (sizeof(Int) >= sizeof(Float))
     [[nodiscard]] constexpr
     Int Floor(Float val) noexcept
@@ -121,7 +121,7 @@ namespace Math
         return Cast<Int>(val - (val < Trunc<Float>(val)));
     }
 
-    template <FloatingPointType Float>
+    template <Concept::FloatingPointType Float>
     [[nodiscard]] constexpr
     Float Floor(Float val) noexcept
     {
@@ -129,7 +129,7 @@ namespace Math
         return Cast<Float>(Floor<Int, Float>(val));
     }
 
-    template <SignedIntegralType Int, FloatingPointType Float>
+    template <Concept::SignedIntegralType Int, Concept::FloatingPointType Float>
         requires (sizeof(Int) >= sizeof(Float))
     [[nodiscard]] constexpr
     Int Ceil(Float val) noexcept
@@ -137,7 +137,7 @@ namespace Math
         return Cast<Int>(val + (val > Trunc<Float>(val)));
     }
 
-    template <FloatingPointType Float>
+    template <Concept::FloatingPointType Float>
     [[nodiscard]] constexpr
     Float Ceil(Float val) noexcept
     {
@@ -145,7 +145,7 @@ namespace Math
         return Cast<Float>(Ceil<Int, Float>(val));
     }
 
-    template <FloatingPointType Float>
+    template <Concept::FloatingPointType Float>
     [[nodiscard]] constexpr
     Float Frac(Float val) noexcept
     {
@@ -156,7 +156,7 @@ namespace Math
     // Smoothstep, Smootherstep
     //////////////////////////////////////////////////////////////////////////
 
-    template <FloatingPointType T>
+    template <Concept::FloatingPointType T>
     [[nodiscard]] constexpr
     T Smoothstep(T val, T begin, T end) noexcept
     {
@@ -164,7 +164,7 @@ namespace Math
         return (static_cast<T>(3) - static_cast<T>(2) * val) * Squared(val);
     }
 
-    template <FloatingPointType T>
+    template <Concept::FloatingPointType T>
     [[nodiscard]] constexpr
     T Smootherstep(T val, T begin, T end) noexcept
     {
@@ -176,14 +176,14 @@ namespace Math
     // Angle unit conversion functions
     //////////////////////////////////////////////////////////////////////////
 
-    template <FloatingPointType T>
+    template <Concept::FloatingPointType T>
     [[nodiscard]] constexpr
     T ToRadians(T degrees) noexcept
     {
         return Constant::Pi<T> * (degrees / Cast<T>(180));
     }
 
-    template <FloatingPointType T>
+    template <Concept::FloatingPointType T>
     [[nodiscard]] constexpr
     T ToDegrees(T radians) noexcept
     {
@@ -199,12 +199,12 @@ namespace Math
     T Min(T v1, Ts... values) noexcept
     {
         // TODO(3011): This needs a refactor, making an array is unnecessary.
-        static_assert(sizeof...(Ts) == 0 || (IsSame<T, Ts> || ...));
+        static_assert(sizeof...(Ts) == 0 || (Concept::IsSame<T, Ts> || ...));
         return Array<T, sizeof...(Ts) + 1>(v1, values...).Min();
     }
 
-    template <ConceptMathTypeUtil T>
-        requires requires (T t) { { t.Min() } -> IsSame<typename T::ScalarType>; }
+    template <Concept::MathTypeUtil T>
+        requires requires (T t) { { t.Min() } -> Concept::IsSame<typename T::ScalarType>; }
     [[nodiscard]] constexpr
     typename T::ScalarType Min(const T& val) noexcept
     {
@@ -216,12 +216,12 @@ namespace Math
     T Max(T v1, Ts... values) noexcept
     {
         // TODO(3011): This needs a refactor, making an array is unnecessary.
-        static_assert(sizeof...(Ts) == 0 || (IsSame<T, Ts> || ...));
+        static_assert(sizeof...(Ts) == 0 || (Concept::IsSame<T, Ts> || ...));
         return Array<T, sizeof...(Ts) + 1>(v1, values...).Max();
     }
 
-    template <ConceptMathTypeUtil T>
-        requires requires (T t) { { t.Max() } -> IsSame<typename T::ScalarType>; }
+    template <Concept::MathTypeUtil T>
+        requires requires (T t) { { t.Max() } -> Concept::IsSame<typename T::ScalarType>; }
     [[nodiscard]] constexpr
     typename T::ScalarType Max(const T& val) noexcept
     {

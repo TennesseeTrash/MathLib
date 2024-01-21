@@ -9,7 +9,7 @@ namespace Math
     // Transform-Transform operators
     //////////////////////////////////////////////////////////////////////////
 
-    template <ConceptBasicTransform Transform>
+    template <Concept::BasicTransform Transform>
     [[nodiscard]] constexpr
     Transform operator* (const Transform& t1, const Transform& t2) noexcept
     {
@@ -32,7 +32,7 @@ namespace Math
         return result;
     }
 
-    template <ConceptBasicTransform Transform>
+    template <Concept::BasicTransform Transform>
     [[maybe_unused]] constexpr
     Transform& operator*= (Transform& t1, const Transform& t2) noexcept
     {
@@ -44,7 +44,7 @@ namespace Math
     // Transform-Vector operators
     //////////////////////////////////////////////////////////////////////////
 
-    template <ConceptBasicTransform Transform, ConceptBasicVector Vec>
+    template <Concept::BasicTransform Transform, Concept::BasicVector Vec>
         requires (Transform::Dimension == Vec::Dimension)
     [[nodiscard]] constexpr
     Vec operator* (const Transform& t, const Vec& v) noexcept
@@ -60,7 +60,7 @@ namespace Math
         return result;
     }
 
-    template <ConceptBasicTransform Transform, ConceptBasicVector Vec>
+    template <Concept::BasicTransform Transform, Concept::BasicVector Vec>
         requires (Transform::Dimension + 1 == Vec::Dimension)
     [[nodiscard]] constexpr
     Vec operator* (const Transform& t, const Vec& v) noexcept
@@ -84,7 +84,7 @@ namespace Math
     // Transform-Point operators
     //////////////////////////////////////////////////////////////////////////
 
-    template <ConceptBasicTransform Transform, ConceptBasicPoint Pnt>
+    template <Concept::BasicTransform Transform, Concept::BasicPoint Pnt>
         requires (Transform::Dimension == Pnt::Dimension)
     [[nodiscard]] constexpr
     Pnt operator* (const Transform& t, const Pnt& p) noexcept

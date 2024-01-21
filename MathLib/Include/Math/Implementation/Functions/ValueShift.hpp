@@ -5,7 +5,7 @@
 
 namespace Math
 {
-    template <SignedIntegralType To, SignedIntegralType From>
+    template <Concept::SignedIntegralType To, Concept::SignedIntegralType From>
         requires (sizeof(To) == sizeof(From))
     [[nodiscard]] constexpr
     To ValueShift(From value) noexcept
@@ -13,7 +13,7 @@ namespace Math
         return Cast<To>(value);
     }
 
-    template <SignedIntegralType To, SignedIntegralType From>
+    template <Concept::SignedIntegralType To, Concept::SignedIntegralType From>
         requires (sizeof(To) < sizeof(From))
     [[nodiscard]] constexpr
     To ValueShift(From value) noexcept
@@ -22,7 +22,7 @@ namespace Math
         return Cast<To>(value >> shiftAmount);
     }
 
-    template <SignedIntegralType To, SignedIntegralType From>
+    template <Concept::SignedIntegralType To, Concept::SignedIntegralType From>
         requires (sizeof(To) > sizeof(From))
     [[nodiscard]] constexpr
     To ValueShift(From value) noexcept
@@ -32,7 +32,7 @@ namespace Math
         return ValueShift<To>(ValueShift<UnsignedTo>(ValueShift<UnsignedFrom>(value)));
     }
 
-    template <UnsignedIntegralType To, UnsignedIntegralType From>
+    template <Concept::UnsignedIntegralType To, Concept::UnsignedIntegralType From>
         requires (sizeof(To) == sizeof(From))
     [[nodiscard]] constexpr
     To ValueShift(From value) noexcept
@@ -40,7 +40,7 @@ namespace Math
         return Cast<To>(value);
     }
 
-    template <UnsignedIntegralType To, UnsignedIntegralType From>
+    template <Concept::UnsignedIntegralType To, Concept::UnsignedIntegralType From>
         requires (sizeof(To) < sizeof(From))
     [[nodiscard]] constexpr
     To ValueShift(From value) noexcept
@@ -49,7 +49,7 @@ namespace Math
         return Cast<To>(value >> shiftAmount);
     }
 
-    template <UnsignedIntegralType To, UnsignedIntegralType From>
+    template <Concept::UnsignedIntegralType To, Concept::UnsignedIntegralType From>
         requires (sizeof(To) > sizeof(From))
     [[nodiscard]] constexpr
     To ValueShift(From value) noexcept
@@ -68,7 +68,7 @@ namespace Math
         return increment * multiplier;
     }
 
-    template <SignedIntegralType To, UnsignedIntegralType From>
+    template <Concept::SignedIntegralType To, Concept::UnsignedIntegralType From>
         requires (sizeof(To) == sizeof(From))
     [[nodiscard]] constexpr
     To ValueShift(From value) noexcept
@@ -89,7 +89,7 @@ namespace Math
         }
     }
 
-    template <SignedIntegralType To, UnsignedIntegralType From>
+    template <Concept::SignedIntegralType To, Concept::UnsignedIntegralType From>
         requires (sizeof(To) != sizeof(From))
     [[nodiscard]] constexpr
     To ValueShift(From value) noexcept
@@ -98,7 +98,7 @@ namespace Math
         return ValueShift<To>(ValueShift<UnsignedTo>(value));
     }
 
-    template <UnsignedIntegralType To, SignedIntegralType From>
+    template <Concept::UnsignedIntegralType To, Concept::SignedIntegralType From>
         requires (sizeof(To) == sizeof(From))
     [[nodiscard]] constexpr
     To ValueShift(From value) noexcept
@@ -119,7 +119,7 @@ namespace Math
         }
     }
 
-    template <UnsignedIntegralType To, SignedIntegralType From>
+    template <Concept::UnsignedIntegralType To, Concept::SignedIntegralType From>
         requires (sizeof(To) != sizeof(From))
     [[nodiscard]] constexpr
     To ValueShift(From value) noexcept

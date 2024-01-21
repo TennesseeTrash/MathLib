@@ -10,21 +10,21 @@ namespace Math
     // Quaternion-Quaternion operators
     //////////////////////////////////////////////////////////////////////////
 
-    template <ConceptBasicQuaternion Quat>
+    template <Concept::BasicQuaternion Quat>
     [[nodiscard]] constexpr
     Quat operator+ (const Quat& p, const Quat& q) noexcept
     {
         return Quat(p.Vector() + q.Vector(), p.Scalar() + q.Scalar());
     }
 
-    template <ConceptBasicQuaternion Quat>
+    template <Concept::BasicQuaternion Quat>
     [[nodiscard]] constexpr
     Quat operator- (const Quat& p, const Quat& q) noexcept
     {
         return Quat(p.Vector() - q.Vector(), p.Scalar() - q.Scalar());
     }
 
-    template <ConceptBasicQuaternion Quat>
+    template <Concept::BasicQuaternion Quat>
     [[nodiscard]] constexpr
     Quat operator* (const Quat& p, const Quat& q) noexcept
     {
@@ -38,14 +38,14 @@ namespace Math
     // Quaternion-Scalar operators
     //////////////////////////////////////////////////////////////////////////
 
-    template <ConceptBasicQuaternion Quat>
+    template <Concept::BasicQuaternion Quat>
     [[nodiscard]] constexpr
     Quat operator* (const Quat& q, typename Quat::ScalarType s) noexcept
     {
         return Quat(q.Vector() * s, q.Scalar() * s);
     }
 
-    template <ConceptBasicQuaternion Quat>
+    template <Concept::BasicQuaternion Quat>
     [[nodiscard]] constexpr
     Quat operator* (typename Quat::ScalarType s, const Quat& q) noexcept
     {

@@ -6,8 +6,8 @@
 
 namespace Math
 {
-    template <ConceptStrongType T>
-        requires IntegralType<T>
+    template <Concept::StrongType T>
+        requires Concept::IntegralType<T>
     class UniformDistribution
     {
     public:
@@ -18,7 +18,7 @@ namespace Math
             : mBegin(begin), mEnd(end)
         {}
 
-        template <ConceptRandomNumberGenerator RNG>
+        template <Concept::RandomNumberGenerator RNG>
         [[nodiscard]] constexpr
         ValueType operator()(RNG& rng) const noexcept
         {

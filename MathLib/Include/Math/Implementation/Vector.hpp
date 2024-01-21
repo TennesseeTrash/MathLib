@@ -9,7 +9,7 @@
 
 namespace Math
 {
-    template <ConceptStrongType T>
+    template <Concept::StrongType T>
     struct Vector2T final
     {
         using ScalarType = MakeStrongType<T>;
@@ -23,7 +23,7 @@ namespace Math
         constexpr          Vector2T(T xv, T yv) noexcept : x(xv  ), y(yv  ) {}
 
         template <typename U>
-            requires (IsSpecialization<U, StaticStrongType>)
+            requires (Concept::IsSpecialization<U, StaticStrongType>)
         constexpr Vector2T(const Vector2T<U>& u) noexcept : x(u.x), y(u.y) {}
 
         constexpr       T& operator[] (SizeType idx)       { return reinterpret_cast<      T *>(this)[ToUnderlying(idx)]; }
@@ -38,7 +38,7 @@ namespace Math
         static constexpr Vector2T<T> UnitY() noexcept { return Vector2T<T>(Cast<T>(0), Cast<T>(1)); }
     };
 
-    template <ConceptStrongType T>
+    template <Concept::StrongType T>
     struct Vector3T final
     {
         using ScalarType = T;
@@ -55,7 +55,7 @@ namespace Math
         constexpr explicit Vector3T(const Vector2T<T>& u, T zv) noexcept : x(u.x ), y(u.y ), z(zv  ) {}
 
         template <typename U>
-            requires (IsSpecialization<U, StaticStrongType>)
+            requires (Concept::IsSpecialization<U, StaticStrongType>)
         constexpr Vector3T(const Vector3T<U>& u) noexcept : x(u.x), y(u.y), z(u.z) {}
 
         constexpr       T& operator[] (SizeType idx)       { return reinterpret_cast<      T *>(this)[ToUnderlying(idx)]; }
@@ -71,7 +71,7 @@ namespace Math
         static constexpr Vector3T<T> UnitZ() noexcept { return Vector3T<T>(Cast<T>(0), Cast<T>(0), Cast<T>(1)); }
     };
 
-    template <ConceptStrongType T>
+    template <Concept::StrongType T>
     struct Vector4T final
     {
         using ScalarType = T;
@@ -91,7 +91,7 @@ namespace Math
         constexpr explicit Vector4T(const Vector3T<T>& u, T wv)       noexcept : x(u.x ), y(u.y ), z(u.z ), w(wv  ) {}
 
         template <typename U>
-            requires (IsSpecialization<U, StaticStrongType>)
+            requires (Concept::IsSpecialization<U, StaticStrongType>)
         constexpr Vector4T(const Vector4T<U>& u) noexcept : x(u.x), y(u.y), z(u.z), w(u.w) {}
 
         constexpr       T& operator[] (SizeType idx)       { return reinterpret_cast<      T *>(this)[ToUnderlying(idx)]; }

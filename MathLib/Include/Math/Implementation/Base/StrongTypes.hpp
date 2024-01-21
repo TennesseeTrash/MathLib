@@ -17,7 +17,7 @@ namespace Math
     class StrongType final
     {
     public:
-        //static_assert(!Implementation::IsSpecialization<T, StrongType>::Value, "StrongType may not be nested");
+        //static_assert(!Implementation::Concept::IsSpecialization<T, StrongType>::Value, "StrongType may not be nested");
         using ValueType = T;
 
         [[nodiscard]] constexpr
@@ -77,8 +77,8 @@ namespace Math
     template <typename T>
     struct StaticStrongType final
     {
-        //static_assert(!Implementation::IsSpecialization<T, StaticStrongType>::Value, "StaticStrongType may not be nested");
-        //static_assert(!Implementation::IsSpecialization<T, StrongType>::Value, "StaticStrongType may not be specialized with StrongType");
+        //static_assert(!Implementation::Concept::IsSpecialization<T, StaticStrongType>::Value, "StaticStrongType may not be nested");
+        //static_assert(!Implementation::Concept::IsSpecialization<T, StrongType>::Value, "StaticStrongType may not be specialized with StrongType");
         using ValueType = T;
         ValueType Value;
 

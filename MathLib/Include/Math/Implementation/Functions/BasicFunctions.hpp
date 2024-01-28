@@ -26,6 +26,8 @@ namespace Math
     T Abs(T val) noexcept
     {
         // Note(3011): This might not necessarily work, e.g. i8(-128).
+        // The implementation assumes that val is never T::Min() for
+        // signed integer types.
         return (val > Cast<T>(0)) ? val : -val;
     }
 
@@ -94,65 +96,6 @@ namespace Math
     }
 
     //////////////////////////////////////////////////////////////////////////
-    // Trunc, Floor, Ceil, Frac
-    //////////////////////////////////////////////////////////////////////////
-
-    template <Concept::SignedIntegralType Int, Concept::FloatingPointType Float>
-        requires (sizeof(Int) >= sizeof(Float))
-    [[nodiscard]] constexpr
-    Int Trunc(Float val) noexcept
-    {
-        return Cast<Int>(val);
-    }
-
-    template <Concept::FloatingPointType Float>
-    [[nodiscard]] constexpr
-    Float Trunc(Float val) noexcept
-    {
-        using Int = SignedIntegerSelector<sizeof(UnderlyingType<Float>)>;
-        return Cast<Float>(Trunc<Int, Float>(val));
-    }
-
-    template <Concept::SignedIntegralType Int, Concept::FloatingPointType Float>
-        requires (sizeof(Int) >= sizeof(Float))
-    [[nodiscard]] constexpr
-    Int Floor(Float val) noexcept
-    {
-        return Cast<Int>(val - (val < Trunc<Float>(val)));
-    }
-
-    template <Concept::FloatingPointType Float>
-    [[nodiscard]] constexpr
-    Float Floor(Float val) noexcept
-    {
-        using Int = SignedIntegerSelector<sizeof(UnderlyingType<Float>)>;
-        return Cast<Float>(Floor<Int, Float>(val));
-    }
-
-    template <Concept::SignedIntegralType Int, Concept::FloatingPointType Float>
-        requires (sizeof(Int) >= sizeof(Float))
-    [[nodiscard]] constexpr
-    Int Ceil(Float val) noexcept
-    {
-        return Cast<Int>(val + (val > Trunc<Float>(val)));
-    }
-
-    template <Concept::FloatingPointType Float>
-    [[nodiscard]] constexpr
-    Float Ceil(Float val) noexcept
-    {
-        using Int = SignedIntegerSelector<sizeof(UnderlyingType<Float>)>;
-        return Cast<Float>(Ceil<Int, Float>(val));
-    }
-
-    template <Concept::FloatingPointType Float>
-    [[nodiscard]] constexpr
-    Float Frac(Float val) noexcept
-    {
-        return val - Trunc<Float>(val);
-    }
-
-    //////////////////////////////////////////////////////////////////////////
     // Smoothstep, Smootherstep
     //////////////////////////////////////////////////////////////////////////
 
@@ -170,24 +113,6 @@ namespace Math
     {
         val = Clamp(InvLerp(val, begin, end));
         return ((static_cast<T>(6) * val - static_cast<T>(15)) * val + static_cast<T>(10)) * Cubed(val);
-    }
-
-    //////////////////////////////////////////////////////////////////////////
-    // Angle unit conversion functions
-    //////////////////////////////////////////////////////////////////////////
-
-    template <Concept::FloatingPointType T>
-    [[nodiscard]] constexpr
-    T ToRadians(T degrees) noexcept
-    {
-        return Constant::Pi<T> * (degrees / Cast<T>(180));
-    }
-
-    template <Concept::FloatingPointType T>
-    [[nodiscard]] constexpr
-    T ToDegrees(T radians) noexcept
-    {
-        return Cast<T>(180) * (radians / Constant::Pi<T>);
     }
 
     //////////////////////////////////////////////////////////////////////////

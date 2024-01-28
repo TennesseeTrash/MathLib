@@ -21,14 +21,14 @@ namespace
     };
 }
 
-TEST_CASE("Basic UniformDistribution tests", "[Math][Random]")
+TEST_CASE("Make sure the fake RNG implementation is valid", "[Math][Random]")
 {
-    SECTION("Check correctness")
-    {
-        STATIC_REQUIRE(Math::Concept::RandomNumberGenerator<ConstantFakeRNG>);
-        STATIC_REQUIRE(Math::Concept::Distribution<Math::UniformDistribution<u32>, ConstantFakeRNG>);
-    }
+    STATIC_REQUIRE(Math::Concept::RandomNumberGenerator<ConstantFakeRNG>);
+    STATIC_REQUIRE(Math::Concept::Distribution<Math::UniformDistribution<u32>, ConstantFakeRNG>);
+}
 
+TEST_CASE("UniformDistribution tests with equal type sizes", "[Math][Random]")
+{
     SECTION("Check u32 correctness in min/max range")
     {
         Math::UniformDistribution<u32> distribution;
@@ -141,4 +141,9 @@ TEST_CASE("Basic UniformDistribution tests", "[Math][Random]")
             REQUIRE(distribution(rng) == (Cast<i32>(i % 50) - 50));
         }
     }
+}
+
+TEST_CASE("UniformDistribution tests with unequal type sizes", "[Math][Random]")
+{
+
 }

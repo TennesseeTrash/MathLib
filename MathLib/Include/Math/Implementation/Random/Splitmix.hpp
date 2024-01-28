@@ -5,7 +5,7 @@
 
 namespace Math::Implementation
 {
-    class Splitmix32
+    class Splitmix32 final
     {
     public:
         [[nodiscard]] constexpr
@@ -26,7 +26,7 @@ namespace Math::Implementation
         u32 mState;
     };
 
-    class Splitmix64
+    class Splitmix64 final
     {
     public:
         [[nodiscard]] constexpr

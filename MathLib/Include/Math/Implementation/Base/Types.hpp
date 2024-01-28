@@ -5,6 +5,8 @@
 #include "StrongTypesUtils.hpp"
 #include "Packs.hpp"
 
+#include <limits>
+
 namespace Math
 {
     //////////////////////////////////////////////////////////////////////////

@@ -15,11 +15,12 @@
 
 #include "../Base/Types.hpp"
 #include "../Base/Array.hpp"
+#include "../Functions/IntUtils.hpp"
 #include "Splitmix.hpp"
 
 namespace Math
 {
-    class Xoshiro128StarStar
+    class Xoshiro128StarStar final
     {
     public:
         using ValueType = u32;
@@ -38,7 +39,7 @@ namespace Math
         [[nodiscard]] constexpr
         u32 operator() () noexcept
         {
-            const u32 result = RoL(mState[1] * 5, 7) * 9;
+            const u32 result = RotateLeft(mState[1] * 5, 7u) * 9;
             const u32 t = mState[1] << 9;
 
             mState[2] ^= mState[0];
@@ -48,7 +49,7 @@ namespace Math
 
             mState[2] ^= t;
 
-            mState[3] = RoL(mState[3], 11);
+            mState[3] = RotateLeft(mState[3], 11u);
 
             return result;
         }
@@ -99,12 +100,6 @@ namespace Math
             return result;
         }
     private:
-        [[nodiscard]] constexpr
-        u32 RoL(u32 val, SizeType shift) const noexcept
-        {
-            return (val << shift) | (val >> (32 - shift));
-        }
-
         Array<u32, 4> mState;
 
         static constexpr Array<u32, 4> sJump = Array<u32, 4>(
@@ -119,7 +114,7 @@ namespace Math
             u32(0x1C580662));
     };
 
-    class Xoshiro256StarStar
+    class Xoshiro256StarStar final
     {
     public:
         using ValueType = u64;
@@ -144,7 +139,7 @@ namespace Math
         u64 operator() () noexcept
         {
             // xoshiro256**
-            const u64 result = RoL(mState[1] * 5, 7) * 9;
+            const u64 result = RotateLeft(mState[1] * 5, 7u) * 9;
             const u64 t = mState[1] << 17;
 
             mState[2] ^= mState[0];
@@ -154,7 +149,7 @@ namespace Math
 
             mState[2] ^= t;
 
-            mState[3] = RoL(mState[3], 45);
+            mState[3] = RotateLeft(mState[3], 45u);
 
             return result;
         }
@@ -205,12 +200,6 @@ namespace Math
             return result;
         }
     private:
-        [[nodiscard]] constexpr static
-        u64 RoL(u64 val, SizeType shift) noexcept
-        {
-            return (val << shift) | (val >> (64 - shift));
-        }
-
         Array<u64, 4> mState;
 
         static constexpr Array<u64, 4> sJump = Array<u64, 4>(

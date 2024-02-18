@@ -22,10 +22,6 @@ namespace Math
         constexpr explicit Vector2T(T val)      noexcept : x(val ), y(val ) {}
         constexpr          Vector2T(T xv, T yv) noexcept : x(xv  ), y(yv  ) {}
 
-        template <typename U>
-            requires (Concept::IsSpecialization<U, StaticStrongType>)
-        constexpr Vector2T(const Vector2T<U>& u) noexcept : x(u.x), y(u.y) {}
-
         constexpr       T& operator[] (SizeType idx)       { return reinterpret_cast<      T *>(this)[ToUnderlying(idx)]; }
         constexpr const T& operator[] (SizeType idx) const { return reinterpret_cast<const T *>(this)[ToUnderlying(idx)]; }
 
@@ -53,10 +49,6 @@ namespace Math
         constexpr          Vector3T(T xv, T yv, T zv)           noexcept : x(xv  ), y(yv  ), z(zv  ) {}
         constexpr explicit Vector3T(const Vector2T<T>& u)       noexcept : x(u.x ), y(u.y ), z(T(0)) {}
         constexpr explicit Vector3T(const Vector2T<T>& u, T zv) noexcept : x(u.x ), y(u.y ), z(zv  ) {}
-
-        template <typename U>
-            requires (Concept::IsSpecialization<U, StaticStrongType>)
-        constexpr Vector3T(const Vector3T<U>& u) noexcept : x(u.x), y(u.y), z(u.z) {}
 
         constexpr       T& operator[] (SizeType idx)       { return reinterpret_cast<      T *>(this)[ToUnderlying(idx)]; }
         constexpr const T& operator[] (SizeType idx) const { return reinterpret_cast<const T *>(this)[ToUnderlying(idx)]; }
@@ -89,10 +81,6 @@ namespace Math
         constexpr explicit Vector4T(const Vector2T<T>& u, T zv, T wv) noexcept : x(u.x ), y(u.y ), z(zv  ), w(wv  ) {}
         constexpr explicit Vector4T(const Vector3T<T>& u)             noexcept : x(u.x ), y(u.y ), z(u.z ), w(T(0)) {}
         constexpr explicit Vector4T(const Vector3T<T>& u, T wv)       noexcept : x(u.x ), y(u.y ), z(u.z ), w(wv  ) {}
-
-        template <typename U>
-            requires (Concept::IsSpecialization<U, StaticStrongType>)
-        constexpr Vector4T(const Vector4T<U>& u) noexcept : x(u.x), y(u.y), z(u.z), w(u.w) {}
 
         constexpr       T& operator[] (SizeType idx)       { return reinterpret_cast<      T *>(this)[ToUnderlying(idx)]; }
         constexpr const T& operator[] (SizeType idx) const { return reinterpret_cast<const T *>(this)[ToUnderlying(idx)]; }

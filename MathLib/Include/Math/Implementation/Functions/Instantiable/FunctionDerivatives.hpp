@@ -7,7 +7,7 @@ namespace Math::Function
 {
     namespace Implementation
     {
-        template <typename T, StaticSizeType Order>
+        template <typename T, SizeType Order>
         struct Derivative final
         {
             using Type = typename Derivative<typename Derivative<T, 1>::Type, Cast<SizeType>(Order) - 1>::Type;
@@ -26,7 +26,7 @@ namespace Math::Function
         };
     }
 
-    template <typename T, StaticSizeType Order = 1>
+    template <typename T, SizeType Order = 1>
     using Derivative = typename Implementation::Derivative<T, Order>::Type;
 }
 

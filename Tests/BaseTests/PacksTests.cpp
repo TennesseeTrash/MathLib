@@ -6,7 +6,6 @@ using Math::i64;
 using Math::f32;
 using Math::f64;
 using Math::SizeType;
-using Math::i32s;
 
 namespace
 {
@@ -130,7 +129,7 @@ TEST_CASE("TypePack creation and basic utilities", "[Math][Common]")
 TEST_CASE("ValuePack creation and basic utilities", "[Math][Common]")
 {
     // Won't work with StrongTypes, only StaticStrongTypes, due to class type and private value.
-    using Pack = Math::ValuePack<i32s, 1, 2, 3, 4>;
+    using Pack = Math::ValuePack<i32, 1, 2, 3, 4>;
 
     SECTION("Test Pack::Size")
     {
@@ -139,7 +138,7 @@ TEST_CASE("ValuePack creation and basic utilities", "[Math][Common]")
 
     SECTION("Test Pack::ValueType")
     {
-        STATIC_REQUIRE(Math::Concept::IsSame<Pack::ValueType, i32s>);
+        STATIC_REQUIRE(Math::Concept::IsSame<Pack::ValueType, i32>);
     }
 
     SECTION("Test Pack::At")
@@ -174,7 +173,7 @@ TEST_CASE("ValuePack creation and basic utilities", "[Math][Common]")
 
     SECTION("Test ValuePack::MakeAscending")
     {
-        using ResultPack = Math::ValuePack<i32s>::MakeAscending<5>;
+        using ResultPack = Math::ValuePack<i32>::MakeAscending<5>;
         STATIC_REQUIRE(ResultPack::Size == 5);
         STATIC_REQUIRE(i32(ResultPack::At<0>) == 0);
         STATIC_REQUIRE(i32(ResultPack::At<1>) == 1);
@@ -185,7 +184,7 @@ TEST_CASE("ValuePack creation and basic utilities", "[Math][Common]")
 
     SECTION("Test ValuePack::MakeDescending")
     {
-        using ResultPack = Math::ValuePack<i32s>::MakeDescending<5>;
+        using ResultPack = Math::ValuePack<i32>::MakeDescending<5>;
         STATIC_REQUIRE(ResultPack::Size == 5);
         STATIC_REQUIRE(i32(ResultPack::At<0>) == 4);
         STATIC_REQUIRE(i32(ResultPack::At<1>) == 3);
@@ -196,7 +195,7 @@ TEST_CASE("ValuePack creation and basic utilities", "[Math][Common]")
 
     SECTION("Test Concatenate")
     {
-        using ResultPack = Math::Concatenate<Pack, Math::ValuePack<i32s, 5>>;
+        using ResultPack = Math::Concatenate<Pack, Math::ValuePack<i32, 5>>;
         STATIC_REQUIRE(ResultPack::Size == 5);
         STATIC_REQUIRE(i32(ResultPack::At<0>) == 1);
         STATIC_REQUIRE(i32(ResultPack::At<1>) == 2);
@@ -252,17 +251,17 @@ TEST_CASE("ValuePack creation and basic utilities", "[Math][Common]")
 
     SECTION("Test Zip")
     {
-        using ResultPack = Math::Zip<Pack, Math::ValuePack<i32s, 5, 6, 7, 8, 9>>;
+        using ResultPack = Math::Zip<Pack, Math::ValuePack<i32, 5, 6, 7, 8, 9>>;
         STATIC_REQUIRE(ResultPack::Size == 4);
-        STATIC_REQUIRE(Math::Concept::IsSame<ResultPack::At<0>, Math::ValuePack<i32s, 1, 5>>);
-        STATIC_REQUIRE(Math::Concept::IsSame<ResultPack::At<1>, Math::ValuePack<i32s, 2, 6>>);
-        STATIC_REQUIRE(Math::Concept::IsSame<ResultPack::At<2>, Math::ValuePack<i32s, 3, 7>>);
-        STATIC_REQUIRE(Math::Concept::IsSame<ResultPack::At<3>, Math::ValuePack<i32s, 4, 8>>);
+        STATIC_REQUIRE(Math::Concept::IsSame<ResultPack::At<0>, Math::ValuePack<i32, 1, 5>>);
+        STATIC_REQUIRE(Math::Concept::IsSame<ResultPack::At<1>, Math::ValuePack<i32, 2, 6>>);
+        STATIC_REQUIRE(Math::Concept::IsSame<ResultPack::At<2>, Math::ValuePack<i32, 3, 7>>);
+        STATIC_REQUIRE(Math::Concept::IsSame<ResultPack::At<3>, Math::ValuePack<i32, 4, 8>>);
     }
 
     SECTION("Test ZipWith")
     {
-        using ResultPack = Math::ZipWith<decltype([](i32 a, i32 b){ return a + b; }), Pack, Math::ValuePack<i32s, 5, 6, 7, 8, 9>>;
+        using ResultPack = Math::ZipWith<decltype([](i32 a, i32 b){ return a + b; }), Pack, Math::ValuePack<i32, 5, 6, 7, 8, 9>>;
         STATIC_REQUIRE(ResultPack::Size == 4);
         STATIC_REQUIRE(i32(ResultPack::At<0>) == 6);
         STATIC_REQUIRE(i32(ResultPack::At<1>) == 8);

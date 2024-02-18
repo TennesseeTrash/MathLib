@@ -22,7 +22,7 @@
 
 namespace Math
 {
-    template <Concept::StrongType T, Vector3T<MakeStaticStrongType<T>> BottomRowParam = Vector3T<MakeStaticStrongType<T>>::UnitZ()>
+    template <Concept::StrongType T, Vector3T<MakeStrongType<T>> BottomRowParam = Vector3T<MakeStrongType<T>>::UnitZ()>
     class Transform2T final
     {
     public:
@@ -86,7 +86,7 @@ namespace Math
         Array<RowVectorType, 2> rows;
     };
 
-    template <Concept::StrongType T, Vector4T<MakeStaticStrongType<T>> BottomRowParam = Vector4T<MakeStaticStrongType<T>>::UnitW()>
+    template <Concept::StrongType T, Vector4T<MakeStrongType<T>> BottomRowParam = Vector4T<MakeStrongType<T>>::UnitW()>
     class Transform3T final
     {
     public:

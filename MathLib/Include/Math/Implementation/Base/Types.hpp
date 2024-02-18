@@ -89,7 +89,7 @@ namespace Math
 
     namespace Implementation
     {
-        template <typename Specialized, template <typename...> typename Base, StaticSizeType Index = 0>
+        template <typename Specialized, template <typename...> typename Base, SizeType Index = 0>
         struct TemplateArgument
         {
         private:
@@ -102,7 +102,7 @@ namespace Math
         };
     }
 
-    template <typename Specialized, template <typename...> typename Base, StaticSizeType Index = 0>
+    template <typename Specialized, template <typename...> typename Base, SizeType Index = 0>
     using TemplateArgument = typename Implementation::TemplateArgument<Specialized, Base, Index>::Type;
 }
 

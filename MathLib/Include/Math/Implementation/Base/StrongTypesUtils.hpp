@@ -18,12 +18,6 @@ namespace Math::Implementation
     };
 
     template <typename T>
-    struct UnderlyingType<StaticStrongType<T>>
-    {
-        using Type = T;
-    };
-
-    template <typename T>
     struct MakeStrongType
     {
         using Type = StrongType<T>;
@@ -35,31 +29,7 @@ namespace Math::Implementation
         using Type = StrongType<T>;
     };
 
-    template <typename T>
-    struct MakeStrongType<StaticStrongType<T>>
-    {
-        using Type = StrongType<T>;
-    };
-
-    template <typename T>
-    struct MakeStaticStrongType
-    {
-        using Type = StaticStrongType<T>;
-    };
-
-    template <typename T>
-    struct MakeStaticStrongType<StrongType<T>>
-    {
-        using Type = StaticStrongType<T>;
-    };
-
-    template <typename T>
-    struct MakeStaticStrongType<StaticStrongType<T>>
-    {
-        using Type = StaticStrongType<T>;
-    };
-
-    template <StaticSizeType>
+    template <SizeType>
     struct SignedIntegerSelector
     {
         using Type = void;
@@ -70,7 +40,7 @@ namespace Math::Implementation
     template <> struct SignedIntegerSelector<4> { using Type = i32; };
     template <> struct SignedIntegerSelector<8> { using Type = i64; };
 
-    template <StaticSizeType>
+    template <SizeType>
     struct UnsignedIntegerSelector
     {
         using Type = void;
@@ -81,7 +51,7 @@ namespace Math::Implementation
     template <> struct UnsignedIntegerSelector<4> { using Type = u32; };
     template <> struct UnsignedIntegerSelector<8> { using Type = u64; };
 
-    template <StaticSizeType>
+    template <SizeType>
     struct FloatingPointSelector
     {
         using Type = void;
@@ -99,16 +69,13 @@ namespace Math
     template <typename T>
     using MakeStrongType = typename Implementation::MakeStrongType<T>::Type;
 
-    template <typename T>
-    using MakeStaticStrongType = typename Implementation::MakeStaticStrongType<T>::Type;
-
-    template <StaticSizeType Size>
+    template <SizeType Size>
     using SignedIntegerSelector = typename Implementation::SignedIntegerSelector<Size>::Type;
 
-    template <StaticSizeType Size>
+    template <SizeType Size>
     using UnsignedIntegerSelector = typename Implementation::UnsignedIntegerSelector<Size>::Type;
 
-    template <StaticSizeType Size>
+    template <SizeType Size>
     using FloatingPointSelector = typename Implementation::FloatingPointSelector<Size>::Type;
 
     template <typename To, typename From>

@@ -4,7 +4,6 @@
 #include <Math/Random.hpp>
 
 using Math::f32;
-using Math::f32s;
 
 using Math::Equal;
 
@@ -115,8 +114,7 @@ TEST_CASE("Array creation utilities")
 
     SECTION("MakeArray from ValuePack")
     {
-        using Math::f32s;
-        using Pack = Math::ValuePack<f32s, 1.0f, 2.0f, 3.0f, 4.0f>;
+        using Pack = Math::ValuePack<f32, 1.0f, 2.0f, 3.0f, 4.0f>;
         auto array = Math::MakeArray<f32, Pack>();
         REQUIRE(Equal(array[0], 1.0f));
         REQUIRE(Equal(array[1], 2.0f));

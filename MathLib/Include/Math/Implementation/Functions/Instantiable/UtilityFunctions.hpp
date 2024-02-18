@@ -7,7 +7,7 @@
 
 namespace Math::Function
 {
-    template <typename T, MakeStaticStrongType<T> TBegin, MakeStaticStrongType<T> TEnd>
+    template <typename T, MakeStrongType<T> TBegin, MakeStrongType<T> TEnd>
     struct Lerp final
     {
     public:
@@ -21,10 +21,10 @@ namespace Math::Function
             return (1 - x) * Begin + x * End;
         }
 
-        using DerivativeType = Constant<T, Cast<MakeStaticStrongType<T>>(1)>;
+        using DerivativeType = Constant<T, Cast<MakeStrongType<T>>(1)>;
     };
 
-    template <typename T, MakeStaticStrongType<T> TBegin, MakeStaticStrongType<T> TEnd>
+    template <typename T, MakeStrongType<T> TBegin, MakeStrongType<T> TEnd>
     struct InverseLerp final
     {
     public:
@@ -38,10 +38,10 @@ namespace Math::Function
             return (x - Begin) / (End - Begin);
         }
 
-        using DerivativeType = Constant<T, Cast<MakeStaticStrongType<T>>(1)>;
+        using DerivativeType = Constant<T, Cast<MakeStrongType<T>>(1)>;
     };
 
-    template <typename T, MakeStaticStrongType<T> TBegin = Cast<T>(0), MakeStaticStrongType<T> TEnd = Cast<T>(1)>
+    template <typename T, MakeStrongType<T> TBegin = Cast<T>(0), MakeStrongType<T> TEnd = Cast<T>(1)>
     using Smoothstep = GeneralPiecewise<
         TypePack<
             Constant<T, Cast<T>(0)>,
@@ -58,7 +58,7 @@ namespace Math::Function
         >
     >;
 
-    template <typename T, MakeStaticStrongType<T> TBegin = Cast<T>(0), MakeStaticStrongType<T> TEnd = Cast<T>(1)>
+    template <typename T, MakeStrongType<T> TBegin = Cast<T>(0), MakeStrongType<T> TEnd = Cast<T>(1)>
     using Smootherstep = GeneralPiecewise<
         TypePack<
             Constant<T, Cast<T>(0)>,

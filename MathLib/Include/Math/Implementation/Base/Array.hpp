@@ -6,7 +6,7 @@
 
 namespace Math
 {
-    template <typename T, StaticSizeType N>
+    template <typename T, SizeType N>
     class Array final
     {
     public:
@@ -116,7 +116,7 @@ namespace Math
         T mArray[ToUnderlying(Size)] = {};
     };
 
-    template <typename T, StaticSizeType N, typename... Ts>
+    template <typename T, SizeType N, typename... Ts>
     [[nodiscard]] constexpr
     Array<T, N> MakeArray(const Ts&... values)
     {
@@ -125,7 +125,7 @@ namespace Math
         return Array<T, N>(Cast<T>(values)...);
     }
 
-    template <typename T, StaticSizeType N, Concept::Invocable<T&> Func>
+    template <typename T, SizeType N, Concept::Invocable<T&> Func>
     [[nodiscard]] constexpr
     Array<T, N> MakeArray(Func func)
     {
@@ -134,7 +134,7 @@ namespace Math
         return result;
     }
 
-    template <typename T, StaticSizeType N, Concept::Invocable<SizeType, T&> Func>
+    template <typename T, SizeType N, Concept::Invocable<SizeType, T&> Func>
     [[nodiscard]] constexpr
     Array<T, N> MakeArray(Func func)
     {

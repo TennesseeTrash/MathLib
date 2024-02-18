@@ -8,7 +8,7 @@ namespace Math::Function
     template <typename T>
     struct ControlPoint final
     {
-        MakeStaticStrongType<T> Value;
+        MakeStrongType<T> Value;
         Orientation Side;
     };
 

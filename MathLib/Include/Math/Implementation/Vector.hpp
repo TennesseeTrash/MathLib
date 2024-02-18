@@ -18,7 +18,7 @@ namespace Math
         T x = T(0);
         T y = T(0);
 
-        constexpr          Vector2T()           noexcept : x(T(0)), y(T(0)) {}
+        constexpr          Vector2T()           noexcept = default;
         constexpr explicit Vector2T(T val)      noexcept : x(val ), y(val ) {}
         constexpr          Vector2T(T xv, T yv) noexcept : x(xv  ), y(yv  ) {}
 
@@ -44,7 +44,7 @@ namespace Math
         T y = T(0);
         T z = T(0);
 
-        constexpr          Vector3T()                           noexcept : x(T(0)), y(T(0)), z(T(0)) {}
+        constexpr          Vector3T()                           noexcept = default;
         constexpr explicit Vector3T(T val)                      noexcept : x(val ), y(val ), z(val ) {}
         constexpr          Vector3T(T xv, T yv, T zv)           noexcept : x(xv  ), y(yv  ), z(zv  ) {}
         constexpr explicit Vector3T(const Vector2T<T>& u)       noexcept : x(u.x ), y(u.y ), z(T(0)) {}
@@ -74,7 +74,7 @@ namespace Math
         T z = T(0);
         T w = T(0);
 
-        constexpr          Vector4T()                                 noexcept : x(T(0)), y(T(0)), z(T(0)), w(T(0)) {}
+        constexpr          Vector4T()                                 noexcept = default;
         constexpr explicit Vector4T(T val)                            noexcept : x(val ), y(val ), z(val ), w(val ) {}
         constexpr          Vector4T(T xv, T yv, T zv, T wv)           noexcept : x(xv  ), y(yv  ), z(zv  ), w(wv  ) {}
         constexpr explicit Vector4T(const Vector2T<T>& u)             noexcept : x(u.x ), y(u.y ), z(T(0)), w(T(0)) {}
@@ -94,6 +94,49 @@ namespace Math
         static constexpr Vector4T<T> UnitY() noexcept { return Vector4T<T>(Cast<T>(0), Cast<T>(1), Cast<T>(0), Cast<T>(0)); }
         static constexpr Vector4T<T> UnitZ() noexcept { return Vector4T<T>(Cast<T>(0), Cast<T>(0), Cast<T>(1), Cast<T>(0)); }
         static constexpr Vector4T<T> UnitW() noexcept { return Vector4T<T>(Cast<T>(0), Cast<T>(0), Cast<T>(0), Cast<T>(1)); }
+    };
+
+    template <SizeType N, Concept::StrongType T>
+    struct VectorNT final
+    {
+        using ScalarType = T;
+        static constexpr SizeType Dimension = N;
+
+        Array<ScalarType, Dimension> Data;
+
+        constexpr          VectorNT()      noexcept = default;
+        constexpr explicit VectorNT(T val) noexcept { Data.Fill(val); }
+
+        template <Concept::BasicVector OtherVec>
+            requires (OtherVec::Dimension <= Dimension)
+        constexpr explicit VectorNT(const OtherVec& other) noexcept
+        {
+            for (SizeType i = 0; i < other.Dimension; ++i)
+            {
+                Data[i] = other[i];
+            }
+        }
+
+        template <typename... ValueTypes>
+            requires (sizeof...(ValueTypes) == Dimension)
+        constexpr VectorNT(ValueTypes... values) noexcept
+            : Data{MakeStrongType<ValueTypes>(values)...}
+        {}
+
+        constexpr       T& operator[] (SizeType idx)       { return Data[idx]; }
+        constexpr const T& operator[] (SizeType idx) const { return Data[idx]; }
+
+        constexpr T LenSqr() const noexcept { T result; Data.ForEach([&result](T val) { result += val * val; }); return result; }
+        constexpr T Length() const noexcept { return Sqrt(LenSqr()); }
+        constexpr T Max()    const noexcept { return Data.Max(); }
+        constexpr T Min()    const noexcept { return Data.Min(); }
+
+        static constexpr VectorNT<Dimension, ScalarType> Unit(SizeType axisIndex) noexcept
+        {
+            VectorNT<Dimension, ScalarType> result;
+            result[axisIndex] = Cast<ScalarType>(1);
+            return result;
+        }
     };
 }
 

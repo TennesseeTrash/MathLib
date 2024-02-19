@@ -7,13 +7,11 @@
 
 namespace Math::Function
 {
-    template <typename T, MakeStrongType<T> TBegin, MakeStrongType<T> TEnd>
+    template <typename T, MakeStrongType<T> Begin, MakeStrongType<T> End>
     struct Lerp final
     {
     public:
         using ValueType = MakeStrongType<T>;
-        static constexpr ValueType Begin = Cast<ValueType>(TBegin);
-        static constexpr ValueType End = Cast<ValueType>(TEnd);
 
         [[nodiscard]] constexpr
         ValueType operator() (ValueType x) const noexcept
@@ -21,16 +19,14 @@ namespace Math::Function
             return (1 - x) * Begin + x * End;
         }
 
-        using DerivativeType = Constant<T, Cast<MakeStrongType<T>>(1)>;
+        using DerivativeType = Constant<T, Cast<ValueType>(1)>;
     };
 
-    template <typename T, MakeStrongType<T> TBegin, MakeStrongType<T> TEnd>
+    template <typename T, MakeStrongType<T> Begin, MakeStrongType<T> End>
     struct InverseLerp final
     {
     public:
         using ValueType = MakeStrongType<T>;
-        static constexpr ValueType Begin = Cast<ValueType>(TBegin);
-        static constexpr ValueType End = Cast<ValueType>(TEnd);
 
         [[nodiscard]] constexpr
         ValueType operator() (ValueType x) const noexcept
@@ -38,7 +34,7 @@ namespace Math::Function
             return (x - Begin) / (End - Begin);
         }
 
-        using DerivativeType = Constant<T, Cast<MakeStrongType<T>>(1)>;
+        using DerivativeType = Constant<T, Cast<ValueType>(1)>;
     };
 
     template <typename T, MakeStrongType<T> TBegin = Cast<T>(0), MakeStrongType<T> TEnd = Cast<T>(1)>

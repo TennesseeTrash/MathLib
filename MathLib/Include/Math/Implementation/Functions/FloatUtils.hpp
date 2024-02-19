@@ -1,6 +1,7 @@
 #ifndef MATHLIB_IMPLEMENTATION_FUNCTIONS_FLOAT_UTILS_HPP
 #define MATHLIB_IMPLEMENTATION_FUNCTIONS_FLOAT_UTILS_HPP
 
+#include "../Base/Types.hpp"
 #include "../Base/Concepts.hpp"
 
 namespace Math

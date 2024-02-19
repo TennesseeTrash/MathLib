@@ -7,12 +7,11 @@
 
 namespace Math::Function
 {
-    template <typename T, MakeStrongType<T>... TCoefficients>
+    template <Concept::StrongType T, T... TCoefficients>
     struct Polynomial final
     {
     public:
-        using ValueType = MakeStrongType<T>;
-        static constexpr Array<ValueType, sizeof...(TCoefficients)> Coefficients = { Cast<ValueType>(TCoefficients)... };
+        using ValueType = T;
 
         [[nodiscard]] constexpr
         ValueType operator() (ValueType x) const noexcept
@@ -30,6 +29,8 @@ namespace Math::Function
         }
 
     private:
+        static constexpr Array<ValueType, sizeof...(TCoefficients)> Coefficients = { Cast<ValueType>(TCoefficients)... };
+
         template <typename CoefficientsPack>
         struct ConvertToPolynomial;
 
@@ -39,33 +40,30 @@ namespace Math::Function
             using Type = Polynomial<T, ValuePackCoefficients...>;
         };
 
-        using StaticValueType = MakeStrongType<ValueType>;
-        using CoefficientsPack = ValuePack<StaticValueType, TCoefficients...>;
-        using Multipliers = typename ValuePack<StaticValueType>::template MakeDescending<sizeof...(TCoefficients)>;
+        using CoefficientsPack = ValuePack<ValueType, TCoefficients...>;
+        using Multipliers = typename ValuePack<ValueType>::template MakeDescending<sizeof...(TCoefficients)>;
         using MultipliedCoefficients = ZipWith<decltype([](ValueType a, ValueType b) { return a * b; }), CoefficientsPack, Multipliers>;
         using DerivedCoefficients = RemoveLast<MultipliedCoefficients>;
         using DerivedPolynomial = typename ConvertToPolynomial<DerivedCoefficients>::Type;
-        using Zero = Polynomial<T, Cast<StaticValueType>(0)>;
+        using Zero = Polynomial<T, Cast<ValueType>(0)>;
     public:
         using DerivativeType = ConditionalType<sizeof...(TCoefficients) == 1, Zero, DerivedPolynomial>;
     };
 
-    template <typename T, MakeStrongType<T> TConstant>
-    using Constant = Polynomial<T, TConstant>;
+    template <Concept::StrongType T, T Constant>
+    using Constant = Polynomial<T, Constant>;
 
-    template <typename T, MakeStrongType<T> TSlope = Cast<T>(1), MakeStrongType<T> TIntercept = Cast<T>(0)>
-    using Linear = Polynomial<T, TSlope, TIntercept>;
+    template <Concept::StrongType T, T Slope = Cast<T>(1), T Intercept = Cast<T>(0)>
+    using Linear = Polynomial<T, Slope, Intercept>;
 
-    template <typename T, MakeStrongType<T> TSquare = Cast<T>(1), MakeStrongType<T> TLinear = Cast<T>(0), MakeStrongType<T> TConstant = Cast<T>(0)>
-    using Quadratic = Polynomial<T, TSquare, TLinear, TConstant>;
+    template <Concept::StrongType T, T Square = Cast<T>(1), T Linear = Cast<T>(0), T Constant = Cast<T>(0)>
+    using Quadratic = Polynomial<T, Square, Linear, Constant>;
 
-    template <typename T, MakeStrongType<T> TExponent, MakeStrongType<T> TMultiplier = Cast<T>(1)>
+    template <Concept::StrongType T, T Exponent, T Multiplier = Cast<T>(1)>
     struct Power final
     {
     public:
-        using ValueType = MakeStrongType<T>;
-        static constexpr ValueType Exponent = TExponent;
-        static constexpr ValueType Multiplier = TMultiplier;
+        using ValueType = T;
 
         [[nodiscard]] constexpr
         ValueType operator() (ValueType x) const noexcept
@@ -76,13 +74,11 @@ namespace Math::Function
         using DerivativeType = Multiply<Constant<ValueType, Exponent * Multiplier>, Power<ValueType, Exponent - Cast<ValueType>(1)>>;
     };
 
-    template <typename T, MakeStrongType<T> TBase = Math::Constant::E<T>, MakeStrongType<T> TExponentMultiplier = Cast<T>(1)>
+    template <Concept::StrongType T, T Base = Math::Constant::E<T>, T ExponentMultiplier = Cast<T>(1)>
     struct Exponential final
     {
     public:
-        using ValueType = MakeStrongType<T>;
-        static constexpr ValueType Base = TBase;
-        static constexpr ValueType ExponentMultiplier = TExponentMultiplier;
+        using ValueType = T;
 
         [[nodiscard]] constexpr
         ValueType operator() (ValueType x) const noexcept
@@ -93,11 +89,11 @@ namespace Math::Function
         using DerivativeType = Multiply<Constant<ValueType, ExponentMultiplier>, Exponential<ValueType, Base, ExponentMultiplier>>;
     };
 
-    template <typename T>
+    template <Concept::StrongType T>
     struct NaturalLogarithm final
     {
     public:
-        using ValueType = MakeStrongType<T>;
+        using ValueType = T;
 
         [[nodiscard]] constexpr
         ValueType operator() (ValueType x) const noexcept
@@ -108,12 +104,11 @@ namespace Math::Function
         using DerivativeType = Divide<Constant<ValueType, Cast<ValueType>(1)>, Linear<ValueType, Cast<ValueType>(1), Cast<ValueType>(0)>>;
     };
 
-    template <typename T, MakeStrongType<T> TBase>
+    template <Concept::StrongType T, T Base>
     struct Logarithm final
     {
     public:
-        using ValueType = MakeStrongType<T>;
-        static constexpr ValueType Base = TBase;
+        using ValueType = T;
 
         [[nodiscard]] constexpr
         ValueType operator() (ValueType x) const noexcept

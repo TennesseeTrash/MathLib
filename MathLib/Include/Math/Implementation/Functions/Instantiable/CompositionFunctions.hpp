@@ -6,7 +6,7 @@
 namespace Math::Function
 {
     // Note(3011): Forward decl for PowerCompose.
-    template <typename T>
+    template <Concept::StrongType T>
     struct NaturalLogarithm;
 
     template <typename Func>

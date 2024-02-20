@@ -48,34 +48,51 @@ namespace Math
             : mBegin(begin), mEnd(end)
         {}
 
-        // TODO(3011): (The implementation has been disabled for getting larger types from smaller types.)
-        // Using just the ValueShift function is imperfect in the case where we're
-        // trying to generate a value with a larger size than the RNG's value type.
-        // Some values cannot be generated. It would be better to use the RNG as
-        // a source of random bits that get shifted into the larger type.
+        // TODO(3011): Remove the code duplication.
         template <Concept::RandomNumberGenerator RNG>
-            requires (sizeof(typename RNG::ValueType) >= sizeof(ValueType))
         [[nodiscard]] constexpr
         ValueType operator()(RNG& rng) const noexcept
         {
             using RNGVT = typename RNG::ValueType;
-            RNGVT begin = ValueShift<RNGVT>(mBegin);
-            RNGVT range = ValueShift<RNGVT>(mEnd) - begin;
-            if (range == RNGVT::Max())
+            using RandomBitsType = UnsignedIntegerSelector<sizeof(ValueType)>;
+
+            RandomBitsType begin = ValueShift<RandomBitsType>(mBegin);
+            RandomBitsType range = ValueShift<RandomBitsType>(mEnd) - begin;
+
+            if constexpr (sizeof(RNGVT) < sizeof(ValueType))
             {
-                return ValueShift<ValueType>(rng());
+                if (range == Cast<RandomBitsType>(RNGVT::Max()))
+                {
+                    return ValueShift<ValueType>(rng());
+                }
+                else if (range <= Cast<RandomBitsType>(RNGVT::Max()))
+                {
+                    ++range;
+                    RNGVT repeat = RNGVT::Max() - (RNGVT::Max() % Cast<RNGVT>(range));
+                    RNGVT result = rng();
+                    while (result > repeat)
+                    {
+                        result = rng();
+                    }
+
+                    return ValueShift<ValueType>(begin + (Cast<RandomBitsType>(result) % range));
+                }
+            }
+
+            if (range == RandomBitsType::Max())
+            {
+                return ValueShift<ValueType>(GetRandomBits<RandomBitsType>(rng));
             }
 
             ++range;
-            RNGVT repeat = RNGVT::Max() - (RNGVT::Max() % range);
-            RNGVT result = rng();
+            RandomBitsType repeat = RandomBitsType::Max() - (RandomBitsType::Max() % range);
+            RandomBitsType result = GetRandomBits<RandomBitsType>(rng);
             while (result > repeat)
             {
-                result = rng();
+                result = GetRandomBits<RandomBitsType>(rng);
             }
 
             return ValueShift<ValueType>(begin + (result % range));
-
         }
     private:
         ValueType mBegin;

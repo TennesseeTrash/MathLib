@@ -2,6 +2,7 @@
 #define MATHLIB_IMPLEMENTATION_FUNCTIONS_EQUAL_HPP
 
 #include "../Base/Concepts.hpp"
+#include "../../Constants.hpp"
 
 namespace Math
 {

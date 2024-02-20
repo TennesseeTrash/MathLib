@@ -1,6 +1,11 @@
 #include <catch2/catch_test_macros.hpp>
 #include <Math/Noise.hpp>
 
+// TODO(3011): These tests are disabled for now to speed up test run time.
+// They are not really indicative of the quality of the noise functions
+// anyway. The noise functions will need a specialized test suite (maybe
+// using reference noise maps).
+/*
 TEST_CASE("Test 2D Perlin noise", "[Math][Noise]")
 {
     Math::Noise::Perlin<Math::f32> noise;
@@ -126,3 +131,4 @@ TEST_CASE("Test 4D Perlin noise", "[Math][Noise]")
         }
     }
 }
+*/

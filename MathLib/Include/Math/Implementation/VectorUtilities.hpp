@@ -104,13 +104,6 @@ namespace Math
 
     template <Concept::Vector3 Vec>
     [[nodiscard]] constexpr
-    Vec ReflectLocalZ(const Vec& u) noexcept
-    {
-        return Vec(-u.x, -u.y, u.z);
-    }
-
-    template <Concept::Vector3 Vec>
-    [[nodiscard]] constexpr
     Vec Refract(const Vec& u, const Vec& n, typename Vec::ScalarType eta) noexcept
     {
         using Scalar = typename Vec::ScalarType;

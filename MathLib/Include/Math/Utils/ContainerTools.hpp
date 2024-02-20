@@ -2,6 +2,7 @@
 #define MATHLIB_UTILS_CONTAINER_TOOLS_HPP
 
 #include "../Base.hpp"
+#include "../Implementation/Functions/Equal.hpp"
 
 #include <unordered_map>
 
@@ -38,14 +39,7 @@ namespace Math
         [[nodiscard]] constexpr
         std::size_t operator()(const Vec& u, const Vec& v) const noexcept
         {
-            for (SizeType i = 0; i < Vec::Dimension; ++i)
-            {
-                if (u[i] != v[i])
-                {
-                    return false;
-                }
-            }
-            return true;
+            return Equal(u, v);
         }
     };
 

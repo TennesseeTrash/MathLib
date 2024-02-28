@@ -52,19 +52,10 @@ namespace Math::Concept
         {
             static constexpr bool Value = true;
         };
-
-        template <typename Specialization, template <typename...> typename... Bases>
-        struct IsSpecializationOfAny
-        {
-            static constexpr bool Value = (IsSpecialization<Specialization, Bases>::Value || ...);
-        };
     }
 
     template <typename Specialization, template<typename...> typename Base>
     concept IsSpecialization = Implementation::IsSpecialization<Specialization, Base>::Value;
-
-    template <typename Specialization, template<typename...> typename... Bases>
-    concept IsSpecializationOfAny = Implementation::IsSpecializationOfAny<Specialization, Bases...>::Value;
 
     template <typename T>
     concept HasValueType = requires
@@ -161,7 +152,7 @@ namespace Math::Concept
     template <typename T>
     concept StrongType = requires (T a)
     {
-        typename T::ValueType;
+        requires FundamentalType<typename T::ValueType>;
         { ToUnderlying(a) } -> IsSameBaseType<typename T::ValueType>;
 
         { T::Min()  } -> IsSame<T>;
@@ -198,8 +189,7 @@ namespace Math::Concept
     template <typename T>
     concept RandomNumberGenerator = requires(T rng)
     {
-        typename T::ValueType;
-
+        requires StrongType<typename T::ValueType>;
         requires UnsignedIntegralType<typename T::ValueType>;
 
         requires requires (typename T::ValueType val)
@@ -215,7 +205,6 @@ namespace Math::Concept
     template <typename T, typename RNG>
     concept Distribution = requires (T dist)
     {
-        typename T::ValueType;
         requires StrongType<typename T::ValueType>;
         requires requires (typename T::ValueType val)
         {

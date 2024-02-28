@@ -31,6 +31,9 @@ namespace Math
     static_assert(Concept::Matrix2<Matrix2d>);
     static_assert(Concept::Matrix3<Matrix3d>);
     static_assert(Concept::Matrix4<Matrix4d>);
+
+    static_assert(Concept::MatrixN<MatrixNT<7, f32>>);
+    static_assert(Concept::MatrixN<MatrixNT<7, f64>>);
 }
 
 #endif //MATHLIB_MATRIX_HPP

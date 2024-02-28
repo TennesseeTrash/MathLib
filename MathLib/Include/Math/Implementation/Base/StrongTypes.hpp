@@ -6,18 +6,12 @@
 #include <compare>
 #include <limits>
 
-// TODO(3011):
-//  - It might prove beneficial to make StrongType into a struct with
-//    the member value being public. This would make it possible to
-//    get rid of StaticStrongType.
-
 namespace Math
 {
     template <typename T>
     struct StrongType final
     {
     public:
-        //static_assert(!Implementation::Concept::IsSpecialization<T, StrongType>::Value, "StrongType may not be nested");
         using ValueType = T;
         ValueType Value;
 

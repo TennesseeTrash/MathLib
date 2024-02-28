@@ -2,6 +2,7 @@
 #define MATHLIB_IMPLEMENTATION_RANDOM_UNIFORM_DISTRIBUTION_HPP
 
 #include "../Base/Concepts.hpp"
+#include "../Functions/BasicFunctions.hpp"
 #include "../Functions/ValueShift.hpp"
 #include "../Functions/IntUtils.hpp"
 #include "Utils.hpp"
@@ -48,7 +49,6 @@ namespace Math
             : mBegin(begin), mEnd(end)
         {}
 
-        // TODO(3011): Remove the code duplication.
         template <Concept::RandomNumberGenerator RNG>
         [[nodiscard]] constexpr
         ValueType operator()(RNG& rng) const noexcept
@@ -61,6 +61,11 @@ namespace Math
 
             if constexpr (sizeof(RNGVT) < sizeof(ValueType))
             {
+                // Note(3011): I don't really like this duplication, but I don't see a more
+                // elegant way to do this currently. The usage where this becomes useful is
+                // generally not a great idea anyway, so I might still remove this at some
+                // point.
+
                 if (range == Cast<RandomBitsType>(RNGVT::Max()))
                 {
                     return ValueShift<ValueType>(rng());
@@ -111,17 +116,15 @@ namespace Math
             : mBegin(begin), mEnd(end)
         {}
 
-        // TODO(3011):
-        // For now, the implementation is very naive. It should be correct for
-        // the [0,1] range. However, the result values get scaled and shifted
-        // with other ranges, which loses information.
         template <Concept::RandomNumberGenerator RNG>
         [[nodiscard]] constexpr
         ValueType operator()(RNG& rng) const noexcept
         {
-            // TODO(3011): Not sure if this is the best we can do, but it's a start.
+            // Note(3011): Currently, this generates values in the range [begin,end).
+            // That makes this specialization a bit inconsistent with the behaviour
+            // for integers, which means this might still change in the future.
             ValueType result = UniformUnitDistribution<ValueType>()(rng);
-            return mBegin + (mEnd - mBegin) * result;
+            return Lerp(result, mBegin, mEnd);
         }
     private:
         ValueType mBegin;

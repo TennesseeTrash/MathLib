@@ -5,14 +5,6 @@
 #include "Implementation/QuaternionOperators.hpp"
 #include "Implementation/QuaternionUtilities.hpp"
 
-#include "Matrix.hpp"
-
-// TODO(3011): Reimplement this class to follow the same conventions
-// as other classes in MathLib.
-
-// TODO(3011): It might be nicer for the quaternion to return a transform
-// instead of a matrix.
-
 namespace Math
 {
     //////////////////////////////////////////////////////////////////////////

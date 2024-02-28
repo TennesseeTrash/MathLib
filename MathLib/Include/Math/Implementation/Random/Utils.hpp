@@ -15,7 +15,7 @@ namespace Math
 
         if constexpr (sizeof(T) <= sizeof(RNGVT))
         {
-            // Use the full range or discard the lower bits.
+            // Note(3011): Use the full range or discard the lower bits.
             return ValueShift<T>(rng());
         }
         else

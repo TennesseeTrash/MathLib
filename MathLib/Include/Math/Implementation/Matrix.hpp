@@ -167,6 +167,35 @@ namespace Math
     private:
         Array<VectorType, 4> rows;
     };
+
+    template <SizeType N, Concept::StrongType T>
+    class MatrixNT final
+    {
+    public:
+        using ScalarType = T;
+        using VectorType = VectorNT<N, T>;
+        static constexpr SizeType Dimension = N;
+
+        constexpr explicit MatrixNT() noexcept
+            : rows{}
+        {}
+
+        constexpr explicit MatrixNT(T diag) noexcept
+            : rows{}
+        {
+            rows.ForEach([diag](SizeType i, ScalarType& row){ row[i] = diag; });
+        }
+
+        constexpr       VectorType& operator[] (SizeType index)       { return rows[index]; }
+        constexpr const VectorType& operator[] (SizeType index) const { return rows[index]; }
+
+        constexpr T Min() const { T min = T::Max(); rows.ForEach([&min](T& row){ if (row.Min() < min) { min = row.Min(); } }); return min; }
+        constexpr T Max() const { T max = T::Min(); rows.ForEach([&max](T& row){ if (row.Max() > max) { max = row.Max(); } }); return max; }
+
+        static constexpr MatrixNT<N, T> Identity() noexcept { return MatrixNT<N, T>(Cast<T>(1)); }
+    private:
+        Array<VectorType, Dimension> rows;
+    };
 }
 
 #endif //MATHLIB_IMPLEMENTATION_MATRIX_HPP

@@ -2,6 +2,7 @@
 #define MATHLIB_FUNCTIONS_HPP
 
 #include "Implementation/Functions/BasicFunctions.hpp"
+#include "Implementation/Functions/Log.hpp"
 #include "Implementation/Functions/Trigonometric.hpp"
 #include "Implementation/Functions/ValueShift.hpp"
 #include "Implementation/Functions/Equal.hpp"

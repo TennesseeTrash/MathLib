@@ -138,31 +138,53 @@ namespace Math::Constant::Implementation
     };
 
     template <typename T>
-    struct Epsilon final
+    struct EqualEpsilon final
     {};
 
     template <Concept::IntegralType T>
-    struct Epsilon<T> final
+    struct EqualEpsilon<T> final
     {
         static constexpr T Value = T(0);
     };
 
     template <>
-    struct Epsilon<float> final
+    struct EqualEpsilon<float> final
     {
         static constexpr float Value = 1.0e-6f;
     };
 
     template <>
-    struct Epsilon<double> final
+    struct EqualEpsilon<double> final
     {
         static constexpr double Value = 1.0e-10;
     };
 
     template <typename T>
-    struct Epsilon<StrongType<T>> final
+    struct EqualEpsilon<StrongType<T>> final
     {
-        static constexpr StrongType<T> Value = StrongType<T>(Epsilon<T>::Value);
+        static constexpr StrongType<T> Value = StrongType<T>(EqualEpsilon<T>::Value);
+    };
+
+    template <typename T>
+    struct GeometryEpsilon final
+    {};
+
+    template <>
+    struct GeometryEpsilon<float> final
+    {
+        static constexpr float Value = 1.0e-3f;
+    };
+
+    template <>
+    struct GeometryEpsilon<double> final
+    {
+        static constexpr double Value = 1.0e-6;
+    };
+
+    template <typename T>
+    struct GeometryEpsilon<StrongType<T>> final
+    {
+        static constexpr StrongType<T> Value = StrongType<T>(GeometryEpsilon<T>::Value);
     };
 }
 

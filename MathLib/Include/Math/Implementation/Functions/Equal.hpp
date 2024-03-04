@@ -8,7 +8,7 @@ namespace Math
 {
     template <Concept::FundamentalType T>
     [[nodiscard]] constexpr
-    bool Equal(T val1, T val2, T epsilon = Constant::Epsilon<T>) noexcept
+    bool Equal(T val1, T val2, T epsilon = Constant::EqualEpsilon<T>) noexcept
     {
         if constexpr (Concept::FloatingPointType<T>)
         {
@@ -22,28 +22,28 @@ namespace Math
 
     template <Concept::FundamentalType T>
     [[nodiscard]] constexpr
-    bool Equal(StrongType<T> val1, StrongType<T> val2, StrongType<T> epsilon = Constant::Epsilon<StrongType<T>>) noexcept
+    bool Equal(StrongType<T> val1, StrongType<T> val2, StrongType<T> epsilon = Constant::EqualEpsilon<StrongType<T>>) noexcept
     {
         return Equal(ToUnderlying(val1), ToUnderlying(val2), ToUnderlying(epsilon));
     }
 
     template <Concept::FundamentalType T>
     [[nodiscard]] constexpr
-    bool Equal(StrongType<T> val1, T val2, StrongType<T> epsilon = Constant::Epsilon<StrongType<T>>) noexcept
+    bool Equal(StrongType<T> val1, T val2, StrongType<T> epsilon = Constant::EqualEpsilon<StrongType<T>>) noexcept
     {
         return Equal(ToUnderlying(val1), val2, ToUnderlying(epsilon));
     }
 
     template <Concept::FundamentalType T>
     [[nodiscard]] constexpr
-    bool Equal(T val1, StrongType<T> val2, StrongType<T> epsilon = Constant::Epsilon<StrongType<T>>) noexcept
+    bool Equal(T val1, StrongType<T> val2, StrongType<T> epsilon = Constant::EqualEpsilon<StrongType<T>>) noexcept
     {
         return Equal(val1, ToUnderlying(val2), ToUnderlying(epsilon));
     }
 
     template <Concept::MathTypeUtil T>
     [[nodiscard]] constexpr
-    bool Equal(const T& u, const T& v, typename T::ScalarType epsilon = Constant::Epsilon<typename T::ScalarType>) noexcept
+    bool Equal(const T& u, const T& v, typename T::ScalarType epsilon = Constant::EqualEpsilon<typename T::ScalarType>) noexcept
     {
         for (SizeType i = 0; i < T::Dimension; ++i)
         {

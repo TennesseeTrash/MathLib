@@ -12,7 +12,7 @@ namespace Math
     public:
         using ValueType = T;
         static constexpr SizeType Size = N;
-    public:
+
         [[nodiscard]] constexpr
         Array() noexcept = default;
 
@@ -24,6 +24,28 @@ namespace Math
             static_assert(sizeof...(Ts) == ToUnderlying(Size), "Invalid number of arguments");
             static_assert(sizeof...(Ts) == 0
                       || (Concept::IsSame<T, Ts> && ...), "Invalid types");
+        }
+
+        [[nodiscard]] constexpr
+        T* Data()
+        {
+            if constexpr (Size == 0)
+            {
+                return nullptr;
+            }
+
+            return mArray;
+        }
+
+        [[nodiscard]] constexpr
+        const T* Data() const
+        {
+            if constexpr (Size == 0)
+            {
+                return nullptr;
+            }
+
+            return mArray;
         }
 
         template <Concept::Invocable<T&> Func>
@@ -38,9 +60,33 @@ namespace Math
             return func;
         }
 
+        template <Concept::Invocable<const T&> Func>
+        [[maybe_unused]] constexpr
+        Func ForEach(Func func) const noexcept
+        {
+            for (SizeType i = 0; i < Size; ++i)
+            {
+                func((*this)[i]);
+            }
+
+            return func;
+        }
+
         template <Concept::Invocable<SizeType, T&> Func>
         [[maybe_unused]] constexpr
         Func ForEach(Func func) noexcept
+        {
+            for (SizeType i = 0; i < Size; ++i)
+            {
+                func(i, (*this)[i]);
+            }
+
+            return func;
+        }
+
+        template <Concept::Invocable<SizeType, const T&> Func>
+        [[maybe_unused]] constexpr
+        Func ForEach(Func func) const noexcept
         {
             for (SizeType i = 0; i < Size; ++i)
             {

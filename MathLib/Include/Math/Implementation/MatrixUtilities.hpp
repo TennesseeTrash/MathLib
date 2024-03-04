@@ -127,21 +127,6 @@ namespace Math
     {
         return Adjugate(m) / Determinant(m);
     }
-
-    template <Concept::BasicMatrix Mat>
-    [[nodiscard]] constexpr
-    bool HasNaN(const Mat& m)
-    {
-        for (SizeType i = 0; i < Mat::Dimension; ++i)
-        {
-            if (HasNaN(m[i]))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
 }
 
 #endif //MATHLIB_IMPLEMENTATION_MATRIX_UTILITIES_HPP

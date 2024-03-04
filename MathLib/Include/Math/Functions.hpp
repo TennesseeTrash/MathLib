@@ -6,6 +6,7 @@
 #include "Implementation/Functions/Trigonometric.hpp"
 #include "Implementation/Functions/ValueShift.hpp"
 #include "Implementation/Functions/Equal.hpp"
+#include "Implementation/Functions/HasNaN.hpp"
 #include "Implementation/Functions/Angles.hpp"
 #include "Implementation/Functions/IntUtils.hpp"
 #include "Implementation/Functions/FloatUtils.hpp"

@@ -55,6 +55,13 @@ namespace Math
 
         return true;
     }
+
+    template <Concept::Quaternion Quat>
+    [[nodiscard]] constexpr
+    bool Equal(const Quat& p, const Quat& q) noexcept
+    {
+        return Equal(p.Vector(), q.Vector()) && Equal(p.Scalar(), q.Scalar());
+    }
 }
 
 #endif //MATHLIB_IMPLEMENTATION_FUNCTIONS_EQUAL_HPP

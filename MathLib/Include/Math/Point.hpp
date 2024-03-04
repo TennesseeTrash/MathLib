@@ -3,7 +3,6 @@
 
 #include "Implementation/Point.hpp"
 #include "Implementation/PointOperators.hpp"
-#include "Implementation/PointUtilities.hpp"
 
 namespace Math
 {

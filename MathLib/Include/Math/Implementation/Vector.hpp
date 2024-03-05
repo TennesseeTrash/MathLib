@@ -5,8 +5,6 @@
 #include "Functions/BasicFunctions.hpp"
 #include "Functions/Trigonometric.hpp"
 
-// TODO(3011): Add a generic, n-dimensional vector implementation.
-
 namespace Math
 {
     template <Concept::StrongType T>
@@ -138,6 +136,36 @@ namespace Math
             return result;
         }
     };
+
+    namespace Implementation
+    {
+        template <SizeType Dimension, Concept::StrongType ScalarType>
+        struct VectorSelector
+        {
+            using Type = VectorNT<Dimension, ScalarType>;
+        };
+
+        template <Concept::StrongType ScalarType>
+        struct VectorSelector<2, ScalarType>
+        {
+            using Type = Vector2T<ScalarType>;
+        };
+
+        template <Concept::StrongType ScalarType>
+        struct VectorSelector<3, ScalarType>
+        {
+            using Type = Vector3T<ScalarType>;
+        };
+
+        template <Concept::StrongType ScalarType>
+        struct VectorSelector<4, ScalarType>
+        {
+            using Type = Vector4T<ScalarType>;
+        };
+    }
+
+    template <SizeType Dimension, Concept::StrongType ScalarType>
+    using VectorSelector = typename Implementation::VectorSelector<Dimension, ScalarType>::Type;
 }
 
 #endif //MATHLIB_IMPLEMENTATION_VECTOR_HPP

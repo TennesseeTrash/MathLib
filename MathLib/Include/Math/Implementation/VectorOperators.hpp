@@ -116,6 +116,58 @@ namespace Math
     }
 
     //////////////////////////////////////////////////////////////////////////
+    // Bitwise Vector-Vector operators
+    //////////////////////////////////////////////////////////////////////////
+
+    template <Concept::IntegerVector Vec>
+    [[nodiscard]] constexpr
+    Vec operator& (const Vec& u, const Vec& v) noexcept
+    {
+        Vec result;
+        for (SizeType i = 0; i < Vec::Dimension; ++i)
+        {
+            result[i] = u[i] & v[i];
+        }
+        return result;
+    }
+
+    template <Concept::IntegerVector Vec>
+    [[nodiscard]] constexpr
+    Vec operator| (const Vec& u, const Vec& v) noexcept
+    {
+        Vec result;
+        for (SizeType i = 0; i < Vec::Dimension; ++i)
+        {
+            result[i] = u[i] | v[i];
+        }
+        return result;
+    }
+
+    template <Concept::IntegerVector Vec>
+    [[nodiscard]] constexpr
+    Vec operator^ (const Vec& u, const Vec& v) noexcept
+    {
+        Vec result;
+        for (SizeType i = 0; i < Vec::Dimension; ++i)
+        {
+            result[i] = u[i] ^ v[i];
+        }
+        return result;
+    }
+
+    template <Concept::IntegerVector Vec>
+    [[nodiscard]] constexpr
+    Vec operator~ (const Vec& u) noexcept
+    {
+        Vec result;
+        for (SizeType i = 0; i < Vec::Dimension; ++i)
+        {
+            result[i] = ~u[i];
+        }
+        return result;
+    }
+
+    //////////////////////////////////////////////////////////////////////////
     // Vector-Scalar operators
     //////////////////////////////////////////////////////////////////////////
 

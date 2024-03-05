@@ -88,7 +88,7 @@ namespace Math
         template <SizeType Count, SizeType Index = 0>
         struct MakeAscendingImpl
         {
-            using Type = typename MakeAscendingImpl<Count, SizeType(Index) + 1>::Type::template Prepend<Cast<T>(Index)>;
+            using Type = typename MakeAscendingImpl<Count, Index + 1>::Type::template Prepend<Cast<T>(Index)>;
         };
 
         template <SizeType Count>
@@ -100,7 +100,7 @@ namespace Math
         template <SizeType Count, SizeType Index = 0>
         struct MakeDescendingImpl
         {
-            using Type = typename MakeDescendingImpl<Count, SizeType(Index) + 1>::Type::template Append<Cast<T>(Index)>;
+            using Type = typename MakeDescendingImpl<Count, Index + 1>::Type::template Append<Cast<T>(Index)>;
         };
 
         template <SizeType Count>
@@ -153,7 +153,7 @@ namespace Math
         template <SizeType Index, typename HeadType, typename... TailTypes>
         struct RemoveAt<TypePack<HeadType, TailTypes...>, Index>
         {
-            using Type = typename Concatenate<TypePack<HeadType>, typename RemoveAt<TypePack<TailTypes...>, Cast<SizeType>(Index) - 1>::Type>::Type;
+            using Type = typename Concatenate<TypePack<HeadType>, typename RemoveAt<TypePack<TailTypes...>, Index - 1>::Type>::Type;
         };
 
         template <typename HeadType, typename... TailTypes>
@@ -165,7 +165,7 @@ namespace Math
         template <SizeType Index, typename T, T HeadValue, T... TailValues>
         struct RemoveAt<ValuePack<T, HeadValue, TailValues...>, Index>
         {
-            using Type = typename Concatenate<ValuePack<T, HeadValue>, typename RemoveAt<ValuePack<T, TailValues...>, Cast<SizeType>(Index) - 1>::Type>::Type;
+            using Type = typename Concatenate<ValuePack<T, HeadValue>, typename RemoveAt<ValuePack<T, TailValues...>, Index - 1>::Type>::Type;
         };
 
         template <typename T, T HeadValue, T... TailValues>
@@ -234,13 +234,13 @@ namespace Math
         template <SizeType Begin, SizeType Length, typename HeadType, typename... TailTypes>
         struct SubPack<TypePack<HeadType, TailTypes...>, Begin, Length>
         {
-            using Type = typename SubPack<TypePack<TailTypes...>, Cast<SizeType>(Begin) - 1, Length>::Type;
+            using Type = typename SubPack<TypePack<TailTypes...>, Begin - 1, Length>::Type;
         };
 
         template <SizeType Length, typename HeadType, typename... TailTypes>
         struct SubPack<TypePack<HeadType, TailTypes...>, 0, Length>
         {
-            using Type = typename Concatenate<TypePack<HeadType>, typename SubPack<TypePack<TailTypes...>, 0, SizeType(Length) - 1>::Type>::Type;
+            using Type = typename Concatenate<TypePack<HeadType>, typename SubPack<TypePack<TailTypes...>, 0, Length - 1>::Type>::Type;
         };
 
         template <typename HeadType, typename... TailTypes>
@@ -258,13 +258,13 @@ namespace Math
         template <SizeType Begin, SizeType Length, typename T, T HeadValue, T... TailValues>
         struct SubPack<ValuePack<T, HeadValue, TailValues...>, Begin, Length>
         {
-            using Type = typename SubPack<ValuePack<T, TailValues...>, SizeType(Begin) - 1, Length>::Type;
+            using Type = typename SubPack<ValuePack<T, TailValues...>, Begin - 1, Length>::Type;
         };
 
         template <SizeType Length, typename T, T HeadValue, T... TailValues>
         struct SubPack<ValuePack<T, HeadValue, TailValues...>, 0, Length>
         {
-            using Type = typename Concatenate<ValuePack<T, HeadValue>, typename SubPack<ValuePack<T, TailValues...>, 0, SizeType(Length) - 1>::Type>::Type;
+            using Type = typename Concatenate<ValuePack<T, HeadValue>, typename SubPack<ValuePack<T, TailValues...>, 0, Length - 1>::Type>::Type;
         };
 
         template <typename T, T HeadValue, T... TailValues>

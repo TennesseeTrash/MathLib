@@ -12,7 +12,7 @@ namespace Math
         return val != val;
     }
 
-    template <Concept::MathTypeUtil T>
+    template <Concept::MathType T>
     [[nodiscard]] constexpr
     bool HasNaN(const T& t) noexcept
     {

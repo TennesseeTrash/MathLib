@@ -171,17 +171,6 @@ namespace Math::Concept
         };
     };
 
-    template <typename T>
-    concept Function = requires (T f)
-    {
-        typename T::ValueType;
-
-        requires requires (typename T::ValueType val)
-        {
-            { f(val) } -> IsSame<T>;
-        };
-    };
-
     //////////////////////////////////////////////////////////////////////////
     // Random concepts
     //////////////////////////////////////////////////////////////////////////
@@ -315,6 +304,20 @@ namespace Math::Concept
               || Vector3<T>
               || Vector4<T>
               || VectorN<T>;
+    };
+
+    template <typename T>
+    concept IntegerVector = requires
+    {
+        requires Vector<T>;
+        requires IntegralType<typename T::ScalarType>;
+    };
+
+    template <typename T>
+    concept FloatVector = requires
+    {
+        requires Vector<T>;
+        requires FloatingPointType<typename T::ScalarType>;
     };
 
     //////////////////////////////////////////////////////////////////////////
@@ -630,7 +633,7 @@ namespace Math::Concept
         { q.Scalar() } -> IsSameBaseType<typename T::ScalarType>;
 
         { q.NormSqr() } -> IsSameBaseType<typename T::ScalarType>;
-        { q.Norm() } -> IsSameBaseType<typename T::ScalarType>;
+        { q.Norm()    } -> IsSameBaseType<typename T::ScalarType>;
     };
 
     template <typename T>
@@ -647,25 +650,11 @@ namespace Math::Concept
     };
 
     //////////////////////////////////////////////////////////////////////////
-    // Shape concepts
-    //////////////////////////////////////////////////////////////////////////
-
-    template <typename T>
-    concept Shape2D = requires (T s)
-    {
-        requires Scalar<typename T::ScalarType>;
-        requires BasicVector<typename T::VectorType>;
-        requires BasicPoint<typename T::PointType>;
-
-        // TODO(3011): Figure out the interface
-    };
-
-    //////////////////////////////////////////////////////////////////////////
     // Utility concepts
     //////////////////////////////////////////////////////////////////////////
 
     template <typename T>
-    concept MathTypeUtil = requires
+    concept MathType = requires
     {
         requires BasicVector<T>
               || BasicPoint<T>

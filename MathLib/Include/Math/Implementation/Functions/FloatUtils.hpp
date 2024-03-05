@@ -60,6 +60,22 @@ namespace Math
     {
         return val - Trunc<Float>(val);
     }
+
+    template <Concept::SignedIntegralType Int, Concept::FloatingPointType Float>
+        requires (sizeof(Int) >= sizeof(Float))
+    [[nodiscard]] constexpr
+    Int Round(Float val) noexcept
+    {
+        return Floor<Int, Float>(val + 0.5f);
+    }
+
+    template <Concept::FloatingPointType Float>
+    [[nodiscard]] constexpr
+    Float Round(Float val) noexcept
+    {
+        using Int = SignedIntegerSelector<sizeof(UnderlyingType<Float>)>;
+        return Round<Int, Float>(val);
+    }
 }
 
 #endif //MATHLIB_IMPLEMENTATION_FUNCTIONS_FLOAT_UTILS_HPP

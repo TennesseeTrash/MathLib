@@ -41,7 +41,7 @@ namespace Math
         return Equal(val1, ToUnderlying(val2), ToUnderlying(epsilon));
     }
 
-    template <Concept::MathTypeUtil T>
+    template <Concept::MathType T>
     [[nodiscard]] constexpr
     bool Equal(const T& u, const T& v, typename T::ScalarType epsilon = Constant::EqualEpsilon<typename T::ScalarType>) noexcept
     {

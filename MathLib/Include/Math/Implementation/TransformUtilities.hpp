@@ -7,20 +7,6 @@
 
 namespace Math
 {
-    template <Concept::Transform2 Transform>
-    [[nodiscard]] constexpr
-    typename Transform::TransformMatrixType ToMatrix(const Transform& t) noexcept
-    {
-        return typename Transform::TransformMatrixType( t[0], t[1], Transform::BottomRow );
-    }
-
-    template <Concept::Transform3 Transform>
-    [[nodiscard]] constexpr
-    typename Transform::TransformMatrixType ToMatrix(const Transform& t) noexcept
-    {
-        return typename Transform::TransformMatrixType( t[0], t[1], t[2], Transform::BottomRow );
-    }
-
     template <Concept::Scalar Scalar>
     [[nodiscard]] constexpr
     Transform2T<Scalar> Translate(const Vector2T<Scalar>& v) noexcept
@@ -210,7 +196,6 @@ namespace Math
     [[nodiscard]] constexpr
     auto PerspectiveProjection(Scalar fov, Scalar aspectRatio, Scalar near, Scalar far) noexcept
     {
-        static_assert(Hand == Orientation::Right || Hand == Orientation::Left, "Orientation must be either Right or Left.");
         using Vec = Vector4T<Scalar>;
         using TransformRight = Transform3T<Scalar, Vec(0, 0, -1, 0)>;
         using TransformLeft = Transform3T<Scalar, Vec(0, 0, 1, 0)>;
@@ -228,8 +213,6 @@ namespace Math
     [[nodiscard]] constexpr
     Transform3T<Scalar> OrthographicProjection(Scalar left, Scalar right, Scalar bottom, Scalar top, Scalar near, Scalar far) noexcept
     {
-        static_assert(Hand == Orientation::Right || Hand == Orientation::Left, "Orientation must be either Right or Left.");
-
         Transform3T<Scalar> result;
         result[0][0] = Cast<Scalar>(2) / (right - left);
         result[1][1] = Cast<Scalar>(2) / (top - bottom);

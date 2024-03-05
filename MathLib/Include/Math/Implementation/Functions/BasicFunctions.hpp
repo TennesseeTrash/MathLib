@@ -121,7 +121,7 @@ namespace Math
         return Array<T, sizeof...(Ts) + 1>(v1, values...).Min();
     }
 
-    template <Concept::MathTypeUtil T>
+    template <Concept::MathType T>
         requires requires (T t) { { t.Min() } -> Concept::IsSame<typename T::ScalarType>; }
     [[nodiscard]] constexpr
     typename T::ScalarType Min(const T& val) noexcept
@@ -138,7 +138,7 @@ namespace Math
         return Array<T, sizeof...(Ts) + 1>(v1, values...).Max();
     }
 
-    template <Concept::MathTypeUtil T>
+    template <Concept::MathType T>
         requires requires (T t) { { t.Max() } -> Concept::IsSame<typename T::ScalarType>; }
     [[nodiscard]] constexpr
     typename T::ScalarType Max(const T& val) noexcept

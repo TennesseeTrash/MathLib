@@ -64,6 +64,8 @@ namespace Math
         constexpr       RowVectorType& operator[] (SizeType index)       { return rows[index]; }
         constexpr const RowVectorType& operator[] (SizeType index) const { return rows[index]; }
 
+        constexpr TransformMatrixType ToMatrix() const { return TransformMatrixType(rows[0], rows[1], BottomRow); }
+
         static constexpr Transform2T<T> Identity() noexcept { return Transform2T<T>(Cast<T>(1)); }
     private:
         Array<RowVectorType, 2> rows;
@@ -135,6 +137,8 @@ namespace Math
 
         constexpr       RowVectorType& operator[] (SizeType index)       { return rows[index]; }
         constexpr const RowVectorType& operator[] (SizeType index) const { return rows[index]; }
+
+        constexpr TransformMatrixType ToMatrix() const { return TransformMatrixType(rows[0], rows[1], rows[2], BottomRow); }
 
         static constexpr Transform3T<T> Identity() noexcept { return Transform3T<T>(Cast<T>(1)); }
     private:

@@ -49,6 +49,7 @@ namespace Math
         return val * val * val;
     }
 
+    // TODO(3011): Possible implicit conversion
     template <typename T>
     [[nodiscard]] constexpr
     T Pow(T val, T exponent) noexcept
@@ -56,6 +57,7 @@ namespace Math
         return std::pow(ToUnderlying(val), ToUnderlying(exponent));
     }
 
+    // TODO(3011): Possible implicit conversion
     template <typename T>
     [[nodiscard]] constexpr
     T Sqrt(T val) noexcept
@@ -112,38 +114,60 @@ namespace Math
     // Min/Max
     //////////////////////////////////////////////////////////////////////////
 
+    template <typename T>
+    [[nodiscard]] constexpr
+    auto Min(const T& val) noexcept
+    {
+        if constexpr (requires (T t) { { t.Min() } -> Concept::IsSame<typename T::ScalarType>; })
+        {
+            return val.Min();
+        }
+        else
+        {
+            return val;
+        }
+    }
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    T Min(T v1, T v2) noexcept
+    {
+        return (v1 < v2) ? v1 : v2;
+    }
+
     template <typename T, typename... Ts>
     [[nodiscard]] constexpr
-    T Min(T v1, Ts... values) noexcept
+    T Min(T v1, T v2, Ts... values) noexcept
     {
-        // TODO(3011): This needs a refactor, making an array is unnecessary.
-        static_assert(sizeof...(Ts) == 0 || (Concept::IsSame<T, Ts> || ...));
-        return Array<T, sizeof...(Ts) + 1>(v1, values...).Min();
+        return Min(Min(v1, v2), values...);
     }
 
-    template <Concept::MathType T>
-        requires requires (T t) { { t.Min() } -> Concept::IsSame<typename T::ScalarType>; }
+    template <typename T>
     [[nodiscard]] constexpr
-    typename T::ScalarType Min(const T& val) noexcept
+    auto Max(const T& val) noexcept
     {
-        return val.Min();
+        if constexpr (requires (T t) { { t.Max() } -> Concept::IsSame<typename T::ScalarType>; })
+        {
+            return val.Max();
+        }
+        else
+        {
+            return val;
+        }
+    }
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    T Max(T v1, T v2) noexcept
+    {
+        return (v1 > v2) ? v1 : v2;
     }
 
     template <typename T, typename... Ts>
     [[nodiscard]] constexpr
-    T Max(T v1, Ts... values) noexcept
+    T Max(T v1, T v2, Ts... values) noexcept
     {
-        // TODO(3011): This needs a refactor, making an array is unnecessary.
-        static_assert(sizeof...(Ts) == 0 || (Concept::IsSame<T, Ts> || ...));
-        return Array<T, sizeof...(Ts) + 1>(v1, values...).Max();
-    }
-
-    template <Concept::MathType T>
-        requires requires (T t) { { t.Max() } -> Concept::IsSame<typename T::ScalarType>; }
-    [[nodiscard]] constexpr
-    typename T::ScalarType Max(const T& val) noexcept
-    {
-        return val.Max();
+        return Max(Max(v1, v2), values...);
     }
 }
 

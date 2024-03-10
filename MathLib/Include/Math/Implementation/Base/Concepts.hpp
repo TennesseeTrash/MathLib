@@ -153,10 +153,24 @@ namespace Math::Concept
     concept StrongType = requires (T a)
     {
         requires FundamentalType<typename T::ValueType>;
-        { ToUnderlying(a) } -> IsSameBaseType<typename T::ValueType>;
+        { ToUnderlying(a) } -> IsSame<typename T::ValueType>;
 
         { T::Min()  } -> IsSame<T>;
         { T::Max()  } -> IsSame<T>;
+    };
+
+    template <typename T>
+    concept StrongIntegerType = requires
+    {
+        requires StrongType<T>;
+        requires IntegralType<typename T::ValueType>;
+    };
+
+    template <typename T>
+    concept StrongFloatType = requires
+    {
+        requires StrongType<T>;
+        requires FloatingPointType<typename T::ValueType>;
     };
 
     template <typename T>

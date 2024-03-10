@@ -12,8 +12,7 @@ namespace Math
     template <Concept::StrongType T>
     class UniformDistribution;
 
-    template <Concept::StrongType T>
-        requires Concept::FloatingPointType<T> && (sizeof(T) == 4 || sizeof(T) == 8)
+    template <Concept::StrongFloatType T>
     class UniformUnitDistribution
     {
     public:

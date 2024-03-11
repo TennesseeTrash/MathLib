@@ -194,6 +194,15 @@ namespace Math::Geometry2D
             return Constant::Pi<ScalarType> * Radii.x * Radii.y;
         }
 
+        [[nodiscard]] constexpr
+        ScalarType Perimeter() const noexcept
+        {
+            // Ramanujan's approximation
+            ScalarType h = Squared(Radii.x - Radii.y) / Squared(Radii.x + Radii.y);
+            return Constant::Pi<ScalarType> * (Radii.x + Radii.y)
+                * (ScalarType(1) + (ScalarType(3) * h) / (ScalarType(10) + Sqrt(ScalarType(4) - ScalarType(3) * h)));
+        }
+
         PointType  Center;
         VectorType Radii;
         ScalarType Angle;

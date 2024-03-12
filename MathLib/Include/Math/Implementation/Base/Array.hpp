@@ -21,7 +21,7 @@ namespace Math
                   && (Concept::IsConvertible<Ts, T> && ...))
         [[nodiscard]] constexpr
         Array(const Ts&... values)
-            : mArray{ values... }
+            : mArray{ Cast<ValueType>(values)... }
         {
             static_assert(sizeof...(Ts) == ToUnderlying(Size), "Invalid number of arguments");
         }

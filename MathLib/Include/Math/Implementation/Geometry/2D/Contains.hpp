@@ -91,7 +91,63 @@ namespace Math::Geometry2D
         return Equal(t.x, t.y) && t.x >= 0 && t.x <= 1;
     }
 
-    // TODO(3011): Would the rest of these make sense?
+    template <Concept::StrongFloatType T>
+    [[nodiscard]] constexpr
+    bool Contains(const Line<T>& line, const Line<T>& other) noexcept
+    {
+        return Contains(line, other.Start) && Contains(line, other.End);
+    }
+
+    template <Concept::StrongFloatType T>
+    [[nodiscard]] constexpr
+    bool Contains(const Line<T>& line, const Circle<T>& circle) noexcept
+    {
+        return Contains(line, circle.Center)
+            && Equal(circle.Radius, T(0), Constant::GeometryEpsilon<T>);
+    }
+
+    template <Concept::StrongFloatType T>
+    [[nodiscard]] constexpr
+    bool Contains(const Line<T>& line, const Triangle<T>& triangle) noexcept
+    {
+        return Contains(line, triangle.Vertices[0])
+            && Contains(line, triangle.Vertices[1])
+            && Contains(line, triangle.Vertices[2]);
+    }
+
+    template <Concept::StrongFloatType T>
+    [[nodiscard]] constexpr
+    bool Contains(const Line<T>& line, const Rectangle<T>& rectangle) noexcept
+    {
+        return Contains(line, rectangle.Min)
+            && Contains(line, rectangle.Max)
+            && Contains(line, Point<T>(rectangle.Min.x, rectangle.Max.y))
+            && Contains(line, Point<T>(rectangle.Max.x, rectangle.Min.y));
+    }
+
+    template <Concept::StrongFloatType T>
+    [[nodiscard]] constexpr
+    bool Contains(const Line<T>& line, const Quadrilateral<T>& quadrilateral) noexcept
+    {
+        const SizeType vertexCount = quadrilateral.Vertices.Size;
+        for (SizeType i = 0; i < vertexCount; ++i)
+        {
+            if (!Contains(line, quadrilateral.Vertices[i]))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    template <Concept::StrongFloatType T>
+    [[nodiscard]] constexpr
+    bool Contains(const Line<T>& line, const Ellipse<T>& ellipse) noexcept
+    {
+        return Contains(line, ellipse.Center)
+            && Equal(ellipse.Radii.x, T(0), Constant::GeometryEpsilon<T>)
+            && Equal(ellipse.Radii.y, T(0), Constant::GeometryEpsilon<T>);
+    }
 
 
 

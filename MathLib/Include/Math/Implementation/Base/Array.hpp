@@ -17,13 +17,13 @@ namespace Math
         Array() noexcept = default;
 
         template <typename... Ts>
+            requires (sizeof...(Ts) == ToUnderlying(Size)
+                  && (Concept::IsConvertible<Ts, T> && ...))
         [[nodiscard]] constexpr
         Array(const Ts&... values)
             : mArray{ values... }
         {
             static_assert(sizeof...(Ts) == ToUnderlying(Size), "Invalid number of arguments");
-            static_assert(sizeof...(Ts) == 0
-                      || (Concept::IsSame<T, Ts> && ...), "Invalid types");
         }
 
         [[nodiscard]] constexpr
@@ -161,33 +161,6 @@ namespace Math
     private:
         T mArray[ToUnderlying(Size)] = {};
     };
-
-    template <typename T, SizeType N, typename... Ts>
-    [[nodiscard]] constexpr
-    Array<T, N> MakeArray(const Ts&... values)
-    {
-        static_assert(sizeof...(Ts) == ToUnderlying(N), "Invalid number of arguments");
-        static_assert((Concept::IsConvertible<UnderlyingType<T>, UnderlyingType<Ts>> && ...), "Invalid types");
-        return Array<T, N>(Cast<T>(values)...);
-    }
-
-    template <typename T, SizeType N, Concept::Invocable<T&> Func>
-    [[nodiscard]] constexpr
-    Array<T, N> MakeArray(Func func)
-    {
-        Array<T, N> result;
-        result.template ForEach<Func>(func);
-        return result;
-    }
-
-    template <typename T, SizeType N, Concept::Invocable<SizeType, T&> Func>
-    [[nodiscard]] constexpr
-    Array<T, N> MakeArray(Func func)
-    {
-        Array<T, N> result;
-        result.template ForEach<Func>(func);
-        return result;
-    }
 
     namespace Implementation
     {

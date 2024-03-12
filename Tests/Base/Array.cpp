@@ -26,7 +26,7 @@ TEST_CASE("Test Array basics", "[Math][Common]")
 
     SECTION("Normal constructor")
     {
-        Math::Array<f32, 4> array(f32(1.0f), f32(2.0f), f32(3.0f), f32(4.0f));
+        Math::Array<f32, 4> array(1.0f, 2.0f, 3.0f, 4.0f);
         REQUIRE(Equal(array[0], 1.0f));
         REQUIRE(Equal(array[1], 2.0f));
         REQUIRE(Equal(array[2], 3.0f));
@@ -35,7 +35,7 @@ TEST_CASE("Test Array basics", "[Math][Common]")
 
     SECTION("ForEach")
     {
-        Math::Array<f32, 4> array(f32(1.0f), f32(2.0f), f32(3.0f), f32(4.0f));
+        Math::Array<f32, 4> array(1.0f, 2.0f, 3.0f, 4.0f);
         array.ForEach([](f32& value) { value *= 2.0f; });
         REQUIRE(Equal(array[0], 2.0f));
         REQUIRE(Equal(array[1], 4.0f));
@@ -45,7 +45,7 @@ TEST_CASE("Test Array basics", "[Math][Common]")
 
     SECTION("ForEach with index")
     {
-        Math::Array<f32, 4> array(f32(1.0f), f32(2.0f), f32(3.0f), f32(4.0f));
+        Math::Array<f32, 4> array(1.0f, 2.0f, 3.0f, 4.0f);
         array.ForEach([](Math::SizeType index, f32& value) { value *= Cast<f32>(index); });
         REQUIRE(Equal(array[0], 0.0f));
         REQUIRE(Equal(array[1], 2.0f));
@@ -66,7 +66,7 @@ TEST_CASE("Test Array basics", "[Math][Common]")
     SECTION("Shuffle")
     {
         Math::Random64 random;
-        Math::Array<f32, 4> array(f32(1.0f), f32(2.0f), f32(3.0f), f32(4.0f));
+        Math::Array<f32, 4> array(1.0f, 2.0f, 3.0f, 4.0f);
         array.Shuffle<Math::Random64, Math::UniformDistribution>(random);
         REQUIRE(Equal(array[0], 4.0f));
         REQUIRE(Equal(array[1], 3.0f));
@@ -76,49 +76,8 @@ TEST_CASE("Test Array basics", "[Math][Common]")
 
     SECTION("Min and Max")
     {
-        Math::Array<f32, 4> array(f32(1.0f), f32(2.0f), f32(3.0f), f32(4.0f));
+        Math::Array<f32, 4> array(1.0f, 2.0f, 3.0f, 4.0f);
         REQUIRE(Equal(array.Min(), 1.0f));
         REQUIRE(Equal(array.Max(), 4.0f));
-    }
-}
-
-TEST_CASE("Array creation utilities")
-{
-    SECTION("MakeArray with a list of values")
-    {
-        auto array = Math::MakeArray<f32, 4>(1.0f, 2.0f, 3.0f, 4.0f);
-        REQUIRE(Equal(array[0], 1.0f));
-        REQUIRE(Equal(array[1], 2.0f));
-        REQUIRE(Equal(array[2], 3.0f));
-        REQUIRE(Equal(array[3], 4.0f));
-    }
-
-    SECTION("MakeArray with a function")
-    {
-        f32 temp = 1.0f;
-        auto array = Math::MakeArray<f32, 4>([&temp](f32& value) { value = Math::Cast<f32>(temp); temp += 1.0f; });
-        REQUIRE(Equal(array[0], 1.0f));
-        REQUIRE(Equal(array[1], 2.0f));
-        REQUIRE(Equal(array[2], 3.0f));
-        REQUIRE(Equal(array[3], 4.0f));
-    }
-
-    SECTION("MakeArray with a function (index)")
-    {
-        auto array = Math::MakeArray<f32, 4>([](Math::SizeType index, f32& value) { value = Math::Cast<f32>(index); });
-        REQUIRE(Equal(array[0], 0.0f));
-        REQUIRE(Equal(array[1], 1.0f));
-        REQUIRE(Equal(array[2], 2.0f));
-        REQUIRE(Equal(array[3], 3.0f));
-    }
-
-    SECTION("MakeArray from ValuePack")
-    {
-        using Pack = Math::ValuePack<f32, 1.0f, 2.0f, 3.0f, 4.0f>;
-        auto array = Math::MakeArray<f32, Pack>();
-        REQUIRE(Equal(array[0], 1.0f));
-        REQUIRE(Equal(array[1], 2.0f));
-        REQUIRE(Equal(array[2], 3.0f));
-        REQUIRE(Equal(array[3], 4.0f));
     }
 }

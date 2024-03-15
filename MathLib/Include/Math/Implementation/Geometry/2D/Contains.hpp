@@ -42,7 +42,7 @@ namespace Math::Geometry2D
     {
         return Equal(point, triangle.Vertices[0], Constant::GeometryEpsilon<T>)
             && Equal(point, triangle.Vertices[1], Constant::GeometryEpsilon<T>)
-            && Equal(point, triangle.Vertices[0], Constant::GeometryEpsilon<T>);
+            && Equal(point, triangle.Vertices[2], Constant::GeometryEpsilon<T>);
     }
 
     template <Concept::StrongFloatType T>
@@ -50,7 +50,9 @@ namespace Math::Geometry2D
     bool Contains(const Point<T>& point, const Rectangle<T>& rectangle) noexcept
     {
         return Equal(point, rectangle.Min, Constant::GeometryEpsilon<T>)
-            && Equal(point, rectangle.Max, Constant::GeometryEpsilon<T>);
+            && Equal(point, rectangle.Max, Constant::GeometryEpsilon<T>)
+            && Equal(point, Point<T>(rectangle.Min.x, rectangle.Max.y), Constant::GeometryEpsilon<T>)
+            && Equal(point, Point<T>(rectangle.Max.x, rectangle.Min.y), Constant::GeometryEpsilon<T>);
     }
 
     template <Concept::StrongFloatType T>
@@ -73,8 +75,8 @@ namespace Math::Geometry2D
     bool Contains(const Point<T>& point, const Ellipse<T>& ellipse) noexcept
     {
         return Equal(point, ellipse.Center, Constant::GeometryEpsilon<T>)
-            && Equal(point, ellipse.Radii.x, Constant::GeometryEpsilon<T>)
-            && Equal(point, ellipse.Radii.y, Constant::GeometryEpsilon<T>);
+            && Equal(T(0), ellipse.Radii.x, Constant::GeometryEpsilon<T>)
+            && Equal(T(0), ellipse.Radii.y, Constant::GeometryEpsilon<T>);
     }
 
 

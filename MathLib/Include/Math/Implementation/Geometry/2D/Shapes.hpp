@@ -31,6 +31,20 @@ namespace Math::Geometry2D
         }
 
         [[nodiscard]] constexpr
+        ScalarType Midpoint() const noexcept
+        {
+            return PointType((Vector2T<T>(Start) + Vector2T<T>(End)) / ScalarType(2));
+        }
+
+        [[nodiscard]] constexpr
+        ScalarType Side(const Point<T>& point) const noexcept
+        {
+            Vector2T<T> line = End - Start;
+            Vector2T<T> pointLine = point - Start;
+            return line.x * pointLine.y - line.y * pointLine.x;
+        }
+
+        [[nodiscard]] constexpr
         ScalarType Area() const noexcept
         {
             return ScalarType(0);
@@ -43,11 +57,9 @@ namespace Math::Geometry2D
         }
 
         [[nodiscard]] constexpr
-        ScalarType Side(const Point<T>& point) const noexcept
+        PointType Centroid() const noexcept
         {
-            Vector2T<T> line = End - Start;
-            Vector2T<T> pointLine = point - Start;
-            return line.x * pointLine.y - line.y * pointLine.x;
+            return Midpoint();
         }
 
         PointType Start;
@@ -78,6 +90,12 @@ namespace Math::Geometry2D
             return ScalarType(2) * Constant::Pi<ScalarType> * Radius;
         }
 
+        [[nodiscard]] constexpr
+        PointType Centroid() const noexcept
+        {
+            return Center;
+        }
+
         PointType  Center;
         ScalarType Radius;
     };
@@ -95,6 +113,17 @@ namespace Math::Geometry2D
         {}
 
         [[nodiscard]] constexpr
+        Array<Line<T>, 3> Edges() const noexcept
+        {
+            return Array<Line<T>, 3>
+            {
+                Line<T>(Vertices[0], Vertices[1]),
+                Line<T>(Vertices[1], Vertices[2]),
+                Line<T>(Vertices[2], Vertices[0])
+            };
+        }
+
+        [[nodiscard]] constexpr
         ScalarType Area() const noexcept
         {
             return TriangleArea(Vertices[0] - Vertices[1], Vertices[0] - Vertices[2]);
@@ -106,6 +135,14 @@ namespace Math::Geometry2D
             return (Vertices[0] - Vertices[1]).Length() +
                    (Vertices[1] - Vertices[2]).Length() +
                    (Vertices[2] - Vertices[0]).Length();
+        }
+
+        [[nodiscard]] constexpr
+        PointType Centroid() const noexcept
+        {
+            return PointType((Vector2T<T>(Vertices[0])
+                            + Vector2T<T>(Vertices[1])
+                            + Vector2T<T>(Vertices[2])) / ScalarType(3));
         }
 
         Array<PointType, 3> Vertices;
@@ -136,6 +173,12 @@ namespace Math::Geometry2D
         ScalarType Perimeter() const noexcept
         {
             return ScalarType(2) * ((Max.x - Min.x) + (Max.y - Min.y));
+        }
+
+        [[nodiscard]] constexpr
+        PointType Centroid() const noexcept
+        {
+            return PointType((Vector2T<T>(Min) + Vector2T<T>(Max)) / ScalarType(2));
         }
 
         PointType Min;
@@ -172,6 +215,15 @@ namespace Math::Geometry2D
                    (Vertices[3] - Vertices[0]).Length();
         }
 
+        [[nodiscard]] constexpr
+        PointType Centroid() const noexcept
+        {
+            return PointType((Vector2T<T>(Vertices[0])
+                            + Vector2T<T>(Vertices[1])
+                            + Vector2T<T>(Vertices[2])
+                            + Vector2T<T>(Vertices[3])) / ScalarType(4));
+        }
+
         Array<PointType, 4> Vertices;
     };
 
@@ -201,6 +253,12 @@ namespace Math::Geometry2D
             ScalarType h = Squared(Radii.x - Radii.y) / Squared(Radii.x + Radii.y);
             return Constant::Pi<ScalarType> * (Radii.x + Radii.y)
                 * (ScalarType(1) + (ScalarType(3) * h) / (ScalarType(10) + Sqrt(ScalarType(4) - ScalarType(3) * h)));
+        }
+
+        [[nodiscard]] constexpr
+        PointType Centroid() const noexcept
+        {
+            return Center;
         }
 
         PointType  Center;

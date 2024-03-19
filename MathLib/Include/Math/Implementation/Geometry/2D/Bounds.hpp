@@ -115,9 +115,7 @@ namespace Math::Geometry2D
     [[nodiscard]] constexpr
     Circle<T> BoundingCircle(const Line<T>& line) noexcept
     {
-        Point<T> center = (line.Start + line.End) / T(2);
-        T        radius = (line.Start - center).Length();
-        return Circle<T>(center, radius);
+        return Circle<T>(line.Midpoint(), line.Length() / T(2));
     }
 
     template <Concept::StrongFloatType T>
@@ -170,14 +168,29 @@ namespace Math::Geometry2D
     [[nodiscard]] constexpr
     Circle<T> BoundingCircle(const Quadrilateral<T>& quadrilateral) noexcept
     {
-        // TODO(3011): Actually implement properly, this will never
-        // be a tight bounding circle for any non-rectangular shape.
-        // Problems to solve:
-        //   - It would be nice to have this work for a general polygon.
-        //   - Using a proper algorithm to find the minimum bounding circle.
-        //     (Ideally with a convex hull.)
-        //       - For that, the constraint of not using any dynamic allocations must be solved.
-        return BoundingCircle(BoundingRectangle(quadrilateral));
+        constexpr SizeType vertexCount = quadrilateral.Vertices.Size;
+        Circle<T> minCircle = BoundingCircle(Line<T>(quadrilateral.Vertices[0], quadrilateral.Vertices[1]));
+        for (SizeType i = 0; i < vertexCount; ++i)
+        {
+            for (SizeType j = i + 1; j < vertexCount; ++j)
+            {
+                Circle<T> tempCircle = BoundingCircle(Line<T>(quadrilateral.Vertices[i], quadrilateral.Vertices[j]));
+                if (tempCircle.Radius < minCircle.Radius)
+                {
+                    minCircle = tempCircle;
+                }
+
+                for (SizeType k = j + 1; k < vertexCount; ++k)
+                {
+                    tempCircle = BoundingCircle(Triangle<T>(quadrilateral.Vertices[i], quadrilateral.Vertices[j], quadrilateral.Vertices[k]));
+                    if (tempCircle.Radius < minCircle.Radius)
+                    {
+                        minCircle = tempCircle;
+                    }
+                }
+            }
+        }
+        return minCircle;
     }
 
     template <Concept::StrongFloatType T>

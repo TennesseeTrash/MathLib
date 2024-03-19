@@ -2,10 +2,13 @@
 #define MATHLIB_IMPLEMENTATION_GEOMETRY_2D_CONTAINS_HPP
 
 #include "Shapes.hpp"
+#include "Bounds.hpp"
 #include "../../../Transform.hpp"
 
 // Note(3011): I'm not sure if I like this sort of interface,
 // these functions might make more sense as members.
+// A potential solution would be to keep these functions and
+// make a member function that just calls through to these.
 
 namespace Math::Geometry2D
 {
@@ -59,7 +62,7 @@ namespace Math::Geometry2D
     [[nodiscard]] constexpr
     bool Contains(const Point<T>& point, const Quadrilateral<T>& quadrilateral) noexcept
     {
-        const SizeType vertexCount = quadrilateral.Vertices.Size;
+        constexpr SizeType vertexCount = quadrilateral.Vertices.Size;
         for (SizeType i = 0; i < vertexCount; ++i)
         {
             if (!Equal(point, quadrilateral.Vertices[i], Constant::GeometryEpsilon<T>))
@@ -131,7 +134,7 @@ namespace Math::Geometry2D
     [[nodiscard]] constexpr
     bool Contains(const Line<T>& line, const Quadrilateral<T>& quadrilateral) noexcept
     {
-        const SizeType vertexCount = quadrilateral.Vertices.Size;
+        constexpr SizeType vertexCount = quadrilateral.Vertices.Size;
         for (SizeType i = 0; i < vertexCount; ++i)
         {
             if (!Contains(line, quadrilateral.Vertices[i]))
@@ -198,7 +201,7 @@ namespace Math::Geometry2D
     [[nodiscard]] constexpr
     bool Contains(const Circle<T>& circle, const Quadrilateral<T>& quadrilateral) noexcept
     {
-        const SizeType vertexCount = quadrilateral.Vertices.Size;
+        constexpr SizeType vertexCount = quadrilateral.Vertices.Size;
         for (SizeType i = 0; i < vertexCount; ++i)
         {
             if (!Contains(circle, quadrilateral.Vertices[i]))
@@ -368,9 +371,7 @@ namespace Math::Geometry2D
     [[nodiscard]] constexpr
     bool Contains(const Rectangle<T>& rectangle, const Ellipse<T>& ellipse) noexcept
     {
-        // TODO(3011): This is not going to be completely straight forward, but
-        // an easy way to solve this would be to make a bounding rectangle and check that.
-        return false;
+        return Contains(rectangle, BoundingRectangle(ellipse));
     }
 
 
@@ -383,7 +384,7 @@ namespace Math::Geometry2D
     [[nodiscard]] constexpr
     bool Contains(const Quadrilateral<T>& quadrilateral, const Point<T>& point) noexcept
     {
-        const SizeType vertexCount = quadrilateral.Vertices.Size;
+        constexpr SizeType vertexCount = quadrilateral.Vertices.Size;
         SignedSizeType windings = 0;
 
         for (SizeType i = 0; i < vertexCount; ++i)
@@ -464,7 +465,7 @@ namespace Math::Geometry2D
     [[nodiscard]] constexpr
     bool Contains(const Ellipse<T>& ellipse, const Quadrilateral<T>& quadrilateral) noexcept
     {
-        const SizeType vertexCount = quadrilateral.Vertices.Size;
+        constexpr SizeType vertexCount = quadrilateral.Vertices.Size;
         for (SizeType i = 0; i < vertexCount; ++i)
         {
             if (!Contains(ellipse, quadrilateral.Vertices[i]))

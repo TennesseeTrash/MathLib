@@ -10,6 +10,8 @@
 // A potential solution would be to keep these functions and
 // make a member function that just calls through to these.
 
+#include <iostream>
+
 namespace Math::Geometry2D
 {
     //////////////////////////////////////////////////////////////////////////
@@ -225,6 +227,7 @@ namespace Math::Geometry2D
     //////////////////////////////////////////////////////////////////////////
     // Triangle Contains functions
     //////////////////////////////////////////////////////////////////////////
+    // This section is completely wrong ...
 
     template <Concept::StrongFloatType T>
     [[nodiscard]] constexpr
@@ -232,19 +235,15 @@ namespace Math::Geometry2D
     {
         Array<Vector2T<T>, 3> vectors
         {
-            triangle.Vertices[0] - point,
-            triangle.Vertices[1] - point,
-            triangle.Vertices[2] - point
+            triangle.Vertices[1] - triangle.Vertices[0],
+            triangle.Vertices[2] - triangle.Vertices[0],
+            point                - triangle.Vertices[0]
         };
 
-        Array<T, 3> areas
-        {
-            TriangleArea(vectors[0], vectors[1]),
-            TriangleArea(vectors[1], vectors[2]),
-            TriangleArea(vectors[2], vectors[0])
-        };
-
-        return Equal(areas[0] + areas[1] + areas[2], triangle.Area());
+        T det = vectors[0].x * vectors[1].y - vectors[1].x * vectors[0].y;
+        T s = (vectors[1].y * vectors[2].x - vectors[1].x * vectors[2].y) / det;
+        T t = (vectors[0].x * vectors[2].y - vectors[0].y * vectors[2].x) / det;
+        return s >= 0 && t >= 0 && s + t <= 1;
     }
 
     template <Concept::StrongFloatType T>
@@ -285,7 +284,7 @@ namespace Math::Geometry2D
     [[nodiscard]] constexpr
     bool Contains(const Triangle<T>& triangle, const Quadrilateral<T>& quadrilateral) noexcept
     {
-        const SizeType vertexCount = quadrilateral.Vertices.Size;
+        constexpr SizeType vertexCount = quadrilateral.Vertices.Size;
         for (SizeType i = 0; i < vertexCount; ++i)
         {
             if (!Contains(triangle, quadrilateral.Vertices[i]))
@@ -301,6 +300,11 @@ namespace Math::Geometry2D
     bool Contains(const Triangle<T>& triangle, const Ellipse<T>& ellipse) noexcept
     {
         // TODO(3011): Implement
+        // What does not work:
+        //  - Getting the sum of minimum distances of a line from the ellipse foci
+        //    and checking if it's less than 2 * ellipse.Radii.Max().
+        //  - Drawing circles inside the ellipse and checking if the triangle
+        //    contains all of them.
         return false;
     }
 

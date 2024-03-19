@@ -95,8 +95,8 @@ namespace Math::Geometry2D
         );
 
         Vector2T<T> centerOffset(
-            Squared(majorAxis.x) + Squared(minorAxis.x),
-            Squared(majorAxis.y) + Squared(minorAxis.y)
+            Sqrt(Squared(majorAxis.x) + Squared(minorAxis.x)),
+            Sqrt(Squared(majorAxis.y) + Squared(minorAxis.y))
         );
 
         return Rectangle<T>(ellipse.Center - centerOffset, ellipse.Center + centerOffset);

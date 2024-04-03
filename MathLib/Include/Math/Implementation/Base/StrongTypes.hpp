@@ -78,21 +78,24 @@ namespace Math
         return value;
     }
 
-    using SizeType = StrongType<std::size_t>;
-    using SignedSizeType = StrongType<std::int64_t>;
+    inline namespace Types
+    {
+        using SizeType = StrongType<std::size_t>;
+        using SignedSizeType = StrongType<std::int64_t>;
 
-    using i8  = StrongType<std::int8_t>;
-    using i16 = StrongType<std::int16_t>;
-    using i32 = StrongType<std::int32_t>;
-    using i64 = StrongType<std::int64_t>;
+        using i8  = StrongType<std::int8_t>;
+        using i16 = StrongType<std::int16_t>;
+        using i32 = StrongType<std::int32_t>;
+        using i64 = StrongType<std::int64_t>;
 
-    using u8  = StrongType<std::uint8_t>;
-    using u16 = StrongType<std::uint16_t>;
-    using u32 = StrongType<std::uint32_t>;
-    using u64 = StrongType<std::uint64_t>;
+        using u8  = StrongType<std::uint8_t>;
+        using u16 = StrongType<std::uint16_t>;
+        using u32 = StrongType<std::uint32_t>;
+        using u64 = StrongType<std::uint64_t>;
 
-    using f32 = StrongType<float>;
-    using f64 = StrongType<double>;
+        using f32 = StrongType<float>;
+        using f64 = StrongType<double>;
+    }
 }
 
 #endif //MATHLIB_IMPLEMENTATION_BASE_STRONG_TYPE_HPP

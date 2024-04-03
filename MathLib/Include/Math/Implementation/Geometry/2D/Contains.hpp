@@ -9,8 +9,6 @@
 // A potential solution would be to keep these functions and
 // make a member function that just calls through to these.
 
-#include <iostream>
-
 namespace Math::Geometry2D
 {
     //////////////////////////////////////////////////////////////////////////
@@ -226,7 +224,6 @@ namespace Math::Geometry2D
     //////////////////////////////////////////////////////////////////////////
     // Triangle Contains functions
     //////////////////////////////////////////////////////////////////////////
-    // This section is completely wrong ...
 
     template <Concept::StrongFloatType T>
     [[nodiscard]] constexpr
@@ -256,8 +253,20 @@ namespace Math::Geometry2D
     [[nodiscard]] constexpr
     bool Contains(const Triangle<T>& triangle, const Circle<T>& circle) noexcept
     {
-        // TODO(3011): Implement
-        return false;
+        if (!Contains(triangle, circle.Center))
+        {
+            return false;
+        }
+
+        Array<Line<T>, 3> edges = triangle.Edges();
+        Array<T, 3> distances
+        {
+            Abs(edges[0].Side(circle.Center)) / edges[0].Length(),
+            Abs(edges[1].Side(circle.Center)) / edges[1].Length(),
+            Abs(edges[2].Side(circle.Center)) / edges[2].Length()
+        };
+
+        return distances.Min() >= circle.Radius;
     }
 
     template <Concept::StrongFloatType T>

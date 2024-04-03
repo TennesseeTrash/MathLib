@@ -28,12 +28,12 @@ TEST_CASE("Test Triangle Contains Functions", "[Math][Geometry][Triangle]")
 
     SECTION("Triangle Contains Circle")
     {
-        //Triangle<f32> triangle(Point<f32>(0, 0), Point<f32>(5, 0), Point<f32>(5, 5));
-        //Circle<f32> circle1(Point<f32>(2, 1), 1);
-        //Circle<f32> circle2(Point<f32>(0, 1), 5);
-        //
-        //REQUIRE(Contains(triangle, circle1));
-        //REQUIRE_FALSE(Contains(triangle, circle2));
+        Triangle<f32> triangle(Point<f32>(0, 0), Point<f32>(5, 0), Point<f32>(5, 5));
+        Circle<f32> circle1(Point<f32>(4, 1), 1);
+        Circle<f32> circle2(Point<f32>(2, 1), 1);
+
+        REQUIRE(Contains(triangle, circle1));
+        REQUIRE_FALSE(Contains(triangle, circle2));
     }
 
     SECTION("Triangle Contains Triangle")

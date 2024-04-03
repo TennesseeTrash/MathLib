@@ -9,7 +9,7 @@
 
 namespace Math
 {
-    template <Concept::StrongType T>
+    template <typename T>
     class UniformDistribution;
 
     template <Concept::StrongFloatType T>
@@ -36,8 +36,7 @@ namespace Math
         }
     };
 
-    template <Concept::StrongType T>
-        requires Concept::IntegralType<T>
+    template <Concept::StrongIntegerType T>
     class UniformDistribution<T>
     {
     public:
@@ -103,8 +102,7 @@ namespace Math
         ValueType mEnd;
     };
 
-    template <Concept::StrongType T>
-        requires Concept::FloatingPointType<T>
+    template <Concept::StrongFloatType T>
     class UniformDistribution<T>
     {
     public:
@@ -112,16 +110,13 @@ namespace Math
 
         [[nodiscard]] constexpr
         UniformDistribution(ValueType begin = Cast<ValueType>(0), ValueType end = Cast<ValueType>(1)) noexcept
-            : mBegin(begin), mEnd(end)
+            : mBegin(begin), mEnd(end.Next())
         {}
 
         template <Concept::RandomNumberGenerator RNG>
         [[nodiscard]] constexpr
         ValueType operator()(RNG& rng) const noexcept
         {
-            // Note(3011): Currently, this generates values in the range [begin,end).
-            // That makes this specialization a bit inconsistent with the behaviour
-            // for integers, which means this might still change in the future.
             ValueType result = UniformUnitDistribution<ValueType>()(rng);
             return Lerp(result, mBegin, mEnd);
         }

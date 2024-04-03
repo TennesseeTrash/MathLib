@@ -81,8 +81,14 @@ namespace Math
                 : Value(value)
             {}
 
-            static constexpr ThisType Min() { return ThisType(std::numeric_limits<ValueType>::min()); }
-            static constexpr ThisType Max() { return ThisType(std::numeric_limits<ValueType>::max()); }
+            static constexpr ThisType Min()      { return ThisType(std::numeric_limits<ValueType>::min()); }
+            static constexpr ThisType Max()      { return ThisType(std::numeric_limits<ValueType>::max()); }
+            static constexpr ThisType Epsilon()  { return ThisType(std::numeric_limits<ValueType>::epsilon()); }
+            static constexpr ThisType Infinity() { return ThisType(std::numeric_limits<ValueType>::infinity()); }
+            static constexpr ThisType NaN()      { return ThisType(std::numeric_limits<ValueType>::quiet_NaN()); }
+
+            ThisType Previous() const noexcept { return std::nextafter(Value, -ThisType::Infinity()); }
+            ThisType Next()     const noexcept { return std::nextafter(Value,  ThisType::Infinity()); }
 
             [[nodiscard]]    friend constexpr ThisType  operator+   (ThisType  a)             noexcept { return +a.Value; }
             [[nodiscard]]    friend constexpr ThisType  operator-   (ThisType  a)             noexcept { return -a.Value; }

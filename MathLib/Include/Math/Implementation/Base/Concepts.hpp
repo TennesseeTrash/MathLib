@@ -140,6 +140,39 @@ namespace Math::Concept
     };
 
     template <typename T>
+    concept Increment = requires (T a)
+    {
+        { ++a } -> IsSame<T>;
+        { a++ } -> IsSame<T>;
+    };
+
+    template <typename T>
+    concept Decrement = requires (T a)
+    {
+        { --a } -> IsSame<T>;
+        { a-- } -> IsSame<T>;
+    };
+
+    template <typename T>
+    concept Bitwise = requires (T a, T b)
+    {
+        { ~a    } -> IsSame<T>;
+        { a & b } -> IsSame<T>;
+        { a | b } -> IsSame<T>;
+        { a ^ b } -> IsSame<T>;
+
+        { a << b } -> IsSame<T>;
+        { a >> b } -> IsSame<T>;
+
+        { a &= b } -> IsSameTypeRef<T>;
+        { a |= b } -> IsSameTypeRef<T>;
+        { a ^= b } -> IsSameTypeRef<T>;
+
+        { a <<= b } -> IsSameTypeRef<T>;
+        { a >>= b } -> IsSameTypeRef<T>;
+    };
+
+    template <typename T>
     concept ArithmeticType = requires
     {
         requires BinaryArithmetic<T, T>;
@@ -157,6 +190,10 @@ namespace Math::Concept
 
         { T::Min()  } -> IsSame<T>;
         { T::Max()  } -> IsSame<T>;
+
+        requires ArithmeticType<T>;
+        requires Increment<T>;
+        requires Decrement<T>;
     };
 
     template <typename T>
@@ -164,6 +201,7 @@ namespace Math::Concept
     {
         requires StrongType<T>;
         requires IntegralType<typename T::ValueType>;
+        requires Bitwise<T>;
     };
 
     template <typename T>
@@ -171,6 +209,16 @@ namespace Math::Concept
     {
         requires StrongType<T>;
         requires FloatingPointType<typename T::ValueType>;
+
+        { T::Epsilon()  } -> IsSame<T>;
+        { T::Infinity() } -> IsSame<T>;
+        { T::NaN()      } -> IsSame<T>;
+
+        requires requires (T val)
+        {
+            { val.Previous() } -> IsSame<T>;
+            { val.Next()     } -> IsSame<T>;
+        };
     };
 
     template <typename T>

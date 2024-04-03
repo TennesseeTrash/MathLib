@@ -6,6 +6,7 @@
 #include "../../../Functions.hpp"
 #include "../../../Vector.hpp"
 #include "../../../Point.hpp"
+#include "../../../Transform.hpp"
 
 namespace Math::Geometry2D
 {
@@ -157,11 +158,9 @@ namespace Math::Geometry2D
 
         [[nodiscard]] constexpr
         Rectangle(const PointType& min, const PointType& max) noexcept
-            : Min(min), Max(max)
-        {
-            Min = PointType(Math::Min(min.x, max.x), Math::Min(min.y, max.y));
-            Max = PointType(Math::Max(min.x, max.x), Math::Max(min.y, max.y));
-        }
+            : Min(Math::Min(min.x, max.x), Math::Min(min.y, max.y))
+            , Max(Math::Max(min.x, max.x), Math::Max(min.y, max.y))
+        {}
 
         [[nodiscard]] constexpr
         ScalarType Area() const noexcept
@@ -239,6 +238,33 @@ namespace Math::Geometry2D
         Ellipse(const PointType& center, const VectorType& radii, ScalarType angle = ScalarType(0)) noexcept
             : Center(center), Radii(radii), Angle(angle)
         {}
+
+        [[nodiscard]] constexpr
+        ScalarType Eccentricity() const noexcept
+        {
+            return Sqrt(ScalarType(1) - Squared(Max(Radii) / Min(Radii)));
+        }
+
+        Array<PointType, 2> Foci() const noexcept
+        {
+            ScalarType centerOffset = Sqrt(Abs(Squared(Radii.x) - Squared(Radii.y)));
+            Array<PointType, 2> foci;
+            if (Radii.x >= Radii.y)
+            {
+                foci[0] = PointType(-centerOffset, ScalarType(0));
+                foci[1] = PointType( centerOffset, ScalarType(0));
+            }
+            else
+            {
+                foci[0] = PointType(ScalarType(0), -centerOffset);
+                foci[1] = PointType(ScalarType(0),  centerOffset);
+            }
+
+            Transform2T<T> rotation = Rotate(Angle);
+            foci[0] = Center + rotation * VectorType(foci[0]);
+            foci[1] = Center + rotation * VectorType(foci[1]);
+            return foci;
+        }
 
         [[nodiscard]] constexpr
         ScalarType Area() const noexcept

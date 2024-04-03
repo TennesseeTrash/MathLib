@@ -3,7 +3,6 @@
 
 #include "Shapes.hpp"
 #include "Bounds.hpp"
-#include "../../../Transform.hpp"
 
 // Note(3011): I'm not sure if I like this sort of interface,
 // these functions might make more sense as members.

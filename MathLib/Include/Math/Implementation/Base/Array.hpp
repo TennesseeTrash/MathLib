@@ -161,26 +161,6 @@ namespace Math
     private:
         T mArray[ToUnderlying(Size)] = {};
     };
-
-    namespace Implementation
-    {
-        template <typename ValueType, typename T>
-        struct MakeArrayImpl;
-
-        template <typename ValueType, typename T, T... Values>
-        struct MakeArrayImpl<ValueType, ValuePack<T, Values...>>
-        {
-            using Type = Array<ValueType, sizeof...(Values)>;
-            static constexpr Type Value{ Cast<ValueType>(Values)... };
-        };
-    }
-
-    template <typename ValueType, typename T>
-    [[nodiscard]] constexpr
-    typename Implementation::MakeArrayImpl<ValueType, T>::Type MakeArray()
-    {
-        return Implementation::MakeArrayImpl<ValueType, T>::Value;
-    }
 }
 
 #endif //MATHLIB_IMPLEMENTATION_BASE_ARRAY_HPP

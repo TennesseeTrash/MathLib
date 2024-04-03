@@ -32,10 +32,12 @@
 *.app
 
 # Ignore local settings/cache
+**/.vs
 **/.vscode
 **/.cache
 
 # Ignore build dir
+**/out
 **/build
 
 # Ignore Mac files

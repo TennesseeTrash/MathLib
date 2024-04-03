@@ -3,7 +3,6 @@
 
 #include "StrongTypes.hpp"
 #include "StrongTypesUtils.hpp"
-#include "Packs.hpp"
 
 #include <limits>
 
@@ -86,24 +85,6 @@ namespace Math
 
     template <typename... T>
     using GetValueType = typename Implementation::GetValueType<T...>::Type;
-
-    namespace Implementation
-    {
-        template <typename Specialized, template <typename...> typename Base, SizeType Index = 0>
-        struct TemplateArgument
-        {
-        private:
-            template <typename... Args>
-            static TypePack<Args...> GetArg(Base<Args...>);
-
-            using SpecializedArgs = decltype(GetArg(Specialized{}));
-        public:
-            using Type = typename SpecializedArgs::template At<Index>;
-        };
-    }
-
-    template <typename Specialized, template <typename...> typename Base, SizeType Index = 0>
-    using TemplateArgument = typename Implementation::TemplateArgument<Specialized, Base, Index>::Type;
 }
 
 #endif //MATHLIB_IMPLEMENTATION_BASE_TYPES_HPP

@@ -12,21 +12,15 @@ namespace Math::Implementation
     };
 
     template <typename T>
-    struct UnderlyingType<StrongType<T>>
+    struct UnderlyingType<StrongIntegerType<T>>
     {
         using Type = T;
     };
 
     template <typename T>
-    struct MakeStrongType
+    struct UnderlyingType<StrongFloatType<T>>
     {
-        using Type = StrongType<T>;
-    };
-
-    template <typename T>
-    struct MakeStrongType<StrongType<T>>
-    {
-        using Type = StrongType<T>;
+        using Type = T;
     };
 
     template <SizeType>
@@ -66,9 +60,6 @@ namespace Math
     template <typename T>
     using UnderlyingType = typename Implementation::UnderlyingType<T>::Type;
 
-    template <typename T>
-    using MakeStrongType = typename Implementation::MakeStrongType<T>::Type;
-
     template <SizeType Size>
     using SignedIntegerSelector = typename Implementation::SignedIntegerSelector<Size>::Type;
 
@@ -88,28 +79,28 @@ namespace Math
 
     template <typename T>
     [[nodiscard]] constexpr
-    StrongType<T> operator<< (const StrongType<T>& u, const SizeType& v) noexcept
+    Implementation::StrongIntegerType<T> operator<< (const Implementation::StrongIntegerType<T>& u, const SizeType& v) noexcept
     {
-        return StrongType<T>(ToUnderlying(u) << ToUnderlying(v));
+        return ToUnderlying(u) << ToUnderlying(v);
     }
 
     template <typename T>
     [[nodiscard]] constexpr
-    StrongType<T> operator>> (const StrongType<T>& u, const SizeType& v) noexcept
+    Implementation::StrongIntegerType<T> operator>> (const Implementation::StrongIntegerType<T>& u, const SizeType& v) noexcept
     {
-        return StrongType<T>(ToUnderlying(u) >> ToUnderlying(v));
+        return ToUnderlying(u) >> ToUnderlying(v);
     }
 
     template <typename T>
     [[nodiscard]] constexpr
-    StrongType<T> operator<<= (StrongType<T>& u, const SizeType& v) noexcept
+    Implementation::StrongIntegerType<T> operator<<= (Implementation::StrongIntegerType<T>& u, const SizeType& v) noexcept
     {
         return u = u << v;
     }
 
     template <typename T>
     [[nodiscard]] constexpr
-    StrongType<T> operator>>= (StrongType<T>& u, const SizeType& v) noexcept
+    Implementation::StrongIntegerType<T> operator>>= (Implementation::StrongIntegerType<T>& u, const SizeType& v) noexcept
     {
         return u = u >> v;
     }

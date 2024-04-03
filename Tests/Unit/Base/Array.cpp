@@ -46,7 +46,7 @@ TEST_CASE("Test Array basics", "[Math][Common]")
     SECTION("ForEach with index")
     {
         Math::Array<f32, 4> array(1.0f, 2.0f, 3.0f, 4.0f);
-        array.ForEach([](Math::SizeType index, f32& value) { value *= Cast<f32>(index); });
+        array.ForEach([](Math::SizeType index, f32& value) { value *= Math::Cast<f32>(index); });
         REQUIRE(Equal(array[0], 0.0f));
         REQUIRE(Equal(array[1], 2.0f));
         REQUIRE(Equal(array[2], 6.0f));

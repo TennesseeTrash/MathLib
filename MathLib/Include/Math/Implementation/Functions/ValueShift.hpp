@@ -5,33 +5,6 @@
 
 namespace Math
 {
-    template <Concept::SignedIntegralType To, Concept::SignedIntegralType From>
-        requires (sizeof(To) == sizeof(From))
-    [[nodiscard]] constexpr
-    To ValueShift(From value) noexcept
-    {
-        return Cast<To>(value);
-    }
-
-    template <Concept::SignedIntegralType To, Concept::SignedIntegralType From>
-        requires (sizeof(To) < sizeof(From))
-    [[nodiscard]] constexpr
-    To ValueShift(From value) noexcept
-    {
-        From shiftAmount = Cast<From>(sizeof(From) - sizeof(To)) * 8;
-        return Cast<To>(value >> shiftAmount);
-    }
-
-    template <Concept::SignedIntegralType To, Concept::SignedIntegralType From>
-        requires (sizeof(To) > sizeof(From))
-    [[nodiscard]] constexpr
-    To ValueShift(From value) noexcept
-    {
-        using UnsignedFrom = UnsignedIntegerSelector<sizeof(From)>;
-        using UnsignedTo = UnsignedIntegerSelector<sizeof(To)>;
-        return ValueShift<To>(ValueShift<UnsignedTo>(ValueShift<UnsignedFrom>(value)));
-    }
-
     template <Concept::UnsignedIntegralType To, Concept::UnsignedIntegralType From>
         requires (sizeof(To) == sizeof(From))
     [[nodiscard]] constexpr
@@ -126,6 +99,33 @@ namespace Math
     {
         using UnsignedFrom = UnsignedIntegerSelector<sizeof(From)>;
         return ValueShift<To>(ValueShift<UnsignedFrom>(value));
+    }
+
+    template <Concept::SignedIntegralType To, Concept::SignedIntegralType From>
+        requires (sizeof(To) == sizeof(From))
+    [[nodiscard]] constexpr
+    To ValueShift(From value) noexcept
+    {
+        return Cast<To>(value);
+    }
+
+    template <Concept::SignedIntegralType To, Concept::SignedIntegralType From>
+        requires (sizeof(To) < sizeof(From))
+    [[nodiscard]] constexpr
+    To ValueShift(From value) noexcept
+    {
+        From shiftAmount = Cast<From>(sizeof(From) - sizeof(To)) * 8;
+        return Cast<To>(value >> shiftAmount);
+    }
+
+    template <Concept::SignedIntegralType To, Concept::SignedIntegralType From>
+        requires (sizeof(To) > sizeof(From))
+    [[nodiscard]] constexpr
+    To ValueShift(From value) noexcept
+    {
+        using UnsignedFrom = UnsignedIntegerSelector<sizeof(From)>;
+        using UnsignedTo = UnsignedIntegerSelector<sizeof(To)>;
+        return ValueShift<To>(ValueShift<UnsignedTo>(ValueShift<UnsignedFrom>(value)));
     }
 }
 

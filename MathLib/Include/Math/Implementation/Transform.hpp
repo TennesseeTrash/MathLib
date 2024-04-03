@@ -5,7 +5,7 @@
 
 namespace Math
 {
-    template <Concept::StrongType T, Vector3T<MakeStrongType<T>> BottomRowParam = Vector3T<MakeStrongType<T>>::UnitZ()>
+    template <Concept::StrongType T, Vector3T<T> BottomRowParam = Vector3T<T>::UnitZ()>
     class Transform2T final
     {
     public:
@@ -71,7 +71,7 @@ namespace Math
         Array<RowVectorType, 2> rows;
     };
 
-    template <Concept::StrongType T, Vector4T<MakeStrongType<T>> BottomRowParam = Vector4T<MakeStrongType<T>>::UnitW()>
+    template <Concept::StrongType T, Vector4T<T> BottomRowParam = Vector4T<T>::UnitW()>
     class Transform3T final
     {
     public:

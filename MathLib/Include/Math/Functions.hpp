@@ -10,10 +10,5 @@
 #include "Implementation/Functions/Angles.hpp"
 #include "Implementation/Functions/IntUtils.hpp"
 #include "Implementation/Functions/FloatUtils.hpp"
-#include "Implementation/Functions/Instantiable/ElementaryFunctions.hpp"
-#include "Implementation/Functions/Instantiable/CompositionFunctions.hpp"
-#include "Implementation/Functions/Instantiable/FunctionDerivatives.hpp"
-#include "Implementation/Functions/Instantiable/PiecewiseFunctions.hpp"
-#include "Implementation/Functions/Instantiable/UtilityFunctions.hpp"
 
 #endif //MATHLIB_FUNCTIONS_HPP

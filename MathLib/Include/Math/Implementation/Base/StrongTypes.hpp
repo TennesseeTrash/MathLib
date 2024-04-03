@@ -8,65 +8,118 @@
 
 namespace Math
 {
-    template <typename T>
-    struct StrongType final
+    namespace Implementation
     {
-    public:
-        using ValueType = T;
-        ValueType Value;
+        template <typename T>
+        struct StrongIntegerType final
+        {
+        public:
+            using ValueType = T;
+            ValueType Value;
+        private:
+            using ThisType = StrongIntegerType<ValueType>;
+        public:
 
-        [[nodiscard]] constexpr
-        StrongType(T value = T{}) noexcept
-            : Value(value)
-        {}
+            [[nodiscard]] constexpr
+            StrongIntegerType(T value = T{}) noexcept
+                : Value(value)
+            {}
 
-        static constexpr StrongType<ValueType> Min() { return StrongType(std::numeric_limits<ValueType>::min()); }
-        static constexpr StrongType<ValueType> Max() { return StrongType(std::numeric_limits<ValueType>::max()); }
+            static constexpr ThisType Min() { return ThisType(std::numeric_limits<ValueType>::min()); }
+            static constexpr ThisType Max() { return ThisType(std::numeric_limits<ValueType>::max()); }
 
-        // Note(3011): Some of these operators will not work for certain types.
-        // In the future, explicit 'requires' clauses would be nice.
-        // e.g. StrongType<float>(4.0f) << 1 will not compile.
-        [[nodiscard]]    friend constexpr StrongType<ValueType>  operator+   (StrongType<ValueType>  a)                          noexcept { return +a.Value; }
-        [[nodiscard]]    friend constexpr StrongType<ValueType>  operator-   (StrongType<ValueType>  a)                          noexcept { return -a.Value; }
-        [[nodiscard]]    friend constexpr StrongType<ValueType>  operator+   (StrongType<ValueType>  a, StrongType<ValueType> b) noexcept { return a.Value + b.Value; }
-        [[nodiscard]]    friend constexpr StrongType<ValueType>  operator-   (StrongType<ValueType>  a, StrongType<ValueType> b) noexcept { return a.Value - b.Value; }
-        [[nodiscard]]    friend constexpr StrongType<ValueType>  operator*   (StrongType<ValueType>  a, StrongType<ValueType> b) noexcept { return a.Value * b.Value; }
-        [[nodiscard]]    friend constexpr StrongType<ValueType>  operator/   (StrongType<ValueType>  a, StrongType<ValueType> b) noexcept { return a.Value / b.Value; }
-        [[nodiscard]]    friend constexpr StrongType<ValueType>  operator%   (StrongType<ValueType>  a, StrongType<ValueType> b) noexcept { return a.Value % b.Value; }
-        [[nodiscard]]    friend constexpr StrongType<ValueType>  operator~   (StrongType<ValueType>  a)                          noexcept { return ~a.Value; }
-        [[nodiscard]]    friend constexpr StrongType<ValueType>  operator&   (StrongType<ValueType>  a, StrongType<ValueType> b) noexcept { return a.Value & b.Value; }
-        [[nodiscard]]    friend constexpr StrongType<ValueType>  operator|   (StrongType<ValueType>  a, StrongType<ValueType> b) noexcept { return a.Value | b.Value; }
-        [[nodiscard]]    friend constexpr StrongType<ValueType>  operator^   (StrongType<ValueType>  a, StrongType<ValueType> b) noexcept { return a.Value ^ b.Value; }
-        [[nodiscard]]    friend constexpr StrongType<ValueType>  operator<<  (StrongType<ValueType>  a, StrongType<ValueType> s) noexcept { return ValueType(a.Value << s.Value); }
-        [[nodiscard]]    friend constexpr StrongType<ValueType>  operator>>  (StrongType<ValueType>  a, StrongType<ValueType> s) noexcept { return ValueType(a.Value >> s.Value); }
+            [[nodiscard]]    friend constexpr ThisType  operator+   (ThisType  a)             noexcept { return +a.Value; }
+            [[nodiscard]]    friend constexpr ThisType  operator-   (ThisType  a)             noexcept { return -a.Value; }
+            [[nodiscard]]    friend constexpr ThisType  operator+   (ThisType  a, ThisType b) noexcept { return a.Value + b.Value; }
+            [[nodiscard]]    friend constexpr ThisType  operator-   (ThisType  a, ThisType b) noexcept { return a.Value - b.Value; }
+            [[nodiscard]]    friend constexpr ThisType  operator*   (ThisType  a, ThisType b) noexcept { return a.Value * b.Value; }
+            [[nodiscard]]    friend constexpr ThisType  operator/   (ThisType  a, ThisType b) noexcept { return a.Value / b.Value; }
+            [[nodiscard]]    friend constexpr ThisType  operator%   (ThisType  a, ThisType b) noexcept { return a.Value % b.Value; }
+            [[nodiscard]]    friend constexpr ThisType  operator~   (ThisType  a)             noexcept { return ~a.Value; }
+            [[nodiscard]]    friend constexpr ThisType  operator&   (ThisType  a, ThisType b) noexcept { return a.Value & b.Value; }
+            [[nodiscard]]    friend constexpr ThisType  operator|   (ThisType  a, ThisType b) noexcept { return a.Value | b.Value; }
+            [[nodiscard]]    friend constexpr ThisType  operator^   (ThisType  a, ThisType b) noexcept { return a.Value ^ b.Value; }
+            [[nodiscard]]    friend constexpr ThisType  operator<<  (ThisType  a, ThisType s) noexcept { return ValueType(a.Value << s.Value); }
+            [[nodiscard]]    friend constexpr ThisType  operator>>  (ThisType  a, ThisType s) noexcept { return ValueType(a.Value >> s.Value); }
 
-        [[maybe_unused]] friend constexpr StrongType<ValueType>  operator++  (StrongType<ValueType>& a)                          noexcept { return ++a.Value; }
-        [[maybe_unused]] friend constexpr StrongType<ValueType>  operator--  (StrongType<ValueType>& a)                          noexcept { return --a.Value; }
-        [[maybe_unused]] friend constexpr StrongType<ValueType>  operator++  (StrongType<ValueType>& a, int)                     noexcept { return a.Value++; }
-        [[maybe_unused]] friend constexpr StrongType<ValueType>  operator--  (StrongType<ValueType>& a, int)                     noexcept { return a.Value--; }
+            [[maybe_unused]] friend constexpr ThisType  operator++  (ThisType& a)            noexcept { return ++a.Value; }
+            [[maybe_unused]] friend constexpr ThisType  operator--  (ThisType& a)            noexcept { return --a.Value; }
+            [[maybe_unused]] friend constexpr ThisType  operator++  (ThisType& a, int)       noexcept { return a.Value++; }
+            [[maybe_unused]] friend constexpr ThisType  operator--  (ThisType& a, int)       noexcept { return a.Value--; }
 
-        [[maybe_unused]] friend constexpr StrongType<ValueType>& operator+=  (StrongType<ValueType>& a, StrongType<ValueType> b) noexcept { a.Value += b.Value; return a; }
-        [[maybe_unused]] friend constexpr StrongType<ValueType>& operator-=  (StrongType<ValueType>& a, StrongType<ValueType> b) noexcept { a.Value -= b.Value; return a; }
-        [[maybe_unused]] friend constexpr StrongType<ValueType>& operator*=  (StrongType<ValueType>& a, StrongType<ValueType> b) noexcept { a.Value *= b.Value; return a; }
-        [[maybe_unused]] friend constexpr StrongType<ValueType>& operator/=  (StrongType<ValueType>& a, StrongType<ValueType> b) noexcept { a.Value /= b.Value; return a; }
-        [[maybe_unused]] friend constexpr StrongType<ValueType>& operator%=  (StrongType<ValueType>& a, StrongType<ValueType> b) noexcept { a.Value %= b.Value; return a; }
-        [[maybe_unused]] friend constexpr StrongType<ValueType>& operator&=  (StrongType<ValueType>& a, StrongType<ValueType> b) noexcept { a.Value &= b.Value; return a; }
-        [[maybe_unused]] friend constexpr StrongType<ValueType>& operator|=  (StrongType<ValueType>& a, StrongType<ValueType> b) noexcept { a.Value |= b.Value; return a; }
-        [[maybe_unused]] friend constexpr StrongType<ValueType>& operator^=  (StrongType<ValueType>& a, StrongType<ValueType> b) noexcept { a.Value ^= b.Value; return a; }
-        [[maybe_unused]] friend constexpr StrongType<ValueType>& operator<<= (StrongType<ValueType>& a, StrongType<ValueType> s) noexcept { a.Value <<= s.Value; return a; }
-        [[maybe_unused]] friend constexpr StrongType<ValueType>& operator>>= (StrongType<ValueType>& a, StrongType<ValueType> s) noexcept { a.Value >>= s.Value; return a; }
+            [[maybe_unused]] friend constexpr ThisType& operator+=  (ThisType& a, ThisType b) noexcept { a.Value += b.Value; return a; }
+            [[maybe_unused]] friend constexpr ThisType& operator-=  (ThisType& a, ThisType b) noexcept { a.Value -= b.Value; return a; }
+            [[maybe_unused]] friend constexpr ThisType& operator*=  (ThisType& a, ThisType b) noexcept { a.Value *= b.Value; return a; }
+            [[maybe_unused]] friend constexpr ThisType& operator/=  (ThisType& a, ThisType b) noexcept { a.Value /= b.Value; return a; }
+            [[maybe_unused]] friend constexpr ThisType& operator%=  (ThisType& a, ThisType b) noexcept { a.Value %= b.Value; return a; }
+            [[maybe_unused]] friend constexpr ThisType& operator&=  (ThisType& a, ThisType b) noexcept { a.Value &= b.Value; return a; }
+            [[maybe_unused]] friend constexpr ThisType& operator|=  (ThisType& a, ThisType b) noexcept { a.Value |= b.Value; return a; }
+            [[maybe_unused]] friend constexpr ThisType& operator^=  (ThisType& a, ThisType b) noexcept { a.Value ^= b.Value; return a; }
+            [[maybe_unused]] friend constexpr ThisType& operator<<= (ThisType& a, ThisType s) noexcept { a.Value <<= s.Value; return a; }
+            [[maybe_unused]] friend constexpr ThisType& operator>>= (ThisType& a, ThisType s) noexcept { a.Value >>= s.Value; return a; }
 
-        // Note(3011): Default this when the bogus warning in Clang is fixed.
-        // Relevant issue - https://github.com/llvm/llvm-project/issues/43670
-        [[nodiscard]] friend constexpr
-        bool operator==(StrongType<T> a, StrongType<T> b) noexcept { return a.Value == b.Value; }
-        [[nodiscard]] friend constexpr
-        auto operator<=>(StrongType<T> a, StrongType<T> b) noexcept { return a.Value <=> b.Value; }
-    };
+            // Note(3011): Default this when the bogus warning in Clang is fixed.
+            // Relevant issue - https://github.com/llvm/llvm-project/issues/43670
+            [[nodiscard]] friend constexpr
+            bool operator==(ThisType a, ThisType b) noexcept { return a.Value == b.Value; }
+            [[nodiscard]] friend constexpr
+            auto operator<=>(ThisType a, ThisType b) noexcept { return a.Value <=> b.Value; }
+        };
+
+        template <typename T>
+        struct StrongFloatType final
+        {
+        public:
+            using ValueType = T;
+            ValueType Value;
+        private:
+            using ThisType = StrongFloatType<ValueType>;
+        public:
+
+            [[nodiscard]] constexpr
+            StrongFloatType(T value = T{}) noexcept
+                : Value(value)
+            {}
+
+            static constexpr ThisType Min() { return ThisType(std::numeric_limits<ValueType>::min()); }
+            static constexpr ThisType Max() { return ThisType(std::numeric_limits<ValueType>::max()); }
+
+            [[nodiscard]]    friend constexpr ThisType  operator+   (ThisType  a)             noexcept { return +a.Value; }
+            [[nodiscard]]    friend constexpr ThisType  operator-   (ThisType  a)             noexcept { return -a.Value; }
+            [[nodiscard]]    friend constexpr ThisType  operator+   (ThisType  a, ThisType b) noexcept { return a.Value + b.Value; }
+            [[nodiscard]]    friend constexpr ThisType  operator-   (ThisType  a, ThisType b) noexcept { return a.Value - b.Value; }
+            [[nodiscard]]    friend constexpr ThisType  operator*   (ThisType  a, ThisType b) noexcept { return a.Value * b.Value; }
+            [[nodiscard]]    friend constexpr ThisType  operator/   (ThisType  a, ThisType b) noexcept { return a.Value / b.Value; }
+
+            [[maybe_unused]] friend constexpr ThisType  operator++  (ThisType& a)             noexcept { return ++a.Value; }
+            [[maybe_unused]] friend constexpr ThisType  operator--  (ThisType& a)             noexcept { return --a.Value; }
+            [[maybe_unused]] friend constexpr ThisType  operator++  (ThisType& a, int)        noexcept { return a.Value++; }
+            [[maybe_unused]] friend constexpr ThisType  operator--  (ThisType& a, int)        noexcept { return a.Value--; }
+
+            [[maybe_unused]] friend constexpr ThisType& operator+=  (ThisType& a, ThisType b) noexcept { a.Value += b.Value; return a; }
+            [[maybe_unused]] friend constexpr ThisType& operator-=  (ThisType& a, ThisType b) noexcept { a.Value -= b.Value; return a; }
+            [[maybe_unused]] friend constexpr ThisType& operator*=  (ThisType& a, ThisType b) noexcept { a.Value *= b.Value; return a; }
+            [[maybe_unused]] friend constexpr ThisType& operator/=  (ThisType& a, ThisType b) noexcept { a.Value /= b.Value; return a; }
+
+            // Note(3011): Default this when the bogus warning in Clang is fixed.
+            // Relevant issue - https://github.com/llvm/llvm-project/issues/43670
+            [[nodiscard]] friend constexpr
+            bool operator==(ThisType a, ThisType b) noexcept { return a.Value == b.Value; }
+            [[nodiscard]] friend constexpr
+            auto operator<=>(ThisType a, ThisType b) noexcept { return a.Value <=> b.Value; }
+        };
+    }
 
     template <typename T>
     [[nodiscard]] constexpr
-    T ToUnderlying(StrongType<T> value) noexcept
+    T ToUnderlying(Implementation::StrongIntegerType<T> value) noexcept
+    {
+        return value.Value;
+    }
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    T ToUnderlying(Implementation::StrongFloatType<T> value) noexcept
     {
         return value.Value;
     }
@@ -80,21 +133,21 @@ namespace Math
 
     inline namespace Types
     {
-        using SizeType = StrongType<std::size_t>;
-        using SignedSizeType = StrongType<std::int64_t>;
+        using SizeType = Implementation::StrongIntegerType<std::size_t>;
+        using SignedSizeType = Implementation::StrongIntegerType<std::int64_t>;
 
-        using i8  = StrongType<std::int8_t>;
-        using i16 = StrongType<std::int16_t>;
-        using i32 = StrongType<std::int32_t>;
-        using i64 = StrongType<std::int64_t>;
+        using i8  = Implementation::StrongIntegerType<std::int8_t>;
+        using i16 = Implementation::StrongIntegerType<std::int16_t>;
+        using i32 = Implementation::StrongIntegerType<std::int32_t>;
+        using i64 = Implementation::StrongIntegerType<std::int64_t>;
 
-        using u8  = StrongType<std::uint8_t>;
-        using u16 = StrongType<std::uint16_t>;
-        using u32 = StrongType<std::uint32_t>;
-        using u64 = StrongType<std::uint64_t>;
+        using u8  = Implementation::StrongIntegerType<std::uint8_t>;
+        using u16 = Implementation::StrongIntegerType<std::uint16_t>;
+        using u32 = Implementation::StrongIntegerType<std::uint32_t>;
+        using u64 = Implementation::StrongIntegerType<std::uint64_t>;
 
-        using f32 = StrongType<float>;
-        using f64 = StrongType<double>;
+        using f32 = Implementation::StrongFloatType<float>;
+        using f64 = Implementation::StrongFloatType<double>;
     }
 }
 

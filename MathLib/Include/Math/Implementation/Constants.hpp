@@ -5,6 +5,8 @@
 
 namespace Math::Constant::Implementation
 {
+    using namespace Math::Implementation;
+
     template <typename T>
     struct Pi final
     {};
@@ -22,9 +24,9 @@ namespace Math::Constant::Implementation
     };
 
     template <typename T>
-    struct Pi<StrongType<T>> final
+    struct Pi<StrongFloatType<T>> final
     {
-        static constexpr StrongType<T> Value = StrongType<T>(Pi<T>::Value);
+        static constexpr StrongFloatType<T> Value = Pi<T>::Value;
     };
 
     template <typename T>
@@ -44,9 +46,9 @@ namespace Math::Constant::Implementation
     };
 
     template <typename T>
-    struct E<StrongType<T>> final
+    struct E<StrongFloatType<T>> final
     {
-        static constexpr StrongType<T> Value = StrongType<T>(E<T>::Value);
+        static constexpr StrongFloatType<T> Value = E<T>::Value;
     };
 
     template <typename T>
@@ -66,9 +68,9 @@ namespace Math::Constant::Implementation
     };
 
     template <typename T>
-    struct Phi<StrongType<T>> final
+    struct Phi<StrongFloatType<T>> final
     {
-        static constexpr StrongType<T> Value = StrongType<T>(Phi<T>::Value);
+        static constexpr StrongFloatType<T> Value = Phi<T>::Value;
     };
 
     template <typename T>
@@ -88,9 +90,9 @@ namespace Math::Constant::Implementation
     };
 
     template <typename T>
-    struct Sqrt2<StrongType<T>> final
+    struct Sqrt2<StrongFloatType<T>> final
     {
-        static constexpr StrongType<T> Value = StrongType<T>(Sqrt2<T>::Value);
+        static constexpr StrongFloatType<T> Value = Sqrt2<T>::Value;
     };
 
     template <typename T>
@@ -110,9 +112,9 @@ namespace Math::Constant::Implementation
     };
 
     template <typename T>
-    struct Sqrt3<StrongType<T>> final
+    struct Sqrt3<StrongFloatType<T>> final
     {
-        static constexpr StrongType<T> Value = StrongType<T>(Sqrt3<T>::Value);
+        static constexpr StrongFloatType<T> Value = Sqrt3<T>::Value;
     };
 
     template <typename T>
@@ -132,9 +134,9 @@ namespace Math::Constant::Implementation
     };
 
     template <typename T>
-    struct Sqrt5<StrongType<T>> final
+    struct Sqrt5<StrongFloatType<T>> final
     {
-        static constexpr StrongType<T> Value = StrongType<T>(Sqrt5<T>::Value);
+        static constexpr StrongFloatType<T> Value = Sqrt5<T>::Value;
     };
 
     template <typename T>
@@ -160,9 +162,15 @@ namespace Math::Constant::Implementation
     };
 
     template <typename T>
-    struct EqualEpsilon<StrongType<T>> final
+    struct EqualEpsilon<StrongIntegerType<T>> final
     {
-        static constexpr StrongType<T> Value = StrongType<T>(EqualEpsilon<T>::Value);
+        static constexpr StrongIntegerType<T> Value = EqualEpsilon<T>::Value;
+    };
+
+    template <typename T>
+    struct EqualEpsilon<StrongFloatType<T>> final
+    {
+        static constexpr StrongFloatType<T> Value = EqualEpsilon<T>::Value;
     };
 
     template <typename T>
@@ -182,9 +190,9 @@ namespace Math::Constant::Implementation
     };
 
     template <typename T>
-    struct GeometryEpsilon<StrongType<T>> final
+    struct GeometryEpsilon<StrongFloatType<T>> final
     {
-        static constexpr StrongType<T> Value = StrongType<T>(GeometryEpsilon<T>::Value);
+        static constexpr StrongFloatType<T> Value = GeometryEpsilon<T>::Value;
     };
 }
 

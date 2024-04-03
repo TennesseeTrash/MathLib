@@ -8,6 +8,8 @@ using Math::i16;
 using Math::i32;
 using Math::i64;
 
+using Math::Cast;
+
 // TODO(3011): Add tests for unequal sizes.
 
 #include <iostream>

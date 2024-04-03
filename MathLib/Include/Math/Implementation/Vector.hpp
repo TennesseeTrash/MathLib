@@ -10,7 +10,7 @@ namespace Math
     template <Concept::StrongType T>
     struct Vector2T final
     {
-        using ScalarType = MakeStrongType<T>;
+        using ScalarType = T;
         static constexpr SizeType Dimension = 2;
 
         T x = T(0);

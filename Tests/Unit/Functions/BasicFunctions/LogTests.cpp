@@ -29,7 +29,7 @@ TEST_CASE("Test Log with basic values", "[Math][Functions]")
 
         for (i32 i = 0; i < 50; ++i)
         {
-            REQUIRE(Equal(Log(intPow(e, i)), Cast<f32>(i)));
+            REQUIRE(Equal(Log(intPow(e, i)), Math::Cast<f32>(i)));
         }
     }
 }

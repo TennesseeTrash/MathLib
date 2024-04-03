@@ -1,6 +1,7 @@
 #ifndef MATHLIB_IMPLEMENTATION_FUNCTIONS_EQUAL_HPP
 #define MATHLIB_IMPLEMENTATION_FUNCTIONS_EQUAL_HPP
 
+#include "../Base/StrongTypesUtils.hpp"
 #include "../Base/Concepts.hpp"
 #include "../../Constants.hpp"
 
@@ -20,23 +21,23 @@ namespace Math
         }
     }
 
-    template <Concept::FundamentalType T>
+    template <Concept::StrongType T>
     [[nodiscard]] constexpr
-    bool Equal(StrongType<T> val1, StrongType<T> val2, StrongType<T> epsilon = Constant::EqualEpsilon<StrongType<T>>) noexcept
+    bool Equal(T val1, T val2, T epsilon = Constant::EqualEpsilon<T>) noexcept
     {
         return Equal(ToUnderlying(val1), ToUnderlying(val2), ToUnderlying(epsilon));
     }
 
-    template <Concept::FundamentalType T>
+    template <Concept::StrongType T>
     [[nodiscard]] constexpr
-    bool Equal(StrongType<T> val1, T val2, StrongType<T> epsilon = Constant::EqualEpsilon<StrongType<T>>) noexcept
+    bool Equal(T val1, UnderlyingType<T> val2, T epsilon = Constant::EqualEpsilon<T>) noexcept
     {
         return Equal(ToUnderlying(val1), val2, ToUnderlying(epsilon));
     }
 
-    template <Concept::FundamentalType T>
+    template <Concept::StrongType T>
     [[nodiscard]] constexpr
-    bool Equal(T val1, StrongType<T> val2, StrongType<T> epsilon = Constant::EqualEpsilon<StrongType<T>>) noexcept
+    bool Equal(UnderlyingType<T> val1, T val2, T epsilon = Constant::EqualEpsilon<T>) noexcept
     {
         return Equal(val1, ToUnderlying(val2), ToUnderlying(epsilon));
     }

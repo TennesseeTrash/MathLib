@@ -5,6 +5,8 @@ using f32 = Math::f32;
 using i32 = Math::i32;
 using Math::Sqrt;
 using Math::Squared;
+using Math::Equal;
+using Math::Cast;
 
 TEST_CASE("Test Sqrt with basic values", "[Math][Functions]")
 {

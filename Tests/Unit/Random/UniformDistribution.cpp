@@ -1,13 +1,7 @@
 #include <catch2/catch_test_macros.hpp>
 #include <Math/Random.hpp>
 
-using Math::u16;
-using Math::u32;
-using Math::u64;
-using Math::i16;
-using Math::i32;
-using Math::i64;
-
+using namespace Math::Types;
 using Math::Cast;
 
 // TODO(3011): Add tests for unequal sizes.
@@ -208,4 +202,44 @@ TEST_CASE("UniformDistribution tests when RNG has a larger size type", "[Math][R
     }
 
     // TODO(3011): These tests are still woefully incomplete.
+}
+
+TEST_CASE("UniformDistribution with a floating point type", "[Math][Random]")
+{
+    // Note(3011): When these tests are built, the compiler will shout that there
+    // are unsafe float comparisons, but that is intentional here.
+
+    SECTION("Check f32 correctness in 0.0-1.0 range")
+    {
+        Math::UniformDistribution<f32> distribution;
+        {
+            ConstantFakeRNG rng(u32::Min());
+            REQUIRE(distribution(rng) == 0.0f);
+        }
+        {
+            ConstantFakeRNG rng(u32::Max() - 512);
+            REQUIRE(distribution(rng) < 1.0f);
+        }
+        {
+            ConstantFakeRNG rng(u32::Max());
+            REQUIRE(distribution(rng) == 1.0f);
+        }
+    }
+
+    SECTION("Check f64 correctness in 0.0-1.0 range")
+    {
+        Math::UniformDistribution<f64> distribution;
+        {
+            ConstantFakeRNG<u64> rng(u64::Min());
+            REQUIRE(distribution(rng) == 0.0);
+        }
+        {
+            ConstantFakeRNG<u64> rng(u64::Max() - 8192);
+            REQUIRE(distribution(rng) < 1.0);
+        }
+        {
+            ConstantFakeRNG<u64> rng(u64::Max());
+            REQUIRE(distribution(rng) == 1.0);
+        }
+    }
 }

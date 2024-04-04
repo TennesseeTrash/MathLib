@@ -9,6 +9,8 @@
 
 namespace Math
 {
+    // Note(3011): This forward decl should accept only Concept::StrongType,
+    // but Clang does not like that, despite the specializations being stricter.
     template <typename T>
     class UniformDistribution;
 

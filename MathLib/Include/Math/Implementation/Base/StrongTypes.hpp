@@ -87,8 +87,8 @@ namespace Math
             static constexpr ThisType Infinity() { return ThisType(std::numeric_limits<ValueType>::infinity()); }
             static constexpr ThisType NaN()      { return ThisType(std::numeric_limits<ValueType>::quiet_NaN()); }
 
-            ThisType Previous() const noexcept { return std::nextafter(Value, -ThisType::Infinity()); }
-            ThisType Next()     const noexcept { return std::nextafter(Value,  ThisType::Infinity()); }
+            ThisType Previous() const noexcept { return std::nextafter(Value, -ThisType::Infinity().Value); }
+            ThisType Next()     const noexcept { return std::nextafter(Value,  ThisType::Infinity().Value); }
 
             [[nodiscard]]    friend constexpr ThisType  operator+   (ThisType  a)             noexcept { return +a.Value; }
             [[nodiscard]]    friend constexpr ThisType  operator-   (ThisType  a)             noexcept { return -a.Value; }

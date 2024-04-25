@@ -6,6 +6,9 @@
 #include <compare>
 #include <limits>
 
+// TODO(3011): Not again ...
+#include <cmath>
+
 namespace Math
 {
     namespace Implementation

@@ -1,7 +1,7 @@
 #ifndef MATHLIB_IMPLEMENTATION_BASE_CONCEPTS_HPP
 #define MATHLIB_IMPLEMENTATION_BASE_CONCEPTS_HPP
 
-#include "StrongTypes.hpp"
+#include "Types.hpp"
 
 #include <type_traits>
 #include <concepts>

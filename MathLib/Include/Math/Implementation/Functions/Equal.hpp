@@ -1,7 +1,6 @@
 #ifndef MATHLIB_IMPLEMENTATION_FUNCTIONS_EQUAL_HPP
 #define MATHLIB_IMPLEMENTATION_FUNCTIONS_EQUAL_HPP
 
-#include "../Base/StrongTypesUtils.hpp"
 #include "../Base/Concepts.hpp"
 #include "../../Constants.hpp"
 

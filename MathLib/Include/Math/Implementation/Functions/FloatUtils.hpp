@@ -66,7 +66,7 @@ namespace Math
     [[nodiscard]] constexpr
     Int Round(Float val) noexcept
     {
-        return Floor<Int, Float>(val + 0.5f);
+        return Floor<Int, Float>(val + (Float(1) / Float(2)));
     }
 
     template <Concept::FloatingPointType Float>
@@ -74,7 +74,7 @@ namespace Math
     Float Round(Float val) noexcept
     {
         using Int = SignedIntegerSelector<sizeof(UnderlyingType<Float>)>;
-        return Round<Int, Float>(val);
+        return Cast<Float>(Round<Int, Float>(val));
     }
 }
 

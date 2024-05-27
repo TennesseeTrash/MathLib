@@ -14,7 +14,7 @@
 
 namespace Math::Noise
 {
-    template <Concept::FloatingPointType Float, typename Interpolation = decltype([](Float a) { return Smootherstep(a); })>
+    template <Concept::FloatingPointType Float, typename Interpolation = decltype([](Float a) { return Smootherstep<Float>(a, 0, 1); })>
     class Perlin final
     {
     public:

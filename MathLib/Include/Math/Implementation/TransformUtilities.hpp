@@ -178,17 +178,25 @@ namespace Math
         );
     }
 
-    template <Concept::Scalar Scalar>
+    template <Orientation Hand = Orientation::Right, Concept::Scalar Scalar>
     [[nodiscard]] constexpr
     Transform3T<Scalar> LookAt(const Point3T<Scalar>& pos, const Vector3T<Scalar>& dir, const Vector3T<Scalar>& up = {0, 1, 0}) noexcept
     {
-        Vector3T<Scalar> w = -Normalize(dir);
+        Vector3T<Scalar> w = Normalize(dir);
         Vector3T<Scalar> u = Normalize(Cross(Normalize(up), w));
         Vector3T<Scalar> v = Normalize(Cross(w, u));
+        if constexpr (Hand == Orientation::Right)
+        {
+            v = -v;
+        }
+
+        Matrix3T<Scalar> rot = Matrix3T<Scalar>(
+            u.x, u.y, u.z,
+            v.x, v.y, v.z,
+            w.x, w.y, w.z
+        );
         return Transform3T<Scalar>(
-            u.x, u.y, u.z, -pos.x,
-            v.x, v.y, v.z, -pos.y,
-            w.x, w.y, w.z, -pos.z
+            rot, rot * -Vector3T<Scalar>(pos)
         );
     }
 
@@ -206,6 +214,10 @@ namespace Math
         result[1][1] = Cast<Scalar>(1) / tanFovOver2;
         result[2][2] = far / (near - far);
         result[2][3] = -(far * near) / (far - near);
+        if constexpr (Hand == Orientation::Left)
+        {
+            result[2][2] = -result[2][2];
+        }
         return result;
     }
 

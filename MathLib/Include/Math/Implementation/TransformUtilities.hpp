@@ -182,7 +182,7 @@ namespace Math
     [[nodiscard]] constexpr
     Transform3T<Scalar> LookAt(const Point3T<Scalar>& pos, const Vector3T<Scalar>& dir, const Vector3T<Scalar>& up = {0, 1, 0}) noexcept
     {
-        Vector3T<Scalar> w = Normalize(dir);
+        Vector3T<Scalar> w = -Normalize(dir);
         Vector3T<Scalar> u = Normalize(Cross(Normalize(up), w));
         Vector3T<Scalar> v = Normalize(Cross(w, u));
         if constexpr (Hand == Orientation::Right)

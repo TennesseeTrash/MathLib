@@ -92,7 +92,7 @@ namespace Math::Geometry2D
     bool Contains(const Line<T>& line, const Point<T>& point) noexcept
     {
         Vector2T<T> t = (point - line.Start) / (line.End - line.Start);
-        return Equal(t.x, t.y) && t.x >= 0 && t.x <= 1;
+        return Equal(t.x, t.y, Constant::GeometryEpsilon<T>) && t.x >= 0 && t.x <= 1;
     }
 
     template <Concept::StrongFloatType T>
@@ -501,7 +501,6 @@ namespace Math::Geometry2D
     //////////////////////////////////////////////////////////////////////////
     // Ray Contains functions
     //////////////////////////////////////////////////////////////////////////
-    // I'm not sure if any other Contains functions would make sense for a Ray.
 
     template <Concept::StrongFloatType T>
     [[nodiscard]] constexpr

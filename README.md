@@ -1,6 +1,9 @@
 # MathLib
 
-A work-in-progress C++20 math library. Any comments or criticisms are welcome.
+A work-in-progress C++20 math library. Any testing, feedback, suggestions for improvements, or
+pull requests are welcome.
+
+Documentation is currently work in progress [here](https://3011.io/Documentation/MathLib/).
 
 ## Usage
 
@@ -35,42 +38,6 @@ After that, you can just include the appropriate headers in your projects.
 #include <Math/Vector.hpp>
 ```
 
-## Roadmap
-
-The library can be considered complete in terms of the basics. The usual
-core types, such as Vectors and Matrices are implemented and work (for my purposes at least).
-Some extra utilities are also present, such as a few `constexpr` compatible
-RNGs and a uniform distribution adapter (in the C++11 `<random>` style) to make them more useful.
-
-The library was written with easy *static* extensibility in mind, which means that most utilities
-are not implemented in terms of specific types, but in terms of concepts, such that you can use
-them for your own types as long as they satisfy the concept. The most unfortunate exception to this are
-the utility functions for transforms, because C++ cannot deduce template arguments for return types
-(apart from a trick with conversion operators that I've found a bit too clunky to actually use).
-
-Everything in the library is a near-POD type, the only condition it fails is that the default constructor
-does zero initialization (if the committee has any sense, this will be default in C++26 anyway).
-On top of that, there are no dynamic allocations, but everything should be compatible with dynamic allocations
-if you need them. A (sort of) side effect of that is that no error checking is performed, you need to do all
-potential error checking yourself. For example, if you try to calculate the inverse of a singular matrix,
-you will get garbage in the result.
-
-All that said, the library still isn't in a state where it can be considered complete or finished.
-A small mountain of utilities is still missing, incomplete or implemented poorly. The random numbers could
-use a few more distributions, because there are fairly common cases when uniform distribution just doesn't cut it
-and implementing other distributions correctly is a pain.
-
-There is also a section of the library dedicated to geometry. Some 2D shapes with a few utilities are implemented, but
-a lot is still missing (outline intersections, distance, projections etc.). 3D geometry is sadly still far, far away from
-becoming reality.
-
-Another section that still needs work is related to noise functions and functions in general. There was a proof-of-concept
-implementation of differentiable functions at one point, but it was a gargantuan mess of templates that wasn't particularly
-useful. A better implementation is currently work in progress. As for the noise functions, the main idea is that they
-should be useable standalone, but compatible with the differentiable functions. So far an initial Perlin noise implementation
-is present and I have a few other noise functions implemented in a private "experimental" sandbox, but it would be better
-to add the proper groundwork for reasonable differentiable functions first before adding them here.
-
 
 ## Example
 
@@ -104,3 +71,25 @@ int main()
     Math::f32 cosAngle = Dot(v4, v5); // Cross products are also present
 }
 ```
+
+
+## Status
+
+The library is feature complete in terms of the foundational facilities necessary for
+a wide variety of tasks. Templates (and their instantiations) are ready for vectors,
+(square) matrices, points, and transforms. These types already have most utilities made
+and can be considered near stable.
+
+There are also several "modules" of the library that are incomplete, but already somewhat
+usable in their current state and major changes to the existing code are not planned at least
+until after the first actual release. These include the random number utilities (`Math/Random.hpp`),
+and geometry utilities. These modules will be only expanded without major modifications to existing code
+(and API).
+
+Finally, some parts of the library, such as `Math/Noise.hpp` are in very early stages. These
+should be considered unstable and not fit for any practical purpose for now. The API is not final
+and the implementations are not tested very well.
+
+For more specific notes on what the library contains, and the implementation status,
+please refer to the [documentation](https://3011.io/Documentation/MathLib/). The documentation
+is incomplete for now, but it should cover most of the library soon.

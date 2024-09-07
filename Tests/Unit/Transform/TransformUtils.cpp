@@ -108,12 +108,12 @@ TEST_CASE("Test 3D LookAt transform")
 
     SECTION("Non-zero position")
     {
-        Math::Transform3f lookAt = Math::LookAt(Math::Point3f(1.0f, 2.0f, 3.0f), Math::Vector3f(0.0f, 0.0f, 1.0f));
+        Math::Transform3f lookAt = Math::LookAt(Math::Point3f(1.0f, 2.0f, 3.0f), Math::Vector3f(0.0f, 0.0f, -1.0f));
         REQUIRE(Math::Equal(lookAt * Math::Point3f(0.0f, 0.0f, 0.0f), Math::Point3f(-1.0f, -2.0f, -3.0f)));
-        REQUIRE(Math::Equal(lookAt * Math::Point3f(1.0f, 0.0f, 0.0f), Math::Point3f(-2.0f, -2.0f, -3.0f)));
+        REQUIRE(Math::Equal(lookAt * Math::Point3f(1.0f, 0.0f, 0.0f), Math::Point3f(0.0f, -2.0f, -3.0f)));
         REQUIRE(Math::Equal(lookAt * Math::Point3f(0.0f, 1.0f, 0.0f), Math::Point3f(-1.0f, -1.0f, -3.0f)));
-        REQUIRE(Math::Equal(lookAt * Math::Point3f(0.0f, 0.0f, 1.0f), Math::Point3f(-1.0f, -2.0f, -4.0f)));
-        REQUIRE(Math::Equal(lookAt * Math::Point3f(1.0f, 1.0f, 1.0f), Math::Point3f(-2.0f, -1.0f, -4.0f)));
+        REQUIRE(Math::Equal(lookAt * Math::Point3f(0.0f, 0.0f, 1.0f), Math::Point3f(-1.0f, -2.0f, -2.0f)));
+        REQUIRE(Math::Equal(lookAt * Math::Point3f(1.0f, 1.0f, 1.0f), Math::Point3f(0.0f, -1.0f, -2.0f)));
     }
 
     SECTION("Non-trivial view direction")

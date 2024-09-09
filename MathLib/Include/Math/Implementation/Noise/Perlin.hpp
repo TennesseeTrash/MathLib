@@ -4,17 +4,11 @@
 #include "../Base/Array.hpp"
 #include "../../Functions.hpp"
 #include "../../Random.hpp"
-
-// TODO(3011): This is not a good interface. It makes it difficult to
-// get derivatives with minimal overhead. The interface and implementation
-// could use a split. This could also make it possible for the user to further
-// customize the calculation. The "pretty interface" would just overload
-// the () operator and call the underlying implementation that the user could
-// tweak.
+#include "../../Vector.hpp"
 
 namespace Math::Noise
 {
-    template <Concept::FloatingPointType Float, typename Interpolation = decltype([](Float a) { return Smootherstep<Float>(a, 0, 1); })>
+    template <Concept::FloatingPointType Float>
     class Perlin final
     {
     public:
@@ -32,18 +26,18 @@ namespace Math::Noise
         }
 
         [[nodiscard]] constexpr
-        Float operator()(Float x, Float y) const noexcept
+        Float operator()(const Vector2T<Float>& in) const noexcept
         {
             using Int = SignedIntegerSelector<sizeof(Float)>;
 
-            u8 xi = Cast<u8>(Abs(Floor<Int>(x)) & 255);
-            u8 yi = Cast<u8>(Abs(Floor<Int>(y)) & 255);
+            u8 xi = Cast<u8>(Abs(Floor<Int>(in.x)) & 255);
+            u8 yi = Cast<u8>(Abs(Floor<Int>(in.y)) & 255);
 
-            Float xf = Frac(x);
-            Float yf = Frac(y);
+            Float xf = Frac(in.x);
+            Float yf = Frac(in.y);
 
-            Float u = mInterpolation(xf);
-            Float v = mInterpolation(yf);
+            Float u = Smootherstep(xf);
+            Float v = Smootherstep(yf);
 
             Float v1 = Grad(Hash2(xi, yi, 0, 0), xf,     yf    );
             Float v2 = Grad(Hash2(xi, yi, 1, 0), xf - 1, yf    );
@@ -55,21 +49,21 @@ namespace Math::Noise
         }
 
         [[nodiscard]] constexpr
-        Float operator()(Float x, Float y, Float z) const noexcept
+        Float operator()(const Vector3T<Float>& in) const noexcept
         {
             using Int = SignedIntegerSelector<sizeof(Float)>;
 
-            u8 xi = Cast<u8>(Abs(Floor<Int>(x)) & 255);
-            u8 yi = Cast<u8>(Abs(Floor<Int>(y)) & 255);
-            u8 zi = Cast<u8>(Abs(Floor<Int>(z)) & 255);
+            u8 xi = Cast<u8>(Abs(Floor<Int>(in.x)) & 255);
+            u8 yi = Cast<u8>(Abs(Floor<Int>(in.y)) & 255);
+            u8 zi = Cast<u8>(Abs(Floor<Int>(in.z)) & 255);
 
-            Float xf = Frac(x);
-            Float yf = Frac(y);
-            Float zf = Frac(z);
+            Float xf = Frac(in.x);
+            Float yf = Frac(in.y);
+            Float zf = Frac(in.z);
 
-            Float u = mInterpolation(xf);
-            Float v = mInterpolation(yf);
-            Float w = mInterpolation(zf);
+            Float u = Smootherstep(xf);
+            Float v = Smootherstep(yf);
+            Float w = Smootherstep(zf);
 
             Float v1 = Grad(Hash3(xi, yi, zi, 0, 0, 0), xf,     yf,     zf    );
             Float v2 = Grad(Hash3(xi, yi, zi, 1, 0, 0), xf - 1, yf,     zf    );
@@ -87,24 +81,24 @@ namespace Math::Noise
         }
 
         [[nodiscard]] constexpr
-        Float operator()(Float x, Float y, Float z, Float w) const noexcept
+        Float operator()(const Vector4T<Float>& in) const noexcept
         {
             using Int = SignedIntegerSelector<sizeof(Float)>;
 
-            u8 xi = Cast<u8>(Abs(Floor<Int>(x)) & 255);
-            u8 yi = Cast<u8>(Abs(Floor<Int>(y)) & 255);
-            u8 zi = Cast<u8>(Abs(Floor<Int>(z)) & 255);
-            u8 wi = Cast<u8>(Abs(Floor<Int>(w)) & 255);
+            u8 xi = Cast<u8>(Abs(Floor<Int>(in.x)) & 255);
+            u8 yi = Cast<u8>(Abs(Floor<Int>(in.y)) & 255);
+            u8 zi = Cast<u8>(Abs(Floor<Int>(in.z)) & 255);
+            u8 wi = Cast<u8>(Abs(Floor<Int>(in.w)) & 255);
 
-            Float xf = Frac(x);
-            Float yf = Frac(y);
-            Float zf = Frac(z);
-            Float wf = Frac(w);
+            Float xf = Frac(in.x);
+            Float yf = Frac(in.y);
+            Float zf = Frac(in.z);
+            Float wf = Frac(in.w);
 
-            Float u = mInterpolation(xf);
-            Float v = mInterpolation(yf);
-            Float s = mInterpolation(zf);
-            Float t = mInterpolation(wf);
+            Float u = Smootherstep(xf);
+            Float v = Smootherstep(yf);
+            Float s = Smootherstep(zf);
+            Float t = Smootherstep(wf);
 
             Float v1  = Grad(Hash4(xi, yi, zi, wi, 0, 0, 0, 0), xf,     yf,     zf,     wf    );
             Float v2  = Grad(Hash4(xi, yi, zi, wi, 1, 0, 0, 0), xf - 1, yf,     zf,     wf    );
@@ -133,23 +127,6 @@ namespace Math::Noise
                                             Lerp(u, v15, v16)))) + 1) / 2;
         }
 
-        template <Concept::Vector Vec>
-        [[nodiscard]] constexpr
-        Float operator()(const Vec& vec) const noexcept
-        {
-            if constexpr (Concept::Vector2<Vec>)
-            {
-                return (*this)(vec.x, vec.y);
-            }
-            else if constexpr (Concept::Vector3<Vec>)
-            {
-                return (*this)(vec.x, vec.y, vec.z);
-            }
-            else if constexpr (Concept::Vector4<Vec>)
-            {
-                return (*this)(vec.x, vec.y, vec.z, vec.w);
-            }
-        }
     private:
         [[nodiscard]] constexpr
         u8 Hash2(u8 x, u8 y, u8 i = 0, u8 j = 0) const noexcept
@@ -213,7 +190,6 @@ namespace Math::Noise
                  + (!ToUnderlying(hash & 4) ? v : -v);
         }
 
-        Interpolation  mInterpolation;
         Array<u8, 256> mPermutation;
 
         static constexpr Array<u8, 256> sDefaultPermutation = Array<u8, 256>(

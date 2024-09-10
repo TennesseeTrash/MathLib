@@ -49,6 +49,13 @@ namespace Math
         return val * val * val;
     }
 
+    template <typename T>
+    [[nodiscard]] constexpr
+    T Exp(T val) noexcept
+    {
+        return std::exp(ToUnderlying(val));
+    }
+
     // TODO(3011): Possible implicit conversion
     template <typename T>
     [[nodiscard]] constexpr

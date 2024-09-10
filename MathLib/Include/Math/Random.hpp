@@ -3,6 +3,7 @@
 
 #include "Implementation/Random/Xoshiro.hpp"
 #include "Implementation/Random/UniformDistribution.hpp"
+#include "Implementation/Random/PoissonDistribution.hpp"
 
 namespace Math
 {

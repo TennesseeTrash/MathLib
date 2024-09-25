@@ -61,7 +61,7 @@ namespace Math::Geometry2D
     [[nodiscard]] constexpr
     bool Contains(const Point<T>& point, const Quadrilateral<T>& quadrilateral) noexcept
     {
-        constexpr SizeType vertexCount = quadrilateral.Vertices.Size;
+        const SizeType vertexCount = quadrilateral.Vertices.Size;
         for (SizeType i = 0; i < vertexCount; ++i)
         {
             if (!Equal(point, quadrilateral.Vertices[i], Constant::GeometryEpsilon<T>))
@@ -133,7 +133,7 @@ namespace Math::Geometry2D
     [[nodiscard]] constexpr
     bool Contains(const Line<T>& line, const Quadrilateral<T>& quadrilateral) noexcept
     {
-        constexpr SizeType vertexCount = quadrilateral.Vertices.Size;
+        const SizeType vertexCount = quadrilateral.Vertices.Size;
         for (SizeType i = 0; i < vertexCount; ++i)
         {
             if (!Contains(line, quadrilateral.Vertices[i]))
@@ -200,7 +200,7 @@ namespace Math::Geometry2D
     [[nodiscard]] constexpr
     bool Contains(const Circle<T>& circle, const Quadrilateral<T>& quadrilateral) noexcept
     {
-        constexpr SizeType vertexCount = quadrilateral.Vertices.Size;
+        const SizeType vertexCount = quadrilateral.Vertices.Size;
         for (SizeType i = 0; i < vertexCount; ++i)
         {
             if (!Contains(circle, quadrilateral.Vertices[i]))
@@ -292,7 +292,7 @@ namespace Math::Geometry2D
     [[nodiscard]] constexpr
     bool Contains(const Triangle<T>& triangle, const Quadrilateral<T>& quadrilateral) noexcept
     {
-        constexpr SizeType vertexCount = quadrilateral.Vertices.Size;
+        const SizeType vertexCount = quadrilateral.Vertices.Size;
         for (SizeType i = 0; i < vertexCount; ++i)
         {
             if (!Contains(triangle, quadrilateral.Vertices[i]))
@@ -396,7 +396,7 @@ namespace Math::Geometry2D
     [[nodiscard]] constexpr
     bool Contains(const Quadrilateral<T>& quadrilateral, const Point<T>& point) noexcept
     {
-        constexpr SizeType vertexCount = quadrilateral.Vertices.Size;
+        const SizeType vertexCount = quadrilateral.Vertices.Size;
         SignedSizeType windings = 0;
 
         for (SizeType i = 0; i < vertexCount; ++i)
@@ -422,8 +422,19 @@ namespace Math::Geometry2D
         return windings != 0;
     }
 
-    // TODO(3011): These are going to be a major pain to implement, because we're not enforcing
-    // convexity and we want this to work for Polygons in general.
+    // TODO(3011): These (Quadrilateral Contains) are going to be a major pain to implement:
+    //    - We want the algorithms to work for Polygons in general (i.e. >4 vertices)
+    //    - We want to support concave polygons and even "invalid" Polygons (i.e. a Polygon whose edges cross)
+    // Some leads:
+    //    - The Polygon can be broken down into triangles, then the problem simplifies a lot.
+    //    - We can exploit shape areas to hopefully avoid expensive checking operations.
+    //    - Length information could also help eliminate certain candidates.
+    // Difficulties:
+    //    - No allocations
+    //        - We can utilize small helper structs on the stack, but stack space
+    //          is somewhat limited, so we must prefer iterative solutions that do not
+    //          require large amounts of space. (Generally we want to fit in a few kB at most.)
+
 
 
 
@@ -450,7 +461,15 @@ namespace Math::Geometry2D
     [[nodiscard]] constexpr
     bool Contains(const Ellipse<T>& ellipse, const Circle<T>& circle) noexcept
     {
-        // TODO(3011): Implement
+        // Note(3011): The idea here is fairly straight forward, but the implementation
+        // will be somewhat complicated. First, we eliminate the circle if its center
+        // is outside the ellipse. Second, we eliminate the circle if its radius is
+        // larger than the smaller of the two ellipse radii. Finally, we check if
+        // the circle and ellipse have any intersections. If they don't, we can safely
+        // assume that the circle is inside the ellipse.
+        // The only extra consideration we need to keep in mind is to rotate everything
+        // such that the center of the ellipse is at the origin, and the ellipse axes
+        // are aligned with the plane axes.
         return false;
     }
 
@@ -477,7 +496,7 @@ namespace Math::Geometry2D
     [[nodiscard]] constexpr
     bool Contains(const Ellipse<T>& ellipse, const Quadrilateral<T>& quadrilateral) noexcept
     {
-        constexpr SizeType vertexCount = quadrilateral.Vertices.Size;
+        const SizeType vertexCount = quadrilateral.Vertices.Size;
         for (SizeType i = 0; i < vertexCount; ++i)
         {
             if (!Contains(ellipse, quadrilateral.Vertices[i]))
@@ -494,20 +513,6 @@ namespace Math::Geometry2D
     {
         // TODO(3011): Implement
         return false;
-    }
-
-
-
-    //////////////////////////////////////////////////////////////////////////
-    // Ray Contains functions
-    //////////////////////////////////////////////////////////////////////////
-
-    template <Concept::StrongFloatType T>
-    [[nodiscard]] constexpr
-    bool Contains(const Ray<T>& ray, const Point<T>& point) noexcept
-    {
-        Vector2T<T> t = (point - ray.Origin) / ray.Direction;
-        return Equal(t.x, t.y) && t.x >= 0;
     }
 }
 

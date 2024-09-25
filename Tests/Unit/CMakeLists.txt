@@ -45,7 +45,6 @@ target_sources(UnitTests PRIVATE
     "Geometry/2D/Rectangle.cpp"
     "Geometry/2D/Ellipse.cpp"
     "Geometry/2D/Quadrilateral.cpp"
-    "Geometry/2D/Ray.cpp"
     "TestTypes.cpp"
     "TestQuaternions.cpp"
     "TestNoise.cpp"

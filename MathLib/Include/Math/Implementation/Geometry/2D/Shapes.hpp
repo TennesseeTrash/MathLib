@@ -305,6 +305,12 @@ namespace Math::Geometry2D
             : Origin(origin), Direction(Normalize(direction))
         {}
 
+        [[nodiscard]] constexpr
+        PointType Project(ScalarType scale)
+        {
+            return Origin + (scale * Direction);
+        }
+
         PointType  Origin;
         VectorType Direction;
     };

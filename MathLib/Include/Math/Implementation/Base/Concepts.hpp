@@ -210,6 +210,8 @@ namespace Math::Concept
         requires StrongType<T>;
         requires FloatingPointType<typename T::ValueType>;
 
+        { T::Min()      } -> IsSame<T>;
+        { T::Max()      } -> IsSame<T>;
         { T::Epsilon()  } -> IsSame<T>;
         { T::Infinity() } -> IsSame<T>;
         { T::NaN()      } -> IsSame<T>;

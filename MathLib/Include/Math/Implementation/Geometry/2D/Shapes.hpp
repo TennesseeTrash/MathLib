@@ -301,7 +301,7 @@ namespace Math::Geometry2D
         using ScalarType = T;
 
         [[nodiscard]] constexpr
-        Interval(ScalarType min, ScalarType max) noexcept
+        Interval(ScalarType min = ScalarType::Min(), ScalarType max = ScalarType::Max()) noexcept
             : Min(min), Max(max)
         {}
 
@@ -323,7 +323,7 @@ namespace Math::Geometry2D
         {}
 
         [[nodiscard]] constexpr
-        PointType Project(ScalarType scale)
+        PointType Project(ScalarType scale) const noexcept
         {
             return Origin + (scale * Direction);
         }

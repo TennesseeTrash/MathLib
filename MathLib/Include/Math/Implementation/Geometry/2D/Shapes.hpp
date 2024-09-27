@@ -292,6 +292,23 @@ namespace Math::Geometry2D
         ScalarType Angle;
     };
 
+
+
+    template <Concept::StrongFloatType T>
+    struct Interval
+    {
+    public:
+        using ScalarType = T;
+
+        [[nodiscard]] constexpr
+        Interval(ScalarType min, ScalarType max) noexcept
+            : Min(min), Max(max)
+        {}
+
+        ScalarType Min;
+        ScalarType Max;
+    };
+
     template <Concept::StrongFloatType T>
     struct Ray
     {

@@ -36,6 +36,22 @@ namespace Math
     using Vector3l = Vector3T<i64>;
     using Vector4l = Vector4T<i64>;
 
+    using Vector2uc = Vector2T< u8>;
+    using Vector3uc = Vector3T< u8>;
+    using Vector4uc = Vector4T< u8>;
+
+    using Vector2us = Vector2T<u16>;
+    using Vector3us = Vector3T<u16>;
+    using Vector4us = Vector4T<u16>;
+
+    using Vector2u = Vector2T<u32>;
+    using Vector3u = Vector3T<u32>;
+    using Vector4u = Vector4T<u32>;
+
+    using Vector2ul = Vector2T<u64>;
+    using Vector3ul = Vector3T<u64>;
+    using Vector4ul = Vector4T<u64>;
+
     //////////////////////////////////////////////////////////////////////////
     // Enforce concepts on provided types
     //////////////////////////////////////////////////////////////////////////
@@ -55,6 +71,22 @@ namespace Math
     static_assert(Concept::Vector2<Vector2l>);
     static_assert(Concept::Vector3<Vector3l>);
     static_assert(Concept::Vector4<Vector4l>);
+
+    static_assert(Concept::Vector2<Vector2uc>);
+    static_assert(Concept::Vector3<Vector3uc>);
+    static_assert(Concept::Vector4<Vector4uc>);
+
+    static_assert(Concept::Vector2<Vector2us>);
+    static_assert(Concept::Vector3<Vector3us>);
+    static_assert(Concept::Vector4<Vector4us>);
+
+    static_assert(Concept::Vector2<Vector2u>);
+    static_assert(Concept::Vector3<Vector3u>);
+    static_assert(Concept::Vector4<Vector4u>);
+
+    static_assert(Concept::Vector2<Vector2ul>);
+    static_assert(Concept::Vector3<Vector3ul>);
+    static_assert(Concept::Vector4<Vector4ul>);
 }
 
 #endif //MATHLIB_VECTOR_HPP

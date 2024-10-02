@@ -36,8 +36,8 @@ namespace Math::Noise
             Float xf = Frac(in.x);
             Float yf = Frac(in.y);
 
-            Float u = Smootherstep(xf);
-            Float v = Smootherstep(yf);
+            Float u = Smootherstep(xf, Float(0), Float(1));
+            Float v = Smootherstep(yf, Float(0), Float(1));
 
             Float v1 = Grad(Hash2(xi, yi, 0, 0), xf,     yf    );
             Float v2 = Grad(Hash2(xi, yi, 1, 0), xf - 1, yf    );
@@ -61,9 +61,9 @@ namespace Math::Noise
             Float yf = Frac(in.y);
             Float zf = Frac(in.z);
 
-            Float u = Smootherstep(xf);
-            Float v = Smootherstep(yf);
-            Float w = Smootherstep(zf);
+            Float u = Smootherstep(xf, Float(0), Float(1));
+            Float v = Smootherstep(yf, Float(0), Float(1));
+            Float w = Smootherstep(zf, Float(0), Float(1));
 
             Float v1 = Grad(Hash3(xi, yi, zi, 0, 0, 0), xf,     yf,     zf    );
             Float v2 = Grad(Hash3(xi, yi, zi, 1, 0, 0), xf - 1, yf,     zf    );
@@ -95,10 +95,10 @@ namespace Math::Noise
             Float zf = Frac(in.z);
             Float wf = Frac(in.w);
 
-            Float u = Smootherstep(xf);
-            Float v = Smootherstep(yf);
-            Float s = Smootherstep(zf);
-            Float t = Smootherstep(wf);
+            Float u = Smootherstep(xf, Float(0), Float(1));
+            Float v = Smootherstep(yf, Float(0), Float(1));
+            Float s = Smootherstep(zf, Float(0), Float(1));
+            Float t = Smootherstep(wf, Float(0), Float(1));
 
             Float v1  = Grad(Hash4(xi, yi, zi, wi, 0, 0, 0, 0), xf,     yf,     zf,     wf    );
             Float v2  = Grad(Hash4(xi, yi, zi, wi, 1, 0, 0, 0), xf - 1, yf,     zf,     wf    );

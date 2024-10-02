@@ -1,8 +1,23 @@
-add_executable(PathTracer
-    main.cpp
+add_executable(PathTracer)
+
+target_compile_features(PathTracer
+    PRIVATE
+    cxx_std_20
+)
+
+target_include_directories(PathTracer
+    PRIVATE
+    "Include"
 )
 
 target_link_libraries(PathTracer
     PRIVATE
-        MathLib
+    MathLib
+)
+
+target_sources(PathTracer
+    PRIVATE
+    "Main.cpp"
+    "Source/Camera.cpp"
+    "Source/Framebuffer.cpp"
 )

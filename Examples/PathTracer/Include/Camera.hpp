@@ -14,7 +14,6 @@ namespace PathTracer
     private:
         Point3f   mPosition;
         Matrix4f  mScreenToWorld;
-        Matrix4f  mWorldToScreen;
     };
 }
 

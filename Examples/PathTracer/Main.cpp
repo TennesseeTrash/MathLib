@@ -27,8 +27,8 @@ int main(int argc, char **argv)
     using PathTracer::SizeType;
     for (SizeType samples = 0; samples <= 1000; ++samples)
     {
-        std::cout << Math::ToUnderlying(samples) << "\n";
-
+        if (samples % 100 == 0)
+            std::cout << "Sample: " << Math::ToUnderlying(samples) << "\n";
         for (SizeType y = 0; y < 512; ++y)
         {
             for (SizeType x = 0; x < 512; ++x)
@@ -40,6 +40,7 @@ int main(int argc, char **argv)
 
                 if (i)
                 {
+                    // "Lambertian"
                     fb(x, y) = Math::Vector3f(0.0f, 1.0f, 0.0f) * Math::Dot(light, i.Normal);
                 }
                 else

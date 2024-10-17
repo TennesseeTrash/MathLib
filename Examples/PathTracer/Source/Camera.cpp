@@ -18,7 +18,7 @@ namespace PathTracer
         mScreenToWorld = Math::Invert(worldToCamera) * toWorldAdjust;
     }
 
-    Ray Camera::GenerateRay(const Vector2f& screenSample)
+    Ray Camera::GenerateRay(const Vector2f& screenSample) const
     {
         Point3f worldScreen = mScreenToWorld * Point3f(screenSample);
         return Ray(mPosition, Math::Normalize(worldScreen - mPosition));

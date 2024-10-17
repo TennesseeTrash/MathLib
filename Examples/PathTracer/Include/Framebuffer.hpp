@@ -3,7 +3,6 @@
 
 #include "Base.hpp"
 
-#include <vector>
 #include <filesystem>
 
 namespace fs = std::filesystem;
@@ -19,14 +18,18 @@ namespace PathTracer
     {
     public:
         Framebuffer(SizeType width, SizeType height);
+        Framebuffer(Vector2ul size);
+
+        Vector2ul Size() const;
+
+        void Add(const Framebuffer& other);
+        void Scale(f32 scale);
+        void Clear();
 
         bool Save(const fs::path& filename, ImageEncoding encoding = ImageEncoding::HDR) const;
 
-        void Clear();
-
         Vector3f& operator() (SizeType x, SizeType y);
         const Vector3f& operator() (SizeType x, SizeType y) const;
-
     private:
         SizeType mWidth;
         SizeType mHeight;

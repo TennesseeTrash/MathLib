@@ -20,4 +20,7 @@ target_sources(PathTracer
     "Main.cpp"
     "Source/Camera.cpp"
     "Source/Framebuffer.cpp"
+    "Source/Light.cpp"
+    "Source/Material.cpp"
+    "Source/Scene.cpp"
 )

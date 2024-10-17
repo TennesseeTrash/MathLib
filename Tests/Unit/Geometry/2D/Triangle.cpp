@@ -76,4 +76,15 @@ TEST_CASE("Test Triangle Contains Functions", "[Math][Geometry][Triangle]")
         //REQUIRE(Contains(triangle, ellipse1));
         //REQUIRE_FALSE(Contains(triangle, ellipse2));
     }
+
+    SECTION("Test")
+    {
+        namespace G = Math::Geometry;
+
+        G::Ray<f32> r({0.0f, 0.0f, -5.0f}, {0.0f, 0.0f, 1.0f});
+
+        G::Sphere<f32> s({0.0f, 2.0f, 0.0f}, 1.0f);
+
+        REQUIRE(G::HasIntersection(r, G::Interval<f32>{}, s));
+    }
 }

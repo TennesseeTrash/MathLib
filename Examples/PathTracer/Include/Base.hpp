@@ -9,6 +9,8 @@
 #include <Math/Geometry.hpp>
 #include <Math/Random.hpp>
 
+#include <vector>
+
 namespace PathTracer
 {
     using namespace Math::Types;
@@ -24,6 +26,7 @@ namespace PathTracer
     using RNG = Math::Random64;
 
     using Ray = Math::Geometry::Ray<f32>;
+    using Plane = Math::Geometry::Plane<f32>;
     using Sphere = Math::Geometry::Sphere<f32>;
 }
 

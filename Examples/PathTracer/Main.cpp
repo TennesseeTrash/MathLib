@@ -1,56 +1,100 @@
+#include "Base.hpp"
 #include "Camera.hpp"
 #include "Framebuffer.hpp"
-
-#include <Math/Geometry.hpp>
+#include "Light.hpp"
+#include "Math/Implementation/TransformUtilities.hpp"
+#include "Math/Vector.hpp"
+#include "Scene.hpp"
 
 #include <iostream>
+#include <thread>
+#include <mutex>
 
 int main(int argc, char **argv)
 {
     std::cout << "Hello, world!" << std::endl;
 
     using namespace Math::Types;
-    using Intersection = Math::Geometry::Intersection<f32>;
 
-    PathTracer::RNG rng(12);
+    PathTracer::RNG commonRng(15);
     Math::UniformUnitDistribution<f32> dist;
 
     // "Scene"
-    PathTracer::Sphere s({0.0f, 0.0f, 0.0f}, 1.0f);
+    PathTracer::Scene scene;
 
     PathTracer::Camera cam({0.0f, 0.0f, -3.0f}, {0.0f, 0.0f, 1.0f}, {512, 512}, Math::ToRadians<f32>(90.0f));
     PathTracer::Framebuffer fb(512, 512);
+    std::mutex fbMutex;
 
-    // This is the stand-in for an actual light for now.
-    Math::Vector3f light = Math::Normalize(Math::Vector3f(0.5f, -1.0f, -0.8f));
-
-    using PathTracer::SizeType;
-    for (SizeType samples = 0; samples <= 1000; ++samples)
+    std::vector<std::thread> threads;
+    SizeType hwThreads = std::thread::hardware_concurrency();
+    SizeType totalSamples = 1000;
+    SizeType samplesRemainder = totalSamples % hwThreads;
+    for (SizeType i = 0; i < hwThreads; ++i)
     {
-        if (samples % 100 == 0)
-            std::cout << "Sample: " << Math::ToUnderlying(samples) << "\n";
-        for (SizeType y = 0; y < 512; ++y)
+        SizeType samples = totalSamples / hwThreads + ((samplesRemainder > 0) ? 1 : 0);
+        if (samplesRemainder > 0)
         {
-            for (SizeType x = 0; x < 512; ++x)
+            --samplesRemainder;
+        }
+        if (samples == 0)
+        {
+            continue;
+        }
+        PathTracer::RNG rng = commonRng.Jump();
+        threads.push_back(std::thread([samples, rng, &scene, &cam, &fb, &fbMutex]() mutable {
+            Math::UniformUnitDistribution<f32> dist;
+            PathTracer::Framebuffer localFramebuffer(fb.Size());
+            for (SizeType sample = 0; sample < samples; ++sample)
             {
-                f32 xf = Math::Cast<f32>(x) + dist(rng);
-                f32 yf = Math::Cast<f32>(y) + dist(rng);
-                PathTracer::Ray ray = cam.GenerateRay({xf, yf});
-                Intersection i = Math::Geometry::NearestIntersection(ray, {}, s);
+                for (SizeType y = 0; y < 512; ++y)
+                {
+                    for (SizeType x = 0; x < 512; ++x)
+                    {
+                        f32 xf = Math::Cast<f32>(x) + dist(rng);
+                        f32 yf = Math::Cast<f32>(y) + dist(rng);
+                        PathTracer::Ray ray = cam.GenerateRay({xf, yf});
 
-                if (i)
-                {
-                    // "Lambertian"
-                    fb(x, y) = Math::Vector3f(0.0f, 1.0f, 0.0f) * Math::Dot(light, i.Normal);
-                }
-                else
-                {
-                    fb(x, y) = {0.1f, 0.3f, 0.7f};
+                        using Intersection = PathTracer::Scene::Intersection;
+                        if (Intersection i = scene.Intersect(ray, {}); i.IsValid())
+                        {
+                            f32 cosTheta = Math::Dot(i.Normal, -ray.Direction);
+                            if (cosTheta <= Math::Cast<f32>(0))
+                            {
+                                continue;
+                            }
+
+                            PathTracer::Point3f intersectedPoint = ray.Project(i.Distance);
+                            PathTracer::Transform3f intersectedBase = Math::OrthonormalBaseFromZ(i.Normal);
+                            PathTracer::Vector3f incomingDirection = intersectedBase * -ray.Direction;
+                            for (const auto& light : scene.GetLights())
+                            {
+                                PathTracer::Ray lightRay(intersectedPoint, light.SamplePoint(rng) - intersectedPoint);
+                                PathTracer::Vector3f outgoingDirection = intersectedBase * lightRay.Direction;
+                                if (!scene.HasIntersection(lightRay, {Math::Constant::GeometryEpsilon<f32>, i.Distance}))
+                                {
+                                    localFramebuffer(x, y) += i.Material.BRDF(incomingDirection, outgoingDirection) * light.Evaluate(intersectedPoint) * cosTheta;
+                                }
+                            }
+                        }
+                    }
                 }
             }
-        }
+
+            {
+                std::lock_guard lock(fbMutex);
+                fb.Add(localFramebuffer);
+            }
+        }));
     }
 
+    // We need to wait for the computation in all the threads to finish.
+    for (SizeType i = 0; i < threads.size(); ++i)
+    {
+        threads[Math::ToUnderlying(i)].join();
+    }
+
+    fb.Scale(1.0f / Math::Cast<f32>(totalSamples));
     fb.Save("test.hdr");
     return 0;
 }

@@ -14,7 +14,23 @@ namespace Math::Geometry
     struct Plane
     {
     public:
+        using ScalarType = T;
+        using PointType = Point<T>;
+        using VectorType = Vector3T<T>;
 
+        [[nodiscard]] constexpr
+        Plane(const PointType& origin, const VectorType& normal) noexcept
+            : Origin(origin), Normal(normal)
+        {}
+
+        [[nodiscard]] constexpr
+        VectorType SurfaceNormal([[maybe_unused]] const PointType& surfacePoint) const noexcept
+        {
+            return Normal;
+        }
+
+        PointType Origin;
+        VectorType Normal;
     };
 
     template <Concept::StrongFloatType T>
@@ -37,7 +53,7 @@ namespace Math::Geometry
             : Center(center), Radius(radius)
         {}
 
-        VectorType Normal(PointType surfacePoint) const noexcept
+        VectorType SurfaceNormal(const PointType& surfacePoint) const noexcept
         {
             return Normalize(surfacePoint - Center);
         }
@@ -59,6 +75,18 @@ namespace Math::Geometry
             : Min(min), Max(max)
         {}
 
+        [[nodiscard]] constexpr
+        ScalarType Pick(ScalarType t0) const noexcept
+        {
+            if (Min <= t0 && t0 <= Max)
+            {
+                return t0;
+            }
+
+            return ScalarType::NaN();
+        }
+
+        [[nodiscard]] constexpr
         ScalarType Pick(ScalarType t0, ScalarType t1) const noexcept
         {
             ScalarType min = Math::Min(t0, t1);
@@ -88,8 +116,8 @@ namespace Math::Geometry
         using VectorType = Vector3T<T>;
 
         [[nodiscard]] constexpr
-        Intersection(ScalarType distance, VectorType normal = VectorType(Cast<T>(0))) noexcept
-            : Distance(distance), Normal(normal)
+        Intersection(ScalarType distance) noexcept
+            : Distance(distance)
         {}
 
         [[nodiscard]] constexpr
@@ -105,7 +133,6 @@ namespace Math::Geometry
         }
 
         ScalarType Distance;
-        VectorType Normal;
     };
 
     template <Concept::StrongFloatType T>

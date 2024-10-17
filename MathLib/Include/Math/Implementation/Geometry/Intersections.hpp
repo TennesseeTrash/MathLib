@@ -7,6 +7,29 @@ namespace Math::Geometry
 {
     template <Concept::StrongFloatType T>
     [[nodiscard]] constexpr
+    Intersection<T> NearestIntersection(const Ray<T> &ray, const Interval<T> &interval, const Plane<T>& plane) noexcept
+    {
+        using Float = T;
+
+        Float cosAngle = Dot(ray.Direction, plane.Normal);
+        if (Equal(cosAngle, Cast<Float>(0), Math::Constant::GeometryEpsilon<Float>))
+        {
+            if (Equal(Dot(plane.Normal, ray.Origin - plane.Origin), Cast<Float>(0), Math::Constant::GeometryEpsilon<Float>))
+            {
+                return Intersection<Float>(Cast<Float>(0));
+            }
+            else
+            {
+                return Intersection<Float>(Float::NaN());
+            }
+        }
+
+        Float distance = Dot(plane.Normal, plane.Origin - ray.Origin) / Dot(plane.Normal, ray.Direction);
+        return Intersection<Float>(interval.Pick(distance));
+    }
+
+    template <Concept::StrongFloatType T>
+    [[nodiscard]] constexpr
     Intersection<T> NearestIntersection(const Ray<T>& ray, const Interval<T>& interval, const Sphere<T>& sphere) noexcept
     {
         using Float = T;
@@ -15,14 +38,14 @@ namespace Math::Geometry
         auto newOrigin = ray.Origin - sphere.Center;
 
         Float a = ray.Direction.LenSqr();
-        Float b = 2 * Dot(VectorType(Cast<T>(1)), ray.Direction * newOrigin);
+        Float b = 2 * Dot(VectorType(Cast<Float>(1)), ray.Direction * newOrigin);
         Float c = newOrigin.LenSqr() - Squared(sphere.Radius);
 
         Float discriminant = Squared(b) - 4 * a * c;
 
-        if (discriminant < Cast<T>(0))
+        if (discriminant < Cast<Float>(0))
         {
-            return T::NaN();
+            return Float::NaN();
         }
 
         Float discriminantSqrt = Sqrt(discriminant);
@@ -31,13 +54,7 @@ namespace Math::Geometry
         Float t1 = (-b - discriminantSqrt) / a2;
 
         Float distance = interval.Pick(t0, t1);
-        if (distance != distance)
-        {
-            return Intersection<T>(distance);
-        }
-
-        VectorType normal = sphere.Normal(ray.Project(distance));
-        return Intersection<T>(distance, normal);
+        return Intersection<Float>(distance);
     }
 }
 

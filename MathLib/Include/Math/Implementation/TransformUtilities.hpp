@@ -235,6 +235,18 @@ namespace Math
         }
         return result;
     }
+
+    template <Concept::Scalar Scalar>
+    [[nodiscard]] constexpr
+    Transform3T<Scalar> OrthonormalBaseFromZ(const Vector3T<Scalar>& z) noexcept
+    {
+        using Vec = Vector3T<Scalar>;
+
+        Vec zOrtho = Normalize(z);
+        Vec yOrtho = Normalize(Cross(zOrtho, (Abs(zOrtho.x) > Cast<Scalar>(0.99)) ? Vec::UnitY() : Vec::UnitX()));
+        Vec xOrtho = Cross(yOrtho, zOrtho);
+        return Transform3T<Scalar>(xOrtho, yOrtho, zOrtho);
+    }
 }
 
 #endif //MATHLIB_IMPLEMENTATION_TRANSFORM_UTILITIES_HPP

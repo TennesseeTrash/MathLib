@@ -2,6 +2,8 @@
 #define MATHLIB_IMPLEMENTATION_TRANSFORM_OPERATORS_HPP
 
 #include "Base/Concepts.hpp"
+#include "Math/Implementation/Base/Types.hpp"
+#include "MatrixOperators.hpp"
 
 namespace Math
 {
@@ -61,6 +63,22 @@ namespace Math
     }
 
     template <Concept::BasicTransform Transform, Concept::BasicVector Vec>
+        requires (Transform::Dimension == Vec::Dimension)
+    [[nodiscard]] constexpr
+    Vec operator* (const Vec& v, const Transform& t) noexcept
+    {
+        Vec result;
+        for (SizeType i = 0; i < Transform::Dimension; ++i)
+        {
+            for (SizeType j = 0; j < Transform::Dimension; ++j)
+            {
+                result[i] += v[j] * t[j][i];
+            }
+        }
+        return result;
+    }
+
+    template <Concept::BasicTransform Transform, Concept::BasicVector Vec>
         requires (Transform::Dimension + 1 == Vec::Dimension)
     [[nodiscard]] constexpr
     Vec operator* (const Transform& t, const Vec& v) noexcept
@@ -76,6 +94,23 @@ namespace Math
         for (SizeType i = 0; i <= Transform::Dimension; ++i)
         {
             result[Transform::Dimension] += Transform::BottomRow[i] * v[i];
+        }
+        return result;
+    }
+
+    template <Concept::BasicTransform Transform, Concept::BasicVector Vec>
+        requires (Transform::Dimension + 1 == Vec::Dimension)
+    [[nodiscard]] constexpr
+    Vec operator* (const Vec& v, const Transform& t) noexcept
+    {
+        Vec result;
+        for (SizeType i = 0; i < Vec::Dimension; ++i)
+        {
+            for (SizeType j = 0; j < Transform::Dimension; ++j)
+            {
+                result[i] += v[j] * t[j][i];
+            }
+            result[i] += v[Transform::Dimension] * Transform::BottomRow[Transform::Dimension];
         }
         return result;
     }
@@ -102,6 +137,32 @@ namespace Math
         for (SizeType i = 0; i < Transform::Dimension; ++i)
         {
             norm += Transform::BottomRow[i] * p[i];
+        }
+        for (SizeType i = 0; i < Transform::Dimension; ++i)
+        {
+            result[i] /= norm;
+        }
+        return result;
+    }
+
+    template <Concept::BasicTransform Transform, Concept::BasicPoint Pnt>
+        requires (Transform::Dimension == Pnt::Dimension)
+    [[nodiscard]] constexpr
+    Pnt operator* (const Pnt& p, const Transform& t) noexcept
+    {
+        Pnt result;
+        for (SizeType i = 0; i < Transform::Dimension; ++i)
+        {
+            for (SizeType j = 0; j < Transform::Dimension; ++j)
+            {
+                result[i] += p[i] * t[j][i];
+            }
+            result[i] += Transform::BottomRow[i];
+        }
+        typename Pnt::ScalarType norm = Transform::BottomRow[Transform::Dimension];
+        for (SizeType i = 0; i < Transform::Dimension; ++i)
+        {
+            norm += t[i][Transform::Dimension];
         }
         for (SizeType i = 0; i < Transform::Dimension; ++i)
         {

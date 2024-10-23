@@ -2,8 +2,6 @@
 #include "Camera.hpp"
 #include "Framebuffer.hpp"
 #include "Light.hpp"
-#include "Math/Implementation/TransformUtilities.hpp"
-#include "Math/Vector.hpp"
 #include "Scene.hpp"
 
 #include <iostream>
@@ -16,19 +14,21 @@ int main(int argc, char **argv)
 
     using namespace Math::Types;
 
+    Math::Vector2ul resolution(512, 512);
+
     PathTracer::RNG commonRng(15);
     Math::UniformUnitDistribution<f32> dist;
 
     // "Scene"
     PathTracer::Scene scene;
 
-    PathTracer::Camera cam({0.0f, 0.0f, -3.0f}, {0.0f, 0.0f, 1.0f}, {512, 512}, Math::ToRadians<f32>(90.0f));
-    PathTracer::Framebuffer fb(512, 512);
+    PathTracer::Camera cam({0.0f, 0.0f, -3.0f}, {0.0f, 0.0f, 1.0f}, resolution, Math::ToRadians<f32>(90.0f));
+    PathTracer::Framebuffer fb(resolution.x, resolution.y);
     std::mutex fbMutex;
 
     std::vector<std::thread> threads;
     SizeType hwThreads = std::thread::hardware_concurrency();
-    SizeType totalSamples = 1000;
+    SizeType totalSamples = 500;
     SizeType samplesRemainder = totalSamples % hwThreads;
     for (SizeType i = 0; i < hwThreads; ++i)
     {
@@ -42,14 +42,14 @@ int main(int argc, char **argv)
             continue;
         }
         PathTracer::RNG rng = commonRng.Jump();
-        threads.push_back(std::thread([samples, rng, &scene, &cam, &fb, &fbMutex]() mutable {
+        threads.push_back(std::thread([samples, rng, resolution, &scene, &cam, &fb, &fbMutex]() mutable {
             Math::UniformUnitDistribution<f32> dist;
             PathTracer::Framebuffer localFramebuffer(fb.Size());
             for (SizeType sample = 0; sample < samples; ++sample)
             {
-                for (SizeType y = 0; y < 512; ++y)
+                for (SizeType y = 0; y < resolution.y; ++y)
                 {
-                    for (SizeType x = 0; x < 512; ++x)
+                    for (SizeType x = 0; x < resolution.x; ++x)
                     {
                         f32 xf = Math::Cast<f32>(x) + dist(rng);
                         f32 yf = Math::Cast<f32>(y) + dist(rng);
@@ -69,11 +69,12 @@ int main(int argc, char **argv)
                             PathTracer::Vector3f incomingDirection = intersectedBase * -ray.Direction;
                             for (const auto& light : scene.GetLights())
                             {
-                                PathTracer::Ray lightRay(intersectedPoint, light.SamplePoint(rng) - intersectedPoint);
+                                PathTracer::Ray lightRay(intersectedPoint, Normalize(light.SamplePoint(rng) - intersectedPoint));
                                 PathTracer::Vector3f outgoingDirection = intersectedBase * lightRay.Direction;
-                                if (!scene.HasIntersection(lightRay, {Math::Constant::GeometryEpsilon<f32>, i.Distance}))
+                                PathTracer::Vector3f lightIntensity = light.Evaluate(intersectedPoint);
+                                if (lightIntensity.Max() > 0.0f && !scene.HasIntersection(lightRay, {Math::Constant::GeometryEpsilon<f32>, i.Distance}))
                                 {
-                                    localFramebuffer(x, y) += i.Material.BRDF(incomingDirection, outgoingDirection) * light.Evaluate(intersectedPoint) * cosTheta;
+                                    localFramebuffer(x, y) += i.Material->BRDF(incomingDirection, outgoingDirection) * lightIntensity * cosTheta;
                                 }
                             }
                         }

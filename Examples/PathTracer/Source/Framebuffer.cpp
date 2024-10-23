@@ -50,8 +50,8 @@ namespace PathTracer
 
         image << "#?RADIANCE\n";
         image << "FORMAT=32-bit_rle_rgbe\n\n";
-        image << "-Y " << Math::ToUnderlying(Math::Cast<u32>(mWidth)) << ' '
-              << "+X " << Math::ToUnderlying(Math::Cast<u32>(mHeight)) << '\n';
+        image << "-Y " << Math::ToUnderlying(Math::Cast<u32>(mHeight)) << ' '
+              << "+X " << Math::ToUnderlying(Math::Cast<u32>(mWidth)) << '\n';
 
         for (SizeType j = 0; j < mHeight; ++j)
         {

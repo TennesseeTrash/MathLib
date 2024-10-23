@@ -1,4 +1,5 @@
 #include "Scene.hpp"
+#include "Material.hpp"
 
 namespace PathTracer
 {
@@ -7,22 +8,37 @@ namespace PathTracer
         return Distance == Distance;
     }
 
+    Scene::Intersection Scene::Object::Intersect(const Ray& ray, const Interval& interval) const noexcept
+    {
+        return mObject->Intersect(ray, interval);
+    }
+
+    bool Scene::Object::HasIntersection(const Ray& ray, const Interval& interval) const noexcept
+    {
+        return mObject->HasIntersection(ray, interval);
+    }
+
     Scene::Scene()
-        : mPlane({0.0f, 4.0f, 0.0f}, {0.0f, -1.0f, 0.0f}),
-          mObjects{{{0.0f, 0.0f, 0.0f}, 1.0f}, {{2.0f, 1.0f, 5.0f}, 2.5f}, {{-1.0f, -1.0f, 10.0f}, 5.0f}},
-          mLights{{{0.0f, -4.0f, -5.0f}, {1.0f, 1.0f, 1.0f}},},// {{-8.0f, -5.0f, 0.0f}, {0.1f, 1.0f, 1.0f}}},
-          mMaterials{Material({0.5f, 0.8f, 0.1f})}
-    {}
+        : mObjects{},
+          mLights{{{0.0f, 0.0f, -5.0f}, {1.0f, 1.0f, 1.0f}}, {{-4.0f, -4.0f, 4.0f}, {0.1f, 1.0f, 1.0f}}},
+          mMaterials{Material({0.8f, 0.8f, 0.5f})}
+    {
+        // Note(3011): I really don't like this but it doesn't matter much because it's just init code anyway.
+        mObjects.push_back(Sphere({0.0f, 0.0f, 0.0f}, 1.0f));
+        mObjects.push_back(Sphere({2.0f, 1.0f, 5.0f}, 2.5f));
+        mObjects.push_back(Sphere({-1.0f, -1.0f, 10.0f}, 5.0f));
+        mObjects.push_back(Plane({0.0f, 4.0f, 0.0f}, {0.0f, -1.0f, 0.0f}));
+        mObjects.push_back(Plane({0.0f, 0.0f,20.0f}, {0.0f, 0.0f, -1.0f}));
+    }
 
     Scene::Intersection Scene::Intersect(const Ray& ray, const Interval& interval) const
     {
-        using BasicIntersection = Math::Geometry::Intersection<f32>;
-        BasicIntersection nearest = Math::Geometry::NearestIntersection(ray, interval, mPlane);
-        SizeType nearestIndex = SizeType::Max();
+        Intersection nearest = mObjects[0].Intersect(ray, interval);
+        SizeType nearestIndex = 0;
 
-        for (SizeType i = 0; i < mObjects.size(); ++i)
+        for (SizeType i = 1; i < mObjects.size(); ++i)
         {
-            BasicIntersection candidate = Math::Geometry::NearestIntersection(ray, interval, mObjects[Math::ToUnderlying(i)]);
+            Intersection candidate = mObjects[Math::ToUnderlying(i)].Intersect(ray, interval);
             if (!nearest.IsValid() || nearest.Distance > candidate.Distance)
             {
                 nearest = candidate;
@@ -30,41 +46,15 @@ namespace PathTracer
             }
         }
 
-        if (nearest.IsValid())
-        {
-            if (nearestIndex == SizeType::Max())
-            {
-                return {
-                    .Distance = nearest.Distance,
-                    .Normal = mPlane.SurfaceNormal(ray.Project(nearest.Distance)),
-                    .Material = mMaterials[0]
-                };
-            }
-
-            return {
-                .Distance = nearest.Distance,
-                .Normal = mObjects[Math::ToUnderlying(nearestIndex)].SurfaceNormal(ray.Project(nearest.Distance)),
-                .Material = mMaterials[0]
-            };
-        }
-
-        return {
-            .Distance = f32::NaN(),
-            .Normal = Vector3f(0.0f),
-            .Material = mMaterials[0]
-        };
+        nearest.Material = &mMaterials[0];
+        return nearest;
     }
 
     bool Scene::HasIntersection(const Ray& ray, const Interval& interval) const
     {
-        if (Math::Geometry::NearestIntersection(ray, interval, mPlane))
+        for (const auto& object : mObjects)
         {
-            return true;
-        }
-
-        for (SizeType i = 0; i < mObjects.size(); ++i)
-        {
-            if (Math::Geometry::NearestIntersection(ray, interval, mObjects[Math::ToUnderlying(i)]))
+            if (object.HasIntersection(ray, interval))
             {
                 return true;
             }

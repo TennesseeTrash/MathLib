@@ -14,7 +14,7 @@ int main(int argc, char **argv)
 
     using namespace Math::Types;
 
-    Math::Vector2ul resolution(640, 480);
+    Math::Vector2sz resolution(640, 480);
 
     PathTracer::RNG commonRng(15);
     Math::UniformUnitDistribution<f32> dist;

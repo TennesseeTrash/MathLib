@@ -9,11 +9,11 @@ namespace PathTracer
         : mWidth(width), mHeight(height), mBuffer(Math::ToUnderlying(width * height), Vector3f(0.0f))
     {}
 
-    Framebuffer::Framebuffer(Vector2ul size)
+    Framebuffer::Framebuffer(Vector2sz size)
         : mWidth(size.x), mHeight(size.y), mBuffer(Math::ToUnderlying(size.x * size.y), Vector3f(0.0f))
     {}
 
-    Vector2ul Framebuffer::Size() const
+    Vector2sz Framebuffer::Size() const
     {
         return { mWidth, mHeight };
     }

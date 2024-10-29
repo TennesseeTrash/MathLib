@@ -14,13 +14,13 @@ int main(int argc, char **argv)
 
     using namespace Math::Types;
 
-    Math::Vector2ul resolution(512, 512);
+    Math::Vector2ul resolution(640, 480);
 
     PathTracer::RNG commonRng(15);
     Math::UniformUnitDistribution<f32> dist;
 
     // "Scene"
-    PathTracer::Scene scene;
+    PathTracer::Scene scene(resolution);
 
     PathTracer::Camera cam({0.0f, 0.0f, -3.0f}, {0.0f, 0.0f, 1.0f}, resolution, Math::ToRadians<f32>(90.0f));
     PathTracer::Framebuffer fb(resolution.x, resolution.y);

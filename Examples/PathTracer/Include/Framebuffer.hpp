@@ -18,9 +18,9 @@ namespace PathTracer
     {
     public:
         Framebuffer(SizeType width, SizeType height);
-        Framebuffer(Vector2ul size);
+        Framebuffer(Vector2sz size);
 
-        Vector2ul Size() const;
+        Vector2sz Size() const;
 
         void Add(const Framebuffer& other);
         void Scale(f32 scale);

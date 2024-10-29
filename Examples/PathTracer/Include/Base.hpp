@@ -15,7 +15,7 @@ namespace PathTracer
 {
     using namespace Math::Types;
 
-    using Math::Vector2ul;
+    using Math::Vector2sz;
     using Math::Vector2f;
     using Math::Vector3f;
     using Math::Point3f;
@@ -27,6 +27,7 @@ namespace PathTracer
 
     using Ray = Math::Geometry::Ray<f32>;
     using Plane = Math::Geometry::Plane<f32>;
+    using Triangle = Math::Geometry::Triangle<f32>;
     using Sphere = Math::Geometry::Sphere<f32>;
 }
 

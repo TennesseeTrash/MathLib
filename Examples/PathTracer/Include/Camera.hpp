@@ -8,7 +8,7 @@ namespace PathTracer
     class Camera
     {
     public:
-        Camera(const Point3f& position, const Vector3f& direction, const Vector2ul& resolution, f32 fov);
+        Camera(const Point3f& position, const Vector3f& direction, const Vector2sz& resolution, f32 fov);
 
         Ray GenerateRay(const Vector2f& screenSample) const;
     private:

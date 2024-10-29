@@ -18,9 +18,9 @@ namespace PathTracer
         return mObject->HasIntersection(ray, interval);
     }
 
-    Scene::Scene()
         : mObjects{},
           mLights{{{0.0f, 0.0f, -5.0f}, {1.0f, 1.0f, 1.0f}}, {{-4.0f, -4.0f, 4.0f}, {0.1f, 1.0f, 1.0f}}},
+    Scene::Scene(const Vector2sz& resolution)
           mMaterials{Material({0.8f, 0.8f, 0.5f})}
     {
         // Note(3011): I really don't like this but it doesn't matter much because it's just init code anyway.

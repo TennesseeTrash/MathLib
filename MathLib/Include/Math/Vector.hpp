@@ -52,6 +52,10 @@ namespace Math
     using Vector3ul = Vector3T<u64>;
     using Vector4ul = Vector4T<u64>;
 
+    using Vector2sz = Vector2T<SizeType>;
+    using Vector3sz = Vector3T<SizeType>;
+    using Vector4sz = Vector4T<SizeType>;
+
     //////////////////////////////////////////////////////////////////////////
     // Enforce concepts on provided types
     //////////////////////////////////////////////////////////////////////////

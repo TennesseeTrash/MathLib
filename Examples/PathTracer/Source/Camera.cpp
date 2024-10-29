@@ -2,7 +2,7 @@
 
 namespace PathTracer
 {
-    Camera::Camera(const Point3f& position, const Vector3f& direction, const Vector2ul& resolution, f32 fov)
+    Camera::Camera(const Point3f& position, const Vector3f& direction, const Vector2sz& resolution, f32 fov)
         : mPosition(position), mScreenToWorld{}
     {
         Vector2f fres = Vector2f(Math::Cast<f32>(resolution.x), Math::Cast<f32>(resolution.y));

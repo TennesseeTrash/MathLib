@@ -2,6 +2,7 @@
 #define MATHLIB_EXAMPLES_PATHTRACER_SCENE_HPP
 
 #include "Base.hpp"
+#include "Camera.hpp"
 #include "Light.hpp"
 #include "Material.hpp"
 
@@ -66,10 +67,6 @@ namespace PathTracer
                 : mObject(std::make_unique<ObjectContainer<ObjectType>>(object))
             {}
 
-            Object(Object&& other) noexcept = default;
-            Object& operator=(Object&& other) noexcept = default;
-            ~Object() noexcept = default;
-
             Intersection Intersect(const Ray& ray, const Interval& interval) const noexcept;
             bool HasIntersection(const Ray& ray, const Interval& interval) const noexcept;
         private:
@@ -83,13 +80,15 @@ namespace PathTracer
             std::unique_ptr<GenericObject> mObject;
         };
 
-        Scene();
+        Scene(const Vector2sz& resolution);
 
         Intersection Intersect(const Ray& ray, const Interval& interval) const;
         bool HasIntersection(const Ray& ray, const Interval& interval) const;
 
+        const Camera& GetCamera() const;
         std::span<const PointLight> GetLights() const;
     private:
+        Camera mCamera;
         std::vector<Object> mObjects;
         std::vector<PointLight> mLights;
         std::vector<Material> mMaterials;

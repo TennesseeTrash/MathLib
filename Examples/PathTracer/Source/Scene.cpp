@@ -30,6 +30,8 @@ namespace PathTracer
         mObjects.push_back(Sphere({-0.5f, 0.2f, 1.0f}, 0.75f));
         mObjects.push_back(Plane({0.0f, -1.0f, 0.0f}, {0.0f, 1.0f, 0.0f}));
         mObjects.push_back(Plane({0.0f, 0.0f,2.0f}, {0.0f, 0.0f, -1.0f}));
+        mObjects.push_back(Plane({-1.5f, 0.0f, 0.0f}, {1.0f, 0.0f, 0.0f}));
+        mObjects.push_back(Triangle({1.5f, 0.0f, 0.0f}, {1.5f, 0.0f, 1.0f}, {1.5f, 2.0f, 1.0f}));
     }
 
     Scene::Intersection Scene::Intersect(const Ray& ray, const Interval& interval) const

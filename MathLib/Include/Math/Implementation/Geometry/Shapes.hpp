@@ -37,7 +37,23 @@ namespace Math::Geometry
     struct Triangle
     {
     public:
+        using PointType = Point<T>;
+        using VectorType = Vector3T<T>;
 
+        [[nodiscard]] constexpr
+        Triangle(const PointType& a, const PointType& b, const PointType& c)
+            : A(a), B(b), C(c)
+        {}
+
+        [[nodiscard]] constexpr
+        VectorType SurfaceNormal([[maybe_unused]] const PointType& surfacePoint) const noexcept
+        {
+            return Cross(B - A, C - A);
+        }
+
+        PointType A;
+        PointType B;
+        PointType C;
     };
 
     template <Concept::StrongFloatType T>
@@ -62,6 +78,21 @@ namespace Math::Geometry
         ScalarType Radius;
     };
 
+    template <Concept::StrongFloatType T>
+    struct Box
+    {
+    public:
+        using PointType = Point<T>;
+
+        [[nodiscard]] constexpr
+        Box(const PointType& min, const PointType& max)
+            : Min(Math::Min(min.x, max.x), Math::Min(min.y, max.y), Math::Min(min.z, max.z)),
+              Max(Math::Max(min.x, max.x), Math::Max(min.y, max.y), Math::Max(min.z, max.z))
+        {}
+
+        PointType Min;
+        PointType Max;
+    };
 
 
     template <Concept::StrongFloatType T>

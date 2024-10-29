@@ -7,14 +7,14 @@ namespace Math::Geometry
 {
     template <Concept::StrongFloatType T>
     [[nodiscard]] constexpr
-    Intersection<T> NearestIntersection(const Ray<T> &ray, const Interval<T> &interval, const Plane<T>& plane) noexcept
+    Intersection<T> NearestIntersection(const Ray<T> &ray, const Interval<T>& interval, const Plane<T>& plane) noexcept
     {
         using Float = T;
 
-        Float cosAngle = Dot(ray.Direction, plane.Normal);
-        if (Equal(cosAngle, Cast<Float>(0), Math::Constant::GeometryEpsilon<Float>))
+        Float cosIncidence = Dot(ray.Direction, plane.Normal);
+        if (Equal(cosIncidence, Cast<Float>(0), Math::Constant::GeometryEpsilon<Float>))
         {
-            if (Equal(Dot(plane.Normal, ray.Origin - plane.Origin), Cast<Float>(0), Math::Constant::GeometryEpsilon<Float>))
+            if (Equal(Dot(plane.Normal, plane.Origin - ray.Origin), Cast<Float>(0), Math::Constant::GeometryEpsilon<Float>))
             {
                 return Intersection<Float>(Cast<Float>(0));
             }
@@ -24,8 +24,61 @@ namespace Math::Geometry
             }
         }
 
-        Float distance = Dot(plane.Normal, plane.Origin - ray.Origin) / Dot(plane.Normal, ray.Direction);
+        Float distance = Dot(plane.Normal, plane.Origin - ray.Origin) / cosIncidence;
         return Intersection<Float>(interval.Pick(distance));
+    }
+
+    template <Concept::StrongFloatType T>
+    [[nodiscard]] constexpr
+    Intersection<T> NearestIntersection(const Ray<T>& ray, const Interval<T>& interval, const Triangle<T>& triangle) noexcept
+    {
+        using Float = T;
+        using PointType = typename Ray<Float>::PointType;
+        using VectorType = typename Ray<Float>::VectorType;
+
+        VectorType u = triangle.B - triangle.A;
+        VectorType v = triangle.C - triangle.A;
+
+        VectorType normal = Cross(u, v);
+        if (Equal(normal, VectorType(Cast<Float>(0))))
+        {
+            return Intersection<Float>(Float::NaN());
+        }
+
+        Float a = -Dot(normal, ray.Origin - triangle.A);
+        Float b = Dot(normal, ray.Direction);
+        if (Equal(b, Cast<Float>(0), Constant::GeometryEpsilon<Float>))
+        {
+            if (Equal(a, Cast<Float>(0), Constant::GeometryEpsilon<Float>))
+            {
+                return Intersection<Float>(Cast<Float>(0));
+            }
+            else
+            {
+                return Intersection<Float>(Float::NaN());
+            }
+        }
+
+        Float distance = a / b;
+        if (distance < Cast<Float>(0))
+        {
+            return Intersection<Float>(Float::NaN());
+        }
+
+        PointType intersect = ray.Project(distance);
+        VectorType w = intersect - triangle.A;
+        Float det = Squared(Dot(u, v)) - u.LenSqr() * v.LenSqr();
+        Float s = (Dot(u, v) * Dot(w, v) - v.LenSqr() * Dot(u, w)) / det;
+        Float t = (Dot(u, v) * Dot(u, w) - u.LenSqr() * Dot(w, v)) / det;
+
+        if (s > Cast<Float>(0) && t > Cast<Float>(0) && (s + t) <= Cast<Float>(1))
+        {
+            return Intersection<Float>(interval.Pick(distance));
+        }
+        else
+        {
+            return Intersection<Float>(Float::NaN());
+        }
     }
 
     template <Concept::StrongFloatType T>

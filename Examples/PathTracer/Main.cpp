@@ -68,10 +68,11 @@ int main(int argc, char **argv)
                             PathTracer::Vector3f incomingDirection = intersectedBase * -ray.Direction;
                             for (const auto& light : scene.GetLights())
                             {
-                                PathTracer::Ray lightRay(intersectedPoint, Normalize(light.SamplePoint(rng) - intersectedPoint));
+                                PathTracer::Point3f lightPoint = light.SamplePoint(rng);
+                                PathTracer::Ray lightRay(intersectedPoint, Math::Normalize(lightPoint - intersectedPoint));
                                 PathTracer::Vector3f outgoingDirection = intersectedBase * lightRay.Direction;
                                 PathTracer::Vector3f lightIntensity = light.Evaluate(intersectedPoint);
-                                if (lightIntensity.Max() > 0.0f && !scene.HasIntersection(lightRay, {Math::Constant::GeometryEpsilon<f32>, i.Distance}))
+                                if (lightIntensity.Max() > 0.0f && !scene.HasIntersection(lightRay, {Math::Constant::GeometryEpsilon<f32>, (lightPoint - intersectedPoint).Length()}))
                                 {
                                     localFramebuffer(x, y) += i.Material->BRDF(incomingDirection, outgoingDirection) * lightIntensity * cosTheta;
                                 }

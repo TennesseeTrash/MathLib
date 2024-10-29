@@ -18,17 +18,18 @@ namespace PathTracer
         return mObject->HasIntersection(ray, interval);
     }
 
-        : mObjects{},
-          mLights{{{0.0f, 0.0f, -5.0f}, {1.0f, 1.0f, 1.0f}}, {{-4.0f, -4.0f, 4.0f}, {0.1f, 1.0f, 1.0f}}},
     Scene::Scene(const Vector2sz& resolution)
+        : mCamera({0.0f, 0.5f, -2.0f}, {0.0f, 0.0f, 1.0f}, resolution, Math::ToRadians<f32>(90.0f)),
+          mObjects{},
+          mLights{{{0.8f, 0.8f, 0.0f}, Vector3f(10.0f)}},
           mMaterials{Material({0.8f, 0.8f, 0.5f})}
     {
         // Note(3011): I really don't like this but it doesn't matter much because it's just init code anyway.
-        mObjects.push_back(Sphere({0.0f, 0.0f, 0.0f}, 1.0f));
-        mObjects.push_back(Sphere({2.0f, 1.0f, 5.0f}, 2.5f));
-        mObjects.push_back(Sphere({-1.0f, -1.0f, 10.0f}, 5.0f));
-        mObjects.push_back(Plane({0.0f, 4.0f, 0.0f}, {0.0f, -1.0f, 0.0f}));
-        mObjects.push_back(Plane({0.0f, 0.0f,20.0f}, {0.0f, 0.0f, -1.0f}));
+        mObjects.push_back(Sphere({0.0f, 0.0f, 0.0f}, 0.2f));
+        mObjects.push_back(Sphere({0.8f, -0.2f, 0.6f}, 0.50f));
+        mObjects.push_back(Sphere({-0.5f, 0.2f, 1.0f}, 0.75f));
+        mObjects.push_back(Plane({0.0f, -1.0f, 0.0f}, {0.0f, 1.0f, 0.0f}));
+        mObjects.push_back(Plane({0.0f, 0.0f,2.0f}, {0.0f, 0.0f, -1.0f}));
     }
 
     Scene::Intersection Scene::Intersect(const Ray& ray, const Interval& interval) const
@@ -61,6 +62,11 @@ namespace PathTracer
         }
 
         return false;
+    }
+
+    const Camera& Scene::GetCamera() const
+    {
+        return mCamera;
     }
 
     std::span<const PointLight> Scene::GetLights() const

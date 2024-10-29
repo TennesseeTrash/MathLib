@@ -34,6 +34,19 @@ namespace PathTracer
         }
     }
 
+    void Framebuffer::Flip()
+    {
+        for (SizeType y = 0; y < (mHeight / 2); ++y)
+        {
+            for (SizeType x = 0; x < mWidth; ++x)
+            {
+                Vector3f temp = (*this)(x, y);
+                (*this)(x, y) = (*this)(x, (mHeight - 1) - y);
+                (*this)(x, (mHeight - 1) - y) = temp;
+            }
+        }
+    }
+
     void Framebuffer::Clear()
     {
         mBuffer.assign(mBuffer.size(), Vector3f(0.0f));

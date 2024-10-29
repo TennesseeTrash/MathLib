@@ -22,7 +22,6 @@ int main(int argc, char **argv)
     // "Scene"
     PathTracer::Scene scene(resolution);
 
-    PathTracer::Camera cam({0.0f, 0.0f, -3.0f}, {0.0f, 0.0f, 1.0f}, resolution, Math::ToRadians<f32>(90.0f));
     PathTracer::Framebuffer fb(resolution.x, resolution.y);
     std::mutex fbMutex;
 
@@ -42,7 +41,7 @@ int main(int argc, char **argv)
             continue;
         }
         PathTracer::RNG rng = commonRng.Jump();
-        threads.push_back(std::thread([samples, rng, resolution, &scene, &cam, &fb, &fbMutex]() mutable {
+        threads.push_back(std::thread([samples, rng, resolution, &scene, &fb, &fbMutex]() mutable {
             Math::UniformUnitDistribution<f32> dist;
             PathTracer::Framebuffer localFramebuffer(fb.Size());
             for (SizeType sample = 0; sample < samples; ++sample)
@@ -53,7 +52,7 @@ int main(int argc, char **argv)
                     {
                         f32 xf = Math::Cast<f32>(x) + dist(rng);
                         f32 yf = Math::Cast<f32>(y) + dist(rng);
-                        PathTracer::Ray ray = cam.GenerateRay({xf, yf});
+                        PathTracer::Ray ray = scene.GetCamera().GenerateRay({xf, yf});
 
                         using Intersection = PathTracer::Scene::Intersection;
                         if (Intersection i = scene.Intersect(ray, {}); i.IsValid())
@@ -89,13 +88,17 @@ int main(int argc, char **argv)
         }));
     }
 
-    // We need to wait for the computation in all the threads to finish.
+    // We need to wait for the computation in all threads to finish.
     for (SizeType i = 0; i < threads.size(); ++i)
     {
         threads[Math::ToUnderlying(i)].join();
     }
 
     fb.Scale(1.0f / Math::Cast<f32>(totalSamples));
+    // Note(3011): Flipping the Y axis description in the image file would be
+    // better, but tev (the viewer) unfortunately does not support this.
+    // We do this to make it more obvious that we follow the right hand rule.
+    fb.Flip();
     fb.Save("test.hdr");
     return 0;
 }

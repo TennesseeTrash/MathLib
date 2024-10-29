@@ -24,6 +24,7 @@ namespace PathTracer
 
         void Add(const Framebuffer& other);
         void Scale(f32 scale);
+        void Flip();
         void Clear();
 
         bool Save(const fs::path& filename, ImageEncoding encoding = ImageEncoding::HDR) const;

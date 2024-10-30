@@ -17,7 +17,7 @@ namespace PathTracer
         using Interval = Math::Geometry::Interval<f32>;
         struct Intersection
         {
-            bool IsValid();
+            bool IsValid() const;
 
             f32 Distance;
             Vector3f Normal;
@@ -27,6 +27,15 @@ namespace PathTracer
         class Object
         {
         public:
+            struct Intersection
+            {
+                bool IsValid() const;
+
+                f32 Distance;
+                Vector3f Normal;
+                SizeType MaterialIndex;
+            };
+
             struct GenericObject
             {
             public:
@@ -50,7 +59,7 @@ namespace PathTracer
                     return {
                         .Distance = nearest.Distance,
                         .Normal = mObject.SurfaceNormal(ray.Project(nearest.Distance)),
-                        .Material = nullptr
+                        .MaterialIndex = 0,
                     };
                 }
 
@@ -63,8 +72,8 @@ namespace PathTracer
             };
 
             template <typename ObjectType>
-            Object(const ObjectType& object)
-                : mObject(std::make_unique<ObjectContainer<ObjectType>>(object))
+            Object(const ObjectType& object, SizeType materialIndex)
+                : mObject(std::make_unique<ObjectContainer<ObjectType>>(object)), mMaterialIndex(materialIndex)
             {}
 
             Intersection Intersect(const Ray& ray, const Interval& interval) const noexcept;
@@ -78,6 +87,7 @@ namespace PathTracer
             // memory purely on alignment. (8B for vtable (64bit) ptr overhead,
             // 56B of useable space (14 floats ~ 3 points + change).)
             std::unique_ptr<GenericObject> mObject;
+            SizeType mMaterialIndex;
         };
 
         Scene(const Vector2sz& resolution);

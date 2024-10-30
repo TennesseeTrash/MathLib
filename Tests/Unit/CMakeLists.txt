@@ -48,7 +48,6 @@ target_sources(UnitTests PRIVATE
     "TestTypes.cpp"
     "TestQuaternions.cpp"
     "TestNoise.cpp"
-    "TestUtilsContainerTools.cpp"
 )
 
 if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")

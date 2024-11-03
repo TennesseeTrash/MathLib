@@ -2,7 +2,6 @@
 #define MATHLIB_IMPLEMENTATION_RANDOM_POISSON_DISTRIBUTION_HPP
 
 #include "UniformDistribution.hpp"
-#include "../../Base.hpp"
 
 namespace Math
 {

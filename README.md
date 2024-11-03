@@ -1,9 +1,10 @@
 # MathLib
 
 A work-in-progress C++20 math library. Any testing, feedback, suggestions for improvements, or
-pull requests are welcome.
+pull requests are welcome. It's currently not ready for serious use.
 
-Documentation is currently work in progress [here](https://3011.io/Documentation/MathLib/).
+Documentation lives [here](https://3011.io/Documentation/MathLib/) (WIP).
+
 
 ## Usage
 
@@ -42,7 +43,7 @@ After that, you can just include the appropriate headers in your projects.
 ## Example
 
 Below is a small example of what the library has to offer. Larger and more
-practical examples are in [Examples](Examples/)
+practical examples are in [Examples](Examples/).
 
 ```cpp
 #include <Math/Vector.hpp>
@@ -71,25 +72,3 @@ int main()
     Math::f32 cosAngle = Dot(v4, v5); // Cross products are also present
 }
 ```
-
-
-## Status
-
-The library is feature complete in terms of the foundational facilities necessary for
-a wide variety of tasks. Templates (and their instantiations) are ready for vectors,
-(square) matrices, points, and transforms. These types already have most utilities made
-and can be considered near stable.
-
-There are also several "modules" of the library that are incomplete, but already somewhat
-usable in their current state and major changes to the existing code are not planned at least
-until after the first actual release. These include the random number utilities (`Math/Random.hpp`),
-and geometry utilities. These modules will be only expanded without major modifications to existing code
-(and API).
-
-Finally, some parts of the library, such as `Math/Noise.hpp` are in very early stages. These
-should be considered unstable and not fit for any practical purpose for now. The API is not final
-and the implementations are not tested very well.
-
-For more specific notes on what the library contains, and the implementation status,
-please refer to the [documentation](https://3011.io/Documentation/MathLib/). The documentation
-is incomplete for now, but it should cover most of the library soon.

@@ -24,6 +24,7 @@ namespace PathTracer
     using Math::Transform3f;
 
     using RNG = Math::Random64;
+    using Uniform = Math::UniformUnitDistribution<f32>;
 
     using Ray = Math::Geometry::Ray<f32>;
     using Plane = Math::Geometry::Plane<f32>;

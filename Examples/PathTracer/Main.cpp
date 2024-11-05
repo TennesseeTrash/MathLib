@@ -2,11 +2,12 @@
 #include "Camera.hpp"
 #include "Framebuffer.hpp"
 #include "Light.hpp"
+#include "Material.hpp"
 #include "Scene.hpp"
 
 #include <iostream>
-#include <thread>
 #include <mutex>
+#include <thread>
 
 int main(int argc, char **argv)
 {
@@ -14,7 +15,7 @@ int main(int argc, char **argv)
 
     using namespace Math::Types;
 
-    Math::Vector2sz resolution(640, 480);
+    Math::Vector2sz resolution(1920, 1080);
 
     PathTracer::RNG commonRng(15);
     Math::UniformUnitDistribution<f32> dist;
@@ -27,7 +28,7 @@ int main(int argc, char **argv)
 
     std::vector<std::thread> threads;
     SizeType hwThreads = std::thread::hardware_concurrency();
-    SizeType totalSamples = 500;
+    SizeType totalSamples = 100;
     SizeType samplesRemainder = totalSamples % hwThreads;
     for (SizeType i = 0; i < hwThreads; ++i)
     {
@@ -41,8 +42,8 @@ int main(int argc, char **argv)
             continue;
         }
         PathTracer::RNG rng = commonRng.Jump();
-        threads.push_back(std::thread([samples, rng, resolution, &scene, &fb, &fbMutex]() mutable {
-            Math::UniformUnitDistribution<f32> dist;
+        threads.push_back(std::thread([samples, rng, resolution, &scene, &fb, &fbMutex, &currentSamples]() mutable {
+            PathTracer::Uniform dist;
             PathTracer::Framebuffer localFramebuffer(fb.Size());
             for (SizeType sample = 0; sample < samples; ++sample)
             {
@@ -55,29 +56,82 @@ int main(int argc, char **argv)
                         PathTracer::Ray ray = scene.GetCamera().GenerateRay({xf, yf});
 
                         using Intersection = PathTracer::Scene::Intersection;
-                        if (Intersection i = scene.Intersect(ray, {}); i.IsValid())
+                        Intersection intersection = scene.Intersect(ray, {});
+
+                        PathTracer::Vector3f accumulator(0.0f);
+                        PathTracer::Vector3f throughput(1.0f);
+                        SizeType bounce = 0;
+                        while (true)
                         {
-                            f32 cosTheta = Math::Dot(i.Normal, -ray.Direction);
-                            if (cosTheta <= Math::Cast<f32>(0))
+                            if (!intersection.IsValid())
                             {
-                                continue;
+                                // HDRI handling goes here.
+                                break;
                             }
 
-                            PathTracer::Point3f intersectedPoint = ray.Project(i.Distance);
-                            PathTracer::Transform3f intersectedBase = Math::OrthonormalBaseFromZ(i.Normal);
+                            PathTracer::Point3f intersectedPoint = ray.Project(intersection.Distance);
+                            PathTracer::Transform3f intersectedBase = Math::OrthonormalBaseFromZ(intersection.Normal);
                             PathTracer::Vector3f incomingDirection = intersectedBase * -ray.Direction;
-                            for (const auto& light : scene.GetLights())
+
+                            if (intersection.Light)
                             {
-                                PathTracer::Point3f lightPoint = light.SamplePoint(rng);
-                                PathTracer::Ray lightRay(intersectedPoint, Math::Normalize(lightPoint - intersectedPoint));
-                                PathTracer::Vector3f outgoingDirection = intersectedBase * lightRay.Direction;
-                                PathTracer::Vector3f lightIntensity = light.Evaluate(intersectedPoint);
-                                if (lightIntensity.Max() > 0.0f && !scene.HasIntersection(lightRay, {Math::Constant::GeometryEpsilon<f32>, (lightPoint - intersectedPoint).Length()}))
+                                PathTracer::Vector3f intensity = intersection.Light->Sample(rng, ray.Origin).Intensity;
+                                if (bounce == 0 && intensity.Max() > 0.0f)
                                 {
-                                    localFramebuffer(x, y) += i.Material->BRDF(incomingDirection, outgoingDirection) * lightIntensity * cosTheta;
+                                    accumulator += intensity;
+                                }
+                                break;
+                            }
+
+                            PathTracer::Vector3f mis(0.0f);
+                            {   // Explicit lightsource sampling
+                                for (const auto& light : scene.GetLights())
+                                {
+                                    PathTracer::LightSample sample = light.Sample(rng, intersectedPoint);
+                                    PathTracer::Ray lightRay(intersectedPoint, sample.OutgoingDirection);
+                                    PathTracer::Vector3f outgoingDirection = intersectedBase * sample.OutgoingDirection;
+                                    f32 cosTheta = Math::Dot(intersection.Normal, lightRay.Direction);
+                                    f32 brdfPdf = Math::Equal(sample.PDF, 1.0f) ? 0.0f : intersection.Material->PDF(incomingDirection, outgoingDirection);
+                                    if (cosTheta > 0.0f && sample.Intensity.Max() > 0.0f && !scene.HasIntersection(lightRay, {Math::Constant::GeometryEpsilon<f32>, sample.Distance - 2.0f * Math::Constant::GeometryEpsilon<f32>}))
+                                    {
+                                        mis += (intersection.Material->BRDF(incomingDirection, outgoingDirection) * sample.Intensity * cosTheta) / (sample.PDF + brdfPdf);
+                                    }
                                 }
                             }
+                            {   // BRDF sampling
+                                PathTracer::MaterialSample sample = intersection.Material->Sample(rng, incomingDirection);
+                                PathTracer::Vector3f outgoingDirection = sample.OutgoingDirection * intersectedBase;
+                                f32 cosTheta = Math::Dot(intersection.Normal, outgoingDirection);
+
+                                ray = PathTracer::Ray(intersectedPoint, outgoingDirection);
+                                intersection = scene.Intersect(ray, {Math::Constant::GeometryEpsilon<f32>});
+
+                                if (intersection.Light && cosTheta > 0.0f && sample.Intensity.Max() > 0.0f)
+                                {
+                                    PathTracer::Point3f lightPoint = ray.Project(intersection.Distance);
+                                    mis += sample.Intensity * intersection.Light->Evaluate(intersectedPoint, lightPoint) * cosTheta / (sample.PDF + intersection.Light->PDF(intersectedPoint, lightPoint));
+                                }
+
+                                accumulator += throughput * mis;
+                                throughput *= sample.Intensity * cosTheta / sample.PDF;
+                            }
+
+
+                            // Russian roulette
+                            f32 survive = Math::Min(throughput.Max(), f32(1.0f));
+                            if (dist(rng) < survive)
+                            {
+                                throughput /= survive;
+                            }
+                            else
+                            {
+                                break;
+                            }
+
+                            ++bounce;
                         }
+
+                        localFramebuffer(x, y) += accumulator;
                     }
                 }
             }

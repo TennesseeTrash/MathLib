@@ -22,6 +22,7 @@ namespace PathTracer
             f32 Distance;
             Vector3f Normal;
             const Material* Material;
+            const Light* Light;
         };
 
         class Object
@@ -96,11 +97,11 @@ namespace PathTracer
         bool HasIntersection(const Ray& ray, const Interval& interval) const;
 
         const Camera& GetCamera() const;
-        std::span<const PointLight> GetLights() const;
+        std::span<const Light> GetLights() const;
     private:
         Camera mCamera;
         std::vector<Object> mObjects;
-        std::vector<PointLight> mLights;
+        std::vector<Light> mLights;
         std::vector<Material> mMaterials;
     };
 }

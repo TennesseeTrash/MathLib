@@ -5,6 +5,8 @@ using Math::Min;
 using Math::Max;
 using Math::Equal;
 
+using namespace Math::Types;
+
 TEST_CASE("Basic Min tests", "[Math][Functions]")
 {
     SECTION("Basic int values with Min")

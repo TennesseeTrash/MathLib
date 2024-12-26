@@ -1,13 +1,13 @@
 include(${PROJECT_SOURCE_DIR}/CMake/Catch2.cmake)
 
-add_executable(UnitTests)
+add_executable(Tests)
 
-target_link_libraries(UnitTests PRIVATE
+target_link_libraries(Tests PRIVATE
     MathLib
     Catch2::Catch2WithMain
 )
 
-target_sources(UnitTests PRIVATE
+target_sources(Tests PRIVATE
     "Base/Array.cpp"
     "Functions/BasicFunctions/SignAbsTests.cpp"
     "Functions/BasicFunctions/PowerTests.cpp"
@@ -51,11 +51,11 @@ target_sources(UnitTests PRIVATE
 )
 
 if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-    target_compile_options(UnitTests PRIVATE /W4)
+    target_compile_options(Tests PRIVATE /W4)
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-    target_compile_options(UnitTests PRIVATE -Wall -Wextra -Wpedantic)
+    target_compile_options(Tests PRIVATE -Wall -Wextra -Wpedantic)
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Clang" OR CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
-    target_compile_options(UnitTests PRIVATE -Weverything -Wpedantic -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-unsafe-buffer-usage)
+    target_compile_options(Tests PRIVATE -Weverything -Wpedantic -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-unsafe-buffer-usage)
 else()
-    message(WARNING "Unknown compiler, no compiler warnings set for UnitTests target!")
+    message(WARNING "Unknown compiler, no compiler warnings set for Tests target!")
 endif()

@@ -28,7 +28,7 @@ int main(int argc, char **argv)
 
     std::vector<std::thread> threads;
     SizeType hwThreads = std::thread::hardware_concurrency();
-    SizeType totalSamples = 100;
+    SizeType totalSamples = 4;
     SizeType samplesRemainder = totalSamples % hwThreads;
     for (SizeType i = 0; i < hwThreads; ++i)
     {
@@ -42,7 +42,7 @@ int main(int argc, char **argv)
             continue;
         }
         PathTracer::RNG rng = commonRng.Jump();
-        threads.push_back(std::thread([samples, rng, resolution, &scene, &fb, &fbMutex, &currentSamples]() mutable {
+        threads.push_back(std::thread([samples, rng, resolution, &scene, &fb, &fbMutex]() mutable {
             PathTracer::Uniform dist;
             PathTracer::Framebuffer localFramebuffer(fb.Size());
             for (SizeType sample = 0; sample < samples; ++sample)

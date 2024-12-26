@@ -2,6 +2,7 @@
 #define MATHLIB_IMPLEMENTATION_CONSTANTS_HPP
 
 #include "Base/Types.hpp"
+#include "Base/Concepts.hpp"
 
 namespace Math::Constant::Implementation
 {

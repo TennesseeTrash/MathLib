@@ -1,18 +1,33 @@
 #ifndef MATHLIB_IMPLEMENTATION_FUNCTIONS_TRIGONOMETRIC_FUNCTIONS_HPP
 #define MATHLIB_IMPLEMENTATION_FUNCTIONS_TRIGONOMETRIC_FUNCTIONS_HPP
 
-#include "../Base/Concepts.hpp"
-#include "../Base/Types.hpp"
+#include "../../Base.hpp"
+#include "../Constants.hpp"
+#include "Equal.hpp"
 
 // TODO(3011): Add custom implementation and remove this include later.
 #include <cmath>
 
 namespace Math
 {
-    template <Concept::FloatingPointType T>
+    template <Concept::StrongFloatType T>
     [[nodiscard]] constexpr
     T Sin(T val) noexcept
     {
+        if (val != val)
+        {
+            return T::NaN();
+        }
+
+        if (Equal(T(0), Abs(val), T::Epsilon()) || Equal(Constant::Pi<T>, Abs(val), T::Epsilon()))
+        {
+            return T(0);
+        }
+        else if (Equal(Constant::PiDiv2<T>, Abs(val), T::Epsilon()))
+        {
+            return T(1);
+        }
+
         return std::sin(ToUnderlying(val));
     }
 

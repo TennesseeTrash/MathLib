@@ -1,6 +1,8 @@
 #ifndef MATHLIB_IMPLEMENTATION_BASE_TYPES_HPP
 #define MATHLIB_IMPLEMENTATION_BASE_TYPES_HPP
 
+#include "Warnings.hpp"
+
 #include <cstdint>
 #include <cstddef>
 #include <compare>
@@ -177,7 +179,7 @@ namespace Math
             // Note(3011): Default this when the bogus warning in Clang is fixed.
             // Relevant issue - https://github.com/llvm/llvm-project/issues/43670
             [[nodiscard]] friend constexpr
-            bool operator==(ThisType a, ThisType b) noexcept { return a.Value == b.Value; }
+            bool operator==(ThisType a, ThisType b) noexcept { return MATH_NO_WARN(-Wfloat-equal, a.Value == b.Value); }
             [[nodiscard]] friend constexpr
             auto operator<=>(ThisType a, ThisType b) noexcept { return a.Value <=> b.Value; }
         };
@@ -209,6 +211,15 @@ namespace Math
     To Cast(From value) noexcept
     {
         return To(static_cast<UnderlyingType<To>>(ToUnderlying(value)));
+    }
+
+    template <typename T>
+    constexpr
+    void Swap(T& a, T& b)
+    {
+        T temp = a;
+        a = b;
+        b = temp;
     }
 
     //////////////////////////////////////////////////////////////////////////
@@ -338,7 +349,7 @@ namespace Math
         [[nodiscard]] constexpr
         StrongFloatType<T> StrongFloatType<T>::Next() const noexcept
         {
-            if (Value != Value)
+            if (MATH_NO_WARN(-Wfloat-equal, Value != Value))
             {
                 return StrongFloatType<T>::NaN();
             }

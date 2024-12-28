@@ -159,7 +159,7 @@ namespace Math::Constant::Implementation
     template <>
     struct EqualEpsilon<double> final
     {
-        static constexpr double Value = 1.0e-10;
+        static constexpr double Value = 1.0e-15;
     };
 
     template <typename T>

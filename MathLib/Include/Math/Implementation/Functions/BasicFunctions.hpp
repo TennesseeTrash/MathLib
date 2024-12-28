@@ -3,6 +3,7 @@
 
 #include "../../Base.hpp"
 #include "../../Constants.hpp"
+#include "Math/Implementation/Base/Concepts.hpp"
 
 // Note(3011): Currently used for std::pow, std::log and std::sqrt.
 // TODO(3011): Add custom implementation and remove this include later.
@@ -11,8 +12,15 @@
 namespace Math
 {
     //////////////////////////////////////////////////////////////////////////
-    // Sign, Abs
+    // IsNan, Sign, Abs
     //////////////////////////////////////////////////////////////////////////
+
+    template <Concept::StrongFloatType T>
+    [[nodiscard]] constexpr
+    bool IsNan(T val)
+    {
+        return val != val;
+    }
 
     template <typename T>
     [[nodiscard]] constexpr

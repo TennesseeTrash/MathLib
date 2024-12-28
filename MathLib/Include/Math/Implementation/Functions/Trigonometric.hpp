@@ -2,7 +2,7 @@
 #define MATHLIB_IMPLEMENTATION_FUNCTIONS_TRIGONOMETRIC_FUNCTIONS_HPP
 
 #include "../../Base.hpp"
-#include "../Constants.hpp"
+#include "../../Constants.hpp"
 #include "Equal.hpp"
 
 // TODO(3011): Add custom implementation and remove this include later.
@@ -35,6 +35,24 @@ namespace Math
     [[nodiscard]] constexpr
     T Cos(T val) noexcept
     {
+        if (val != val)
+        {
+            return T::NaN();
+        }
+
+        if (Equal(T(0), Abs(val), T::Epsilon()))
+        {
+            return T(1);
+        }
+        else if (Equal(Constant::PiDiv2<T>, Abs(val), T::Epsilon()))
+        {
+            return T(0);
+        }
+        else if (Equal(Constant::Pi<T>, Abs(val), T::Epsilon()))
+        {
+            return T(-1);
+        }
+
         return std::cos(ToUnderlying(val));
     }
 

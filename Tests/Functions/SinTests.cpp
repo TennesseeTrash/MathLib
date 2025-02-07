@@ -16,7 +16,11 @@ TEST_CASE("Basic Sin tests", "[Math][Functions]")
         REQUIRE(Math::IsNan(Math::Sin(f32::NaN())));
         REQUIRE(Math::Equal(Math::Sin(f32(0.0f)), std::sin(0.0f)));
         REQUIRE(Math::Equal(Math::Sin(PiDiv2<f32>), std::sin(PiDiv2<float>)));
+        REQUIRE(Math::Equal(Math::Sin(-PiDiv2<f32>), std::sin(-PiDiv2<float>)));
         REQUIRE(Math::Equal(Math::Sin(Pi<f32>), std::sin(Pi<float>)));
+        REQUIRE(Math::Equal(Math::Sin(-Pi<f32>), std::sin(-Pi<float>)));
+        REQUIRE(Math::Equal(Math::Sin(Pi<f32> + PiDiv2<f32>), std::sin(Pi<float> + PiDiv2<float>)));
+        REQUIRE(Math::Equal(Math::Sin(-Pi<f32>-PiDiv2<f32>), std::sin(-Pi<float>-PiDiv2<float>)));
         REQUIRE(Math::Equal(Math::Sin(Tau<f32>), std::sin(Tau<float>)));
     }
 

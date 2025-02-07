@@ -23,9 +23,13 @@ namespace Math
         {
             return T(0);
         }
-        else if (Equal(Constant::PiDiv2<T>, Abs(val), T::Epsilon()))
+        else if (Equal(Constant::PiDiv2<T>, val, T::Epsilon()))
         {
             return T(1);
+        }
+        else if (Equal(-Constant::PiDiv2<T>, val, T::Epsilon()))
+        {
+            return T(-1);
         }
 
         return std::sin(ToUnderlying(val));

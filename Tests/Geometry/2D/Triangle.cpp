@@ -69,11 +69,11 @@ TEST_CASE("Test Triangle Contains Functions", "[Math][Geometry][Triangle]")
 
     SECTION("Triangle Contains Ellipse")
     {
-        //Triangle<f32> triangle(Point<f32>(0, 0), Point<f32>(5, 0), Point<f32>(5, 5));
-        //Ellipse<f32> ellipse1(Point<f32>(2, 1), {1, 0.5f}, 0);
-        //Ellipse<f32> ellipse2(Point<f32>(0, 0), {5, 5}, 0);
-        //
-        //REQUIRE(Contains(triangle, ellipse1));
-        //REQUIRE_FALSE(Contains(triangle, ellipse2));
+        Triangle<f32> triangle(Point<f32>(0, 0), Point<f32>(5, 0), Point<f32>(5, 5));
+        Ellipse<f32> ellipse1(Point<f32>(3, 1), {1.0f, 0.5f}, 0);
+        Ellipse<f32> ellipse2(Point<f32>(2, 1), {1.0f, 0.5f}, 0);
+
+        REQUIRE(Contains(triangle, ellipse1));
+        REQUIRE_FALSE(Contains(triangle, ellipse2));
     }
 }

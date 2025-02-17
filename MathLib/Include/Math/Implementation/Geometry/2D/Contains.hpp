@@ -307,13 +307,17 @@ namespace Math::Geometry2D
     [[nodiscard]] constexpr
     bool Contains(const Triangle<T>& triangle, const Ellipse<T>& ellipse) noexcept
     {
-        // TODO(3011): Implement
-        // What does not work:
-        //  - Getting the sum of minimum distances of a line from the ellipse foci
-        //    and checking if it's less than 2 * ellipse.Radii.Max().
-        //  - Drawing circles inside the ellipse and checking if the triangle
-        //    contains all of them.
-        return false;
+        Transform2T<T> circleTransform = Rotate(-ellipse.Angle)
+                                       * Scale(Vector2T<T>(Cast<T>(1) / ellipse.Radii.x, Cast<T>(1) / ellipse.Radii.y))
+                                       * Translate(-Vector2T<T>(ellipse.Center));
+
+        Triangle<T> transformedTriangle (
+            circleTransform * triangle.Vertices[0],
+            circleTransform * triangle.Vertices[1],
+            circleTransform * triangle.Vertices[2]
+        );
+
+        return Contains(transformedTriangle, Circle<T>(Point<T>(), Cast<T>(1)));
     }
 
 

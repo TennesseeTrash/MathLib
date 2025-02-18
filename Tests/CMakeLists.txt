@@ -19,6 +19,7 @@ target_sources(Tests PRIVATE
     "Functions/MinMaxTests.cpp"
     "Functions/SinTests.cpp"
     "Functions/CosTests.cpp"
+    "Functions/PolynomialsTests.cpp"
     "Vector/VectorType.cpp"
     "Vector/VectorOperator.cpp"
     "Vector/VectorUtils.cpp"

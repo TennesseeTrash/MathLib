@@ -4,6 +4,7 @@
 #include "Implementation/Functions/BasicFunctions.hpp"
 #include "Implementation/Functions/Log.hpp"
 #include "Implementation/Functions/Trigonometric.hpp"
+#include "Implementation/Functions/Polynomials.hpp"
 #include "Implementation/Functions/ValueShift.hpp"
 #include "Implementation/Functions/Equal.hpp"
 #include "Implementation/Functions/HasNaN.hpp"

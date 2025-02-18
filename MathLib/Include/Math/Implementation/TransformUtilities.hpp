@@ -5,6 +5,7 @@
 #include "../Functions.hpp"
 #include "Point.hpp"
 #include "MatrixOperators.hpp"
+#include "Transform.hpp"
 
 namespace Math
 {

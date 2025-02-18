@@ -307,8 +307,13 @@ namespace Math::Geometry2D
     [[nodiscard]] constexpr
     bool Contains(const Triangle<T>& triangle, const Ellipse<T>& ellipse) noexcept
     {
+        Vector2T<T> invRadii (
+            Cast<T>(1) / ellipse.Radii.x,
+            Cast<T>(1) / ellipse.Radii.y
+        );
+
         Transform2T<T> circleTransform = Rotate(-ellipse.Angle)
-                                       * Scale(Vector2T<T>(Cast<T>(1) / ellipse.Radii.x, Cast<T>(1) / ellipse.Radii.y))
+                                       * Scale(Vector2T<T>(invRadii.x, invRadii.y))
                                        * Translate(-Vector2T<T>(ellipse.Center));
 
         Triangle<T> transformedTriangle (

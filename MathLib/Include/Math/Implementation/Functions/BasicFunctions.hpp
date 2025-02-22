@@ -80,6 +80,13 @@ namespace Math
         return std::sqrt(ToUnderlying(val));
     }
 
+    template <typename T>
+    [[nodiscard]] constexpr
+    T Cbrt(T val) noexcept
+    {
+        return std::cbrt(ToUnderlying(val));
+    }
+
     //////////////////////////////////////////////////////////////////////////
     // Clamp, Lerp
     //////////////////////////////////////////////////////////////////////////

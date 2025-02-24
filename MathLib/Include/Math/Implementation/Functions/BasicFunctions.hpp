@@ -197,11 +197,9 @@ namespace Math
     T Mid(T v1, T v2, T v3) noexcept
     {
         return (v1 > v2) ? (v3 > v1) ? v1
-                                     : (v2 > v3) ? v3
-                                                 : v2
+                                     : (v2 > v3) ? v3 : v2
                          : (v3 > v2) ? v2
-                                     : (v1 > v3) ? v1
-                                                 : v3;
+                                     : (v1 > v3) ? v1 : v3;
     }
 }
 

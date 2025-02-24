@@ -24,11 +24,10 @@ TEST_CASE("Test Polynomial Solvers", "[Math][Functions]")
 
     SECTION("Quadratic with two roots")
     {
-        // TODO(3011): Don't enforce result ordering.
         auto solution = Math::QuadraticRoots(f32(2.0f), f32(-4.0f), f32(-6.0f));
         REQUIRE(solution.Count == Math::SizeType(2));
-        REQUIRE(Math::Equal(solution.Roots[1], f32(-1.0f)));
-        REQUIRE(Math::Equal(solution.Roots[0], f32(3.0f)));
+        REQUIRE(Math::Equal(solution.Roots[0], f32(-1.0f)));
+        REQUIRE(Math::Equal(solution.Roots[1], f32(3.0f)));
     }
 
     SECTION("Cubic with one root")

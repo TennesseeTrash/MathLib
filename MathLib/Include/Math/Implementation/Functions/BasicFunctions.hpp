@@ -93,7 +93,7 @@ namespace Math
 
     template <typename T>
     [[nodiscard]] constexpr
-    T Clamp(T val, T min = static_cast<T>(0), T max = static_cast<T>(1)) noexcept
+    T Clamp(T val, T min = Cast<T>(0), T max = Cast<T>(1)) noexcept
     {
         return (val > max) ? max : ((val < min) ? min : val);
     }
@@ -121,7 +121,7 @@ namespace Math
     T Smoothstep(T val, T begin, T end) noexcept
     {
         val = Clamp(InvLerp(val, begin, end));
-        return (static_cast<T>(3) - static_cast<T>(2) * val) * Squared(val);
+        return (Cast<T>(3) - Cast<T>(2) * val) * Squared(val);
     }
 
     template <Concept::FloatingPointType T>
@@ -129,11 +129,11 @@ namespace Math
     T Smootherstep(T val, T begin, T end) noexcept
     {
         val = Clamp(InvLerp(val, begin, end));
-        return ((static_cast<T>(6) * val - static_cast<T>(15)) * val + static_cast<T>(10)) * Cubed(val);
+        return ((Cast<T>(6) * val - Cast<T>(15)) * val + Cast<T>(10)) * Cubed(val);
     }
 
     //////////////////////////////////////////////////////////////////////////
-    // Min/Max
+    // Min, Max, Mid
     //////////////////////////////////////////////////////////////////////////
 
     template <typename T>
@@ -190,6 +190,18 @@ namespace Math
     T Max(T v1, T v2, Ts... values) noexcept
     {
         return Max(Max(v1, v2), values...);
+    }
+
+    template <typename T>
+    [[nodiscard]] constexpr
+    T Mid(T v1, T v2, T v3) noexcept
+    {
+        return (v1 > v2) ? (v3 > v1) ? v1
+                                     : (v2 > v3) ? v3
+                                                 : v2
+                         : (v3 > v2) ? v2
+                                     : (v1 > v3) ? v1
+                                                 : v3;
     }
 }
 

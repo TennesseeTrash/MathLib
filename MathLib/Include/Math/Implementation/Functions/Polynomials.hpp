@@ -40,7 +40,7 @@ namespace Math
         T root2 = (-b - Sqrt(discriminant)) / (Cast<T>(2) * a);
         return {
             .Count = 2,
-            .Roots = { root1, root2 },
+            .Roots = { Min(root1, root2), Max(root1, root2) },
         };
     }
 
@@ -78,7 +78,7 @@ namespace Math
                 T root2 = (Cast<T>(4) * a * b * c - Cast<T>(9) * Squared(a) * d - Cubed(b)) / (a * delta0);
                 return {
                     .Count = 2,
-                    .Roots = { root1, root2, T::NaN() },
+                    .Roots = { Min(root1, root2), Max(root1, root2), T::NaN() },
                 };
             }
         }
@@ -102,9 +102,14 @@ namespace Math
             T root2 = ((-1 / (3 * ToUnderlying(a))) * (ToUnderlying(b) + u1 * ToUnderlying(coeff1) + ToUnderlying(delta0) / (u1 * ToUnderlying(coeff1)))).real();
             T root3 = ((-1 / (3 * ToUnderlying(a))) * (ToUnderlying(b) + u2 * ToUnderlying(coeff1) + ToUnderlying(delta0) / (u2 * ToUnderlying(coeff1)))).real();
 
+            // TODO(3011): This is unnecessarily inefficient ...
+            T min = Min(root1, root2, root3);
+            T mid = Mid(root1, root2, root3);
+            T max = Max(root1, root2, root3);
+
             return {
                 .Count = 3,
-                .Roots = { root1, root2, root3 },
+                .Roots = { min, mid, max },
             };
         }
     }
